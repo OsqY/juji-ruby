@@ -1,0 +1,62 @@
+<div class="chaotic-container">
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5rem;">
+    <h1 style="font-size: 4rem;">ARCHIVO<br>JUJI</h1>
+    <%= link_to "NUEVO REPORTE +", new_daily_report_path, class: "btn-chaos" %>
+  </div>
+
+  <% @daily_reports.each do |report| %>
+    <section class="report-card">
+      <div class="daily-header">
+        <div class="daily-date">
+          <%= report.report_date.strftime("%d/%m") %>
+        </div>
+        <div class="daily-metadata">
+          ENTRADA NO. <%= report.id %><br>
+          <%= t("date.day_names")[report.report_date.wday].upcase %><br>
+          <%= report.report_date.strftime("%Y") %>
+        </div>
+      </div>
+
+      <div class="report-grid">
+        <div class="report-column">
+          <span class="section-label">AYER</span>
+          <h2 class="section-title">¿Qué hice ayer?</h2>
+          <div class="report-text"><%= format_as_list report.yesterday %></div>
+        </div>
+
+        <div class="report-column">
+          <span class="section-label">HOY</span>
+          <h2 class="section-title">¿Qué voy a hacer hoy?</h2>
+          <div class="report-text"><%= format_as_list report.today %></div>
+        </div>
+
+        <% if report.blockers.present? %>
+          <div class="report-section-full">
+            <div class="report-section-block">
+              <span class="section-label" style="background: var(--ink); color: var(--paper);">IMPEDIMENTOS</span>
+              <div class="report-text" style="font-weight: 700;"><%= report.blockers %></div>
+            </div>
+          </div>
+        <% end %>
+
+        <% if report.additional_details.present? %>
+          <div class="report-section-full" style="margin-top: 1rem;">
+            <div class="report-section-block" style="background: transparent; border: 2px dashed #ddd;">
+              <span class="section-label" style="background: #ddd;">NOTAS</span>
+              <div class="report-text" style="font-size: 1rem;"><%= report.additional_details %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div style="margin-top: 3rem; display: flex; justify-content: flex-end; gap: 1rem; align-items: center; font-size: 0.7rem; font-weight: 900; opacity: 0.4;">
+        <%= link_to "EDITAR", edit_daily_report_path(report), style: "color: var(--ink); text-decoration: none;" %>
+        <span style="opacity: 0.3;">/</span>
+        <%= button_to "ELIMINAR", daily_report_path(report), 
+            method: :delete, 
+            data: { turbo_confirm: "¿Estás seguro de que deseas eliminar este reporte?" }, 
+            class: "delete-btn-link" %>
+      </div>
+    </section>
+  <% end %>
+</div>

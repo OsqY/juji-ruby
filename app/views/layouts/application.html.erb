@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title><%= content_for(:title) || "Juji" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Juji">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body data-controller="theme">
+    <nav class="chaos-nav">
+      <%= link_to "REPORTES", daily_reports_path %>
+      <%= link_to "FINANZAS", transactions_path %>
+      
+      <div style="flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 2rem;">
+        <% if authenticated? %>
+          <div style="font-weight: 900; font-size: 0.7rem; text-align: right; line-height: 1;">
+            <span style="opacity: 0.5;">USUARIO</span><br>
+            <%= current_user.email_address.upcase %>
+          </div>
+          <%= button_to "SALIR", session_path, method: :delete, class: "delete-btn-link", style: "font-size: 0.8rem; border-bottom: 2px solid #D63031;" %>
+        <% else %>
+          <%= link_to "ENTRAR", new_session_path, style: "font-size: 0.8rem;" %>
+          <%= link_to "REGISTRARME", new_registration_path, style: "font-size: 0.8rem; background: var(--highlight); padding: 0.4rem 0.8rem;" %>
+        <% end %>
+
+        <div class="theme-picker">
+        <label class="theme-option" title="Modo Claro" for="theme_light">
+          <input type="radio" name="theme" id="theme_light" value="light" data-action="change->theme#switch">
+          <i data-lucide="sun"></i>
+        </label>
+        <label class="theme-option" title="Modo Oscuro" for="theme_dark">
+          <input type="radio" name="theme" id="theme_dark" value="dark" data-action="change->theme#switch">
+          <i data-lucide="moon"></i>
+        </label>
+        <label class="theme-option" title="Vintage" for="theme_vintage">
+          <input type="radio" name="theme" id="theme_vintage" value="vintage" data-action="change->theme#switch">
+          <i data-lucide="palette"></i>
+        </label>
+        </div>
+      </div>
+    </nav>
+    <main class="chaotic-container" style="padding-top: 6rem;">
+      <%= yield %>
+    </main>
+  </body>
+</html>

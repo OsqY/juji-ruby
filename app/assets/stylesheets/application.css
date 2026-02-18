@@ -1,0 +1,398 @@
+/* Editorial Magazine Aesthetic: Bold, Structured, Highly Legible */
+
+:root {
+  --ink: #1A1A1A;
+  --paper: #FFFFFF;
+  --highlight: #FFF200;
+  /* Neon Yellow Highlighter */
+  --accent-blue: #0055FF;
+  --muted-gray: #F0F0F0;
+  --border-thick: 3px;
+
+  /* Semantic Financial Colors */
+  --income-bg: #E1FFEC;
+  --income-text: #2D5A27;
+  --expense-bg: #FFEBEB;
+  --expense-text: #D63031;
+}
+
+[data-theme="dark"] {
+  --ink: #F0F0F0;
+  --paper: #121212;
+  --highlight: #E11D48;
+  /* Crimson / Rose accent for dark mode */
+  --accent-blue: #38BDF8;
+  --muted-gray: #1E1E1E;
+
+  /* Dark Mode Financial Contrast */
+  --income-bg: #064E3B;
+  /* Deep Forest Green */
+  --income-text: #6EE7B7;
+  /* Mint */
+  --expense-bg: #450A0A;
+  /* Deep Maroon */
+  --expense-text: #FCA5A5;
+  /* Soft Rose */
+}
+
+[data-theme="vintage"] {
+  --paper: #f4ecd8;
+  --ink: #433422;
+  --highlight: #d4a373;
+  --accent-blue: #606c38;
+  --muted-gray: #e9edc9;
+
+  /* Vintage Financial Contrast */
+  --income-bg: #d9ed92;
+  --income-text: #1a4301;
+  --expense-bg: #fbc4ab;
+  --expense-text: #780000;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700;900&display=swap');
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  line-height: 1.4;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Archivo Black', sans-serif;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.chaotic-container {
+  padding: 4rem 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Report Component Architecture */
+.report-card {
+  border-top: 8px solid var(--ink);
+  margin-bottom: 6rem;
+  padding-top: 2rem;
+  position: relative;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+}
+
+.report-column {
+  grid-column: span 6;
+}
+
+@media (max-width: 768px) {
+  .report-column {
+    grid-column: span 12;
+  }
+}
+
+.report-section-full {
+  grid-column: span 12;
+  margin-top: 2rem;
+}
+
+.report-section-block {
+  background: var(--muted-gray);
+  padding: 2.5rem;
+  border: 4px solid var(--ink);
+}
+
+.section-label {
+  background: var(--highlight);
+  color: #000;
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  font-weight: 900;
+  font-size: 0.8rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .section-label {
+  background: var(--highlight);
+  color: #fff;
+}
+
+.section-title {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.report-text {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+/* Standardized Form Controls */
+.form-group {
+  margin-bottom: 4rem;
+}
+
+input:not([type="submit"]),
+textarea,
+select {
+  width: 100%;
+  padding: 1.2rem;
+  border: 4px solid var(--ink);
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+  box-sizing: border-box;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  background: white !important;
+  box-shadow: 8px 8px 0px var(--highlight);
+}
+
+[data-theme="dark"] input:not([type="submit"]),
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background: #1e1e1e !important;
+  color: #fff !important;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus {
+  background: #2a2a2a !important;
+}
+
+/* Buttons */
+.btn-chaos,
+input[type="submit"].btn-chaos {
+  display: inline-block;
+  padding: 1.2rem 2.5rem;
+  background: var(--ink) !important;
+  color: var(--paper) !important;
+  text-decoration: none;
+  font-family: 'Archivo Black', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 6px 6px 0px var(--highlight);
+  transition: transform 0.1s;
+}
+
+.btn-chaos:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px var(--accent-blue);
+}
+
+.btn-chaos:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--ink);
+}
+
+/* Sticky Action Bar */
+.form-actions {
+  position: sticky;
+  bottom: 2rem;
+  background: var(--paper);
+  padding: 2.5rem;
+  border: 6px solid var(--ink);
+  box-shadow: 12px 12px 0px var(--highlight);
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  z-index: 100;
+}
+
+/* Theme Switcher 2.0 */
+.theme-picker {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--muted-gray);
+  padding: 0.4rem;
+  border: 4px solid var(--ink);
+  margin-left: auto;
+}
+
+.theme-option {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 4px solid transparent;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.theme-option:hover {
+  background: var(--highlight);
+}
+
+.theme-option input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.theme-option i {
+  color: var(--ink);
+  opacity: 0.5;
+}
+
+.theme-option input:checked+i {
+  opacity: 1;
+  color: var(--accent-blue);
+}
+
+/* Icons */
+.lucide {
+  width: 22px;
+  height: 22px;
+  stroke-width: 3px;
+}
+
+/* Custom Calendar Picker */
+.editorial-calendar {
+  display: flex;
+  flex-direction: column;
+  background: var(--muted-gray);
+  border: 4px solid var(--ink);
+  margin-top: 1rem;
+}
+
+.calendar-main {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.calendar-control {
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  width: 50px;
+  height: 50px;
+  font-size: 2rem;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-display {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+}
+
+.calendar-day {
+  font-size: 5rem;
+  font-family: 'Archivo Black', sans-serif;
+  line-height: 1;
+  display: block;
+}
+
+.calendar-month-year {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 1.2rem;
+  display: block;
+  border-top: 2px solid var(--ink);
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.calendar-picker {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--paper);
+  border-top: 4px solid var(--ink);
+}
+
+.calendar-picker.hidden {
+  display: none;
+}
+
+.calendar-picker select {
+  flex: 1;
+  background: white !important;
+  color: black !important;
+  border: 4px solid var(--ink);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+label {
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: var(--ink);
+}
+
+.delete-btn-link {
+  background: none;
+  border: none;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: inherit;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.6;
+}
+
+.delete-btn-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+  color: #D63031;
+}
+
+/* Nav */
+nav.chaos-nav {
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+  z-index: 1000;
+  padding: 1.5rem 3rem;
+  border-bottom: 4px solid var(--ink);
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+nav.chaos-nav a {
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 900;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+nav.chaos-nav a:hover {
+  background: var(--highlight);
+}

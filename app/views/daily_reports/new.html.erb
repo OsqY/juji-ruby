@@ -1,0 +1,83 @@
+<div class="chaotic-container" style="max-width: 800px;">
+  <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
+    <h1 style="font-size: 3.5rem;"><%= @daily_report.new_record? ? "NUEVO REPORTE" : "EDITAR REPORTE" %></h1>
+  </div>
+
+  <%= form_with(model: @daily_report) do |f| %>
+    <% if @daily_report.errors.any? %>
+      <div style="background: #FFEDED; border: 4px solid #D63031; padding: 2rem; margin-bottom: 3rem; color: #D63031;">
+        <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">ERRORS / ERRORES:</h2>
+        <ul style="font-weight: 700;">
+          <% @daily_report.errors.full_messages.each do |message| %>
+            <li><%= message.upcase %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <div class="form-group" data-controller="calendar">
+      <%= f.label :report_date, "¿DE QUÉ DÍA?" %>
+      <%= f.hidden_field :report_date, value: (@daily_report.report_date || Date.today), data: { calendar_target: "input" } %>
+      
+      <div class="editorial-calendar">
+        <div class="calendar-main">
+          <button type="button" class="calendar-control" data-action="click->calendar#prevDay">&larr;</button>
+          <div class="calendar-display" data-action="click->calendar#togglePicker">
+            <span class="calendar-day" data-calendar-target="displayDay">00</span>
+            <div class="calendar-month-year">
+              <span data-calendar-target="displayMonth">MES</span> / <span data-calendar-target="displayYear">2026</span>
+            </div>
+          </div>
+          <button type="button" class="calendar-control" data-action="click->calendar#nextDay">&rarr;</button>
+        </div>
+
+        <div class="calendar-picker hidden" data-calendar-target="picker">
+          <%= select_tag :calendar_month, options_for_select(
+            (0..11).map { |m| [I18n.t("date.month_names")[m+1].upcase, m] }, 
+            (@daily_report.report_date || Date.today).month - 1
+          ), data: { action: "change->calendar#selectMonth" } %>
+          
+          <%= select_tag :calendar_year, options_for_select(
+            (Date.today.year - 5..Date.today.year + 2).to_a, 
+            (@daily_report.report_date || Date.today).year
+          ), data: { action: "change->calendar#selectYear" } %>
+        </div>
+      </div>
+      <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 1rem;">FLECHAS PARA DÍAS / CLIC EN EL NÚMERO PARA MES Y AÑO</p>
+    </div>
+
+    <div class="form-group">
+      <span class="section-label">PASADO</span>
+      <h2 class="section-title">1. ¿QUÉ HICE AYER?</h2>
+      <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 0.5rem;">(Escribe una tarea por línea)</p>
+      <%= f.text_area :yesterday, placeholder: "• Tarea 1\n• Tarea 2..." %>
+    </div>
+
+    <div class="form-group">
+      <span class="section-label" style="background: var(--accent-blue); color: white;">PRESENTE</span>
+      <h2 class="section-title">2. ¿QUÉ VOY A HACER HOY?</h2>
+      <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 0.5rem;">(Escribe una tarea por línea)</p>
+      <%= f.text_area :today, placeholder: "• Tarea prioritaria\n• Tarea secundaria..." %>
+    </div>
+
+    <div class="form-group">
+      <div class="report-section-block">
+        <span class="section-label" style="background: var(--ink); color: var(--paper);">BLOQUEOS</span>
+        <h2 class="section-title">3. ¿HAY ALGÚN IMPEDIMENTO?</h2>
+        <%= f.text_field :blockers, placeholder: "¿Algo te detiene?" %>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-bottom: 8rem;">
+      <span class="section-label" style="background: #ddd; color: #000;">EXTRAS</span>
+      <h2 class="section-title">DETALLES ADICIONALES</h2>
+      <%= f.text_area :additional_details, rows: 4, placeholder: "Notas, reflexiones, etc." %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "GUARDAR REPORTE", class: "btn-chaos", style: "flex: 1;" %>
+      <%= link_to "CANCELAR", daily_reports_path, style: "font-weight: 900; text-decoration: none; color: #D63031;" %>
+    </div>
+
+  <% end %>
+</div>

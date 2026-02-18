@@ -1,0 +1,42 @@
+<div class="chaotic-container" style="max-width: 600px;">
+  <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
+    <h1 style="font-size: 3.5rem;">ENTRAR</h1>
+    <p style="font-weight: 700; opacity: 0.6;">ACCEDE A TU ARCHIVO PERSONAL</p>
+  </div>
+
+  <% if alert %>
+    <div style="background: #FFEDED; border: 4px solid #D63031; padding: 2rem; margin-bottom: 3rem; color: #D63031; font-weight: 700;">
+      <%= alert.upcase %>
+    </div>
+  <% end %>
+
+  <% if notice %>
+    <div style="background: #E1FFEC; border: 4px solid #2D5A27; padding: 2rem; margin-bottom: 3rem; color: #2D5A27; font-weight: 700;">
+      <%= notice.upcase %>
+    </div>
+  <% end %>
+
+  <%= form_with(url: session_path) do |f| %>
+    <div class="form-group">
+      <%= f.label :email_address, "CORREO ELECTRÓNICO" %>
+      <%= f.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "tu@ejemplo.com" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password, "CONTRASEÑA" %>
+      <%= f.password_field :password, required: true, autocomplete: "current-password", placeholder: "••••••••" %>
+    </div>
+
+    <div style="margin-bottom: 2rem; text-align: right;">
+      <%= link_to "¿OLVIDASTE TU CONTRASEÑA?", new_password_path, style: "font-size: 0.8rem; font-weight: 700; color: var(--ink); opacity: 0.6;" %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "ACCEDER", class: "btn-chaos", style: "flex: 1;" %>
+    </div>
+
+    <div style="margin-top: 2rem; text-align: center;">
+      <%= link_to "¿NO TIENES CUENTA? CREAR UNA", new_registration_path, style: "font-weight: 900; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--highlight);" %>
+    </div>
+  <% end %>
+</div>
