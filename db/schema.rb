@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_18_031103) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_18_162000) do
   create_table "daily_reports", force: :cascade do |t|
     t.text "additional_details"
     t.text "blockers"
@@ -31,6 +31,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_18_031103) do
     t.string "user_agent"
     t.integer "user_id", null: false
     t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "solid_cache_entries", force: :cascade do |t|
+    t.integer "byte_size", null: false
+    t.datetime "created_at", null: false
+    t.binary "key", null: false
+    t.integer "key_hash", limit: 8, null: false
+    t.binary "value", null: false
+    t.index ["created_at"], name: "index_solid_cache_entries_on_created_at"
+    t.index ["key_hash", "byte_size"], name: "index_solid_cache_entries_on_key_hash_and_byte_size"
+    t.index ["key_hash"], name: "index_solid_cache_entries_on_key_hash", unique: true
   end
 
   create_table "transactions", force: :cascade do |t|
