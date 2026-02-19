@@ -9,28 +9,30 @@
   --muted-gray: #F0F0F0;
   --border-thick: 3px;
 
-  /* Semantic Financial Colors */
+  /* Semantic Financial Colors - Refined for Contrast */
   --income-bg: #E1FFEC;
-  --income-text: #2D5A27;
+  --income-text: #1E3F19;
+  /* Darker green for accessibility */
   --expense-bg: #FFEBEB;
-  --expense-text: #D63031;
+  --expense-text: #B91C1C;
+  /* Darker red for accessibility */
 }
 
 [data-theme="dark"] {
-  --ink: #F0F0F0;
-  --paper: #121212;
-  --highlight: #E11D48;
-  /* Crimson / Rose accent for dark mode */
+  --ink: #FFFFFF;
+  /* Pure white for max contrast */
+  --paper: #0A0A0A;
+  /* Deeper black */
+  --highlight: #F43F5E;
+  /* Vibrant Rose */
   --accent-blue: #38BDF8;
-  --muted-gray: #1E1E1E;
+  --muted-gray: #1A1A1A;
 
-  /* Dark Mode Financial Contrast */
+  /* Dark Mode Financial Contrast - High Legibility */
   --income-bg: #064E3B;
-  /* Deep Forest Green */
   --income-text: #6EE7B7;
   /* Mint */
-  --expense-bg: #450A0A;
-  /* Deep Maroon */
+  --expense-bg: #7F1D1D;
   --expense-text: #FCA5A5;
   /* Soft Rose */
 }
@@ -58,6 +60,7 @@ body {
   margin: 0;
   line-height: 1.4;
   transition: background-color 0.3s, color 0.3s;
+  overflow-x: hidden;
 }
 
 h1,
@@ -68,10 +71,85 @@ h3 {
   margin: 0;
 }
 
+h1 {
+  font-size: 4rem;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.2rem;
+    /* Reduced further for mobile */
+  }
+}
+
+.index-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+  /* Reduced from 5rem */
+}
+
+@media (max-width: 768px) {
+  .index-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    /* Reduced from 2rem */
+    margin-bottom: 2rem;
+  }
+}
+
+.chaotic-title {
+  /* Inherits fluid h1 size */
+  line-height: 0.9;
+}
+
+.report-actions {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7rem;
+  font-weight: 900;
+  opacity: 0.4;
+}
+
+.action-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .report-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    opacity: 0.7;
+    /* Higher visibility on mobile */
+  }
+}
+
 .chaotic-container {
-  padding: 4rem 2rem;
-  max-width: 1000px;
+  padding: 8rem 4rem 4rem;
+  /* Reduced top padding */
+  max-width: 1100px;
   margin: 0 auto;
+}
+
+@media (max-width: 1100px) {
+  .chaotic-container {
+    padding: 4rem 2rem 2rem;
+    /* Reasonable tablet padding */
+  }
+}
+
+@media (max-width: 768px) {
+  .chaotic-container {
+    padding: 3rem 1rem 2rem;
+    /* Even tighter spacing */
+  }
 }
 
 /* Report Component Architecture */
@@ -105,8 +183,18 @@ h3 {
 
 .report-section-block {
   background: var(--muted-gray);
-  padding: 2.5rem;
+  padding: 2rem;
   border: 4px solid var(--ink);
+}
+
+.report-section-block label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.report-section-block input,
+.report-section-block textarea {
+  margin-top: 0 !important;
 }
 
 .section-label {
@@ -132,9 +220,80 @@ h3 {
   text-transform: uppercase;
 }
 
+.form-title {
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .form-title {
+    font-size: 2.2rem;
+  }
+}
+
 .report-text {
   font-size: 1.2rem;
   line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .report-text {
+    font-size: 1rem;
+  }
+}
+
+/* Finance Specific Responsive Styles */
+.finance-sum {
+  font-size: 3.5rem;
+}
+
+.net-balance {
+  font-size: 6rem;
+  letter-spacing: -4px;
+}
+
+@media (max-width: 768px) {
+  .finance-sum {
+    font-size: 1.8rem;
+    /* Reduced further */
+  }
+
+  .net-balance {
+    font-size: 2.5rem;
+    /* Reduced further */
+    letter-spacing: -1px;
+  }
+
+  .report-section-block {
+    padding: 1.5rem;
+    /* Thinner padding on mobile */
+  }
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--paper);
+}
+
+.history-amount {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .history-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .history-amount {
+    text-align: left;
+    width: 100%;
+    border-top: 2px dashed var(--muted-gray);
+    padding-top: 1rem;
+  }
 }
 
 /* Standardized Form Controls */
@@ -142,19 +301,34 @@ h3 {
   margin-bottom: 4rem;
 }
 
-input:not([type="submit"]),
+input:not([type="submit"]):not([type="hidden"]),
 textarea,
 select {
   width: 100%;
-  padding: 1.2rem;
+  padding: 1.5rem;
+  /* Increased padding */
   border: 4px solid var(--ink);
   font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  /* Larger font */
   background: var(--paper) !important;
   color: var(--ink) !important;
   box-sizing: border-box;
   transition: all 0.2s;
   margin-top: 0.5rem;
+}
+
+textarea {
+  min-height: 15rem;
+  /* Taller textareas */
+  resize: vertical;
+  /* Allow manual resizing */
+}
+
+input:not([type="submit"]):not([type="hidden"]),
+select {
+  height: 4.5rem;
+  /* Explicit height for standard inputs */
 }
 
 input:focus,
@@ -210,13 +384,32 @@ input[type="submit"].btn-chaos {
   position: sticky;
   bottom: 2rem;
   background: var(--paper);
-  padding: 2.5rem;
-  border: 6px solid var(--ink);
+  padding: 2.5rem 4rem;
+  border: 4px solid var(--ink);
+  /* Slightly thinner on all devices */
   box-shadow: 12px 12px 0px var(--highlight);
   display: flex;
   gap: 2rem;
   align-items: center;
   z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .form-actions {
+    padding: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+    bottom: 0;
+  }
+
+  .form-actions>* {
+    width: 100%;
+  }
+
+  .form-actions .btn-chaos {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 /* Theme Switcher 2.0 */
@@ -248,19 +441,33 @@ input[type="submit"].btn-chaos {
 .theme-option input {
   position: absolute;
   opacity: 0;
-  cursor: pointer;
-  height: 0;
   width: 0;
+  height: 0;
 }
 
 .theme-option i {
   color: var(--ink);
-  opacity: 0.5;
+  opacity: 0.4;
+  /* Lowered inactive opacity to make active pop more */
+  transition: opacity 0.2s;
+}
+
+.theme-option:hover i {
+  opacity: 0.8;
 }
 
 .theme-option input:checked+i {
-  opacity: 1;
+  opacity: 1 !important;
   color: var(--accent-blue);
+}
+
+[data-theme="dark"] .theme-option input:checked+i {
+  color: var(--highlight);
+}
+
+[data-theme="vintage"] .theme-option input:checked+i {
+  color: var(--ink);
+  filter: drop-shadow(0 0 1px var(--ink));
 }
 
 /* Icons */
@@ -311,6 +518,23 @@ input[type="submit"].btn-chaos {
   font-family: 'Archivo Black', sans-serif;
   line-height: 1;
   display: block;
+}
+
+@media (max-width: 768px) {
+  .calendar-main {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .calendar-day {
+    font-size: 3rem;
+  }
+
+  .calendar-control {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
 }
 
 .calendar-month-year {
@@ -377,11 +601,140 @@ nav.chaos-nav {
   top: 0;
   background: var(--paper);
   z-index: 1000;
-  padding: 1.5rem 3rem;
+  padding: 0.6rem 2rem;
+  /* Thinner nav and less side padding */
   border-bottom: 4px solid var(--ink);
   display: flex;
-  gap: 3rem;
+  justify-content: space-between;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  nav.chaos-nav {
+    padding: 0.5rem 1rem;
+    /* Tighter on mobile */
+  }
+}
+
+.nav-branding .logo-text {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-close {
+  display: none;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  /* Reduced from 3rem */
+}
+
+.nav-main-links {
+  display: flex;
+  gap: 1.2rem;
+  /* Reduced from 2rem */
+}
+
+.nav-user-controls {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (max-width: 1100px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-actions {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    /* Full screen for better focus */
+    height: 100vh;
+    background: var(--paper);
+    flex-direction: column;
+    padding: 6rem 2rem;
+    transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2000;
+    gap: 4rem;
+    align-items: center;
+    /* Center horizontally */
+    text-align: center;
+  }
+
+  .nav-actions.menu-active {
+    right: 0;
+    /* Removed box-shadow backdrop as it's full screen now */
+  }
+
+  .menu-close {
+    display: block;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 3.5rem;
+    cursor: pointer;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .nav-main-links {
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .nav-main-links a {
+    font-size: 2.5rem !important;
+    /* Bold, magazine-style choice */
+    border-bottom: 4px solid transparent;
+  }
+
+  .nav-main-links a:active {
+    border-bottom-color: var(--highlight);
+  }
+
+  .nav-user-controls {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 2.5rem;
+    margin-top: auto;
+    padding-top: 3rem;
+    border-top: 6px solid var(--ink);
+  }
+
+  .user-badge {
+    text-align: center;
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  .theme-picker {
+    margin: 0 auto;
+    scale: 1.2;
+    /* Slightly larger for easier touch */
+  }
+
+  body.no-scroll {
+    overflow: hidden;
+  }
 }
 
 nav.chaos-nav a {
@@ -395,4 +748,132 @@ nav.chaos-nav a {
 
 nav.chaos-nav a:hover {
   background: var(--highlight);
+}
+
+/* Card-style Radio Selection */
+.transaction-type-cards {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 600px) {
+  .transaction-type-cards {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.type-card-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.type-card-wrapper input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.type-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.type-card .card-label {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.type-card .card-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Expense Card Selection */
+.type-card-wrapper input#transaction_transaction_type_expense:checked+.type-card {
+  background: var(--expense-bg);
+  border-color: var(--expense-text);
+  color: var(--expense-text);
+  box-shadow: 8px 8px 0px var(--expense-text);
+  transform: translate(-4px, -4px);
+}
+
+/* Income Card Selection */
+.type-card-wrapper input#transaction_transaction_type_income:checked+.type-card {
+  background: var(--income-bg);
+  border-color: var(--income-text);
+  color: var(--income-text);
+  box-shadow: 8px 8px 0px var(--income-text);
+  transform: translate(-4px, -4px);
+}
+
+.type-card:hover {
+  background: var(--muted-gray);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px var(--ink);
+}
+
+/* =====================================================
+   TABLET RESPONSIVE (1100px) - Key layout adaptations
+   ===================================================== */
+@media (max-width: 1100px) {
+  .report-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .report-column {
+    grid-column: span 1;
+  }
+
+  .daily-header {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .finance-sum {
+    font-size: 2.5rem;
+  }
+
+  .net-balance {
+    font-size: 4rem;
+    letter-spacing: -2px;
+  }
+
+  .form-title {
+    font-size: 2.5rem;
+  }
+
+  .chaotic-container {
+    max-width: 100%;
+  }
+
+  .index-header {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+}
+
+/* =====================================================
+   MEDIUM TABLET / LARGE PHONE (900px)
+   ===================================================== */
+@media (max-width: 900px) {
+  h1 {
+    font-size: 3rem;
+  }
+
+  .chaotic-title {
+    font-size: 3.5rem;
+  }
 }

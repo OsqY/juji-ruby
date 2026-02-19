@@ -1,0 +1,77 @@
+<div class="chaotic-container">
+  <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
+    <h1 class="form-title">RASTREADOR DE HÁBITOS</h1>
+    <p style="font-weight: 700; opacity: 0.6;">TUS ÚLTIMOS 7 DÍAS / YOUR LAST 7 DAYS</p>
+  </div>
+
+  <%# Form to Add New Habit %>
+  <div class="report-section-block" style="margin-bottom: 3rem;">
+    <h2 class="section-title">CREAR NUEVO HÁBITO</h2>
+    <%= form_with(model: @new_habit) do |f| %>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 250px;">
+          <%= f.label :name, "NOMBRE DEL HÁBITO", style: "font-size: 0.7rem; font-weight: 900; opacity: 0.5; display: block;" %>
+          <%= f.text_field :name, placeholder: "Ej. Meditar, Leer 10 min, Ejercicio...", required: true %>
+        </div>
+        <div style="display: flex; align-items: flex-end;">
+          <%= f.submit "AGREGAR +", class: "btn-chaos", style: "padding: 1rem 2rem;" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Habit Grid %>
+  <div class="habit-tracker-grid" style="display: flex; flex-direction: column; gap: 2rem; overflow-x: auto;">
+    <% if @habits.any? %>
+      <div style="display: grid; grid-template-columns: 200px repeat(7, 1fr); gap: 10px; min-width: 600px; padding-bottom: 1rem;">
+        <%# Header row with dates %>
+        <div></div>
+        <% @dates.each do |date| %>
+          <div style="text-align: center;">
+            <div style="font-size: 0.6rem; font-weight: 900; opacity: 0.4;"><%= date.strftime("%a").upcase %></div>
+            <div style="font-size: 1rem; font-weight: 900;"><%= date.day %></div>
+          </div>
+        <% end %>
+
+        <%# Habit Rows %>
+        <% @habits.each do |habit| %>
+          <%# Habit Name & Actions %>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding-right: 1rem;">
+            <h3 style="margin: 0; font-size: 1.1rem; text-transform: uppercase;"><%= habit.name %></h3>
+            <%= button_to habit_path(habit), method: :delete, class: "delete-btn-link", data: { confirm: "¿Eliminar?" }, style: "opacity: 0.3;" do %>
+               <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
+            <% end %>
+          </div>
+
+          <%# Habit Completion Toggles %>
+          <% @dates.each do |date| %>
+            <% log = habit.habit_logs.find_by(log_date: date) %>
+            <div style="display: flex; justify-content: center; align-items: center;">
+              <%= button_to toggle_habit_path(habit, date: date), method: :post, class: "habit-toggle-cell", style: "padding: 0; border: none; background: none; cursor: pointer; width: 40px; height: 40px;" do %>
+                <div style="width: 100%; height: 100%; border: 4px solid var(--ink); border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; <%= log&.completed ? 'background: var(--highlight); color: black;' : 'background: var(--paper);' %>">
+                   <% if log&.completed %>
+                     <i data-lucide="check" style="width: 20px; height: 20px; stroke-width: 4;"></i>
+                   <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="report-section-block" style="text-align: center; padding: 4rem;">
+        <p style="font-weight: 900; opacity: 0.3; font-size: 1.2rem;">SIN HÁBITOS TODAVÍA / NO HABITS YET</p>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .habit-toggle-cell:hover div {
+    transform: scale(1.1);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .habit-toggle-cell:active div {
+    transform: scale(0.95);
+  }
+</style>

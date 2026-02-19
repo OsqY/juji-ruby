@@ -67,6 +67,20 @@
       </div>
     </div>
 
+    <div class="form-group">
+      <div class="report-section-block" style="background: var(--paper); border: 4px solid var(--ink);">
+        <span class="section-label" style="background: var(--highlight); color: black;">VISUAL</span>
+        <h2 class="section-title">4. MOMENTO VISUAL DEL DÍA</h2>
+        <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 1rem;">(Sube una foto que represente tu día)</p>
+        <%= f.file_field :photo, accept: "image/*", style: "width: 100%; font-family: inherit; font-weight: 700;" %>
+        <% if @daily_report.photo.attached? %>
+          <div style="margin-top: 1rem; border: 4px solid var(--ink);">
+             <%= image_tag @daily_report.photo, style: "width: 100%; display: block;" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
     <div class="form-group" style="margin-bottom: 8rem;">
       <span class="section-label" style="background: #ddd; color: #000;">EXTRAS</span>
       <h2 class="section-title">DETALLES ADICIONALES</h2>

@@ -44,6 +44,6 @@ class DailyReportsController < ApplicationController
     end
 
     def daily_report_params
-      params.expect(daily_report: [ :report_date, :yesterday, :today, :blockers, :additional_details ])
+      params.require(:daily_report).permit(:report_date, :yesterday, :today, :blockers, :additional_details, :photo)
     end
 end

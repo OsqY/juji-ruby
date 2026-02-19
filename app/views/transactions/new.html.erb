@@ -1,38 +1,60 @@
 <div class="chaotic-container" style="max-width: 800px;">
   <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
-    <h1 style="font-size: 3.5rem;">REGISTRAR MOVIMIENTO</h1>
+    <h1 class="form-title">REGISTRAR MOVIMIENTO</h1>
   </div>
 
   <%= form_with(model: @transaction) do |f| %>
     
     <div class="form-group">
-      <%= f.label :amount, "¿CUÁNTO DINERO (L)?" %>
-      <%= f.number_field :amount, step: 0.01, placeholder: "0.00" %>
+      <%= f.label :transaction_type, "TIPO DE FLUJO" %>
+      <div class="transaction-type-cards">
+        <label class="type-card-wrapper">
+          <%= f.radio_button :transaction_type, "expense", checked: true %>
+          <div class="type-card">
+            <div class="card-label">EGRESO</div>
+          </div>
+        </label>
+        
+        <label class="type-card-wrapper">
+          <%= f.radio_button :transaction_type, "income" %>
+          <div class="type-card">
+            <div class="card-label">INGRESO</div>
+          </div>
+        </label>
+      </div>
     </div>
 
     <div class="form-group">
-      <%= f.label :description, "¿POR QUÉ CONCEPTO? (DESCRIPCIÓN)" %>
-      <%= f.text_field :description, placeholder: "Compra de materiales, Venta de..." %>
+      <div class="report-section-block">
+        <%= f.label :amount, "¿CUÁNTO DINERO (L)?" %>
+        <%= f.number_field :amount, step: 0.01, placeholder: "0.00" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="report-section-block" style="background: var(--muted-gray);">
+        <%= f.label :description, "¿POR QUÉ CONCEPTO? (DESCRIPCIÓN)" %>
+        <%= f.text_area :description, placeholder: "Compra de materiales, Venta de..." %>
+      </div>
     </div>
 
     <div class="report-grid" style="margin-bottom: 4rem;">
       <div class="report-column">
         <div class="form-group" style="margin-bottom: 0;">
-          <%= f.label :transaction_type, "TIPO DE FLUJO" %>
-          <%= f.select :transaction_type, Transaction.transaction_types.keys.map { |k| [k == 'income' ? 'INGRESO' : 'EGRESO', k] } %>
+          <div class="report-section-block">
+            <%= f.label :date, "FECHA DEL MOVIMIENTO" %>
+            <%= f.date_field :date, value: Date.today %>
+          </div>
         </div>
       </div>
       <div class="report-column">
         <div class="form-group" style="margin-bottom: 0;">
-          <%= f.label :date, "FECHA DEL MOVIMIENTO" %>
-          <%= f.date_field :date, value: Date.today %>
+          <div class="report-section-block">
+            <%= f.label :category, "CATEGORÍA / ETIQUETA" %>
+            <%= f.text_area :category, placeholder: "Sueldo, Comida, Inversión, etc." %>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :category, "CATEGORÍA / ETIQUETA" %>
-      <%= f.text_field :category, placeholder: "Sueldo, Comida, Inversión, etc." %>
     </div>
 
     <div class="form-actions">

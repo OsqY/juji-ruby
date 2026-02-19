@@ -23,40 +23,57 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body data-controller="theme">
+  <body data-controller="theme menu">
     <nav class="chaos-nav">
-      <%= link_to "REPORTES", daily_reports_path %>
-      <%= link_to "FINANZAS", transactions_path %>
-      
-      <div style="flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 2rem;">
-        <% if authenticated? %>
-          <div style="font-weight: 900; font-size: 0.7rem; text-align: right; line-height: 1;">
-            <span style="opacity: 0.5;">USUARIO</span><br>
-            <%= current_user.email_address.upcase %>
-          </div>
-          <%= button_to "SALIR", session_path, method: :delete, class: "delete-btn-link", style: "font-size: 0.8rem; border-bottom: 2px solid #D63031;" %>
-        <% else %>
-          <%= link_to "ENTRAR", new_session_path, style: "font-size: 0.8rem;" %>
-          <%= link_to "REGISTRARME", new_registration_path, style: "font-size: 0.8rem; background: var(--highlight); padding: 0.4rem 0.8rem;" %>
-        <% end %>
+      <div class="nav-branding">
+        <%= link_to "JUJI", root_path, class: "logo-text" %>
+      </div>
 
-        <div class="theme-picker">
-        <label class="theme-option" title="Modo Claro" for="theme_light">
-          <input type="radio" name="theme" id="theme_light" value="light" data-action="change->theme#switch">
-          <i data-lucide="sun"></i>
-        </label>
-        <label class="theme-option" title="Modo Oscuro" for="theme_dark">
-          <input type="radio" name="theme" id="theme_dark" value="dark" data-action="change->theme#switch">
-          <i data-lucide="moon"></i>
-        </label>
-        <label class="theme-option" title="Vintage" for="theme_vintage">
-          <input type="radio" name="theme" id="theme_vintage" value="vintage" data-action="change->theme#switch">
-          <i data-lucide="palette"></i>
-        </label>
+      <button class="menu-toggle" data-action="click->menu#toggle">
+        <i data-lucide="menu"></i>
+      </button>
+      
+      <div class="nav-actions" data-menu-target="menu">
+        <button class="menu-close" data-action="click->menu#toggle">&times;</button>
+        
+        <div class="nav-main-links">
+          <%= link_to "REPORTES", daily_reports_path, data: { action: "click->menu#close" } %>
+          <%= link_to "HÁBITOS", habits_path, data: { action: "click->menu#close" } %>
+          <%= link_to "PROYECTOS", projects_path, data: { action: "click->menu#close" } %>
+          <%= link_to "COMPRAS", shopping_items_path, data: { action: "click->menu#close" } %>
+          <%= link_to "FINANZAS", transactions_path, data: { action: "click->menu#close" } %>
+        </div>
+
+        <div class="nav-user-controls">
+          <% if authenticated? %>
+            <div class="user-badge">
+              <span>USUARIO</span><br>
+              <%= current_user.email_address.upcase %>
+            </div>
+            <%= button_to "SALIR", session_path, method: :delete, class: "delete-btn-link", style: "border-bottom: 2px solid #D63031;" %>
+          <% else %>
+            <%= link_to "ENTRAR", new_session_path, style: "font-size: 0.8rem;" %>
+            <%= link_to "REGISTRARME", new_registration_path, style: "font-size: 0.8rem; background: var(--highlight); padding: 0.4rem 0.8rem;" %>
+          <% end %>
+
+          <div class="theme-picker">
+          <label class="theme-option" title="Modo Claro" for="theme_light">
+            <input type="radio" name="theme" id="theme_light" value="light" data-action="change->theme#switch">
+            <i data-lucide="sun"></i>
+          </label>
+          <label class="theme-option" title="Modo Oscuro" for="theme_dark">
+            <input type="radio" name="theme" id="theme_dark" value="dark" data-action="change->theme#switch">
+            <i data-lucide="moon"></i>
+          </label>
+          <label class="theme-option" title="Vintage" for="theme_vintage">
+            <input type="radio" name="theme" id="theme_vintage" value="vintage" data-action="change->theme#switch">
+            <i data-lucide="palette"></i>
+          </label>
+          </div>
         </div>
       </div>
     </nav>
-    <main class="chaotic-container" style="padding-top: 6rem;">
+    <main class="chaotic-container">
       <%= yield %>
     </main>
   </body>

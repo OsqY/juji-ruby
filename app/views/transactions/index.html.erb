@@ -1,6 +1,6 @@
 <div class="chaotic-container">
-  <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5rem;">
-    <h1 style="font-size: 4rem;">FLUJO DE<br>CAJA</h1>
+  <div class="index-header">
+    <h1 class="chaotic-title">FLUJO DE<br>CAJA</h1>
     <%= link_to "REGISTRAR +", new_transaction_path, class: "btn-chaos" %>
   </div>
 
@@ -8,13 +8,13 @@
     <div class="report-column">
       <div class="report-section-block" style="background: var(--income-bg); color: var(--income-text);">
         <span class="section-label" style="background: var(--income-text); color: var(--income-bg);">INGRESOS</span>
-        <h2 style="font-size: 3.5rem; margin-top: 1rem;">L. <%= number_with_precision @income, precision: 2 %></h2>
+        <h2 class="finance-sum" style="margin-top: 1rem;">L. <%= number_with_precision @income, precision: 2 %></h2>
       </div>
     </div>
     <div class="report-column">
       <div class="report-section-block" style="background: var(--expense-bg); color: var(--expense-text);">
         <span class="section-label" style="background: var(--expense-text); color: var(--expense-bg);">EGRESOS</span>
-        <h2 style="font-size: 3.5rem; margin-top: 1rem;">L. <%= number_with_precision @expenses, precision: 2 %></h2>
+        <h2 class="finance-sum" style="margin-top: 1rem;">L. <%= number_with_precision @expenses, precision: 2 %></h2>
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
       <div class="daily-date">TOTAL</div>
       <div class="daily-metadata">BALANCE NETO</div>
     </div>
-    <h2 style="font-size: 6rem; letter-spacing: -4px; margin-top: 1rem;">
+    <h2 class="net-balance" style="margin-top: 1rem;">
       L. <%= number_with_precision @balance, precision: 2 %>
     </h2>
   </section>
@@ -33,7 +33,7 @@
   
   <div style="display: flex; flex-direction: column; gap: 2rem;">
     <% @transactions.each do |t| %>
-      <div class="report-section-block" style="display: flex; justify-content: space-between; align-items: center; background: var(--paper);">
+      <div class="report-section-block history-item">
         <div>
           <span class="section-label" style="background: <%= t.income? ? 'var(--income-text)' : 'var(--expense-text)' %>; color: <%= t.income? ? 'var(--income-bg)' : 'var(--expense-bg)' %>;">
             <%= t.transaction_type.to_s.upcase %>
@@ -43,7 +43,7 @@
             <%= t.date.strftime("%d %B %Y").upcase %> | <%= (t.category.presence || "VARIOS").upcase %>
           </p>
         </div>
-        <div style="text-align: right;">
+        <div class="history-amount">
           <h2 style="color: <%= t.income? ? 'var(--income-text)' : 'var(--expense-text)' %>; font-size: 2.5rem; font-family: 'Archivo Black';">
             <%= t.income? ? '+' : '-' %>L. <%= number_with_precision t.amount, precision: 2 %>
           </h2>
