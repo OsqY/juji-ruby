@@ -30,6 +30,10 @@
       <% report_new_active = controller_name == "daily_reports" && action_name == "new" %>
       <% finance_active = controller_name == "transactions" && action_name != "new" %>
       <% finance_new_active = controller_name == "transactions" && action_name == "new" %>
+      <% projects_active = controller_name == "projects" %>
+      <% habits_active = controller_name == "habits" %>
+      <% budgets_active = controller_name == "budgets" %>
+      <% shopping_active = controller_name == "shopping_items" %>
       <% login_active = controller_name == "sessions" && action_name == "new" %>
       <% register_active = controller_name == "registrations" && action_name == "new" %>
       <% recovery_active = controller_name == "passwords" && action_name == "new" %>
@@ -43,8 +47,12 @@
         <%= link_to "DASHBOARD", dashboard_path, class: "nav-link #{'is-active' if dashboard_active}" %>
         <%= link_to "REPORTES", daily_reports_path, class: "nav-link #{'is-active' if reports_active}" %>
         <%= link_to "NUEVO REPORTE", new_daily_report_path, class: "nav-link nav-link-create #{'is-active' if report_new_active}" %>
+        <%= link_to "PROYECTOS", projects_path, class: "nav-link #{'is-active' if projects_active}" %>
+        <%= link_to "HÁBITOS", habits_path, class: "nav-link #{'is-active' if habits_active}" %>
         <%= link_to "FINANZAS", transactions_path, class: "nav-link #{'is-active' if finance_active}" %>
         <%= link_to "NUEVA TRANSACCIÓN", new_transaction_path, class: "nav-link nav-link-create #{'is-active' if finance_new_active}" %>
+        <%= link_to "PRESUPUESTOS", budgets_path, class: "nav-link #{'is-active' if budgets_active}" %>
+        <%= link_to "COMPRAS", shopping_items_path, class: "nav-link #{'is-active' if shopping_active}" %>
       </div>
 
       <div class="nav-meta" role="navigation" aria-label="Cuenta">

@@ -13,7 +13,7 @@ class ProjectTasksController < ApplicationController
 
   def toggle
     @task.update(completed: !@task.completed)
-    redirect_to projects_path
+    redirect_to projects_path, notice: "Logro actualizado."
   end
 
   def destroy

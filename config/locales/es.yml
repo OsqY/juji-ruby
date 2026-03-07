@@ -21,6 +21,7 @@ es:
     format: "%{attribute} %{message}"
     messages:
       blank: "no puede estar en blanco"
+      taken: "ya está en uso"
 
   number:
     currency:

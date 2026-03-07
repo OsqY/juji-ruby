@@ -720,6 +720,63 @@ input[type="submit"].btn-chaos {
   box-shadow: 2px 2px 0px var(--ink);
 }
 
+/* Theme-specific button styling for better contrast */
+[data-theme="dark"] .btn-chaos,
+[data-theme="dark"] input[type="submit"].btn-chaos {
+  background: var(--accent-blue) !important;
+  color: var(--paper) !important;
+}
+
+[data-theme="dark"] .btn-chaos:hover,
+[data-theme="dark"] input[type="submit"].btn-chaos:hover {
+  background: var(--ink) !important;
+  box-shadow: 8px 8px 0px var(--accent-blue);
+}
+
+[data-theme="dark"] .btn-chaos:active,
+[data-theme="dark"] input[type="submit"].btn-chaos:active {
+  box-shadow: 2px 2px 0px var(--accent-blue);
+  background: var(--highlight) !important;
+}
+
+[data-theme="vintage"] .btn-chaos,
+[data-theme="vintage"] input[type="submit"].btn-chaos {
+  background: var(--accent-blue) !important;
+  color: var(--paper) !important;
+}
+
+[data-theme="vintage"] .btn-chaos:hover,
+[data-theme="vintage"] input[type="submit"].btn-chaos:hover {
+  background: var(--ink) !important;
+  box-shadow: 8px 8px 0px var(--accent-blue);
+}
+
+[data-theme="vintage"] .btn-chaos:active,
+[data-theme="vintage"] input[type="submit"].btn-chaos:active {
+  box-shadow: 2px 2px 0px var(--highlight);
+  background: var(--highlight) !important;
+  color: var(--ink) !important;
+}
+
+[data-theme="neon"] .btn-chaos,
+[data-theme="neon"] input[type="submit"].btn-chaos {
+  background: var(--highlight) !important;
+  color: var(--ink) !important;
+}
+
+[data-theme="neon"] .btn-chaos:hover,
+[data-theme="neon"] input[type="submit"].btn-chaos:hover {
+  background: var(--accent-blue) !important;
+  box-shadow: 8px 8px 0px var(--highlight);
+}
+
+[data-theme="neon"] .btn-chaos:active,
+[data-theme="neon"] input[type="submit"].btn-chaos:active {
+  box-shadow: 2px 2px 0px var(--highlight);
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+}
+
 /* Sticky Action Bar */
 .form-actions {
   position: sticky;
@@ -1074,4 +1131,53 @@ nav.chaos-nav {
   .nav-user {
     max-width: 120px;
   }
+}
+
+/* Transaction Type Selection Cards */
+.transaction-type-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.type-card-wrapper {
+  cursor: pointer;
+  display: block;
+  position: relative;
+}
+
+.type-card-wrapper input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.type-card {
+  border: 4px solid var(--ink);
+  padding: 2rem;
+  text-align: center;
+  background: var(--muted-gray);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.type-card-wrapper input[type="radio"]:checked~.type-card {
+  background: var(--highlight);
+  box-shadow: 6px 6px 0px var(--ink);
+  transform: translate(-2px, -2px);
+}
+
+.type-card-wrapper:hover .type-card {
+  border-color: var(--accent-blue);
+}
+
+.card-label {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ink);
+}
 }

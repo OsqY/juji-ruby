@@ -9,7 +9,16 @@ Rails.application.routes.draw do
     patch :toggle_blocker, on: :member
   end
   resources :transactions, except: [ :edit, :update ]
-  resources :budgets, only: %i[ create destroy ]
+  resources :budgets
+  resources :projects do
+    resources :project_tasks do
+      post :toggle, on: :member
+    end
+  end
+  resources :habits do
+    post :toggle, on: :member
+  end
+  resources :shopping_items
 
   # Root page
   root "dashboard#index"

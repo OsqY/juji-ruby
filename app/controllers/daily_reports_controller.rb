@@ -108,7 +108,7 @@ class DailyReportsController < ApplicationController
     end
 
     def daily_report_params
-      params.expect(daily_report: [ :report_date, :work_title, :worked_by, :yesterday, :today, :blockers, :additional_details ])
+      params.expect(daily_report: [ :report_date, :work_title, :worked_by, :yesterday, :today, :blockers, :additional_details, :photo ])
     end
 
     def index_context_params

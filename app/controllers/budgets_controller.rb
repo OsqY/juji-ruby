@@ -1,6 +1,13 @@
 class BudgetsController < ApplicationController
   before_action :set_budget, only: :destroy
 
+  def index
+    @selected_month = parse_month
+    @budgets = current_user.budgets.for_month(@selected_month).order(:category)
+    @previous_month = @selected_month.prev_month
+    @next_month = @selected_month.next_month
+  end
+
   def create
     @budget = current_user.budgets.new(budget_params)
 
@@ -30,6 +37,14 @@ class BudgetsController < ApplicationController
     def selected_month
       Date.strptime(params[:budget][:month], "%Y-%m-%d")
     rescue StandardError
+      Date.current.beginning_of_month
+    end
+
+    def parse_month
+      return Date.strptime(params[:month], "%Y-%m") if params[:month].present?
+
+      Date.current.beginning_of_month
+    rescue ArgumentError
       Date.current.beginning_of_month
     end
 end
