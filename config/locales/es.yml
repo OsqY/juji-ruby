@@ -1,4 +1,27 @@
 es:
+  activerecord:
+    models:
+      daily_report: "Reporte diario"
+      budget: "Presupuesto"
+    attributes:
+      daily_report:
+        report_date: "fecha"
+        work_title: "titulo del trabajo"
+        worked_by: "responsable"
+        yesterday: "que he hecho"
+        today: "que hare"
+        blockers: "bloqueos"
+        additional_details: "detalles adicionales"
+      budget:
+        category: "categoria"
+        month: "mes"
+        monthly_limit: "limite mensual"
+
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: "no puede estar en blanco"
+
   number:
     currency:
       format:

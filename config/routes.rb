@@ -1,27 +1,18 @@
 Rails.application.routes.draw do
+  get "dashboard", to: "dashboard#index"
+
   resource :session
   resources :passwords, param: :token
   resources :registrations, only: %i[ new create ]
 
-  resources :daily_reports
+  resources :daily_reports do
+    patch :toggle_blocker, on: :member
+  end
   resources :transactions, except: [ :edit, :update ]
-  resources :shopping_items, only: %i[ index create update destroy ]
-  resources :habits, only: %i[ index create destroy ] do
-    member do
-      post :toggle
-    end
-  end
-
-  resources :projects, only: %i[ index create destroy ] do
-    resources :project_tasks, only: %i[ create destroy ] do
-      member do
-        post :toggle
-      end
-    end
-  end
+  resources :budgets, only: %i[ create destroy ]
 
   # Root page
-  root "daily_reports#index"
+  root "dashboard#index"
 
   # PWA routes
   get "up" => "rails/health#show", as: :rails_health_check

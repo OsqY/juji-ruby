@@ -1,0 +1,74 @@
+<div class="chaotic-container">
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem;">
+    <h1 style="font-size: 3.4rem;">DASHBOARD<br>JUJI</h1>
+    <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: flex-end;">
+      <%= link_to "NUEVO REPORTE", new_daily_report_path, class: "btn-chaos", style: "font-size: 0.9rem; padding: 0.8rem 1.1rem;" %>
+      <%= link_to "NUEVA TRANSACCIÓN", new_transaction_path, class: "btn-chaos", style: "font-size: 0.9rem; padding: 0.8rem 1.1rem;" %>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <section class="dashboard-card dashboard-card-large">
+      <span class="section-label">ÚLTIMA DAILY</span>
+      <% if @latest_daily %>
+        <h2 class="section-title" style="margin-top: 0.8rem;"><%= @latest_daily.work_title.presence || "SIN TÍTULO" %></h2>
+        <p style="margin-bottom: 0.8rem; font-weight: 700; opacity: 0.75;">
+          <%= @latest_daily.report_date.strftime("%d/%m/%Y") %> | RESPONSABLE: <%= @latest_daily.worked_by.presence || "SIN RESPONSABLE" %>
+        </p>
+        <div class="report-text" style="font-size: 1rem;"><%= format_as_list @latest_daily.today %></div>
+      <% else %>
+        <p class="report-text" style="opacity: 0.7;">Aún no hay dailies registradas.</p>
+      <% end %>
+    </section>
+
+    <section class="dashboard-card">
+      <span class="section-label" style="background: var(--expense-text); color: var(--expense-bg);">BLOQUEOS ABIERTOS</span>
+      <% if @open_blockers.any? %>
+        <ul class="editorial-list" style="margin-top: 1rem;">
+          <% @open_blockers.each do |report| %>
+            <li>
+              <strong><%= report.report_date.strftime("%d/%m") %></strong> -
+              <%= truncate(report.blockers, length: 80) %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="report-text" style="opacity: 0.7; margin-top: 1rem;">Sin bloqueos activos.</p>
+      <% end %>
+    </section>
+
+    <section class="dashboard-card dashboard-card-income">
+      <span class="section-label" style="background: var(--income-text); color: var(--income-bg);">BALANCE DEL MES</span>
+      <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.6rem; font-weight: 900;">
+        <div>INGRESOS: L. <%= number_with_precision @month_income, precision: 2 %></div>
+        <div>EGRESOS: L. <%= number_with_precision @month_expenses, precision: 2 %></div>
+        <div style="font-size: 1.5rem; border-top: 2px solid currentColor; padding-top: 0.5rem;">
+          NETO: L. <%= number_with_precision @month_balance, precision: 2 %>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard-card dashboard-card-wide">
+      <span class="section-label">GASTO POR CATEGORÍA (MES)</span>
+      <% if @expenses_by_category.any? %>
+        <div class="category-bars" style="margin-top: 1rem;">
+          <% max_expense = @expenses_by_category.map(&:last).max.to_f %>
+          <% @expenses_by_category.each do |category, amount| %>
+            <% width = max_expense.positive? ? ((amount.to_f / max_expense) * 100).round(1) : 0 %>
+            <div class="category-row">
+              <div class="category-meta">
+                <strong><%= category.to_s.upcase %></strong>
+                <span>L. <%= number_with_precision amount, precision: 2 %></span>
+              </div>
+              <div class="category-bar-track">
+                <div class="category-bar-fill" style="width: <%= width %>%;"></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="report-text" style="opacity: 0.7; margin-top: 1rem;">No hay egresos este mes.</p>
+      <% end %>
+    </section>
+  </div>
+</div>

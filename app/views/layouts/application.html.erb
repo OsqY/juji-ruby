@@ -23,57 +23,61 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body data-controller="theme menu">
+  <body data-controller="theme">
     <nav class="chaos-nav">
-      <div class="nav-branding">
-        <%= link_to "JUJI", root_path, class: "logo-text" %>
+      <% dashboard_active = controller_name == "dashboard" %>
+      <% reports_active = controller_name == "daily_reports" && action_name != "new" %>
+      <% report_new_active = controller_name == "daily_reports" && action_name == "new" %>
+      <% finance_active = controller_name == "transactions" && action_name != "new" %>
+      <% finance_new_active = controller_name == "transactions" && action_name == "new" %>
+      <% login_active = controller_name == "sessions" && action_name == "new" %>
+      <% register_active = controller_name == "registrations" && action_name == "new" %>
+      <% recovery_active = controller_name == "passwords" && action_name == "new" %>
+
+      <div class="nav-brand">
+        <%= link_to "JUJI", root_path, class: "brand-mark" %>
+        <span class="brand-tag">archivo personal</span>
       </div>
 
-      <button class="menu-toggle" data-action="click->menu#toggle">
-        <i data-lucide="menu"></i>
-      </button>
-      
-      <div class="nav-actions" data-menu-target="menu">
-        <button class="menu-close" data-action="click->menu#toggle">&times;</button>
-        
-        <div class="nav-main-links">
-          <%= link_to "REPORTES", daily_reports_path, data: { action: "click->menu#close" } %>
-          <%= link_to "HÁBITOS", habits_path, data: { action: "click->menu#close" } %>
-          <%= link_to "PROYECTOS", projects_path, data: { action: "click->menu#close" } %>
-          <%= link_to "COMPRAS", shopping_items_path, data: { action: "click->menu#close" } %>
-          <%= link_to "FINANZAS", transactions_path, data: { action: "click->menu#close" } %>
-        </div>
+      <div class="nav-primary" role="navigation" aria-label="Secciones principales">
+        <%= link_to "DASHBOARD", dashboard_path, class: "nav-link #{'is-active' if dashboard_active}" %>
+        <%= link_to "REPORTES", daily_reports_path, class: "nav-link #{'is-active' if reports_active}" %>
+        <%= link_to "NUEVO REPORTE", new_daily_report_path, class: "nav-link nav-link-create #{'is-active' if report_new_active}" %>
+        <%= link_to "FINANZAS", transactions_path, class: "nav-link #{'is-active' if finance_active}" %>
+        <%= link_to "NUEVA TRANSACCIÓN", new_transaction_path, class: "nav-link nav-link-create #{'is-active' if finance_new_active}" %>
+      </div>
 
-        <div class="nav-user-controls">
-          <% if authenticated? %>
-            <div class="user-badge">
-              <span>USUARIO</span><br>
-              <%= current_user.email_address.upcase %>
-            </div>
-            <%= button_to "SALIR", session_path, method: :delete, class: "delete-btn-link", style: "border-bottom: 2px solid #D63031;" %>
-          <% else %>
-            <%= link_to "ENTRAR", new_session_path, style: "font-size: 0.8rem;" %>
-            <%= link_to "REGISTRARME", new_registration_path, style: "font-size: 0.8rem; background: var(--highlight); padding: 0.4rem 0.8rem;" %>
-          <% end %>
+      <div class="nav-meta" role="navigation" aria-label="Cuenta">
+        <% if authenticated? %>
+          <div class="nav-user"><%= current_user.email_address %></div>
+          <%= button_to "SALIR", session_path, method: :delete, class: "nav-logout-btn" %>
+        <% else %>
+          <%= link_to "ENTRAR", new_session_path, class: "nav-link nav-link-soft #{'is-active' if login_active}" %>
+          <%= link_to "REGISTRARME", new_registration_path, class: "nav-link nav-link-solid #{'is-active' if register_active}" %>
+          <%= link_to "RECUPERAR", new_password_path, class: "nav-link nav-link-soft #{'is-active' if recovery_active}" %>
+        <% end %>
 
-          <div class="theme-picker">
-          <label class="theme-option" title="Modo Claro" for="theme_light">
-            <input type="radio" name="theme" id="theme_light" value="light" data-action="change->theme#switch">
-            <i data-lucide="sun"></i>
-          </label>
-          <label class="theme-option" title="Modo Oscuro" for="theme_dark">
-            <input type="radio" name="theme" id="theme_dark" value="dark" data-action="change->theme#switch">
-            <i data-lucide="moon"></i>
-          </label>
-          <label class="theme-option" title="Vintage" for="theme_vintage">
-            <input type="radio" name="theme" id="theme_vintage" value="vintage" data-action="change->theme#switch">
-            <i data-lucide="palette"></i>
-          </label>
-          </div>
-        </div>
+        <div class="theme-picker theme-picker-compact">
+        <label class="theme-option" title="Modo Claro" for="theme_light">
+          <input type="radio" name="theme" id="theme_light" value="light" data-action="change->theme#switch">
+          <i data-lucide="sun"></i>
+        </label>
+        <label class="theme-option" title="Modo Oscuro" for="theme_dark">
+          <input type="radio" name="theme" id="theme_dark" value="dark" data-action="change->theme#switch">
+          <i data-lucide="moon"></i>
+        </label>
+        <label class="theme-option" title="Vintage" for="theme_vintage">
+          <input type="radio" name="theme" id="theme_vintage" value="vintage" data-action="change->theme#switch">
+          <i data-lucide="palette"></i>
+        </label>
+        <label class="theme-option" title="Neon" for="theme_neon">
+          <input type="radio" name="theme" id="theme_neon" value="neon" data-action="change->theme#switch">
+          <i data-lucide="zap"></i>
+        </label>
+      </div>
       </div>
     </nav>
-    <main class="chaotic-container">
+    <main class="chaotic-container" style="padding-top: 6rem;">
       <%= yield %>
     </main>
   </body>

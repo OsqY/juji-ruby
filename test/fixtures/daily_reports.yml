@@ -2,13 +2,17 @@
 
 one:
   report_date: 2026-02-17
+  work_title: Implementacion del dashboard de dailies
+  worked_by: dev1@example.com
   yesterday: MyText
   today: MyText
   blockers: MyText
   additional_details: MyText
 
 two:
-  report_date: 2026-02-17
+  report_date: 2026-02-18
+  work_title: Ajustes de formulario y estilos
+  worked_by: dev2@example.com
   yesterday: MyText
   today: MyText
   blockers: MyText

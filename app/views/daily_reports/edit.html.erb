@@ -46,15 +46,27 @@
     </div>
 
     <div class="form-group">
+      <span class="section-label" style="background: #1f8f5f; color: white;">EN CURSO</span>
+      <h2 class="section-title">0. ¿EN QUÉ SE ESTÁ TRABAJANDO?</h2>
+      <%= f.text_field :work_title, placeholder: "Ej. Implementación de reporte diario" %>
+    </div>
+
+    <div class="form-group">
+      <span class="section-label" style="background: #3157d6; color: white;">RESPONSABLE</span>
+      <h2 class="section-title">¿QUIÉN LO ESTÁ TRABAJANDO?</h2>
+      <%= f.text_field :worked_by, placeholder: "Ej. Oscar" %>
+    </div>
+
+    <div class="form-group">
       <span class="section-label">PASADO</span>
-      <h2 class="section-title">1. ¿QUÉ HICE AYER?</h2>
+      <h2 class="section-title">1. ¿QUÉ HE HECHO?</h2>
       <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 0.5rem;">(Escribe una tarea por línea)</p>
       <%= f.text_area :yesterday %>
     </div>
 
     <div class="form-group">
       <span class="section-label" style="background: var(--accent-blue); color: white;">PRESENTE</span>
-      <h2 class="section-title">2. ¿QUÉ VOY A HACER HOY?</h2>
+      <h2 class="section-title">2. ¿QUÉ HARÉ?</h2>
       <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 0.5rem;">(Escribe una tarea por línea)</p>
       <%= f.text_area :today %>
     </div>

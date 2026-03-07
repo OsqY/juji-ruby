@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { createIcons, Sun, Moon, Palette, Menu, Check, Trash2 } from "lucide"
+import { createIcons, Sun, Moon, Palette, Zap } from "lucide"
 
 export default class ThemeController extends Controller {
     static targets = ["select"]
@@ -20,9 +20,7 @@ export default class ThemeController extends Controller {
                 Sun,
                 Moon,
                 Palette,
-                Menu,
-                Check,
-                Trash2
+                Zap
             }
         })
     }
