@@ -146,9 +146,9 @@
         <% end %>
       </div>
 
-      <div style="margin-top: 3rem; display: flex; justify-content: flex-end; gap: 1rem; align-items: center; font-size: 0.7rem; font-weight: 900; opacity: 0.4;">
-        <%= link_to "EDITAR", edit_daily_report_path(report), style: "color: var(--ink); text-decoration: none;" %>
-        <span style="opacity: 0.3;">/</span>
+      <div class="card-actions">
+        <%= link_to "EDITAR", edit_daily_report_path(report), class: "card-action-link" %>
+        <span class="card-actions-divider">/</span>
         <%= button_to "ELIMINAR", daily_report_path(report),
             method: :delete,
             data: { turbo_confirm: "¿Estás seguro de que deseas eliminar este reporte?" },
