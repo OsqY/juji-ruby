@@ -3,7 +3,7 @@
   <div class="chaotic-container">
     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
       <h1 style="font-size: 3.3rem;">ARCHIVO<br>JUJI</h1>
-      <%= link_to "NUEVO REPORTE +", new_daily_report_path, class: "btn-chaos", data: { turbo_frame: "_top" } %>
+      <%= link_to t("daily_reports.actions.new"), new_daily_report_path, class: "btn-chaos", data: { turbo_frame: "daily_report_form_panel" } %>
     </div>
 
     <section class="report-section-block" style="margin-bottom: 2rem;">
@@ -78,80 +78,83 @@
     </section>
 
     <% @daily_reports.each do |report| %>
-      <section class="report-card">
-        <div class="daily-header">
-          <div class="daily-date">
-            <%= report.report_date.strftime("%d/%m") %>
-          </div>
-          <div class="daily-metadata">
-            ENTRADA NO. <%= report.id %><br>
-            <%= t("date.day_names")[report.report_date.wday].upcase %><br>
-            <%= report.report_date.strftime("%Y") %>
-          </div>
-        </div>
-
-        <div class="report-section-block" style="margin-bottom: 2rem;">
-          <span class="section-label" style="background: #1f8f5f; color: white;">EN CURSO</span>
-          <h2 class="section-title" style="margin-top: 0.7rem;"><%= report.work_title.presence || "SIN TÍTULO" %></h2>
-          <p style="font-size: 0.85rem; opacity: 0.75; margin-top: 0.5rem; font-weight: 700;">
-            RESPONSABLE: <%= report.worked_by.presence || "SIN RESPONSABLE" %>
-          </p>
-        </div>
-
-        <div class="report-grid">
-          <div class="report-column">
-            <span class="section-label">HE HECHO</span>
-            <h2 class="section-title">¿Qué he hecho?</h2>
-            <div class="report-text"><%= format_as_list report.yesterday %></div>
+      <section class="report-card" data-controller="export">
+        <div data-export-target="card">
+          <div class="daily-header">
+            <div class="daily-date">
+              <%= report.report_date.strftime("%d/%m") %>
+            </div>
+            <div class="daily-metadata">
+              ENTRADA NO. <%= report.id %><br>
+              <%= t("date.day_names")[report.report_date.wday].upcase %><br>
+              <%= report.report_date.strftime("%Y") %>
+            </div>
           </div>
 
-          <div class="report-column">
-            <span class="section-label">HARÉ</span>
-            <h2 class="section-title">¿Qué haré?</h2>
-            <div class="report-text"><%= format_as_list report.today %></div>
+          <div class="report-section-block" style="margin-bottom: 2rem;">
+            <span class="section-label" style="background: #1f8f5f; color: white;">EN CURSO</span>
+            <h2 class="section-title" style="margin-top: 0.7rem;"><%= report.work_title.presence || "SIN TÍTULO" %></h2>
+            <p style="font-size: 0.85rem; opacity: 0.75; margin-top: 0.5rem; font-weight: 700;">
+              RESPONSABLE: <%= report.worked_by.presence || "SIN RESPONSABLE" %>
+            </p>
           </div>
+          <div class="report-grid">
+            <div class="report-column">
+              <span class="section-label">HE HECHO</span>
+              <h2 class="section-title">¿Qué he hecho?</h2>
+              <div class="report-text"><%= format_as_list report.yesterday %></div>
+            </div>
 
-          <% if report.blockers.present? %>
-            <div class="report-section-full">
-              <div class="report-section-block">
-                <span class="section-label" style="background: var(--ink); color: var(--paper);">IMPEDIMENTOS</span>
+            <div class="report-column">
+              <span class="section-label">HARÉ</span>
+              <h2 class="section-title">¿Qué haré?</h2>
+              <div class="report-text"><%= format_as_list report.today %></div>
+            </div>
 
-                <div class="blocker-toggle-row">
-                  <%= form_with url: toggle_blocker_daily_report_path(report), method: :patch, class: "blocker-toggle-form" do %>
-                    <%= hidden_field_tag :view, @view_mode %>
-                    <%= hidden_field_tag :date, @reference_date.strftime("%Y-%m-%d") %>
-                    <%= hidden_field_tag :worked_by, @selected_worked_by %>
-                    <%= hidden_field_tag :work_title, @selected_work_title %>
-                    <%= hidden_field_tag :resolved, "0" %>
+            <% if report.blockers.present? %>
+              <div class="report-section-full">
+                <div class="report-section-block">
+                  <span class="section-label" style="background: var(--ink); color: var(--paper);">IMPEDIMENTOS</span>
 
-                    <label class="blocker-toggle-label">
-                      <%= check_box_tag :resolved, "1", report.blockers_resolved, onchange: "this.form.requestSubmit()" %>
-                      <span>
-                        <%= report.blockers_resolved ? "BLOQUEO RESUELTO" : "MARCAR COMO RESUELTO" %>
-                      </span>
-                    </label>
-                  <% end %>
+                  <div class="blocker-toggle-row">
+                    <%= form_with url: toggle_blocker_daily_report_path(report), method: :patch, class: "blocker-toggle-form" do %>
+                      <%= hidden_field_tag :view, @view_mode %>
+                      <%= hidden_field_tag :date, @reference_date.strftime("%Y-%m-%d") %>
+                      <%= hidden_field_tag :worked_by, @selected_worked_by %>
+                      <%= hidden_field_tag :work_title, @selected_work_title %>
+                      <%= hidden_field_tag :resolved, "0" %>
+
+                      <label class="blocker-toggle-label">
+                        <%= check_box_tag :resolved, "1", report.blockers_resolved, onchange: "this.form.requestSubmit()" %>
+                        <span>
+                          <%= report.blockers_resolved ? "BLOQUEO RESUELTO" : "MARCAR COMO RESUELTO" %>
+                        </span>
+                      </label>
+                    <% end %>
+                  </div>
+
+                  <div class="report-text <%= 'blocker-text-resolved' if report.blockers_resolved %>" style="font-weight: 700;"><%= report.blockers %></div>
                 </div>
-
-                <div class="report-text <%= 'blocker-text-resolved' if report.blockers_resolved %>" style="font-weight: 700;"><%= report.blockers %></div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
 
-          <% if report.additional_details.present? %>
-            <div class="report-section-full" style="margin-top: 1rem;">
-              <div class="report-section-block" style="background: transparent; border: 2px dashed #ddd;">
-                <span class="section-label" style="background: #ddd;">NOTAS</span>
-                <div class="report-text" style="font-size: 1rem;"><%= report.additional_details %></div>
+            <% if report.additional_details.present? %>
+              <div class="report-section-full" style="margin-top: 1rem;">
+                <div class="report-section-block" style="background: transparent; border: 2px dashed #ddd;">
+                  <span class="section-label" style="background: #ddd;">NOTAS</span>
+                  <div class="report-text" style="font-size: 1rem;"><%= report.additional_details %></div>
+                </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
 
         <div class="card-actions">
-          <%= link_to "EDITAR", edit_daily_report_path(report), class: "card-action-link", data: { turbo_frame: "_top" } %>
+          <button type="button" class="card-export-btn" data-action="click->export#download">EXPORTAR IMAGEN</button>
           <span class="card-actions-divider">/</span>
-          <%= button_to "ELIMINAR", daily_report_path(report, view: @view_mode, date: @reference_date.strftime("%Y-%m-%d"), worked_by: @selected_worked_by, work_title: @selected_work_title),
+          <%= link_to t("common.edit"), edit_daily_report_path(report), class: "card-action-link", data: { turbo_frame: "daily_report_form_panel" } %>
+          <span class="card-actions-divider">/</span>
+          <%= button_to t("common.delete"), daily_report_path(report, view: @view_mode, date: @reference_date.strftime("%Y-%m-%d"), worked_by: @selected_worked_by, work_title: @selected_work_title),
               method: :delete,
               data: { turbo_confirm: "¿Estás seguro de que deseas eliminar este reporte?" },
               class: "delete-btn-link" %>
@@ -165,5 +168,7 @@
         <p class="report-text">Prueba cambiar semana/mes o limpiar filtros.</p>
       </section>
     <% end %>
+
+    <%= turbo_frame_tag "daily_report_form_panel" %>
   </div>
 <% end %>

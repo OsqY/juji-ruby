@@ -34,6 +34,7 @@
       <% habits_active = controller_name == "habits" %>
       <% budgets_active = controller_name == "budgets" %>
       <% shopping_active = controller_name == "shopping_items" %>
+      <% guide_active = controller_name == "guides" %>
       <% login_active = controller_name == "sessions" && action_name == "new" %>
       <% register_active = controller_name == "registrations" && action_name == "new" %>
       <% recovery_active = controller_name == "passwords" && action_name == "new" %>
@@ -50,6 +51,7 @@
 
       <div class="nav-primary" role="navigation" aria-label="Secciones principales">
         <%= link_to "DASHBOARD", dashboard_path, class: "nav-link #{'is-active' if dashboard_active}" %>
+        <%= link_to t("guide.nav"), guide_path, class: "nav-link #{'is-active' if guide_active}" %>
 
         <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
           <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if reports_group_active %>">REPORTES</summary>

@@ -19,7 +19,16 @@ class DailyReportsController < ApplicationController
     @daily_report = current_user.daily_reports.new(daily_report_params)
 
     if @daily_report.save
-      redirect_to daily_reports_path, notice: "Reporte creado con éxito."
+      if turbo_frame_request?
+        load_index_data
+        flash.now[:notice] = I18n.t("daily_reports.flash.created")
+        render turbo_stream: [
+          turbo_stream.replace("daily_reports_content", partial: "daily_reports/content"),
+          turbo_stream.replace("daily_report_form_panel", partial: "shared/empty_frame", locals: { frame_id: "daily_report_form_panel" })
+        ]
+      else
+        redirect_to daily_reports_path, notice: I18n.t("daily_reports.flash.created")
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,7 +36,16 @@ class DailyReportsController < ApplicationController
 
   def update
     if @daily_report.update(daily_report_params)
-      redirect_to daily_reports_path, notice: "Reporte actualizado."
+      if turbo_frame_request?
+        load_index_data
+        flash.now[:notice] = I18n.t("daily_reports.flash.updated")
+        render turbo_stream: [
+          turbo_stream.replace("daily_reports_content", partial: "daily_reports/content"),
+          turbo_stream.replace("daily_report_form_panel", partial: "shared/empty_frame", locals: { frame_id: "daily_report_form_panel" })
+        ]
+      else
+        redirect_to daily_reports_path, notice: I18n.t("daily_reports.flash.updated")
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -39,10 +57,10 @@ class DailyReportsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        flash.now[:notice] = "Reporte eliminado."
+        flash.now[:notice] = I18n.t("daily_reports.flash.deleted")
         render_daily_reports_content
       end
-      format.html { redirect_to daily_reports_path(index_context_params), notice: "Reporte eliminado.", status: :see_other }
+      format.html { redirect_to daily_reports_path(index_context_params), notice: I18n.t("daily_reports.flash.deleted"), status: :see_other }
     end
   end
 
@@ -52,10 +70,10 @@ class DailyReportsController < ApplicationController
 
       respond_to do |format|
         format.turbo_stream do
-          flash.now[:alert] = "Este reporte no tiene bloqueo activo."
+          flash.now[:alert] = I18n.t("daily_reports.flash.no_blocker")
           render_daily_reports_content(status: :unprocessable_entity)
         end
-        format.html { redirect_back fallback_location: daily_reports_path, alert: "Este reporte no tiene bloqueo activo." }
+        format.html { redirect_back fallback_location: daily_reports_path, alert: I18n.t("daily_reports.flash.no_blocker") }
       end
 
       return
@@ -64,7 +82,7 @@ class DailyReportsController < ApplicationController
     resolved = ActiveModel::Type::Boolean.new.cast(params[:resolved])
     @daily_report.update_columns(blockers_resolved: resolved, updated_at: Time.current)
 
-    message = resolved ? "Bloqueo marcado como resuelto." : "Bloqueo marcado como pendiente."
+    message = resolved ? I18n.t("daily_reports.flash.blocker_resolved") : I18n.t("daily_reports.flash.blocker_pending")
     load_index_data
 
     respond_to do |format|

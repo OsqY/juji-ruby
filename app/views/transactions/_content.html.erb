@@ -3,7 +3,7 @@
   <div class="chaotic-container">
     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
       <h1 style="font-size: 3.6rem;">FLUJO DE<br>CAJA</h1>
-      <%= link_to "REGISTRAR +", new_transaction_path, class: "btn-chaos", data: { turbo_frame: "_top" } %>
+      <%= link_to t("transactions.actions.new"), new_transaction_path, class: "btn-chaos", data: { turbo_frame: "transaction_form_panel" } %>
     </div>
 
     <section class="report-section-block" style="margin-bottom: 2rem;">
@@ -48,9 +48,23 @@
 
       <%= form_with model: @budget, url: budgets_path(context: "transactions"), class: "budget-form" do |f| %>
         <%= f.hidden_field :month, value: @selected_month.strftime("%Y-%m-%d") %>
+        <% category_options = @category_options.to_a %>
+        <% selected_category = @budget.category.to_s.strip.downcase %>
+        <% in_options = selected_category.present? && category_options.include?(selected_category) %>
+        <% selected_option = in_options ? selected_category : "__new__" %>
+        <% custom_value = in_options ? "" : selected_category %>
         <div>
           <label>Categoría</label>
-          <%= f.text_field :category, placeholder: "Ej. comida" %>
+          <div data-controller="category-picker">
+            <%= f.hidden_field :category, value: selected_category, data: { category_picker_target: "hidden" } %>
+            <%= select_tag "budget[category_option]",
+              options_for_select([*category_options.map { |category| [category, category] }, [t("transactions.category.new"), "__new__"]], selected_option),
+                data: { category_picker_target: "select", action: "change->category-picker#selectChanged", new_value: "__new__" } %>
+
+            <div data-category-picker-target="customWrap" style="margin-top: 0.4rem;">
+              <%= text_field_tag "budget[category_custom]", custom_value, placeholder: t("transactions.category.custom_placeholder"), data: { category_picker_target: "custom", action: "input->category-picker#customChanged" } %>
+            </div>
+          </div>
         </div>
         <div>
           <label>Límite mensual</label>
@@ -127,5 +141,7 @@
         </div>
       <% end %>
     </div>
+
+    <%= turbo_frame_tag "transaction_form_panel" %>
   </div>
 <% end %>

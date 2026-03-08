@@ -7,41 +7,64 @@ export default class extends Controller {
     async download(event) {
         const button = event.currentTarget
         const card = this.cardTarget
+        const exportPadding = 28
+        const paperColor = getComputedStyle(document.body).getPropertyValue("--paper").trim() || "#ffffff"
 
-        // Save original button text
         const originalText = button.innerHTML
         button.innerHTML = "GENERANDO..."
         button.disabled = true
 
+        let captureHost = null
+
         try {
-            // Capture at a fixed width for consistent editorial look across devices
-            const canvas = await html2canvas(card, {
-                backgroundColor: getComputedStyle(document.body).getPropertyValue('--paper'),
-                scale: 2, // Better resolution
-                windowWidth: 1000, // Force a wider viewport during capture
-                onclone: (clonedDoc) => {
-                    const clonedCard = clonedDoc.querySelector('[data-export-target="card"]')
-                    if (clonedCard) {
-                        clonedCard.style.width = "800px" // Force standard width
-                        clonedCard.style.padding = "4rem" // Add consistent border
-                        clonedCard.style.margin = "0"
-                    }
-                }
+            const exportWidth = Math.ceil(card.scrollWidth)
+
+            // Build an offscreen capture host to add extra breathing room in width/height.
+            captureHost = document.createElement("div")
+            captureHost.style.position = "fixed"
+            captureHost.style.left = "-10000px"
+            captureHost.style.top = "0"
+            captureHost.style.padding = `${exportPadding}px`
+            captureHost.style.background = paperColor
+            captureHost.style.zIndex = "-1"
+            captureHost.style.boxSizing = "border-box"
+
+            const cardClone = card.cloneNode(true)
+            cardClone.style.maxWidth = "none"
+            cardClone.style.width = `${exportWidth}px`
+            cardClone.style.margin = "0"
+            cardClone.style.boxSizing = "border-box"
+            cardClone.style.overflow = "visible"
+
+            captureHost.appendChild(cardClone)
+            document.body.appendChild(captureHost)
+
+            const canvas = await html2canvas(captureHost, {
+                backgroundColor: paperColor,
+                scale: 2,
+                useCORS: true,
+                width: Math.ceil(captureHost.scrollWidth),
+                height: Math.ceil(captureHost.scrollHeight),
+                windowWidth: Math.ceil(captureHost.scrollWidth),
+                windowHeight: Math.ceil(captureHost.scrollHeight),
+                scrollX: 0,
+                scrollY: 0
             })
 
             const image = canvas.toDataURL("image/png")
             const link = document.createElement("a")
-            const date = card.querySelector(".daily-date").innerText.replace("/", "-")
+            const date = (card.querySelector(".daily-date")?.innerText || "daily").replace("/", "-")
 
             link.download = `juji-report-${date}.png`
             link.href = image
             link.click()
         } catch (error) {
             console.error("Export failed", error)
-            alert("Error al exportar la imagen. Inténtalo de nuevo.")
+            alert("Error al exportar la imagen. Intentalo de nuevo.")
         } finally {
+            if (captureHost) captureHost.remove()
             button.innerHTML = originalText
             button.disabled = false
-        }
+    }
     }
 }

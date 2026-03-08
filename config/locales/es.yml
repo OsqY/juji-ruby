@@ -1,4 +1,79 @@
 es:
+  guide:
+    nav: "Guia"
+    title: "Guia de funcionalidades"
+    labels:
+      what_is_new: "Novedades"
+      reports: "Reportes"
+      finance: "Finanzas"
+      productivity: "Productividad"
+      tips: "Tips"
+    whats_new:
+      title: "Flujo actualizado"
+      drawer: "Ahora los formularios principales se abren en panel lateral para no perder el contexto de la lista."
+      turbo: "Las acciones frecuentes actualizan secciones con Turbo para una experiencia mas fluida."
+    reports:
+      title: "Como usar reportes diarios"
+      step_1: "Desde Reportes, usa 'Nuevo reporte +' para abrir el panel lateral."
+      step_2: "Completa responsable, trabajo en curso, tareas y bloqueos."
+      step_3: "Guarda y veras la lista actualizada sin salir de la vista."
+    finance:
+      title: "Como usar finanzas"
+      step_1: "En Finanzas, registra ingresos o egresos desde 'Registrar +'."
+      step_2: "Asigna categoria para que el dashboard agrupe tus gastos."
+      step_3: "Configura presupuestos por categoria y monitorea alertas de uso."
+    productivity:
+      title: "Como usar productividad"
+      step_1: "Crea proyectos con meta y descripcion para mantener claridad."
+      step_2: "Agrega tareas por proyecto y marcalas como completadas."
+      step_3: "Complementa con habitos y lista de compras para rutina diaria."
+    tips:
+      title: "Recomendaciones"
+      item_1: "Usa el dashboard para revisar bloqueos e indicadores del mes."
+      item_2: "Mantener categorias consistentes mejora tus reportes financieros."
+      item_3: "Si pruebas un cambio nuevo, puedes comparar rapido desde esta guia."
+    quick_actions:
+      go_dashboard: "Ir al dashboard"
+      open_reports: "Abrir reportes"
+      open_finance: "Abrir finanzas"
+      open_projects: "Abrir proyectos"
+
+  common:
+    edit: "Editar"
+    delete: "Eliminar"
+    cancel: "Cancelar"
+    close: "Cerrar"
+
+  daily_reports:
+    actions:
+      new: "Nuevo reporte +"
+    form:
+      title_new: "Nuevo reporte"
+      title_edit: "Editar reporte"
+      submit_new: "Guardar reporte"
+      submit_edit: "Actualizar reporte"
+    flash:
+      created: "Reporte creado con éxito."
+      updated: "Reporte actualizado."
+      deleted: "Reporte eliminado."
+      no_blocker: "Este reporte no tiene bloqueo activo."
+      blocker_resolved: "Bloqueo marcado como resuelto."
+      blocker_pending: "Bloqueo marcado como pendiente."
+
+  transactions:
+    actions:
+      new: "Registrar +"
+    form:
+      title: "Registrar movimiento"
+      submit: "Registrar ahora"
+    category:
+      saved: "Categorias guardadas"
+      new: "Nueva categoria"
+      custom_placeholder: "Escribe una categoria nueva"
+    flash:
+      created: "Movimiento registrado."
+      deleted: "Transaccion eliminada."
+
   activerecord:
     models:
       daily_report: "Reporte diario"

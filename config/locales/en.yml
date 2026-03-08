@@ -29,3 +29,78 @@
 
 en:
   hello: "Hello world"
+
+  guide:
+    nav: "Guide"
+    title: "Feature Guide"
+    labels:
+      what_is_new: "What's new"
+      reports: "Reports"
+      finance: "Finance"
+      productivity: "Productivity"
+      tips: "Tips"
+    whats_new:
+      title: "Updated flow"
+      drawer: "Main forms now open in a side panel so users keep list context."
+      turbo: "Frequent actions refresh sections with Turbo for a smoother experience."
+    reports:
+      title: "How to use daily reports"
+      step_1: "From Reports, use 'New report +' to open the side panel."
+      step_2: "Fill in owner, current work, tasks, and blockers."
+      step_3: "Save and see the list updated without leaving the page."
+    finance:
+      title: "How to use finance"
+      step_1: "In Finance, record income or expense with 'Add +'."
+      step_2: "Set a category so dashboard grouping stays accurate."
+      step_3: "Set monthly budgets per category and monitor usage alerts."
+    productivity:
+      title: "How to use productivity"
+      step_1: "Create projects with a goal date and short description."
+      step_2: "Add tasks per project and mark them completed as you progress."
+      step_3: "Use habits and shopping list to support daily execution."
+    tips:
+      title: "Recommendations"
+      item_1: "Use the dashboard to review blockers and monthly indicators."
+      item_2: "Consistent categories improve financial reporting quality."
+      item_3: "Use this guide as a baseline while validating new UX changes."
+    quick_actions:
+      go_dashboard: "Go to dashboard"
+      open_reports: "Open reports"
+      open_finance: "Open finance"
+      open_projects: "Open projects"
+
+  common:
+    edit: "Edit"
+    delete: "Delete"
+    cancel: "Cancel"
+    close: "Close"
+
+  daily_reports:
+    actions:
+      new: "New report +"
+    form:
+      title_new: "New report"
+      title_edit: "Edit report"
+      submit_new: "Save report"
+      submit_edit: "Update report"
+    flash:
+      created: "Report created successfully."
+      updated: "Report updated."
+      deleted: "Report deleted."
+      no_blocker: "This report has no active blocker."
+      blocker_resolved: "Blocker marked as resolved."
+      blocker_pending: "Blocker marked as pending."
+
+  transactions:
+    actions:
+      new: "Add +"
+    form:
+      title: "Record movement"
+      submit: "Record now"
+    category:
+      saved: "Saved categories"
+      new: "New category"
+      custom_placeholder: "Type a new category"
+    flash:
+      created: "Transaction recorded."
+      deleted: "Transaction deleted."

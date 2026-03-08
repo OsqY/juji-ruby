@@ -1,10 +1,18 @@
-<%= turbo_frame_tag "daily_report_form_content" do %>
+<% frame_id = turbo_frame_request_id.presence || "daily_report_form_content" %>
+<% drawer_mode = frame_id == "daily_report_form_panel" %>
+<%= turbo_frame_tag frame_id do %>
+<% if drawer_mode %>
+<div class="inline-drawer-shell" data-controller="drawer">
+  <div class="inline-drawer-backdrop" data-action="click->drawer#close"></div>
+  <div class="inline-drawer-panel">
+    <button type="button" class="inline-drawer-close" data-action="click->drawer#close"><%= t("common.close") %></button>
+<% end %>
 <div class="chaotic-container" style="max-width: 800px;">
   <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
-    <h1 style="font-size: 3.5rem;">EDITAR REPORTE</h1>
+    <h1 style="font-size: 3.5rem;"><%= t("daily_reports.form.title_edit") %></h1>
   </div>
 
-  <%= form_with(model: @daily_report, data: { turbo_frame: "_top" }) do |f| %>
+  <%= form_with(model: @daily_report, data: (drawer_mode ? {} : { turbo_frame: "_top" })) do |f| %>
     <% if @daily_report.errors.any? %>
       <div style="background: #FFEDED; border: 4px solid #D63031; padding: 2rem; margin-bottom: 3rem; color: #D63031;">
         <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">ERRORS / ERRORES:</h2>
@@ -101,10 +109,18 @@
     </div>
 
     <div class="form-actions">
-      <%= f.submit "ACTUALIZAR REPORTE", class: "btn-chaos", style: "flex: 1;" %>
-      <%= link_to "CANCELAR", daily_reports_path, data: { turbo_frame: "_top" }, style: "font-weight: 900; text-decoration: none; color: #D63031;" %>
+      <%= f.submit t("daily_reports.form.submit_edit"), class: "btn-chaos", style: "flex: 1;" %>
+      <% if drawer_mode %>
+        <button type="button" data-action="click->drawer#close" style="font-weight: 900; text-decoration: none; color: #D63031; background: none; border: none; cursor: pointer;"><%= t("common.cancel") %></button>
+      <% else %>
+        <%= link_to t("common.cancel"), daily_reports_path, data: { turbo_frame: "_top" }, style: "font-weight: 900; text-decoration: none; color: #D63031;" %>
+      <% end %>
     </div>
 
   <% end %>
 </div>
+<% if drawer_mode %>
+  </div>
+</div>
+<% end %>
 <% end %>

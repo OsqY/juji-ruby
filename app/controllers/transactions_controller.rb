@@ -7,14 +7,28 @@ class TransactionsController < ApplicationController
 
   def new
     @transaction = current_user.transactions.new
+    load_category_options
   end
 
   def create
     @transaction = current_user.transactions.new(transaction_params)
+    @transaction.category = resolved_category_param(:transaction)
 
     if @transaction.save
-      redirect_to transactions_path(month: @transaction.date.beginning_of_month.strftime("%Y-%m")), notice: "Movimiento registrado."
+      month_date = @transaction.date.beginning_of_month
+
+      if turbo_frame_request?
+        load_index_data(month_date)
+        flash.now[:notice] = I18n.t("transactions.flash.created")
+        render turbo_stream: [
+          turbo_stream.replace("transactions_content", partial: "transactions/content"),
+          turbo_stream.replace("transaction_form_panel", partial: "shared/empty_frame", locals: { frame_id: "transaction_form_panel" })
+        ]
+      else
+        redirect_to transactions_path(month: month_date.strftime("%Y-%m")), notice: I18n.t("transactions.flash.created")
+      end
     else
+      load_category_options
       render :new, status: :unprocessable_entity
     end
   end
@@ -33,10 +47,10 @@ class TransactionsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        flash.now[:notice] = "Transaccion eliminada."
+        flash.now[:notice] = I18n.t("transactions.flash.deleted")
         render_transactions_content
       end
-      format.html { redirect_to transactions_path(month: month_date.strftime("%Y-%m")), notice: "Eliminado.", status: :see_other }
+      format.html { redirect_to transactions_path(month: month_date.strftime("%Y-%m")), notice: I18n.t("transactions.flash.deleted"), status: :see_other }
     end
   end
 
@@ -66,6 +80,22 @@ class TransactionsController < ApplicationController
       @budget = current_user.budgets.new(month: @selected_month)
       @previous_month = @selected_month.prev_month
       @next_month = @selected_month.next_month
+      @category_options = category_options_for_user
+    end
+
+    def load_category_options
+      @category_options = category_options_for_user
+    end
+
+    def category_options_for_user
+      transaction_categories = current_user.transactions.where.not(category: [ nil, "" ]).pluck(:category)
+      budget_categories = current_user.budgets.where.not(category: [ nil, "" ]).pluck(:category)
+
+      (transaction_categories + budget_categories)
+        .map { |category| category.to_s.strip.downcase }
+        .reject(&:blank?)
+        .uniq
+        .sort
     end
 
     def render_transactions_content(status: :ok)
@@ -86,5 +116,17 @@ class TransactionsController < ApplicationController
 
     def transaction_params
       params.expect(transaction: [ :amount, :description, :transaction_type, :category, :date ])
+    end
+
+    def resolved_category_param(scope)
+      input = params[scope] || {}
+      custom = input[:category_custom].to_s.strip
+      option = input[:category_option].to_s.strip
+
+      return custom if custom.present?
+      return "" if option == "__new__"
+      return option if option.present?
+
+      input[:category].to_s
     end
 end

@@ -593,6 +593,23 @@ svg {
   white-space: nowrap;
 }
 
+.card-export-btn {
+  background: none;
+  border: none;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: inherit;
+  cursor: pointer;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.card-export-btn:hover {
+  text-decoration: underline;
+}
+
 .card-actions-divider {
   opacity: 0.35;
 }
@@ -1365,4 +1382,85 @@ nav.chaos-nav {
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--ink);
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+}
+
+.guide-card {
+  grid-column: span 6;
+}
+
+.guide-steps,
+.guide-tips-list {
+  margin: 0.8rem 0 0;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.guide-actions {
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .guide-card {
+    grid-column: span 12;
+  }
+}
+
+/* Inline Drawer / Modal Panel */
+.inline-drawer-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 1600;
+}
+
+.inline-drawer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--ink) 40%, transparent);
+  backdrop-filter: blur(1px);
+}
+
+.inline-drawer-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(920px, 100vw);
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--paper);
+  border-left: 6px solid var(--ink);
+  box-shadow: -14px 0 0 color-mix(in srgb, var(--highlight) 40%, transparent);
+}
+
+.inline-drawer-close {
+  position: sticky;
+  top: 0.65rem;
+  margin: 0.65rem 0.65rem 0 auto;
+  display: block;
+  z-index: 4;
+  background: var(--highlight);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.35rem 0.6rem;
+}
+
+@media (max-width: 680px) {
+  .inline-drawer-panel {
+    width: 100vw;
+    border-left-width: 0;
+  }
 }
