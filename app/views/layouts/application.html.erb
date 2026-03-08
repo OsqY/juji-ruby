@@ -23,8 +23,8 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body data-controller="theme">
-    <nav class="chaos-nav">
+  <body data-controller="theme frame-state">
+    <nav class="chaos-nav" data-controller="nav-dropdown" data-action="click->nav-dropdown#closeOnLinkClick">
       <% dashboard_active = controller_name == "dashboard" %>
       <% reports_active = controller_name == "daily_reports" && action_name != "new" %>
       <% report_new_active = controller_name == "daily_reports" && action_name == "new" %>
@@ -43,27 +43,57 @@
         <span class="brand-tag">archivo personal</span>
       </div>
 
+      <% reports_group_active = reports_active || report_new_active %>
+      <% productivity_group_active = projects_active || habits_active || shopping_active %>
+      <% finance_group_active = finance_active || finance_new_active || budgets_active %>
+      <% account_group_active = login_active || register_active || recovery_active %>
+
       <div class="nav-primary" role="navigation" aria-label="Secciones principales">
         <%= link_to "DASHBOARD", dashboard_path, class: "nav-link #{'is-active' if dashboard_active}" %>
-        <%= link_to "REPORTES", daily_reports_path, class: "nav-link #{'is-active' if reports_active}" %>
-        <%= link_to "NUEVO REPORTE", new_daily_report_path, class: "nav-link nav-link-create #{'is-active' if report_new_active}" %>
-        <%= link_to "PROYECTOS", projects_path, class: "nav-link #{'is-active' if projects_active}" %>
-        <%= link_to "HÁBITOS", habits_path, class: "nav-link #{'is-active' if habits_active}" %>
-        <%= link_to "FINANZAS", transactions_path, class: "nav-link #{'is-active' if finance_active}" %>
-        <%= link_to "NUEVA TRANSACCIÓN", new_transaction_path, class: "nav-link nav-link-create #{'is-active' if finance_new_active}" %>
-        <%= link_to "PRESUPUESTOS", budgets_path, class: "nav-link #{'is-active' if budgets_active}" %>
-        <%= link_to "COMPRAS", shopping_items_path, class: "nav-link #{'is-active' if shopping_active}" %>
+
+        <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
+          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if reports_group_active %>">REPORTES</summary>
+          <div class="nav-dropdown-menu" role="menu" aria-label="Sección reportes">
+            <%= link_to "VER REPORTES", daily_reports_path, class: "nav-link #{'is-active' if reports_active}", role: "menuitem" %>
+            <%= link_to "NUEVO REPORTE", new_daily_report_path, class: "nav-link nav-link-create #{'is-active' if report_new_active}", role: "menuitem" %>
+          </div>
+        </details>
+
+        <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
+          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if productivity_group_active %>">PRODUCTIVIDAD</summary>
+          <div class="nav-dropdown-menu" role="menu" aria-label="Sección productividad">
+            <%= link_to "PROYECTOS", projects_path, class: "nav-link #{'is-active' if projects_active}", role: "menuitem" %>
+            <%= link_to "HÁBITOS", habits_path, class: "nav-link #{'is-active' if habits_active}", role: "menuitem" %>
+            <%= link_to "COMPRAS", shopping_items_path, class: "nav-link #{'is-active' if shopping_active}", role: "menuitem" %>
+          </div>
+        </details>
+
+        <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
+          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if finance_group_active %>">FINANZAS</summary>
+          <div class="nav-dropdown-menu" role="menu" aria-label="Sección finanzas">
+            <%= link_to "VER FINANZAS", transactions_path, class: "nav-link #{'is-active' if finance_active}", role: "menuitem" %>
+            <%= link_to "NUEVA TRANSACCIÓN", new_transaction_path, class: "nav-link nav-link-create #{'is-active' if finance_new_active}", role: "menuitem" %>
+            <%= link_to "PRESUPUESTOS", budgets_path, class: "nav-link #{'is-active' if budgets_active}", role: "menuitem" %>
+          </div>
+        </details>
       </div>
 
       <div class="nav-meta" role="navigation" aria-label="Cuenta">
-        <% if authenticated? %>
-          <div class="nav-user"><%= current_user.email_address %></div>
-          <%= button_to "SALIR", session_path, method: :delete, class: "nav-logout-btn" %>
-        <% else %>
-          <%= link_to "ENTRAR", new_session_path, class: "nav-link nav-link-soft #{'is-active' if login_active}" %>
-          <%= link_to "REGISTRARME", new_registration_path, class: "nav-link nav-link-solid #{'is-active' if register_active}" %>
-          <%= link_to "RECUPERAR", new_password_path, class: "nav-link nav-link-soft #{'is-active' if recovery_active}" %>
-        <% end %>
+        <details class="nav-dropdown nav-dropdown-account" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
+          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if account_group_active %>">
+            <%= authenticated? ? "CUENTA" : "ACCESO" %>
+          </summary>
+          <div class="nav-dropdown-menu nav-account-menu" role="menu" aria-label="Menú de cuenta">
+            <% if authenticated? %>
+              <div class="nav-user nav-user-menu"><%= current_user.email_address %></div>
+              <%= button_to "SALIR", session_path, method: :delete, class: "nav-logout-btn nav-logout-btn-menu" %>
+            <% else %>
+              <%= link_to "ENTRAR", new_session_path, class: "nav-link nav-link-soft #{'is-active' if login_active}", role: "menuitem" %>
+              <%= link_to "REGISTRARME", new_registration_path, class: "nav-link nav-link-solid #{'is-active' if register_active}", role: "menuitem" %>
+              <%= link_to "RECUPERAR", new_password_path, class: "nav-link nav-link-soft #{'is-active' if recovery_active}", role: "menuitem" %>
+            <% end %>
+          </div>
+        </details>
 
         <div class="theme-picker theme-picker-compact">
         <label class="theme-option" title="Modo Claro" for="theme_light">

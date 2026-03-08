@@ -55,6 +55,9 @@
   --highlight: #63ff59;
   --accent-blue: #b05bff;
   --muted-gray: #181327;
+  --tone-green-dark: #0f3a1d;
+  --tone-purple-dark: #2a0f44;
+  --tone-red-dark: #7d1f2e;
 
   --income-bg: #0f3520;
   --income-text: #7cff9f;
@@ -345,6 +348,14 @@ svg {
 [data-theme="neon"] .section-label {
   background: var(--highlight);
   color: #fff;
+}
+
+[data-theme="neon"] .section-label {
+  color: var(--tone-green-dark) !important;
+}
+
+[data-theme="neon"] .section-label[style*="var(--accent-blue)"] {
+  color: var(--tone-purple-dark) !important;
 }
 
 .section-title {
@@ -761,12 +772,13 @@ input[type="submit"].btn-chaos {
 [data-theme="neon"] .btn-chaos,
 [data-theme="neon"] input[type="submit"].btn-chaos {
   background: var(--highlight) !important;
-  color: var(--ink) !important;
+  color: var(--tone-green-dark) !important;
 }
 
 [data-theme="neon"] .btn-chaos:hover,
 [data-theme="neon"] input[type="submit"].btn-chaos:hover {
   background: var(--accent-blue) !important;
+  color: var(--tone-purple-dark) !important;
   box-shadow: 8px 8px 0px var(--highlight);
 }
 
@@ -774,7 +786,7 @@ input[type="submit"].btn-chaos {
 [data-theme="neon"] input[type="submit"].btn-chaos:active {
   box-shadow: 2px 2px 0px var(--highlight);
   background: var(--paper) !important;
-  color: var(--ink) !important;
+  color: var(--tone-purple-dark) !important;
 }
 
 /* Sticky Action Bar */
@@ -994,10 +1006,62 @@ nav.chaos-nav {
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  overflow-x: auto;
-  white-space: nowrap;
+  flex-wrap: wrap;
+  overflow: visible;
+  white-space: normal;
   scrollbar-width: thin;
   flex: 1;
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown > summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nav-dropdown > summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nav-dropdown-toggle::after {
+  content: "\25BE";
+  font-size: 0.58rem;
+  opacity: 0.8;
+}
+
+.nav-dropdown[open] > .nav-dropdown-toggle::after {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.28rem);
+  left: 0;
+  min-width: 190px;
+  padding: 0.35rem;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 5px 5px 0 color-mix(in srgb, var(--highlight) 80%, var(--paper));
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  z-index: 1100;
+}
+
+.nav-dropdown-menu .nav-link {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-meta {
@@ -1005,6 +1069,7 @@ nav.chaos-nav {
   align-items: center;
   gap: 0.35rem;
   flex-shrink: 0;
+  position: relative;
 }
 
 .nav-user {
@@ -1059,6 +1124,36 @@ nav.chaos-nav {
   display: inline-flex;
 }
 
+.nav-dropdown-account > .nav-dropdown-menu {
+  left: auto;
+  right: 0;
+  min-width: 210px;
+}
+
+.nav-account-menu {
+  align-items: stretch;
+}
+
+.nav-user-menu {
+  max-width: none;
+  font-size: 0.66rem;
+  line-height: 1.35;
+  padding: 0.45rem 0.55rem;
+  border: 2px dashed color-mix(in srgb, var(--ink) 30%, transparent);
+  background: color-mix(in srgb, var(--paper) 92%, var(--muted-gray));
+  box-sizing: border-box;
+}
+
+.nav-account-menu .button_to {
+  display: block;
+  width: 100%;
+}
+
+.nav-logout-btn-menu {
+  width: 100%;
+  text-align: left;
+}
+
 .nav-logout-btn {
   background: color-mix(in srgb, var(--paper) 95%, #ffdede);
   border: 2px solid #D63031;
@@ -1076,6 +1171,42 @@ nav.chaos-nav {
 .nav-logout-btn:hover {
   background: #ffd8d8;
   color: #D63031;
+}
+
+[data-theme="neon"] .nav-link,
+[data-theme="neon"] .nav-logout-btn,
+[data-theme="neon"] .delete-btn-link,
+[data-theme="neon"] .card-action-link {
+  color: var(--tone-green-dark);
+}
+
+[data-theme="neon"] .nav-link:hover,
+[data-theme="neon"] .nav-link.is-active,
+[data-theme="neon"] .nav-link-solid {
+  color: var(--tone-green-dark);
+}
+
+[data-theme="neon"] .nav-link:hover,
+[data-theme="neon"] .nav-link.is-active,
+[data-theme="neon"] .nav-link-solid,
+[data-theme="neon"] .theme-option:hover {
+  background: var(--highlight);
+}
+
+[data-theme="neon"] .nav-link-create:hover,
+[data-theme="neon"] .btn-chaos:hover,
+[data-theme="neon"] .nav-dropdown-menu .nav-link.nav-link-create:hover {
+  background: var(--accent-blue) !important;
+  color: var(--tone-purple-dark) !important;
+}
+
+[data-theme="neon"] .nav-logout-btn {
+  border-color: var(--tone-red-dark);
+  color: var(--tone-red-dark);
+}
+
+[data-theme="neon"] .nav-logout-btn:hover {
+  color: var(--tone-red-dark);
 }
 
 @keyframes navDrop {
@@ -1110,6 +1241,43 @@ nav.chaos-nav {
     order: 3;
     width: 100%;
     flex-basis: 100%;
+    gap: 0.42rem;
+  }
+
+  .nav-dropdown {
+    width: 100%;
+  }
+
+  .nav-dropdown > summary {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .nav-dropdown-menu {
+    position: static;
+    margin-top: 0.3rem;
+    width: 100%;
+    min-width: 0;
+    box-shadow: none;
+    border-width: 2px;
+  }
+
+  .nav-meta .nav-dropdown {
+    width: auto;
+  }
+
+  .nav-meta .nav-dropdown > summary {
+    width: auto;
+  }
+
+  .nav-meta .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.3rem);
+    right: 0;
+    left: auto;
+    width: max-content;
+    min-width: 185px;
+    box-shadow: 5px 5px 0 color-mix(in srgb, var(--highlight) 80%, var(--paper));
   }
 
   .nav-link,
@@ -1172,6 +1340,24 @@ nav.chaos-nav {
   border-color: var(--accent-blue);
 }
 
+[data-theme="neon"] .type-card {
+  color: var(--ink);
+}
+
+[data-theme="neon"] .type-card-wrapper input[type="radio"]:checked ~ .type-card {
+  background: var(--highlight);
+  border-color: var(--tone-green-dark);
+  box-shadow: 6px 6px 0 var(--tone-green-dark);
+}
+
+[data-theme="neon"] .type-card-wrapper input[type="radio"]:checked ~ .type-card .card-label {
+  color: var(--tone-green-dark);
+}
+
+[data-theme="neon"] .type-card-wrapper:hover .type-card .card-label {
+  color: var(--tone-purple-dark);
+}
+
 .card-label {
   font-family: 'Archivo Black', sans-serif;
   font-size: 1.4rem;
@@ -1179,5 +1365,4 @@ nav.chaos-nav {
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--ink);
-}
 }

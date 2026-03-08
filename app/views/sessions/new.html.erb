@@ -1,3 +1,4 @@
+<%= turbo_frame_tag "session_form_content" do %>
 <div class="chaotic-container" style="max-width: 600px;">
   <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
     <h1 class="form-title">ENTRAR</h1>
@@ -16,10 +17,10 @@
     </div>
   <% end %>
 
-  <%= form_with(url: session_path) do |f| %>
+  <%= form_with(url: session_path, data: { turbo_frame: "_top" }) do |f| %>
     <div class="form-group">
       <%= f.label :email_address, "CORREO ELECTRÓNICO" %>
-      <%= f.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "tu@ejemplo.com" %>
+      <%= f.email_field :email_address, value: @email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "tu@ejemplo.com" %>
     </div>
 
     <div class="form-group">
@@ -28,7 +29,7 @@
     </div>
 
     <div style="margin-bottom: 2rem; text-align: right;">
-      <%= link_to "¿OLVIDASTE TU CONTRASEÑA?", new_password_path, style: "font-size: 0.8rem; font-weight: 700; color: var(--ink); opacity: 0.6;" %>
+      <%= link_to "¿OLVIDASTE TU CONTRASEÑA?", new_password_path, data: { turbo_frame: "_top" }, style: "font-size: 0.8rem; font-weight: 700; color: var(--ink); opacity: 0.6;" %>
     </div>
 
     <div class="form-actions">
@@ -36,7 +37,8 @@
     </div>
 
     <div style="margin-top: 2rem; text-align: center;">
-      <%= link_to "¿NO TIENES CUENTA? CREAR UNA", new_registration_path, style: "font-weight: 900; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--highlight);" %>
+      <%= link_to "¿NO TIENES CUENTA? CREAR UNA", new_registration_path, data: { turbo_frame: "_top" }, style: "font-weight: 900; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--highlight);" %>
     </div>
   <% end %>
 </div>
+<% end %>

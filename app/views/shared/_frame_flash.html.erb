@@ -1,0 +1,11 @@
+<% if flash[:notice].present? %>
+  <div style="background: #E1FFEC; border: 4px solid #2D5A27; padding: 1rem 1.2rem; margin-bottom: 1.2rem; color: #2D5A27; font-weight: 700;">
+    <%= flash[:notice].to_s.upcase %>
+  </div>
+<% end %>
+
+<% if flash[:alert].present? %>
+  <div style="background: #FFEDED; border: 4px solid #D63031; padding: 1rem 1.2rem; margin-bottom: 1.2rem; color: #D63031; font-weight: 700;">
+    <%= flash[:alert].to_s.upcase %>
+  </div>
+<% end %>

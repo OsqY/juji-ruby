@@ -1,23 +1,34 @@
 require "test_helper"
 
 class TransactionsControllerTest < ActionDispatch::IntegrationTest
-  test "should get index" do
-    get transactions_index_url
-    assert_response :success
+  setup do
+    @user = users(:one)
+    sign_in_as(@user)
+
+    @transaction = @user.transactions.create!(
+      amount: 120.50,
+      description: "Pago de prueba",
+      transaction_type: :expense,
+      category: "general",
+      date: Date.current
+    )
   end
 
-  test "should get show" do
-    get transactions_show_url
+  test "should get index" do
+    get transactions_path
     assert_response :success
   end
 
   test "should get new" do
-    get transactions_new_url
+    get new_transaction_path
     assert_response :success
   end
 
-  test "should get edit" do
-    get transactions_edit_url
-    assert_response :success
+  test "should destroy transaction" do
+    assert_difference("Transaction.count", -1) do
+      delete transaction_path(@transaction, month: Date.current.strftime("%Y-%m"))
+    end
+
+    assert_redirected_to transactions_path(month: Date.current.strftime("%Y-%m"))
   end
 end

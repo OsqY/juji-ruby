@@ -1,10 +1,11 @@
+<%= turbo_frame_tag "registration_form_content" do %>
 <div class="chaotic-container" style="max-width: 600px;">
   <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
     <h1 class="form-title">CREAR CUENTA</h1>
     <p style="font-weight: 700; opacity: 0.6;">ÚNETE AL ARCHIVO JUJI</p>
   </div>
 
-  <%= form_with(model: @user, url: registrations_path) do |f| %>
+  <%= form_with(model: @user, url: registrations_path, data: { turbo_frame: "_top" }) do |f| %>
     <% if @user.errors.any? %>
       <div style="background: #FFEDED; border: 4px solid #D63031; padding: 2rem; margin-bottom: 3rem; color: #D63031;">
         <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">ERRORES:</h2>
@@ -36,7 +37,8 @@
     </div>
 
     <div style="margin-top: 2rem; text-align: center;">
-      <%= link_to "¿YA TIENES CUENTA? ENTRAR", new_session_path, style: "font-weight: 900; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--highlight);" %>
+      <%= link_to "¿YA TIENES CUENTA? ENTRAR", new_session_path, data: { turbo_frame: "_top" }, style: "font-weight: 900; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--highlight);" %>
     </div>
   <% end %>
 </div>
+<% end %>

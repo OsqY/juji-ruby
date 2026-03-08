@@ -5,6 +5,10 @@ export default class ThemeController extends Controller {
     static targets = ["select"]
 
     connect() {
+        this.refreshIcons = this.initIcons.bind(this)
+        document.addEventListener("turbo:render", this.refreshIcons)
+        document.addEventListener("turbo:frame-load", this.refreshIcons)
+
         const theme = localStorage.getItem("theme") || "light"
         this.applyTheme(theme)
         this.initIcons()
@@ -12,6 +16,11 @@ export default class ThemeController extends Controller {
         // Auto-select the radio/option if needed
         const radio = this.element.querySelector(`input[value="${theme}"]`)
         if (radio) radio.checked = true
+    }
+
+    disconnect() {
+        document.removeEventListener("turbo:render", this.refreshIcons)
+        document.removeEventListener("turbo:frame-load", this.refreshIcons)
     }
 
     initIcons() {

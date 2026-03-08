@@ -1,9 +1,10 @@
+<%= turbo_frame_tag "transaction_form_content" do %>
 <div class="chaotic-container" style="max-width: 800px;">
   <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
     <h1 class="form-title">REGISTRAR MOVIMIENTO</h1>
   </div>
 
-  <%= form_with(model: @transaction) do |f| %>
+  <%= form_with(model: @transaction, data: { turbo_frame: "_top" }) do |f| %>
     
     <div class="form-group">
       <%= f.label :transaction_type, "TIPO DE FLUJO" %>
@@ -59,8 +60,9 @@
 
     <div class="form-actions">
       <%= f.submit "REGISTRAR AHORA", class: "btn-chaos", style: "flex: 1;" %>
-      <%= link_to "CANCELAR", transactions_path, style: "font-weight: 900; text-decoration: none; color: #D63031;" %>
+      <%= link_to "CANCELAR", transactions_path, data: { turbo_frame: "_top" }, style: "font-weight: 900; text-decoration: none; color: #D63031;" %>
     </div>
 
   <% end %>
 </div>
+<% end %>

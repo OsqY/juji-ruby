@@ -41,7 +41,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
 
   test "update" do
     assert_changes -> { @user.reload.password_digest } do
-      put password_path(@user.password_reset_token), params: { password: "new", password_confirmation: "new" }
+      put password_path(@user.password_reset_token), params: { password: "newpass", password_confirmation: "newpass" }
       assert_redirected_to new_session_path
     end
 
@@ -53,15 +53,13 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     token = @user.password_reset_token
     assert_no_changes -> { @user.reload.password_digest } do
       put password_path(token), params: { password: "no", password_confirmation: "match" }
-      assert_redirected_to edit_password_path(token)
+      assert_response :unprocessable_entity
     end
-
-    follow_redirect!
     assert_notice "Passwords did not match"
   end
 
   private
     def assert_notice(text)
-      assert_select "div", /#{text}/
+      assert_select "div", /#{Regexp.escape(text)}/i
     end
 end

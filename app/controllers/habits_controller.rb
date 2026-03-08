@@ -2,22 +2,32 @@ class HabitsController < ApplicationController
   before_action :set_habit, only: %i[ toggle destroy ]
 
   def index
-    @habits = current_user.habits.order(:created_at)
-    @new_habit = current_user.habits.build
-
-    # Define the current week (last 7 days including today)
-    @dates = (Date.today - 6.days..Date.today).to_a
+    load_index_data
   end
 
   def create
     @habit = current_user.habits.build(habit_params)
+
     if @habit.save
-      redirect_to habits_path, notice: "Hábito creado / Habit created."
+      load_index_data
+
+      respond_to do |format|
+        format.turbo_stream do
+          flash.now[:notice] = "Hábito creado / Habit created."
+          render_habits_content
+        end
+        format.html { redirect_to habits_path, notice: "Hábito creado / Habit created." }
+      end
     else
-      @habits = current_user.habits.order(:created_at)
-      @dates = (Date.today - 6.days..Date.today).to_a
-      @new_habit = @habit
-      render :index, status: :unprocessable_entity
+      load_index_data(new_habit: @habit)
+
+      respond_to do |format|
+        format.turbo_stream do
+          flash.now[:alert] = @habit.errors.full_messages.to_sentence.presence || "No se pudo crear el hábito."
+          render_habits_content(status: :unprocessable_entity)
+        end
+        format.html { render :index, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -27,15 +37,38 @@ class HabitsController < ApplicationController
     log.completed = !log.completed
     log.save
 
-    redirect_to habits_path
+    load_index_data
+
+    respond_to do |format|
+      format.turbo_stream { render_habits_content }
+      format.html { redirect_to habits_path }
+    end
   end
 
   def destroy
     @habit.destroy
-    redirect_to habits_path, notice: "Hábito eliminado / Habit deleted."
+    load_index_data
+
+    respond_to do |format|
+      format.turbo_stream do
+        flash.now[:notice] = "Hábito eliminado / Habit deleted."
+        render_habits_content
+      end
+      format.html { redirect_to habits_path, notice: "Hábito eliminado / Habit deleted." }
+    end
   end
 
   private
+
+  def load_index_data(new_habit: nil)
+    @habits = current_user.habits.order(:created_at)
+    @new_habit = new_habit || current_user.habits.build
+    @dates = (Date.today - 6.days..Date.today).to_a
+  end
+
+  def render_habits_content(status: :ok)
+    render turbo_stream: turbo_stream.replace("habits_content", partial: "habits/content"), status: status
+  end
 
   def set_habit
     @habit = current_user.habits.find(params[:id])
