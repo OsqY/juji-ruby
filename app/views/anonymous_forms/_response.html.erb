@@ -1,0 +1,13 @@
+<article id="<%= dom_id(response) %>" style="border: 3px solid var(--ink); background: var(--paper); padding: 0.9rem;">
+  <p style="margin: 0 0 0.7rem; font-size: 0.75rem; font-weight: 800; opacity: 0.6;">
+    RESPUESTA #<%= response.id %> | <%= l(response.created_at, format: :short) %>
+    <% if response.user_id.present? %>
+      | USUARIO AUTENTICADO
+    <% else %>
+      | ANÓNIMA
+    <% end %>
+  </p>
+  <% anonymous_form.questions.each do |question| %>
+    <p style="margin: 0.3rem 0;"><strong><%= question.prompt %>:</strong> <%= response_answer_for(response, question) %></p>
+  <% end %>
+</article>

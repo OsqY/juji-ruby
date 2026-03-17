@@ -1,0 +1,45 @@
+<div class="chaotic-container">
+  <%= render "shared/frame_flash" %>
+
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;">
+    <div>
+      <h1 style="font-size: 3rem;">FORMULARIOS ANÓNIMOS</h1>
+      <p style="font-weight: 700; opacity: 0.6;">Crea formularios públicos con límite de respuestas.</p>
+    </div>
+    <%= link_to "NUEVO FORMULARIO", new_anonymous_form_path, class: "btn-chaos", style: "padding: 0.9rem 1.2rem;" %>
+  </div>
+
+  <% if @anonymous_forms.any? %>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
+      <% @anonymous_forms.each do |form| %>
+        <section class="report-section-block" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem;">
+          <div>
+            <h2 class="section-title" style="font-size: 1.4rem; margin-bottom: 0.4rem;"><%= form.title %></h2>
+            <p style="font-size: 0.78rem; font-weight: 800; opacity: 0.6;">
+              <%= form.responses_count %> / <%= form.response_limit %> RESPUESTAS
+            </p>
+          </div>
+
+          <% if form.description.present? %>
+            <p class="report-text" style="font-size: 0.95rem; margin: 0;"><%= truncate(form.description, length: 120) %></p>
+          <% end %>
+
+          <p style="font-size: 0.8rem; margin: 0; font-weight: 700;">
+            <strong>Preguntas:</strong> <%= form.questions.size %>
+          </p>
+
+          <div style="display: flex; gap: 0.7rem; margin-top: auto; flex-wrap: wrap;">
+            <%= link_to "VER", anonymous_form_path(form), class: "nav-link" %>
+            <%= link_to "ABRIR LINK", public_anonymous_form_path(form.token), class: "nav-link", target: "_blank", rel: "noopener" %>
+            <%= button_to "ELIMINAR", anonymous_form_path(form), method: :delete, class: "delete-btn-link", data: { turbo_confirm: "¿Eliminar este formulario?" } %>
+          </div>
+        </section>
+      <% end %>
+    </div>
+  <% else %>
+    <section class="report-section-block" style="text-align: center; padding: 3rem;">
+      <h2 class="section-title">SIN FORMULARIOS</h2>
+      <p class="report-text">Crea tu primer formulario anónimo y comparte el enlace.</p>
+    </section>
+  <% end %>
+</div>

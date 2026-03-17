@@ -1,0 +1,39 @@
+<% question ||= AnonymousFormQuestion.new(question_type: :free_text, required: true) %>
+<% fields_scope = "anonymous_form[questions_attributes][#{index}]" %>
+<% selected_type = question.question_type.presence || "free_text" %>
+<% options_display = selected_type == "free_text" ? "display: none;" : "" %>
+
+<div class="report-section-block anonymous-question-card" data-anonymous-form-builder-target="question" style="padding: 1rem;">
+  <input type="hidden" name="<%= fields_scope %>[position]" value="<%= question.position || 0 %>" data-question-position>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 0.6rem;">
+    <strong style="font-size: 0.8rem; opacity: 0.7;">PREGUNTA</strong>
+    <button type="button" class="delete-btn-link" data-action="anonymous-form-builder#removeQuestion">QUITAR</button>
+  </div>
+
+  <div style="margin-bottom: 0.8rem;">
+    <label>Texto de la pregunta</label>
+    <input type="text" name="<%= fields_scope %>[prompt]" value="<%= question.prompt %>" required>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: end; margin-bottom: 0.8rem;">
+    <div>
+      <label>Tipo de respuesta</label>
+      <select name="<%= fields_scope %>[question_type]" data-question-type data-action="change->anonymous-form-builder#toggleType">
+        <option value="free_text" <%= "selected" if selected_type == "free_text" %>>Respuesta libre</option>
+        <option value="single_choice" <%= "selected" if selected_type == "single_choice" %>>Selección única</option>
+        <option value="multiple_choice" <%= "selected" if selected_type == "multiple_choice" %>>Selección múltiple</option>
+      </select>
+    </div>
+    <label style="display: inline-flex; align-items: center; gap: 0.45rem; margin: 0; font-size: 0.82rem;">
+      <input type="hidden" name="<%= fields_scope %>[required]" value="0">
+      <input type="checkbox" name="<%= fields_scope %>[required]" value="1" <%= "checked" if question.required? %>>
+      Obligatoria
+    </label>
+  </div>
+
+  <div data-question-options style="<%= options_display %>">
+    <label>Opciones (una por línea)</label>
+    <textarea name="<%= fields_scope %>[options_text]" rows="3" placeholder="Sí&#10;No"><%= question.options_text %></textarea>
+  </div>
+</div>

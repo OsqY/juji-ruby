@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :projects, dependent: :destroy
   has_many :habits, dependent: :destroy
   has_many :shopping_items, dependent: :destroy
+  has_many :anonymous_forms, dependent: :destroy
+  has_many :anonymous_form_responses, dependent: :nullify
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 

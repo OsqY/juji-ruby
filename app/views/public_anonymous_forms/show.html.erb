@@ -1,0 +1,64 @@
+<div class="chaotic-container" style="max-width: 860px;">
+  <%= render "shared/frame_flash" %>
+
+  <section class="report-section-block" style="margin-bottom: 1.5rem;">
+    <span class="section-label">FORMULARIO ANÓNIMO</span>
+    <h1 class="form-title" style="margin-top: 0.9rem;"><%= @anonymous_form.title %></h1>
+    <% if @anonymous_form.description.present? %>
+      <p class="report-text" style="font-size: 1rem;"><%= @anonymous_form.description %></p>
+    <% end %>
+    <p style="font-size: 0.8rem; font-weight: 800; opacity: 0.65; margin: 0;">
+      Quedan <%= @anonymous_form.remaining_responses %> de <%= @anonymous_form.response_limit %> respuestas disponibles.
+    </p>
+  </section>
+
+  <% if @anonymous_form.open_for_responses? %>
+    <%= form_with url: public_anonymous_form_responses_path(@anonymous_form.token), method: :post do %>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <% @questions.each_with_index do |question, index| %>
+          <section class="report-section-block" style="padding: 1.1rem;">
+            <p style="margin: 0 0 0.7rem; font-weight: 900;">
+              <%= index + 1 %>. <%= question.prompt %>
+              <% if question.required? %>
+                <span style="color: #D63031;">*</span>
+              <% end %>
+            </p>
+
+            <% case question.question_type %>
+            <% when "free_text" %>
+              <%= text_area_tag "answers[#{question.id}]", params.dig(:answers, question.id.to_s), rows: 3, required: question.required? %>
+            <% when "single_choice" %>
+              <div style="display: flex; flex-direction: column; gap: 0.45rem;">
+                <% question.options.each do |option| %>
+                  <label style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <%= radio_button_tag "answers[#{question.id}]", option, params.dig(:answers, question.id.to_s) == option, required: question.required? %>
+                    <span><%= option %></span>
+                  </label>
+                <% end %>
+              </div>
+            <% when "multiple_choice" %>
+              <% selected_values = Array(params.dig(:answers, question.id.to_s)) %>
+              <div style="display: flex; flex-direction: column; gap: 0.45rem;">
+                <% question.options.each do |option| %>
+                  <label style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <%= check_box_tag "answers[#{question.id}][]", option, selected_values.include?(option) %>
+                    <span><%= option %></span>
+                  </label>
+                <% end %>
+              </div>
+            <% end %>
+          </section>
+        <% end %>
+      </div>
+
+      <div class="form-actions" style="margin-top: 1.2rem;">
+        <%= submit_tag "ENVIAR RESPUESTA", class: "btn-chaos", style: "flex: 1;" %>
+      </div>
+    <% end %>
+  <% else %>
+    <section class="report-section-block" style="text-align: center;">
+      <h2 class="section-title">FORMULARIO CERRADO</h2>
+      <p class="report-text">Este formulario ya alcanzó su límite de respuestas.</p>
+    </section>
+  <% end %>
+</div>

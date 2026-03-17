@@ -1,0 +1,54 @@
+<div class="chaotic-container" style="max-width: 980px;">
+  <%= turbo_stream_from [@anonymous_form, :responses] %>
+  <%= render "shared/frame_flash" %>
+
+  <%= render "response_stats", anonymous_form: @anonymous_form %>
+
+  <section class="report-section-block" style="margin-bottom: 1.5rem;">
+    <span class="section-label" style="background: var(--accent-blue); color: white;">LINK PÚBLICO</span>
+    <p style="margin: 0.8rem 0 0.6rem; font-weight: 700;">Comparte este enlace para recibir respuestas anónimas:</p>
+    <div data-controller="copy-link">
+      <input type="text" value="<%= @public_link %>" readonly style="width: 100%;" data-copy-link-target="source">
+      <div style="margin-top: 0.65rem; display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
+        <button type="button" class="btn-chaos" style="padding: 0.55rem 0.95rem;" data-action="copy-link#copy">COPIAR LINK</button>
+        <span style="font-size: 0.78rem; font-weight: 800; opacity: 0.75;" data-copy-link-target="status" aria-live="polite"></span>
+      </div>
+    </div>
+    <div style="margin-top: 0.8rem; display: flex; gap: 0.7rem; flex-wrap: wrap;">
+      <%= link_to "ABRIR FORMULARIO", public_anonymous_form_path(@anonymous_form.token), class: "nav-link", target: "_blank", rel: "noopener" %>
+      <%= link_to "VOLVER", anonymous_forms_path, class: "nav-link" %>
+    </div>
+  </section>
+
+  <section class="report-section-block" style="margin-bottom: 1.5rem;">
+    <h2 class="section-title" style="margin-bottom: 0.8rem;">PREGUNTAS</h2>
+    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+      <% @anonymous_form.questions.each_with_index do |question, index| %>
+        <div style="border: 3px solid var(--ink); padding: 0.8rem; background: var(--paper);">
+          <p style="margin: 0 0 0.35rem; font-weight: 900;">#<%= index + 1 %> <%= question.prompt %></p>
+          <p style="margin: 0; font-size: 0.8rem; opacity: 0.7;">
+            <%= human_question_type(question) %>
+            <%= "| obligatoria" if question.required? %>
+          </p>
+          <% if question.options.any? %>
+            <p style="margin: 0.45rem 0 0; font-size: 0.85rem;"><strong>Opciones:</strong> <%= question.options.join(", ") %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="report-section-block">
+    <h2 class="section-title" style="margin-bottom: 1rem;">RESPUESTAS RECIBIDAS</h2>
+
+    <div id="<%= dom_id(@anonymous_form, :responses_list) %>" style="display: flex; flex-direction: column; gap: 0.9rem;">
+      <% @responses.each do |response| %>
+        <%= render "response", response: response, anonymous_form: @anonymous_form %>
+      <% end %>
+    </div>
+
+    <% unless @responses.any? %>
+      <p id="<%= dom_id(@anonymous_form, :responses_empty) %>" class="report-text" style="opacity: 0.7;">Aún no hay respuestas.</p>
+    <% end %>
+  </section>
+</div>

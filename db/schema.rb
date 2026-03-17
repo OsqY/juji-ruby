@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_07_143000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_17_124500) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -37,6 +37,42 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_143000) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "anonymous_form_questions", force: :cascade do |t|
+    t.integer "anonymous_form_id", null: false
+    t.datetime "created_at", null: false
+    t.text "options_text"
+    t.integer "position", default: 0, null: false
+    t.string "prompt", null: false
+    t.integer "question_type", default: 2, null: false
+    t.boolean "required", default: true, null: false
+    t.datetime "updated_at", null: false
+    t.index ["anonymous_form_id"], name: "index_anonymous_form_questions_on_anonymous_form_id"
+  end
+
+  create_table "anonymous_form_responses", force: :cascade do |t|
+    t.integer "anonymous_form_id", null: false
+    t.json "answers", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["anonymous_form_id", "user_id"], name: "index_anonymous_form_responses_on_form_id_and_user_id_unique", unique: true, where: "user_id IS NOT NULL"
+    t.index ["anonymous_form_id"], name: "index_anonymous_form_responses_on_anonymous_form_id"
+    t.index ["user_id"], name: "index_anonymous_form_responses_on_user_id"
+  end
+
+  create_table "anonymous_forms", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.integer "response_limit", default: 1, null: false
+    t.integer "responses_count", default: 0, null: false
+    t.string "title", null: false
+    t.string "token", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["token"], name: "index_anonymous_forms_on_token", unique: true
+    t.index ["user_id"], name: "index_anonymous_forms_on_user_id"
   end
 
   create_table "budgets", force: :cascade do |t|
@@ -155,6 +191,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_143000) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "anonymous_form_questions", "anonymous_forms"
+  add_foreign_key "anonymous_form_responses", "anonymous_forms"
+  add_foreign_key "anonymous_form_responses", "users"
+  add_foreign_key "anonymous_forms", "users"
   add_foreign_key "budgets", "users"
   add_foreign_key "daily_reports", "users"
   add_foreign_key "habit_logs", "habits"

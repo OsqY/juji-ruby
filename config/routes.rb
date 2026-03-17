@@ -20,6 +20,12 @@ Rails.application.routes.draw do
     post :toggle, on: :member
   end
   resources :shopping_items
+  resources :anonymous_forms, only: %i[ index new create show destroy ]
+
+  scope "/f/:token", as: :public_anonymous_form do
+    get "/", to: "public_anonymous_forms#show"
+    post "/responses", to: "public_anonymous_forms#create_response", as: :responses
+  end
 
   # Root page
   root "dashboard#index"

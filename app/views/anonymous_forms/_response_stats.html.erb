@@ -1,0 +1,14 @@
+<div id="<%= dom_id(anonymous_form, :responses_stats) %>" style="border-bottom: 8px solid var(--ink); margin-bottom: 2rem; padding-bottom: 1rem;">
+  <h1 class="form-title"><%= anonymous_form.title %></h1>
+  <p style="font-weight: 700; opacity: 0.6;">
+    <%= anonymous_form.responses_count %> / <%= anonymous_form.response_limit %> respuestas recibidas
+    <% if anonymous_form.open_for_responses? %>
+      | <%= anonymous_form.remaining_responses %> disponibles
+    <% else %>
+      | límite alcanzado
+    <% end %>
+  </p>
+  <% if anonymous_form.description.present? %>
+    <p class="report-text" style="font-size: 1rem;"><%= anonymous_form.description %></p>
+  <% end %>
+</div>
