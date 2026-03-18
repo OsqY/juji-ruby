@@ -8,8 +8,13 @@ cors_origins = case Rails.env
                when 'staging'
                  ['localhost', '127.0.0.1', ENV.fetch('STAGING_DOMAIN', 'localhost')]
                else
-                 # Development: aceptar desde cualquier origen
-                 '*'
+                 # Development: orígenes explícitos para evitar wildcard + credentials
+                 [
+                   'http://localhost:3000',
+                   'http://127.0.0.1:3000',
+                   'http://localhost:3001',
+                   'http://127.0.0.1:3001'
+                 ]
                end
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do

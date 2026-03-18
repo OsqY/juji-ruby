@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
+require_relative "../app/middleware/hotwire_native_middleware"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -26,6 +27,6 @@ module Juji
     config.i18n.default_locale = :es
 
     # Hotwire Native middleware
-    config.middleware.insert_before Rack::Head, HotwireNativeMiddleware
+    config.middleware.insert_before Rack::Head, ::HotwireNativeMiddleware
   end
 end

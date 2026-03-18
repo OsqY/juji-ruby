@@ -24,7 +24,10 @@ module DeepLinking
 
   def self.resolve_deep_link(url)
     # Validar y parsear el deep link
-    uri = URI.parse(url) rescue return nil
+    uri = URI.parse(url)
+  rescue URI::InvalidURIError, ArgumentError
+    return nil
+  else
     
     {
       path: uri.path,

@@ -10,6 +10,13 @@ class HotwireNativeMiddleware
     user_agent = env['HTTP_USER_AGENT'] || ''
     is_native = HotwireNative.native_client?(user_agent)
 
+    # Algunas WebViews envían `Origin: null` en formularios POST.
+    # Rails lo trata como origen inválido para CSRF y responde 422.
+    # Para clientes nativos removemos ese valor para que valide por token.
+    if is_native && env['HTTP_ORIGIN'] == 'null'
+      env.delete('HTTP_ORIGIN')
+    end
+
     # Ejecutar la aplicación
     status, headers, body = @app.call(env)
 
