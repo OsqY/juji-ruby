@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title><%= content_for(:title) || "Juji" %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="application-name" content="Juji">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#FFFFFF">
+    
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    
+    <!-- Hotwire Native Specific Styles -->
+    <style>
+      body {
+        /* Safe area insets para notch */
+        padding-top: max(0px, env(safe-area-inset-top));
+        padding-bottom: max(0px, env(safe-area-inset-bottom));
+        padding-left: max(0px, env(safe-area-inset-left));
+        padding-right: max(0px, env(safe-area-inset-right));
+        
+        /* Prevent zoom on input focus */
+        font-size: 16px;
+      }
+
+      /* Hide web-only elements */
+      .web-only {
+        display: none !important;
+      }
+
+      /* Navigation optimized for mobile */
+      nav.chaos-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding-bottom: max(0px, env(safe-area-inset-bottom));
+        z-index: 1000;
+        border-top: 1px solid var(--muted-gray);
+      }
+
+      body {
+        padding-bottom: calc(5rem + max(0px, env(safe-area-inset-bottom)));
+      }
+
+      main.chaotic-container {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem;
+      }
+
+      /* Touch-friendly buttons */
+      .btn-chaos, button, input[type="submit"], a.btn-chaos {
+        min-height: 48px;
+        min-width: 48px;
+        padding: 12px 16px;
+      }
+
+      /* Responsive text */
+      h1, h2, h3 {
+        font-size: clamp(1.2rem, 5vw, 2rem);
+      }
+
+      /* Bottom padding for sticky nav */
+      body > *:last-child {
+        margin-bottom: 5rem;
+      }
+    </style>
+  </head>
+
+  <body data-controller="theme frame-state" data-platform="native">
+    <%= native_client_badge %>
+
+    <!-- Main Content -->
+    <main class="chaotic-container">
+      <%= yield %>
+    </main>
+
+    <!-- Bottom Navigation for Native Apps -->
+    <nav class="chaos-nav mobile-nav" data-controller="nav-dropdown" data-action="click->nav-dropdown#closeOnLinkClick">
+      <% dashboard_active = controller_name == "dashboard" %>
+      <% reports_active = controller_name == "daily_reports" && action_name != "new" %>
+      <% report_new_active = controller_name == "daily_reports" && action_name == "new" %>
+      <% finance_active = controller_name == "transactions" && action_name != "new" %>
+      <% finance_new_active = controller_name == "transactions" && action_name == "new" %>
+      <% projects_active = controller_name == "projects" %>
+      <% habits_active = controller_name == "habits" %>
+      <% budgets_active = controller_name == "budgets" %>
+      <% shopping_active = controller_name == "shopping_items" %>
+      <% forms_active = controller_name == "anonymous_forms" %>
+      <% guide_active = controller_name == "guides" %>
+      <% login_active = controller_name == "sessions" && action_name == "new" %>
+      <% register_active = controller_name == "registrations" && action_name == "new" %>
+      <% recovery_active = controller_name == "passwords" && action_name == "new" %>
+
+      <div class="mobile-nav-items" style="display: flex; justify-content: space-around; padding: 0.5rem 0; gap: 0.25rem;">
+        <%= link_to dashboard_path, class: "mobile-nav-item #{'is-active' if dashboard_active}", style: "flex: 1; padding: 0.75rem; text-align: center; text-decoration: none; border-top: 3px solid transparent; border-color: #{dashboard_active ? 'var(--accent-blue)' : 'transparent'};" do %>
+          <div style="font-size: 1.5rem;">📊</div>
+          <div style="font-size: 0.7rem; font-weight: 900;">INICIO</div>
+        <% end %>
+
+        <%= link_to daily_reports_path, class: "mobile-nav-item #{'is-active' if reports_active}", style: "flex: 1; padding: 0.75rem; text-align: center; text-decoration: none; border-top: 3px solid transparent; border-color: #{reports_active ? 'var(--accent-blue)' : 'transparent'};" do %>
+          <div style="font-size: 1.5rem;">📝</div>
+          <div style="font-size: 0.7rem; font-weight: 900;">REPORTES</div>
+        <% end %>
+
+        <%= link_to transactions_path, class: "mobile-nav-item #{'is-active' if finance_active}", style: "flex: 1; padding: 0.75rem; text-align: center; text-decoration: none; border-top: 3px solid transparent; border-color: #{finance_active ? 'var(--accent-blue)' : 'transparent'};" do %>
+          <div style="font-size: 1.5rem;">💰</div>
+          <div style="font-size: 0.7rem; font-weight: 900;">FINANZAS</div>
+        <% end %>
+
+        <%= link_to projects_path, class: "mobile-nav-item #{'is-active' if projects_active}", style: "flex: 1; padding: 0.75rem; text-align: center; text-decoration: none; border-top: 3px solid transparent; border-color: #{projects_active ? 'var(--accent-blue)' : 'transparent'};" do %>
+          <div style="font-size: 1.5rem;">🎯</div>
+          <div style="font-size: 0.7rem; font-weight: 900;">PROYECTOS</div>
+        <% end %>
+
+        <% if authenticated? %>
+          <details class="mobile-nav-item" style="flex: 1; padding: 0.75rem; text-align: center; cursor: pointer; border-top: 3px solid transparent; border-color: #{account_group_active ? 'var(--accent-blue)' : 'transparent'};">
+            <summary style="text-decoration: none; list-style: none;">
+              <div style="font-size: 1.5rem;">👤</div>
+              <div style="font-size: 0.7rem; font-weight: 900;">CUENTA</div>
+            </summary>
+            <div style="position: absolute; bottom: 100%; right: 0; left: auto; background: var(--paper); border: 2px solid var(--ink); padding: 0.5rem; min-width: 120px; box-shadow: -4px -4px 0 var(--highlight);">
+              <div style="padding: 0.5rem; font-size: 0.8rem; border-bottom: 1px solid var(--muted-gray); margin-bottom: 0.5rem; word-break: break-all;"><%= current_user.email_address %></div>
+              <%= button_to "SALIR", session_path, method: :delete, style: "width: 100%; text-align: left; padding: 0.5rem; background: none; border: none; cursor: pointer; font-weight: 900;" %>
+            </div>
+          </details>
+        <% else %>
+          <%= link_to new_session_path, class: "mobile-nav-item", style: "flex: 1; padding: 0.75rem; text-align: center; text-decoration: none; border-top: 3px solid transparent; border-color: #{login_active ? 'var(--accent-blue)' : 'transparent'};" do %>
+            <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">🔐</div>
+            <div style="font-size: 0.7rem; font-weight: 900;">ENTRAR</div>
+          <% end %>
+        <% end %>
+      </div>
+    </nav>
+  </body>
+</html>

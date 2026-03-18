@@ -10,11 +10,11 @@
       <h2 class="section-title">AGREGAR ARTÍCULO</h2>
       <%= form_with(model: @new_item) do |f| %>
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <div style="flex: 2; min-width: 250px;">
+          <div style="flex: 2; min-width: auto;">
             <%= f.label :name, "NOMBRE DEL ARTÍCULO", style: "font-size: 0.7rem; font-weight: 900; opacity: 0.5; display: block;" %>
             <%= f.text_field :name, placeholder: "Ej. Pan, Leche, Tornillos...", required: true %>
           </div>
-          <div style="flex: 1; min-width: 120px;">
+          <div style="flex: 1; min-width: auto;">
             <%= f.label :quantity, "CANTIDAD", style: "font-size: 0.7rem; font-weight: 900; opacity: 0.5; display: block;" %>
             <%= f.text_field :quantity, placeholder: "Ej. 2 kg, 1 pack" %>
           </div>

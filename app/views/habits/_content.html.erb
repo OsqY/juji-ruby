@@ -10,7 +10,7 @@
       <h2 class="section-title">CREAR NUEVO HÁBITO</h2>
       <%= form_with(model: @new_habit) do |f| %>
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <div style="flex: 1; min-width: 250px;">
+          <div style="flex: 1; min-width: auto;">
             <%= f.label :name, "NOMBRE DEL HÁBITO", style: "font-size: 0.7rem; font-weight: 900; opacity: 0.5; display: block;" %>
             <%= f.text_field :name, placeholder: "Ej. Meditar, Leer 10 min, Ejercicio...", required: true %>
           </div>
@@ -23,10 +23,10 @@
 
     <div class="habit-tracker-grid" style="display: flex; flex-direction: column; gap: 2rem; overflow-x: auto;">
       <% if @habits.any? %>
-        <div style="display: grid; grid-template-columns: 200px repeat(7, 1fr); gap: 10px; min-width: 600px; padding-bottom: 1rem;">
+        <div style="display: grid; grid-template-columns: auto repeat(7, 50px); gap: 10px; min-width: auto; padding-bottom: 1rem; overflow-x: auto; -webkit-overflow-scrolling: touch;">
           <div></div>
           <% @dates.each do |date| %>
-            <div style="text-align: center;">
+            <div style="text-align: center; min-width: 50px;">
               <div style="font-size: 0.6rem; font-weight: 900; opacity: 0.4;"><%= date.strftime("%a").upcase %></div>
               <div style="font-size: 1rem; font-weight: 900;"><%= date.day %></div>
             </div>

@@ -1,0 +1,168 @@
+<!-- app/views/forms/_mobile_friendly.html.erb -->
+<!-- Incluir esta parcial en formularios para optimarlos en mobile -->
+
+<!-- 
+Uso en formularios:
+<%= render "forms/mobile_friendly", form: f %>
+
+Esto agregará clases y estilos para hacer formularios más usables en mobile
+-->
+
+<style>
+  /* Mobile-optimized form elements */
+  @media (max-width: 768px) {
+    form {
+      padding: 0.5rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="date"],
+    input[type="time"],
+    textarea,
+    select {
+      /* Prevenir zoom en iOS al enfocar */
+      font-size: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 2px solid var(--ink);
+      width: 100%;
+      box-sizing: border-box;
+      margin: 0.5rem 0;
+      -webkit-appearance: none;
+      appearance: none;
+
+      /* Better touch targets */
+      min-height: 44px;
+    }
+
+    /* Remove default styling from selects */
+    select {
+      background: var(--paper)
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>')
+        99% 50% no-repeat;
+      background-size: 20px;
+      padding-right: 32px;
+    }
+
+    /* Focus states for better UX */
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.1);
+    }
+
+    /* Labels */
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 900;
+      font-size: 0.9rem;
+    }
+
+    /* Buttons */
+    .btn-chaos,
+    button,
+    input[type="submit"],
+    input[type="reset"],
+    input[type="button"] {
+      font-size: 16px;
+      padding: 14px 20px;
+      min-height: 48px;
+      width: 100%;
+      box-sizing: border-box;
+      margin: 0.75rem 0;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+      border-radius: 8px;
+      touch-action: manipulation;
+    }
+
+    /* Form groups */
+    .form-group,
+    .field {
+      margin-bottom: 1.5rem;
+      width: 100%;
+    }
+
+    /* Checkboxes y radios */
+    input[type="checkbox"],
+    input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      margin-right: 0.5rem;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input[type="checkbox"] + label,
+    input[type="radio"] + label {
+      display: inline-block;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    /* Error messages */
+    .field_with_errors input,
+    .field_with_errors textarea,
+    .field_with_errors select,
+    .field.error input,
+    .field.error textarea {
+      border-color: #d63031;
+      background-color: #ffebeb;
+    }
+
+    .error-message,
+    .field_with_errors .error {
+      color: #d63031;
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+      display: block;
+    }
+
+    /* Multiple buttons on same line (ONLY on larger screens, not mobile) */
+    .form-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  /* Larger screens: allow multi-column */
+  @media (min-width: 769px) {
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+
+    .form-actions button,
+    .form-actions input[type="submit"] {
+      width: auto;
+    }
+  }
+</style>
+
+<!-- Helpers de Ruby para formularios mobile -->
+<script type="application/javascript">
+  // Auto-focus en primer input en formularios
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    if (form) {
+      const firstInput = form.querySelector('input[type="text"], input[type="email"], textarea, select');
+      if (firstInput) {
+        // Esperar un poco antes de enfocar para que el layout esté listo
+        setTimeout(() => {
+          // No hacer autofocus - dejar que el usuario elija
+          console.log('[Mobile Form] Primer input listo para focus');
+        }, 100);
+      }
+    }
+  });
+</script>
