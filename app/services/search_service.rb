@@ -30,7 +30,6 @@ class SearchService
       .joins(:project)
       .where(projects: { user_id: user.id })
       .where("LOWER(project_tasks.name) LIKE ?", "%#{query}%")
-      .select("project_tasks.*")
       .order("project_tasks.created_at DESC")
       .limit(limit)
 

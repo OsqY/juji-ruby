@@ -1,0 +1,358 @@
+╔═══════════════════════════════════════════════════════════════════════════╗
+║              TESTING QUICK REFERENCE CARD - Rails 8.1                    ║
+║                      Keep This Handy! 📌                                  ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+FRAMEWORK: Minitest | RUBY: 4.0.1 | RAILS: 8.1.2
+
+═══════════════════════════════════════════════════════════════════════════════
+
+RUNNING TESTS
+─────────────────────────────────────────────────────────────────────────────
+
+All tests:
+  $ rails test
+
+Specific file:
+  $ rails test test/models/user_test.rb
+
+Specific test:
+  $ rails test test/models/user_test.rb:5
+
+Pattern:
+  $ rails test test/services/
+
+Verbose:
+  $ rails test --verbose
+
+Parallel:
+  $ rails test --parallel=4
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TEST CLASSES & INHERITANCE
+─────────────────────────────────────────────────────────────────────────────
+
+Model Tests:
+  class UserTest < ActiveSupport::TestCase
+    test "description" { assert_equal(expected, actual) }
+  end
+
+Controller/Integration Tests:
+  class SessionsControllerTest < ActionDispatch::IntegrationTest
+    test "get request" { get path; assert_response :success }
+  end
+
+Job Tests:
+  class CheckAlertsJobTest < ActiveJob::TestCase
+    test "job" { assert_enqueued_with(job: CheckAlertsJob) }
+  end
+
+═══════════════════════════════════════════════════════════════════════════════
+
+ACCESSING TEST DATA
+─────────────────────────────────────────────────────────────────────────────
+
+Fixtures (defined in test/fixtures/*.yml):
+  @user = users(:one)
+  @habit = habits(:one)
+  @project = projects(:one)
+
+Create on-the-fly:
+  @transaction = @user.transactions.create!(amount: 50, ...)
+
+Mixed (fixtures + inline):
+  setup do
+    @user = users(:one)
+    @habit = @user.habits.create!(name: "Read")
+  end
+
+═══════════════════════════════════════════════════════════════════════════════
+
+COMMON ASSERTIONS
+─────────────────────────────────────────────────────────────────────────────
+
+Equality:
+  assert_equal(expected, actual)
+  assert_nil(value)
+  assert_empty(array)
+
+HTTP Response:
+  assert_response :success         # 200
+  assert_response :created         # 201
+  assert_response :redirect        # 3xx
+  assert_response :unprocessable_entity  # 422
+
+Redirect:
+  assert_redirected_to root_path
+  assert_redirected_to user_path(@user)
+
+HTML/Content:
+  assert_select "div"
+  assert_select "div#id"
+  assert_select "div", text: "content"
+  assert_match(/pattern/, @response.body)
+
+Database:
+  assert_difference('User.count', 1) { post users_path }
+  assert_no_difference('User.count') { get users_path }
+
+Exceptions:
+  assert_raises(StandardError) { code }
+
+═══════════════════════════════════════════════════════════════════════════════
+
+AUTHENTICATION IN TESTS
+─────────────────────────────────────────────────────────────────────────────
+
+Sign in:
+  sign_in_as(users(:one))
+
+Sign out:
+  sign_out
+
+Example:
+  test "authenticated action" do
+    sign_in_as(users(:one))
+    get dashboard_path
+    assert_response :success
+  end
+
+═══════════════════════════════════════════════════════════════════════════════
+
+HTTP REQUESTS IN TESTS
+─────────────────────────────────────────────────────────────────────────────
+
+GET:
+  get path
+  get path, params: { key: value }
+
+POST:
+  post path
+  post path, params: { model: { attr: value } }
+
+PATCH/PUT:
+  patch path, params: { ... }
+  put path, params: { ... }
+
+DELETE:
+  delete path
+
+Headers (e.g., Turbo):
+  post path, headers: { "Accept" => Mime[:turbo_stream].to_s }
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TEST SETUP & TEARDOWN
+─────────────────────────────────────────────────────────────────────────────
+
+Setup (runs before each test):
+  class MyTest < ActiveSupport::TestCase
+    setup do
+      @user = users(:one)
+    end
+  end
+
+Teardown (runs after each test):
+  class MyTest < ActiveSupport::TestCase
+    teardown do
+      @user = nil
+    end
+  end
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TIME TRAVEL (TESTING DATES)
+─────────────────────────────────────────────────────────────────────────────
+
+Travel to a date:
+  travel_to 4.days.ago do
+    @user.daily_reports.create!(...)
+  end
+
+Travel back to present:
+  # Automatic when block ends
+
+═══════════════════════════════════════════════════════════════════════════════
+
+SERVICES - HOW TO TEST
+─────────────────────────────────────────────────────────────────────────────
+
+Create test file:
+  touch test/services/my_service_test.rb
+
+Inherit from:
+  class MyServiceTest < ActiveSupport::TestCase
+    setup { @user = users(:one) }
+    
+    test "service method" do
+      result = MyService.method(@user, params)
+      assert_equal(expected, result)
+    end
+  end
+
+Run:
+  rails test test/services/my_service_test.rb
+
+═══════════════════════════════════════════════════════════════════════════════
+
+FIXTURES - YAML FORMAT
+─────────────────────────────────────────────────────────────────────────────
+
+Example (test/fixtures/users.yml):
+  <% password = BCrypt::Password.create("password") %>
+  
+  one:
+    email_address: one@example.com
+    password_digest: <%= password %>
+  
+  two:
+    email_address: two@example.com
+    password_digest: <%= password %>
+
+Usage in tests:
+  @user = users(:one)
+  @other = users(:two)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DEBUGGING FAILED TESTS
+─────────────────────────────────────────────────────────────────────────────
+
+Print values:
+  puts @user.inspect
+  puts @response.body
+
+Run specific failing test:
+  rails test test/models/user_test.rb:12
+
+Check what's in DB during test:
+  puts User.all.inspect
+
+Use pry/byebug (if installed):
+  require 'pry'; binding.pry
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DIRECTORY STRUCTURE
+─────────────────────────────────────────────────────────────────────────────
+
+test/
+├── test_helper.rb              # Main config
+├── test_helpers/
+│   └── session_test_helper.rb  # Auth helpers
+├── models/                      # Model tests
+├── controllers/                 # Controller tests
+├── integration/                 # Integration tests
+├── jobs/                        # Job tests
+├── services/                    # ← CREATE THIS, ADD YOUR SERVICE TESTS
+├── helpers/                     # Helper tests
+├── mailers/                     # Mailer tests
+├── fixtures/                    # YAML test data
+└── system/                      # System/browser tests
+
+═══════════════════════════════════════════════════════════════════════════════
+
+CRITICAL FILES - SERVICES NEEDING TESTS
+─────────────────────────────────────────────────────────────────────────────
+
+SearchService (/app/services/search_service.rb)
+  Status: ❌ NO TESTS
+  Methods: perform, count, organized_results
+  Template: TESTING_QUICK_START.md § STEP 2
+
+AlertService (/app/services/alert_service.rb)
+  Status: ❌ NO TESTS
+  Methods: check_all_users, check_for_user, 3 private methods
+  Template: TESTING_QUICK_START.md § STEP 3
+
+═══════════════════════════════════════════════════════════════════════════════
+
+CI/CD COMMAND
+─────────────────────────────────────────────────────────────────────────────
+
+Test job:
+  bin/rails db:test:prepare test
+
+System test job:
+  bin/rails db:test:prepare test:system
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DOCUMENTATION FILES
+─────────────────────────────────────────────────────────────────────────────
+
+TESTING_README.md
+  → Start here, 5 min read, navigation guide
+
+TESTING_SUMMARY.txt
+  → Executive overview, 10 min read, quick reference
+
+TESTING_ANALYSIS.md
+  → Comprehensive guide, 30 min read, deep dive
+
+TESTING_QUICK_START.md
+  → Copy-paste templates, 15 min read, implement now!
+
+TESTING_QUICK_REFERENCE.txt
+  → This file! Handy reference card
+
+═══════════════════════════════════════════════════════════════════════════════
+
+USEFUL PATTERNS
+─────────────────────────────────────────────────────────────────────────────
+
+Test both success and failure:
+  test "valid case" do
+    result = method(valid_params)
+    assert result
+  end
+  
+  test "invalid case" do
+    result = method(invalid_params)
+    assert_nil result
+  end
+
+Test scoping (user isolation):
+  test "respects user isolation" do
+    other_user = users(:two)
+    @user.create_record(name: "test")
+    
+    results = MyService.search("test", @user)
+    results_other = MyService.search("test", other_user)
+    
+    assert_equal 1, results.count
+    assert_equal 1, results_other.count  # Should only see own
+  end
+
+Test idempotency:
+  test "prevents duplicates" do
+    create_notification(...)
+    create_notification(...)
+    
+    assert_equal 1, Notification.count
+  end
+
+═══════════════════════════════════════════════════════════════════════════════
+
+NEXT STEPS
+─────────────────────────────────────────────────────────────────────────────
+
+1. mkdir -p test/services
+
+2. Copy SearchService test from TESTING_QUICK_START.md § STEP 2
+   into test/services/search_service_test.rb
+
+3. Copy AlertService test from TESTING_QUICK_START.md § STEP 3
+   into test/services/alert_service_test.rb
+
+4. rails test test/services/
+
+5. Fix any failures
+
+6. git add test/services/ && git commit -m "Add service tests"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+KEEP THIS CARD HANDY! 📌
+
