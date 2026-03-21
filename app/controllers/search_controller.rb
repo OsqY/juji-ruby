@@ -6,6 +6,10 @@ class SearchController < ApplicationController
 
     if @query.present?
       @results = SearchService.perform(@query, current_user, limit: 10)
+      
+      # Apply filters if provided
+      @results = apply_filters(@results) if params[:type].present? || params[:from_date].present? || params[:to_date].present?
+      
       @total_count = @results.sum { |_, records| records.size }
     end
   end
@@ -34,6 +38,55 @@ class SearchController < ApplicationController
   end
 
   private
+
+  def apply_filters(results)
+    filtered = {}
+    type_filter = params[:type]&.to_sym
+    from_date = params[:from_date].present? ? Date.parse(params[:from_date]) : nil
+    to_date = params[:to_date].present? ? Date.parse(params[:to_date]) : nil
+
+    results.each do |model_name, records|
+      # Apply type filter
+      if type_filter.present? && model_name != type_filter
+        next
+      end
+
+      # Apply date filter if applicable
+      filtered_records = records.filter do |record|
+        date_field = get_date_field(record, model_name)
+        next true unless date_field
+
+        if from_date && to_date
+          date_field.between?(from_date, to_date)
+        elsif from_date
+          date_field >= from_date
+        elsif to_date
+          date_field <= to_date
+        else
+          true
+        end
+      end
+
+      filtered[model_name] = filtered_records if filtered_records.any?
+    end
+
+    filtered
+  end
+
+  def get_date_field(record, model_name)
+    case model_name
+    when :transactions
+      record.date
+    when :daily_reports
+      record.report_date
+    when :project_tasks, :habits, :shopping_items
+      record.created_at&.to_date
+    when :projects, :budgets, :anonymous_forms
+      record.created_at&.to_date
+    else
+      nil
+    end
+  end
 
   def format_result(record, model_name)
     case model_name

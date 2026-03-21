@@ -47,9 +47,68 @@
         "
       ></div>
     </div>
-  </div>
 
-  <% if @query.present? %>
+    <!-- Advanced Filters (Optional) -->
+    <details style="margin-bottom: 2rem; padding: 1rem; background: #f9f9f9; border-radius: 8px; border: 1px solid #e0e0e0;">
+      <summary style="cursor: pointer; font-weight: 600; color: #333; padding: 0.5rem;">
+        ⚙️ Filtros Avanzados
+      </summary>
+      
+      <form method="get" action="<%= search_path %>" style="margin-top: 1rem;">
+        <input type="hidden" name="q" value="<%= @query %>">
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+          <!-- Type Filter -->
+          <div>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">
+              Tipo de contenido
+            </label>
+            <select name="type" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;">
+              <option value="">Todos los tipos</option>
+              <option value="transactions" <%= 'selected' if params[:type] == 'transactions' %>>💰 Transacciones</option>
+              <option value="daily_reports" <%= 'selected' if params[:type] == 'daily_reports' %>>📝 Reportes</option>
+              <option value="projects" <%= 'selected' if params[:type] == 'projects' %>>🎯 Proyectos</option>
+              <option value="project_tasks" <%= 'selected' if params[:type] == 'project_tasks' %>>✓ Tareas</option>
+              <option value="habits" <%= 'selected' if params[:type] == 'habits' %>>🌟 Hábitos</option>
+              <option value="shopping_items" <%= 'selected' if params[:type] == 'shopping_items' %>>🛒 Compras</option>
+              <option value="budgets" <%= 'selected' if params[:type] == 'budgets' %>>💳 Presupuestos</option>
+              <option value="anonymous_forms" <%= 'selected' if params[:type] == 'anonymous_forms' %>>📋 Formularios</option>
+            </select>
+          </div>
+
+          <!-- Date Range -->
+          <div>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">
+              Desde
+            </label>
+            <input 
+              type="date" 
+              name="from_date" 
+              value="<%= params[:from_date] %>"
+              style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;"
+            />
+          </div>
+
+          <div>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">
+              Hasta
+            </label>
+            <input 
+              type="date" 
+              name="to_date" 
+              value="<%= params[:to_date] %>"
+              style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;"
+            />
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem;">
+          <button type="submit" class="btn-chaos" style="padding: 0.75rem 1.5rem;">Aplicar Filtros</button>
+          <a href="<%= search_path %>" style="padding: 0.75rem 1.5rem; border: 1px solid #ddd; border-radius: 4px; background: #f5f5f5; cursor: pointer; text-decoration: none;">Limpiar</a>
+        </div>
+      </form>
+    </details>
+  </div>
     <% if @total_count > 0 %>
       <div style="margin-bottom: 2rem;">
         <p style="color: #666; font-size: 0.95rem;">
