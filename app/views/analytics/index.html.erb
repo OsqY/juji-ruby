@@ -58,44 +58,37 @@
     </div>
   </div>
 
-  <div class="analytics-charts">
+  <div
+    class="analytics-charts"
+    data-controller="analytics-chart"
+    data-analytics-chart-spending-value="<%= @spending_monthly.to_json %>"
+    data-analytics-chart-habits-value="<%= @habit_completion.to_json %>"
+    data-analytics-chart-alerts-value="<%= @alerts_trend.to_json %>"
+  >
     <h2>Trends</h2>
 
     <!-- Spending Monthly -->
     <div class="chart-container">
       <h3>Monthly Spending</h3>
-      <div id="spending-monthly-chart" class="chart-placeholder">
-        <p>Chart will load here</p>
+      <div class="chart-canvas-wrap">
+        <canvas data-analytics-chart-target="spendingCanvas"></canvas>
       </div>
-      <script>
-        // Monthly spending data
-        var spendingData = <%= @spending_monthly.to_json %>;
-        console.log("Spending monthly:", spendingData);
-      </script>
     </div>
 
     <!-- Habit Completion -->
     <div class="chart-container">
       <h3>Habit Completion Rate</h3>
-      <div id="habit-completion-chart" class="chart-placeholder">
-        <p>Chart will load here</p>
+      <div class="chart-canvas-wrap">
+        <canvas data-analytics-chart-target="habitsCanvas"></canvas>
       </div>
-      <script>
-        var habitData = <%= @habit_completion.to_json %>;
-        console.log("Habit completion:", habitData);
-      </script>
     </div>
 
     <!-- Alerts Trend -->
     <div class="chart-container">
       <h3>Alerts Over Time</h3>
-      <div id="alerts-chart" class="chart-placeholder">
-        <p>Chart will load here</p>
+      <div class="chart-canvas-wrap">
+        <canvas data-analytics-chart-target="alertsCanvas"></canvas>
       </div>
-      <script>
-        var alertsData = <%= @alerts_trend.to_json %>;
-        console.log("Alerts trend:", alertsData);
-      </script>
     </div>
   </div>
 
@@ -259,14 +252,12 @@
       font-weight: 600;
     }
 
-    .chart-placeholder {
+    .chart-canvas-wrap {
       height: 300px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: relative;
       background: #f9fafb;
       border-radius: 4px;
-      color: #9ca3af;
+      padding: 8px;
     }
 
     @media (max-width: 768px) {
@@ -278,7 +269,7 @@
         font-size: 24px;
       }
 
-      .chart-placeholder {
+      .chart-canvas-wrap {
         height: 200px;
       }
     }
