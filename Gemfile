@@ -27,6 +27,7 @@ gem "image_processing", "~> 1.2"
 # Export functionality
 gem "prawn", "~> 2.4"
 gem "csv"
+gem "matrix"
 
 # Hotwire Native support
 gem "rack-cors", "~> 2.0"
