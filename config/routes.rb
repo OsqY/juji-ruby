@@ -20,6 +20,10 @@ Rails.application.routes.draw do
     post :toggle, on: :member
   end
   resources :shopping_items
+  resources :notifications do
+    patch :mark_as_read, on: :member
+    patch :mark_all_as_read, on: :collection
+  end
   resources :anonymous_forms, only: %i[ index new create show destroy ]
 
   scope "/f/:token", as: :public_anonymous_form do

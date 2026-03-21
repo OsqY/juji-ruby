@@ -35,6 +35,7 @@
       <% budgets_active = controller_name == "budgets" %>
       <% shopping_active = controller_name == "shopping_items" %>
       <% forms_active = controller_name == "anonymous_forms" %>
+      <% notifications_active = controller_name == "notifications" %>
       <% guide_active = controller_name == "guides" %>
       <% login_active = controller_name == "sessions" && action_name == "new" %>
       <% register_active = controller_name == "registrations" && action_name == "new" %>
@@ -83,6 +84,9 @@
       </div>
 
       <div class="nav-meta" role="navigation" aria-label="Cuenta">
+        <% if authenticated? %>
+          <%= link_to "NOTIFICACIONES", notifications_path, class: "nav-link #{'is-active' if notifications_active}" %>
+        <% end %>
         <details class="nav-dropdown nav-dropdown-account" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
           <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if account_group_active %>">
             <%= authenticated? ? "CUENTA" : "ACCESO" %>

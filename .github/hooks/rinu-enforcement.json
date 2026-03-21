@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/inject-rinu-policy.sh",
+        "timeout": 10
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/enforce-backlog-on-stop.sh",
+        "timeout": 10
+      }
+    ]
+  }
+}
