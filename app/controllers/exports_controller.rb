@@ -1,6 +1,4 @@
 class ExportsController < ApplicationController
-  before_action :authenticate_user!
-  
   def create
     model_name = params[:model]
     format = params[:format] || "csv"
