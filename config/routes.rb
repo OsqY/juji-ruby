@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   get "search", to: "search#index", as: :search
   get "search/results", to: "search#results", as: :search_results
 
+  # Export routes
+  post "exports", to: "exports#create", as: :exports
+
   resource :session
   resources :passwords, param: :token
   resources :registrations, only: %i[ new create ]

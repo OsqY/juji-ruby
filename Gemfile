@@ -24,6 +24,10 @@ gem "thruster", require: false
 
 gem "image_processing", "~> 1.2"
 
+# Export functionality
+gem "prawn", "~> 2.4"
+gem "csv"
+
 # Hotwire Native support
 gem "rack-cors", "~> 2.0"
 gem "user_agent_parser", ">= 2.0"
