@@ -209,3 +209,125 @@ label {
 body {
   position: relative;
 }
+
+/* Mobile-specific form optimizations */
+@media (max-width: 640px) {
+  /* Ensure full-width inputs without overflow */
+  input,
+  textarea,
+  select {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Larger touch targets for form fields */
+  input[type="radio"],
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+    cursor: pointer;
+  }
+
+  /* Better spacing for form groups */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Reduce padding/margins on mobile for space */
+  .chaotic-container {
+    padding: 1rem !important;
+  }
+
+  /* Make search dropdown work better on mobile */
+  .nav-search-wrapper {
+    width: 100%;
+  }
+
+  .nav-search-results {
+    max-height: 250px !important;
+  }
+
+  /* Improve button sizing on mobile */
+  .btn-chaos,
+  button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Full-width form inputs on mobile */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="date"],
+  textarea,
+  select {
+    width: 100%;
+  }
+
+  /* Improve drawer appearance on mobile */
+  .inline-drawer-panel {
+    max-width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+
+  /* Reduce navbar height on mobile */
+  .chaos-nav {
+    padding: 0.5rem;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  /* Search input less prominent on mobile to save space */
+  .nav-search-input {
+    font-size: 16px; /* Prevents zoom on iOS input */
+  }
+}
+
+/* Extra small devices (< 480px) */
+@media (max-width: 480px) {
+  /* Even tighter spacing */
+  .chaotic-container {
+    padding: 0.75rem !important;
+  }
+
+  /* Smaller fonts for more content visibility */
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  /* Stack columns on very small screens */
+  .report-grid,
+  [class*="grid"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Reduce form margins */
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  /* Full width search results on small screens */
+  .search-results-container,
+  .nav-search-results {
+    max-height: 200px !important;
+  }
+}
