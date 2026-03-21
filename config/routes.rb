@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   # Export routes
   post "exports", to: "exports#create", as: :exports
 
+  # Analytics routes
+  get "analytics", to: "analytics#index", as: :analytics
+  get "analytics/data/:metric", to: "analytics#data", as: :analytics_data
+
   resource :session
   resources :passwords, param: :token
   resources :registrations, only: %i[ new create ]
