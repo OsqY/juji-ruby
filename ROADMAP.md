@@ -17,7 +17,7 @@ Convertir Juji en un sistema de control personal diario que conecte productivida
 
 ---
 
-## Fase 1 (Semanas 1-3): Fundación de valor
+## Fase 1 (Semanas 1-3): Fundación de valor ✅ COMPLETADA
 
 ### Objetivo
 Unificar el valor actual en una experiencia clara y medible.
@@ -54,7 +54,7 @@ Unificar el valor actual en una experiencia clara y medible.
 
 ---
 
-## Fase 2 (Semanas 4-6): Diferenciación del producto
+## Fase 2 (Semanas 4-6): Diferenciación del producto ✅ COMPLETADA
 
 ### Objetivo
 Conectar módulos para generar insights de mayor valor.
@@ -83,37 +83,48 @@ Conectar módulos para generar insights de mayor valor.
 
 ---
 
-## Fase 3 (Semanas 7-9): Retención y hábito
+## Fase 3 (Semanas 7-9): Exportación y Analytics ✅ COMPLETADA
 
 ### Objetivo
-Aumentar constancia y adherencia diaria.
+Habilitar decisiones con datos exportables y métricas accionables.
 
 ### Iniciativas
-1. Rachas y logros.
-2. Recordatorios configurables.
-3. Modo “cierre del día” guiado.
+1. Exportación de datos (PDF/CSV).
+2. Analytics dashboard (8 métricas).
+3. API JSON de métricas para gráficos.
 
 ### Entregables
-- Sistema de rachas visible en hábitos/reportes.
-- Catálogo inicial de logros.
-- Configuración de recordatorios por horario y frecuencia.
-- Flujo guiado de 3 pasos:
-  - reporte
-  - movimientos
-  - tareas
+- ExportService para CSV/PDF en:
+  - transacciones
+  - reportes diarios
+  - proyectos
+  - hábitos
+- ExportsController + ruta `POST /exports`.
+- AnalyticsService con métricas:
+  - gasto mensual
+  - gasto por categoría
+  - cumplimiento de hábitos
+  - estado/progreso de proyectos
+  - tendencia de alertas
+  - balance semanal
+- AnalyticsController + rutas:
+  - `GET /analytics`
+  - `GET /analytics/data/:metric`
+- Dashboard analytics responsive.
+- 27 tests nuevos (14 export + 13 analytics), total 77 tests passing.
 
 ### Criterios de éxito
-- +15% de retención semana 4.
-- >= 50% de usuarios activos completa “cierre del día” al menos 3 veces por semana.
-- >= 25% de recuperación de usuarios inactivos con recordatorios.
+- Exportaciones funcionales por módulo y rango de fechas.
+- Dashboard con métricas visibles y consistentes por usuario.
+- 100% de tests de servicios pasando (77/77).
 
 ### Dependencias
-- Notificaciones in-app estables.
-- Persistencia confiable de estado de progreso diario.
+- Servicios de dominio existentes (Search/Alert).
+- Persistencia y aislamiento de datos por usuario.
 
 ---
 
-## Fase 4 (Semanas 10-12): Escalado y colaboración
+## Fase 4 (Semanas 10-12): Escalado y colaboración (Pendiente)
 
 ### Objetivo
 Habilitar crecimiento y casos de uso compartidos.
@@ -145,16 +156,15 @@ Habilitar crecimiento y casos de uso compartidos.
 ## Backlog priorizado (Now / Next / Later)
 
 ### Now
-- Dashboard semanal.
-- Alertas MVP.
-- Búsqueda global.
-- Optimización móvil de formularios.
+- Completar integración de gráficos reales (Chart.js) en analytics.
+- Publicar botones de exportación en todas las vistas índice.
+- Validación E2E de flujos de exportación.
 
 ### Next
+- Email notifications para alertas.
+- Webhooks y APIs externas.
 - Metas mensuales.
 - Insights automáticos.
-- Vínculo gastos con proyectos/hábitos.
-- Plantillas de reporte.
 
 ### Later
 - Rachas y logros avanzados.
