@@ -37,7 +37,7 @@
             </p>
           </div>
           <% if notification.unread? %>
-            <%= button_to "✓", mark_as_read_notification_path(notification), 
+            <%= button_to "OK", mark_as_read_notification_path(notification), 
                 method: :patch,
                 class: "button-small",
                 style: "background: #2D5A27; color: white; border: none; padding: 0.5rem 1rem; cursor: pointer; margin-left: 1rem;" %>

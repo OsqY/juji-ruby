@@ -53,12 +53,12 @@ export default class extends Controller {
     }
 
     let html = '<div class="search-dropdown"><div class="search-group">'
-    html += '<h3 class="search-group-title">Búsquedas Recientes</h3>'
+      html += '<h3 class="search-group-title">Busquedas Recientes</h3>'
     
     history.forEach((query, index) => {
       html += `
         <a href="/search?q=${encodeURIComponent(query)}" class="search-history-item">
-          <span class="search-result-icon">🕐</span>
+          <span class="search-result-icon">H</span>
           <div class="search-result-content">
             <div class="search-result-title">${this.escapeHtml(query)}</div>
           </div>
@@ -73,12 +73,13 @@ export default class extends Controller {
   }
 
   displayResults(data, query) {
+    const resultsData = data.results || {}
     const groupedResults = {}
     let totalResults = 0
 
-    Object.entries(data).forEach(([modelType, records]) => {
+    Object.entries(resultsData).forEach(([modelType, records]) => {
       if (records.length > 0) {
-        groupedResults[modelType] = records.slice(0, 5) // Limit to 5 per type
+        groupedResults[modelType.toLowerCase().replace(/\s+/g, "_")] = records.slice(0, 5) // Limit to 5 per type
         totalResults += records.length
       }
     })
@@ -116,18 +117,18 @@ export default class extends Controller {
 
   buildResultItem(modelType, record, index) {
     const icons = {
-      transactions: "💰",
-      daily_reports: "📝",
-      projects: "🎯",
-      project_tasks: "✓",
-      habits: "🌟",
-      shopping_items: "🛒",
-      budgets: "💳",
-      anonymous_forms: "📋"
+      transactions: "TX",
+      daily_reports: "RP",
+      projects: "PJ",
+      project_tasks: "TK",
+      habits: "HB",
+      shopping_items: "CP",
+      budgets: "BG",
+      anonymous_forms: "FM"
     }
 
-    const icon = icons[modelType] || "📄"
-    const title = this.escapeHtml(record.title || record.name || "Sin título")
+    const icon = icons[modelType] || "DOC"
+    const title = this.escapeHtml(record.title || record.name || "Sin titulo")
     const subtitle = this.escapeHtml(record.subtitle || record.description || "")
 
     return `

@@ -110,7 +110,7 @@
 
       <div class="nav-primary" role="navigation" aria-label="Secciones principales">
         <%= link_to "DASHBOARD", dashboard_path, class: "nav-link #{'is-active' if dashboard_active}" %>
-        <%= link_to "🔍 BÚSQUEDA", search_path, class: "nav-link #{'is-active' if current_page?(search_path)}" %>
+        <%= link_to "BUSQUEDA", search_path, class: "nav-link #{'is-active' if current_page?(search_path)}" %>
         <%= link_to t("guide.nav"), guide_path, class: "nav-link #{'is-active' if guide_active}" %>
         <%= link_to "FORMULARIOS", anonymous_forms_path, class: "nav-link #{'is-active' if forms_active}" %>
 
@@ -177,6 +177,10 @@
         <label class="theme-option" title="Neon" for="theme_neon">
           <input type="radio" name="theme" id="theme_neon" value="neon" data-action="change->theme#switch">
           <i data-lucide="zap"></i>
+        </label>
+        <label class="theme-option" title="Brat" for="theme_brat">
+          <input type="radio" name="theme" id="theme_brat" value="brat" data-action="change->theme#switch">
+          <i data-lucide="square"></i>
         </label>
       </div>
       </div>

@@ -4,7 +4,7 @@
   <div class="indicators-grid">
     <!-- 1. Hábitos Cumplidos -->
     <div class="indicator-card habits">
-      <div class="indicator-icon">🎯</div>
+      <div class="indicator-icon">HB</div>
       <div class="indicator-content">
         <div class="indicator-number">
           <%= @indicator_habits_completed %>
@@ -24,7 +24,7 @@
 
     <!-- 2. Gasto vs Presupuesto -->
     <div class="indicator-card budget">
-      <div class="indicator-icon">💰</div>
+      <div class="indicator-icon">FN</div>
       <div class="indicator-content">
         <div class="indicator-number">
           L. <%= number_with_precision(@indicator_month_expenses, precision: 2) %>
@@ -50,7 +50,7 @@
 
     <!-- 3. Tareas Cerradas -->
     <div class="indicator-card tasks">
-      <div class="indicator-icon">✅</div>
+      <div class="indicator-icon">TK</div>
       <div class="indicator-content">
         <div class="indicator-number"><%= @indicator_tasks_completed %></div>
         <div class="indicator-label">Tareas Cerradas</div>
@@ -60,21 +60,21 @@
 
     <!-- 4. Bloqueos Abiertos -->
     <div class="indicator-card blockers">
-      <div class="indicator-icon">🚫</div>
+      <div class="indicator-icon">BL</div>
       <div class="indicator-content">
         <div class="indicator-number"><%= @indicator_open_blockers %></div>
         <div class="indicator-label">Bloqueos Abiertos</div>
         <% if @indicator_open_blockers.positive? %>
           <div class="indicator-subtext warning">requieren atención</div>
         <% else %>
-          <div class="indicator-subtext">resueltos ✨</div>
+          <div class="indicator-subtext">resueltos</div>
         <% end %>
       </div>
     </div>
 
     <!-- 5. Reportes Enviados -->
     <div class="indicator-card reports">
-      <div class="indicator-icon">📝</div>
+      <div class="indicator-icon">RP</div>
       <div class="indicator-content">
         <div class="indicator-number">
           <%= @indicator_reports_sent %>
@@ -92,7 +92,7 @@
 
     <!-- 6. Balance Semanal -->
     <div class="indicator-card balance <%= @indicator_weekly_balance >= 0 ? 'positive' : 'negative' %>">
-      <div class="indicator-icon"><%= @indicator_weekly_balance >= 0 ? '📈' : '📉' %></div>
+      <div class="indicator-icon"><%= @indicator_weekly_balance >= 0 ? 'UP' : 'DN' %></div>
       <div class="indicator-content">
         <div class="indicator-number">
           L. <%= number_with_precision(@indicator_weekly_balance.abs, precision: 2) %>

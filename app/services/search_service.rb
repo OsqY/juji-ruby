@@ -41,7 +41,7 @@ class SearchService
 
     # Artículos de Compra
     results[:shopping_items] = user.shopping_items
-      .where("LOWER(name) LIKE ? OR LOWER(quantity) LIKE ?", "%#{query}%", "%#{query}%")
+      .where("LOWER(name) LIKE ? OR LOWER(CAST(quantity AS TEXT)) LIKE ?", "%#{query}%", "%#{query}%")
       .order(created_at: :desc)
       .limit(limit)
 

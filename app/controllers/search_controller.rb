@@ -97,7 +97,7 @@ class SearchController < ApplicationController
         subtitle: "#{record.transaction_type.humanize} - L. #{number_with_precision(record.amount, precision: 2)}",
         url: transaction_path(record),
         type: 'transaction',
-        icon: record.income? ? '💰' : '💸',
+        icon: record.income? ? "IN" : "OUT",
         category: record.category
       }
     when :daily_reports
@@ -107,7 +107,7 @@ class SearchController < ApplicationController
         subtitle: "Reporte - #{record.report_date.strftime('%d/%m/%Y')}",
         url: daily_report_path(record),
         type: 'report',
-        icon: '📝',
+        icon: "RPT",
         date: record.report_date
       }
     when :projects
@@ -117,7 +117,7 @@ class SearchController < ApplicationController
         subtitle: record.description&.truncate(50) || "Proyecto",
         url: project_path(record),
         type: 'project',
-        icon: '📊'
+        icon: "PRJ"
       }
     when :project_tasks
       {
@@ -126,7 +126,7 @@ class SearchController < ApplicationController
         subtitle: "Tarea - #{record.project.name}",
         url: project_project_task_path(record.project, record),
         type: 'task',
-        icon: record.completed? ? '✅' : '◻️',
+        icon: record.completed? ? "DONE" : "TODO",
         completed: record.completed?
       }
     when :habits
@@ -136,16 +136,16 @@ class SearchController < ApplicationController
         subtitle: "Hábito",
         url: habit_path(record),
         type: 'habit',
-        icon: '🎯'
+        icon: "HBT"
       }
     when :shopping_items
       {
         id: record.id,
         title: record.name,
-        subtitle: "#{record.quantity} #{record.unit}",
+        subtitle: "Cantidad: #{record.quantity}",
         url: shopping_item_path(record),
         type: 'shopping',
-        icon: '🛒'
+        icon: "SHP"
       }
     when :budgets
       {
@@ -154,7 +154,7 @@ class SearchController < ApplicationController
         subtitle: "Presupuesto - L. #{number_with_precision(record.monthly_limit, precision: 2)}",
         url: budget_path(record),
         type: 'budget',
-        icon: '💳'
+        icon: "BDG"
       }
     when :anonymous_forms
       {
@@ -163,7 +163,7 @@ class SearchController < ApplicationController
         subtitle: record.description&.truncate(50) || "Formulario",
         url: anonymous_form_path(record),
         type: 'form',
-        icon: '📋'
+        icon: "FRM"
       }
     else
       {

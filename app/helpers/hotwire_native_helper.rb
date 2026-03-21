@@ -6,7 +6,7 @@ module HotwireNativeHelper
     return unless hotwire_native_client? && Rails.env.development?
     
     content_tag :div, class: "hotwire-native-indicator", style: "position: fixed; bottom: 10px; right: 10px; background: #4CAF50; color: white; padding: 8px 12px; border-radius: 4px; z-index: 9999; font-size: 12px; font-weight: bold;" do
-      "🚀 NATIVE CLIENT"
+      "NATIVE CLIENT"
     end
   end
 

@@ -2,11 +2,11 @@ module NotificationsHelper
   def notification_title(notification)
     case notification.notification_type
     when "budget_exceeded"
-      "⚠️ Presupuesto Superado"
+      "Presupuesto Superado"
     when "no_report_3_days"
-      "📋 Reportes Pendientes"
+      "Reportes Pendientes"
     when "project_no_progress"
-      "📊 Proyecto sin Avances"
+      "Proyecto sin Avances"
     else
       "Notificación"
     end

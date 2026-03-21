@@ -17,7 +17,7 @@ module NativeErrorHandling
     Rails.logger.error(exception.backtrace.join("\n"))
 
     if hotwire_native_client?
-      render_native_error(500, "Error del Servidor", "Algo salió mal. Por favor, intenta de nuevo.", "💥")
+      render_native_error(500, "Error del Servidor", "Algo salió mal. Por favor, intenta de nuevo.", "ERR")
     else
       render "errors/500", status: :internal_server_error
     end
@@ -25,7 +25,7 @@ module NativeErrorHandling
 
   def handle_not_found(exception)
     if hotwire_native_client?
-      render_native_error(404, "No Encontrado", "La página que buscas no existe.", "🔍")
+      render_native_error(404, "No Encontrado", "La página que buscas no existe.", "404")
     else
       render "errors/404", status: :not_found
     end
@@ -33,17 +33,17 @@ module NativeErrorHandling
 
   def handle_parameter_missing(exception)
     if hotwire_native_client?
-      render_native_error(400, "Datos Incompletos", "Faltan datos requeridos para procesar tu solicitud.", "⚠️")
+      render_native_error(400, "Datos Incompletos", "Faltan datos requeridos para procesar tu solicitud.", "400")
     else
       render "errors/400", status: :bad_request
     end
   end
 
-  def render_native_error(code, title, message, emoji = "🚨")
+  def render_native_error(code, title, message, marker = "ERR")
     @code = code
     @title = title
     @message = message
-    @emoji = emoji
+    @marker = marker
     @details = Rails.env.development? ? "Code: #{code}" : nil
 
     render "errors/mobile_error", status: code, layout: false
@@ -55,7 +55,7 @@ module NativeErrorHandling
         "#{field}: #{messages.join(', ')}"
       end.join("; ")
 
-      render_native_error(422, "Validación Fallida", errors, "❌")
+      render_native_error(422, "Validación Fallida", errors, "422")
     else
       render :edit, status: :unprocessable_entity
     end

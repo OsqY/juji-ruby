@@ -65,6 +65,22 @@
   --expense-text: #f39cff;
 }
 
+[data-theme="brat"] {
+  --paper: #8ACE00;
+  --ink: #111111;
+  --highlight: #111111;
+  --accent-blue: #2b2b2b;
+  --muted-gray: #96db00;
+  --tone-green-dark: #111111;
+  --tone-purple-dark: #f5f5f5;
+  --tone-red-dark: #7a1f1f;
+
+  --income-bg: #b7f056;
+  --income-text: #0f2e00;
+  --expense-bg: #2e2e2e;
+  --expense-text: #f5f5f5;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700;900&display=swap');
 
 body {
@@ -697,6 +713,8 @@ textarea:focus {
 [data-theme="dark"] textarea,
 [data-theme="neon"] input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
 [data-theme="neon"] textarea,
+[data-theme="brat"] input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+[data-theme="brat"] textarea,
 [data-theme="dark"] select {
   background: #1e1e1e !important;
   color: #fff !important;
@@ -705,6 +723,11 @@ textarea:focus {
 [data-theme="neon"] select {
   background: #141024 !important;
   color: #ddffd8 !important;
+}
+
+[data-theme="brat"] select {
+  background: #a6e92e !important;
+  color: #111 !important;
 }
 
 [data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):focus,
@@ -806,6 +829,26 @@ input[type="submit"].btn-chaos {
   color: var(--tone-purple-dark) !important;
 }
 
+[data-theme="brat"] .btn-chaos,
+[data-theme="brat"] input[type="submit"].btn-chaos {
+  background: #111 !important;
+  color: #8ACE00 !important;
+}
+
+[data-theme="brat"] .btn-chaos:hover,
+[data-theme="brat"] input[type="submit"].btn-chaos:hover {
+  background: #2b2b2b !important;
+  color: #d8ff8f !important;
+  box-shadow: 8px 8px 0px #111;
+}
+
+[data-theme="brat"] .btn-chaos:active,
+[data-theme="brat"] input[type="submit"].btn-chaos:active {
+  box-shadow: 2px 2px 0px #111;
+  background: #111 !important;
+  color: #d8ff8f !important;
+}
+
 /* Sticky Action Bar */
 .form-actions {
   position: sticky;
@@ -823,9 +866,9 @@ input[type="submit"].btn-chaos {
 /* Theme Switcher */
 .theme-picker {
   display: flex;
-  gap: 0.25rem;
+  gap: 0.2rem;
   background: var(--muted-gray);
-  padding: 0.2rem;
+  padding: 0.15rem;
   border: 2px solid var(--ink);
   margin-left: auto;
 }
@@ -835,8 +878,8 @@ input[type="submit"].btn-chaos {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border: 2px solid transparent;
   transition: all 0.2s;
   position: relative;
@@ -876,8 +919,8 @@ input[type="submit"].btn-chaos {
 }
 
 .theme-option .lucide {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   stroke-width: 2.4px;
 }
 
@@ -1197,10 +1240,23 @@ nav.chaos-nav {
   color: var(--tone-green-dark);
 }
 
+[data-theme="brat"] .nav-link,
+[data-theme="brat"] .nav-logout-btn,
+[data-theme="brat"] .delete-btn-link,
+[data-theme="brat"] .card-action-link {
+  color: #111;
+}
+
 [data-theme="neon"] .nav-link:hover,
 [data-theme="neon"] .nav-link.is-active,
 [data-theme="neon"] .nav-link-solid {
   color: var(--tone-green-dark);
+}
+
+[data-theme="brat"] .nav-link:hover,
+[data-theme="brat"] .nav-link.is-active,
+[data-theme="brat"] .nav-link-solid {
+  color: #111;
 }
 
 [data-theme="neon"] .nav-link:hover,
@@ -1210,6 +1266,13 @@ nav.chaos-nav {
   background: var(--highlight);
 }
 
+[data-theme="brat"] .nav-link:hover,
+[data-theme="brat"] .nav-link.is-active,
+[data-theme="brat"] .nav-link-solid,
+[data-theme="brat"] .theme-option:hover {
+  background: #b9f24a;
+}
+
 [data-theme="neon"] .nav-link-create:hover,
 [data-theme="neon"] .btn-chaos:hover,
 [data-theme="neon"] .nav-dropdown-menu .nav-link.nav-link-create:hover {
@@ -1217,9 +1280,22 @@ nav.chaos-nav {
   color: var(--tone-purple-dark) !important;
 }
 
+[data-theme="brat"] .nav-link-create:hover,
+[data-theme="brat"] .btn-chaos:hover,
+[data-theme="brat"] .nav-dropdown-menu .nav-link.nav-link-create:hover {
+  background: #111 !important;
+  color: #d8ff8f !important;
+}
+
 [data-theme="neon"] .nav-logout-btn {
   border-color: var(--tone-red-dark);
   color: var(--tone-red-dark);
+}
+
+[data-theme="brat"] .nav-logout-btn {
+  border-color: #7a1f1f;
+  color: #7a1f1f;
+  background: #d6f79c;
 }
 
 [data-theme="neon"] .nav-logout-btn:hover {

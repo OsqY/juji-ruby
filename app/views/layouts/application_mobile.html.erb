@@ -105,29 +105,29 @@
 
       <div class="mobile-nav-items" style="display: flex; justify-content: space-around; padding: 0.5rem 0; gap: 0.25rem;">
         <%= link_to dashboard_path, class: "mobile-nav-item #{'is-active' if dashboard_active}", style: "flex: 1; padding: 0.75rem; text-align: center; text-decoration: none; border-top: 3px solid transparent; border-color: #{dashboard_active ? 'var(--accent-blue)' : 'transparent'};" do %>
-          <div style="font-size: 1.5rem;">📊</div>
+          <div style="font-size: 1.5rem;">IN</div>
           <div style="font-size: 0.7rem; font-weight: 900;">INICIO</div>
         <% end %>
 
         <%= link_to daily_reports_path, class: "mobile-nav-item #{'is-active' if reports_active}", style: "flex: 1; padding: 0.75rem; text-align: center; text-decoration: none; border-top: 3px solid transparent; border-color: #{reports_active ? 'var(--accent-blue)' : 'transparent'};" do %>
-          <div style="font-size: 1.5rem;">📝</div>
+          <div style="font-size: 1.5rem;">RP</div>
           <div style="font-size: 0.7rem; font-weight: 900;">REPORTES</div>
         <% end %>
 
         <%= link_to transactions_path, class: "mobile-nav-item #{'is-active' if finance_active}", style: "flex: 1; padding: 0.75rem; text-align: center; text-decoration: none; border-top: 3px solid transparent; border-color: #{finance_active ? 'var(--accent-blue)' : 'transparent'};" do %>
-          <div style="font-size: 1.5rem;">💰</div>
+          <div style="font-size: 1.5rem;">FN</div>
           <div style="font-size: 0.7rem; font-weight: 900;">FINANZAS</div>
         <% end %>
 
         <%= link_to projects_path, class: "mobile-nav-item #{'is-active' if projects_active}", style: "flex: 1; padding: 0.75rem; text-align: center; text-decoration: none; border-top: 3px solid transparent; border-color: #{projects_active ? 'var(--accent-blue)' : 'transparent'};" do %>
-          <div style="font-size: 1.5rem;">🎯</div>
+          <div style="font-size: 1.5rem;">PJ</div>
           <div style="font-size: 0.7rem; font-weight: 900;">PROYECTOS</div>
         <% end %>
 
         <% if authenticated? %>
           <details class="mobile-nav-item" style="flex: 1; padding: 0.75rem; text-align: center; cursor: pointer; border-top: 3px solid transparent; border-color: #{account_group_active ? 'var(--accent-blue)' : 'transparent'};">
             <summary style="text-decoration: none; list-style: none;">
-              <div style="font-size: 1.5rem;">👤</div>
+              <div style="font-size: 1.5rem;">CT</div>
               <div style="font-size: 0.7rem; font-weight: 900;">CUENTA</div>
             </summary>
             <div style="position: absolute; bottom: 100%; right: 0; left: auto; background: var(--paper); border: 2px solid var(--ink); padding: 0.5rem; min-width: 120px; box-shadow: -4px -4px 0 var(--highlight);">
@@ -137,7 +137,7 @@
           </details>
         <% else %>
           <%= link_to new_session_path, class: "mobile-nav-item", style: "flex: 1; padding: 0.75rem; text-align: center; text-decoration: none; border-top: 3px solid transparent; border-color: #{login_active ? 'var(--accent-blue)' : 'transparent'};" do %>
-            <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">🔐</div>
+            <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">LG</div>
             <div style="font-size: 0.7rem; font-weight: 900;">ENTRAR</div>
           <% end %>
         <% end %>

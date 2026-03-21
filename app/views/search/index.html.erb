@@ -51,7 +51,7 @@
     <!-- Advanced Filters (Optional) -->
     <details style="margin-bottom: 2rem; padding: 1rem; background: #f9f9f9; border-radius: 8px; border: 1px solid #e0e0e0;">
       <summary style="cursor: pointer; font-weight: 600; color: #333; padding: 0.5rem;">
-        ⚙️ Filtros Avanzados
+        Filtros Avanzados
       </summary>
       
       <form method="get" action="<%= search_path %>" style="margin-top: 1rem;">
@@ -65,14 +65,14 @@
             </label>
             <select name="type" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;">
               <option value="">Todos los tipos</option>
-              <option value="transactions" <%= 'selected' if params[:type] == 'transactions' %>>💰 Transacciones</option>
-              <option value="daily_reports" <%= 'selected' if params[:type] == 'daily_reports' %>>📝 Reportes</option>
-              <option value="projects" <%= 'selected' if params[:type] == 'projects' %>>🎯 Proyectos</option>
-              <option value="project_tasks" <%= 'selected' if params[:type] == 'project_tasks' %>>✓ Tareas</option>
-              <option value="habits" <%= 'selected' if params[:type] == 'habits' %>>🌟 Hábitos</option>
-              <option value="shopping_items" <%= 'selected' if params[:type] == 'shopping_items' %>>🛒 Compras</option>
-              <option value="budgets" <%= 'selected' if params[:type] == 'budgets' %>>💳 Presupuestos</option>
-              <option value="anonymous_forms" <%= 'selected' if params[:type] == 'anonymous_forms' %>>📋 Formularios</option>
+              <option value="transactions" <%= 'selected' if params[:type] == 'transactions' %>>Transacciones</option>
+              <option value="daily_reports" <%= 'selected' if params[:type] == 'daily_reports' %>>Reportes</option>
+              <option value="projects" <%= 'selected' if params[:type] == 'projects' %>>Proyectos</option>
+              <option value="project_tasks" <%= 'selected' if params[:type] == 'project_tasks' %>>Tareas</option>
+              <option value="habits" <%= 'selected' if params[:type] == 'habits' %>>Habitos</option>
+              <option value="shopping_items" <%= 'selected' if params[:type] == 'shopping_items' %>>Compras</option>
+              <option value="budgets" <%= 'selected' if params[:type] == 'budgets' %>>Presupuestos</option>
+              <option value="anonymous_forms" <%= 'selected' if params[:type] == 'anonymous_forms' %>>Formularios</option>
             </select>
           </div>
 
@@ -130,7 +130,7 @@
                   <% when :transactions %>
                     <div class="search-result-card">
                       <%= link_to transaction_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">💰</div>
+                        <div style="font-size: 1.5rem;">TX</div>
                         <div style="flex: 1;">
                           <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
                             <%= record.description %>
@@ -144,7 +144,7 @@
                   <% when :daily_reports %>
                     <div class="search-result-card">
                       <%= link_to daily_report_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">📝</div>
+                        <div style="font-size: 1.5rem;">RP</div>
                         <div style="flex: 1;">
                           <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
                             <%= record.work_title %>
@@ -158,7 +158,7 @@
                   <% when :projects %>
                     <div class="search-result-card">
                       <%= link_to project_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">📊</div>
+                        <div style="font-size: 1.5rem;">PJ</div>
                         <div style="flex: 1;">
                           <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
                             <%= record.name %>
@@ -172,7 +172,7 @@
                   <% when :project_tasks %>
                     <div class="search-result-card">
                       <%= link_to project_project_task_path(record.project, record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;"><%= record.completed? ? '✅' : '◻️' %></div>
+                        <div style="font-size: 1.5rem;"><%= record.completed? ? 'OK' : '--' %></div>
                         <div style="flex: 1;">
                           <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
                             <%= record.name %>
@@ -186,7 +186,7 @@
                   <% when :habits %>
                     <div class="search-result-card">
                       <%= link_to habit_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">🎯</div>
+                        <div style="font-size: 1.5rem;">HB</div>
                         <div style="flex: 1;">
                           <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
                             <%= record.name %>
@@ -200,13 +200,13 @@
                   <% when :shopping_items %>
                     <div class="search-result-card">
                       <%= link_to shopping_item_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">🛒</div>
+                        <div style="font-size: 1.5rem;">CP</div>
                         <div style="flex: 1;">
                           <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
                             <%= record.name %>
                           </h3>
                           <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            Compra · <%= record.quantity %> <%= record.unit %>
+                            Compra · Cantidad: <%= record.quantity %>
                           </p>
                         </div>
                       <% end %>
@@ -214,7 +214,7 @@
                   <% when :budgets %>
                     <div class="search-result-card">
                       <%= link_to budget_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">💳</div>
+                        <div style="font-size: 1.5rem;">BG</div>
                         <div style="flex: 1;">
                           <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
                             <%= record.category %>
@@ -228,7 +228,7 @@
                   <% when :anonymous_forms %>
                     <div class="search-result-card">
                       <%= link_to anonymous_form_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">📋</div>
+                        <div style="font-size: 1.5rem;">FM</div>
                         <div style="flex: 1;">
                           <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
                             <%= record.title %>
@@ -247,14 +247,14 @@
       <% end %>
     <% else %>
       <div style="text-align: center; padding: 3rem 1rem;">
-        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+        <div style="font-size: 3rem; margin-bottom: 1rem;">BUSCAR</div>
         <p style="font-size: 1.1rem; color: #666;">No se encontraron resultados para "<strong><%= @query %></strong>"</p>
         <p style="color: #999; margin-top: 0.5rem;">Intenta con otros términos de búsqueda</p>
       </div>
     <% end %>
   <% else %>
     <div style="text-align: center; padding: 3rem 1rem;">
-      <div style="font-size: 3rem; margin-bottom: 1rem;">🔎</div>
+      <div style="font-size: 3rem; margin-bottom: 1rem;">BUSQUEDA</div>
       <p style="font-size: 1.1rem; color: #666;">Busca en toda tu información</p>
       <p style="color: #999; margin-top: 0.5rem;">Transacciones, reportes, proyectos, hábitos y más</p>
     </div>
