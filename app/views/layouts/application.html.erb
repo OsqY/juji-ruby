@@ -46,6 +46,63 @@
         <span class="brand-tag">archivo personal</span>
       </div>
 
+      <!-- Global Search Bar -->
+      <div 
+        class="nav-search-wrapper" 
+        data-controller="search" 
+        data-action="keydown->search#handleKeydown"
+        style="
+          padding: 0.75rem;
+          border-bottom: 1px solid var(--border-color, #eee);
+        "
+      >
+        <form 
+          method="get" 
+          action="<%= search_path %>" 
+          style="position: relative; display: flex; gap: 0.5rem;"
+          data-search-target="form"
+        >
+          <input 
+            type="text" 
+            name="q" 
+            placeholder="Buscar... (Cmd+K)" 
+            class="nav-search-input"
+            data-search-target="input"
+            data-action="input->search#search blur->search#hideResults"
+            style="
+              flex: 1;
+              padding: 0.6rem 0.8rem;
+              border: 1px solid var(--border-color, #ddd);
+              border-radius: 4px;
+              font-size: 0.9rem;
+              background: var(--bg-color, white);
+              color: var(--text-color, #333);
+              transition: all 0.2s ease;
+            "
+          />
+        </form>
+        
+        <div 
+          class="nav-search-results" 
+          data-search-target="results"
+          style="
+            position: absolute;
+            top: 100%;
+            left: 0.75rem;
+            right: 0.75rem;
+            margin-top: 0.5rem;
+            z-index: 1000;
+            max-height: 300px;
+            overflow-y: auto;
+            background: var(--bg-color, white);
+            border: 1px solid var(--border-color, #ddd);
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: none;
+          "
+        ></div>
+      </div>
+
       <% reports_group_active = reports_active || report_new_active %>
       <% productivity_group_active = projects_active || habits_active || shopping_active %>
       <% finance_group_active = finance_active || finance_new_active || budgets_active %>

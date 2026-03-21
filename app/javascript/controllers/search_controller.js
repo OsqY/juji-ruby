@@ -26,6 +26,7 @@ export default class extends Controller {
       
       if (query.length === 0) {
         this.resultsTarget.innerHTML = ""
+        this.resultsTarget.style.display = 'none'
         this.selectedIndex = -1
         return
       }
@@ -58,6 +59,7 @@ export default class extends Controller {
           <p>No se encontraron resultados para "<strong>${this.escapeHtml(query)}</strong>"</p>
         </div>
       `
+      this.resultsTarget.style.display = 'block'
       return
     }
 
@@ -75,6 +77,7 @@ export default class extends Controller {
 
     html += '</div>'
     this.resultsTarget.innerHTML = html
+    this.resultsTarget.style.display = 'block'
     this.selectedIndex = -1
   }
 
@@ -160,6 +163,7 @@ export default class extends Controller {
     setTimeout(() => {
       if (!this.inputTarget.matches(":focus")) {
         this.resultsTarget.innerHTML = ""
+        this.resultsTarget.style.display = 'none'
         this.selectedIndex = -1
       }
     }, 200)
