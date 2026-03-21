@@ -2,8 +2,13 @@
   <%= render "shared/frame_flash" %>
   <div class="chaotic-container">
     <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
-      <h1 class="form-title">RASTREADOR DE HÁBITOS</h1>
-      <p style="font-weight: 700; opacity: 0.6;">TUS ÚLTIMOS 7 DÍAS / YOUR LAST 7 DAYS</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <div>
+          <h1 class="form-title">RASTREADOR DE HÁBITOS</h1>
+          <p style="font-weight: 700; opacity: 0.6;">TUS ÚLTIMOS 7 DÍAS / YOUR LAST 7 DAYS</p>
+        </div>
+        <%= render "shared/export_actions", model: "habits" %>
+      </div>
     </div>
 
     <div class="report-section-block" style="margin-bottom: 3rem;">

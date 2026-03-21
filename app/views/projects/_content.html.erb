@@ -2,8 +2,13 @@
   <%= render "shared/frame_flash" %>
   <div class="chaotic-container">
     <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
-      <h1 class="form-title">METAS Y PROYECTOS</h1>
-      <p style="font-weight: 700; opacity: 0.6;">TRANSFORMANDO IDEAS EN REALIDADES / MAKING IT HAPPEN</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <div>
+          <h1 class="form-title">METAS Y PROYECTOS</h1>
+          <p style="font-weight: 700; opacity: 0.6;">TRANSFORMANDO IDEAS EN REALIDADES / MAKING IT HAPPEN</p>
+        </div>
+        <%= render "shared/export_actions", model: "projects" %>
+      </div>
     </div>
 
     <div class="report-section-block" style="margin-bottom: 4rem;">

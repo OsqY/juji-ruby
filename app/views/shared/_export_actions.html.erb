@@ -1,0 +1,15 @@
+<div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+  <%= button_to "EXPORTAR CSV",
+      exports_path(model: model, format: "csv"),
+      method: :post,
+      form: { data: { turbo: false } },
+      class: "nav-link",
+      style: "border: 0; background: transparent; cursor: pointer;" %>
+
+  <%= button_to "EXPORTAR PDF",
+      exports_path(model: model, format: "pdf"),
+      method: :post,
+      form: { data: { turbo: false } },
+      class: "nav-link",
+      style: "border: 0; background: transparent; cursor: pointer;" %>
+</div>
