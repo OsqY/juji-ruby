@@ -12,8 +12,8 @@ class AlertService
   private
 
   def self.check_budget_exceeded(user)
-    current_month = Date.today.month
-    current_year = Date.today.year
+    current_month = Time.zone.today.month
+    current_year = Time.zone.today.year
 
     user.budgets.each do |budget|
       next unless budget.month == current_month
@@ -35,25 +35,28 @@ class AlertService
 
   def self.check_no_reports_3_days(user)
     last_report_date = user.daily_reports.order(report_date: :desc).pick(:report_date)
+    days_threshold = AlertsConfig::DAYS_WITHOUT_REPORT
     
-    if last_report_date.nil? || (Date.today - last_report_date).to_i >= 3
+    if last_report_date.nil? || (Time.zone.today - last_report_date).to_i >= days_threshold
       create_notification(
         user,
         :no_report_3_days,
-        "No has enviado reporte diario en 3 días. ¡Actualiza tu estado!"
+        "No has enviado reporte diario en #{days_threshold} días. ¡Actualiza tu estado!"
       )
     end
   end
 
   def self.check_project_no_progress(user)
+    days_threshold = AlertsConfig::DAYS_PROJECT_NO_PROGRESS
+    
     user.projects.each do |project|
       last_task = project.project_tasks.order(created_at: :desc).first
       
-      if last_task.nil? || (Date.today - last_task.created_at.to_date).to_i >= 7
+      if last_task.nil? || (Time.zone.today - last_task.created_at.to_date).to_i >= days_threshold
         create_notification(
           user,
           :project_no_progress,
-          "Proyecto '#{project.name}' sin avances hace más de 7 días"
+          "Proyecto '#{project.name}' sin avances hace más de #{days_threshold} días"
         )
       end
     end
