@@ -1,4 +1,4 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwire/stimulus"
 
 export default class extends Controller {
   static targets = ["input", "results", "form"]
@@ -7,6 +7,8 @@ export default class extends Controller {
   connect() {
     this.setupKeyboardShortcut()
     this.selectedIndex = -1
+    this.MAX_HISTORY = 10
+    this.STORAGE_KEY = "search_history"
   }
 
   setupKeyboardShortcut() {
@@ -25,9 +27,8 @@ export default class extends Controller {
       const query = this.inputTarget.value.trim()
       
       if (query.length === 0) {
-        this.resultsTarget.innerHTML = ""
-        this.resultsTarget.style.display = 'none'
-        this.selectedIndex = -1
+        // Show search history if available
+        this.showSearchHistory()
         return
       }
 
@@ -42,6 +43,35 @@ export default class extends Controller {
     }, this.debounceDelayValue)
   }
 
+  showSearchHistory() {
+    const history = this.getSearchHistory()
+    
+    if (history.length === 0) {
+      this.resultsTarget.innerHTML = ""
+      this.resultsTarget.style.display = 'none'
+      return
+    }
+
+    let html = '<div class="search-dropdown"><div class="search-group">'
+    html += '<h3 class="search-group-title">Búsquedas Recientes</h3>'
+    
+    history.forEach((query, index) => {
+      html += `
+        <a href="/search?q=${encodeURIComponent(query)}" class="search-history-item">
+          <span class="search-result-icon">🕐</span>
+          <div class="search-result-content">
+            <div class="search-result-title">${this.escapeHtml(query)}</div>
+          </div>
+        </a>
+      `
+    })
+    
+    html += '</div></div>'
+    this.resultsTarget.innerHTML = html
+    this.resultsTarget.style.display = 'block'
+    this.selectedIndex = -1
+  }
+
   displayResults(data, query) {
     const groupedResults = {}
     let totalResults = 0
@@ -52,6 +82,9 @@ export default class extends Controller {
         totalResults += records.length
       }
     })
+
+    // Add search to history after successful search
+    this.addToSearchHistory(query)
 
     if (totalResults === 0) {
       this.resultsTarget.innerHTML = `
@@ -109,7 +142,7 @@ export default class extends Controller {
   }
 
   handleKeydown(event) {
-    const items = this.resultsTarget.querySelectorAll(".search-result-item")
+    const items = this.resultsTarget.querySelectorAll(".search-result-item, .search-history-item")
     
     if (items.length === 0) return
 
@@ -136,6 +169,7 @@ export default class extends Controller {
       case "Escape":
         event.preventDefault()
         this.resultsTarget.innerHTML = ""
+        this.resultsTarget.style.display = 'none'
         this.selectedIndex = -1
         break
     }
@@ -150,6 +184,33 @@ export default class extends Controller {
         item.classList.remove("is-selected")
       }
     })
+  }
+
+  // Search history management
+  getSearchHistory() {
+    const stored = localStorage.getItem(this.STORAGE_KEY)
+    return stored ? JSON.parse(stored) : []
+  }
+
+  addToSearchHistory(query) {
+    let history = this.getSearchHistory()
+    
+    // Remove if already exists (to put it at the front)
+    history = history.filter(q => q.toLowerCase() !== query.toLowerCase())
+    
+    // Add to front
+    history.unshift(query)
+    
+    // Limit to MAX_HISTORY items
+    history = history.slice(0, this.MAX_HISTORY)
+    
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(history))
+  }
+
+  clearSearchHistory() {
+    localStorage.removeItem(this.STORAGE_KEY)
+    this.resultsTarget.innerHTML = ""
+    this.resultsTarget.style.display = 'none'
   }
 
   escapeHtml(text) {
