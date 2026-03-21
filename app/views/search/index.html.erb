@@ -2,18 +2,51 @@
   <div style="margin-bottom: 2rem;">
     <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">BÚSQUEDA GLOBAL</h1>
     
-    <form method="get" action="<%= search_path %>" style="display: flex; gap: 0.8rem; margin-bottom: 2rem;">
-      <input 
-        type="text" 
-        name="q" 
-        value="<%= @query %>" 
-        placeholder="Busca transacciones, reportes, proyectos..." 
-        class="search-input"
-        style="flex: 1; padding: 1rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;"
-        autofocus
-      />
-      <button type="submit" class="btn-chaos" style="padding: 1rem 2rem;">BUSCAR</button>
-    </form>
+    <div 
+      class="search-wrapper" 
+      data-controller="search" 
+      data-action="keydown->search#handleKeydown"
+      style="position: relative; margin-bottom: 2rem;"
+    >
+      <form 
+        method="get" 
+        action="<%= search_path %>" 
+        style="display: flex; gap: 0.8rem; margin-bottom: 2rem;" 
+        data-search-target="form"
+      >
+        <input 
+          type="text" 
+          name="q" 
+          value="<%= @query %>" 
+          placeholder="Busca transacciones, reportes, proyectos... (Cmd+K)" 
+          class="search-input"
+          data-search-target="input"
+          data-action="input->search#search blur->search#hideResults"
+          style="flex: 1; padding: 1rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;"
+          autofocus
+        />
+        <button type="submit" class="btn-chaos" style="padding: 1rem 2rem;">BUSCAR</button>
+      </form>
+      
+      <div 
+        class="search-results-container" 
+        data-search-target="results"
+        style="
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          margin-top: -1.5rem;
+          z-index: 1000;
+          max-height: 400px;
+          overflow-y: auto;
+          background: white;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        "
+      ></div>
+    </div>
   </div>
 
   <% if @query.present? %>
@@ -196,5 +229,105 @@
 
   .search-result-card a {
     display: block;
+  }
+
+  /* Dropdown autocomplete styles */
+  .search-dropdown {
+    padding: 0.5rem 0;
+  }
+
+  .search-group {
+    padding: 0.5rem 0;
+  }
+
+  .search-group-title {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #999;
+    margin: 0;
+    margin-top: 0.5rem;
+  }
+
+  .search-group:first-child .search-group-title {
+    margin-top: 0;
+  }
+
+  .search-result-item {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    border-left: 3px solid transparent;
+  }
+
+  .search-result-item:hover {
+    background-color: #f5f5f5;
+    border-left-color: #007bff;
+  }
+
+  .search-result-item.is-selected {
+    background-color: #e8f4ff;
+    border-left-color: #007bff;
+  }
+
+  .search-result-icon {
+    font-size: 1.25rem;
+    min-width: 1.5rem;
+    text-align: center;
+  }
+
+  .search-result-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .search-result-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+  }
+
+  .search-result-subtitle {
+    font-size: 0.8rem;
+    color: #999;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0.25rem 0 0;
+  }
+
+  .search-no-results {
+    padding: 1.5rem;
+    text-align: center;
+    color: #999;
+    font-size: 0.9rem;
+  }
+
+  .search-wrapper {
+    position: relative;
+  }
+
+  @media (max-width: 640px) {
+    .search-results-container {
+      max-height: 300px !important;
+    }
+    
+    .search-result-item {
+      padding: 0.5rem 0.75rem;
+    }
+
+    .search-group-title {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.7rem;
+    }
   }
 </style>
