@@ -89,5 +89,59 @@ class DashboardController < ApplicationController
     end
 
     @unread_notifications_count = current_user.notifications.unread.count
+    
+    load_weekly_indicators
+  end
+
+  private
+
+  def load_weekly_indicators
+    week_range = Date.current.beginning_of_week..Date.current.end_of_week
+    month_range = Date.current.beginning_of_month..Date.current.end_of_month
+
+    # 1. Hábitos cumplidos esta semana
+    @indicator_habits_completed = HabitLog
+      .joins(:habit)
+      .where(habits: { user_id: current_user.id })
+      .where(log_date: week_range, completed: true)
+      .count
+
+    @indicator_habits_total = current_user.habits.count
+
+    # 2. Gasto vs Presupuesto (mes actual)
+    @indicator_month_expenses = current_user.transactions
+      .where(date: month_range, transaction_type: :expense)
+      .sum(:amount)
+
+    @indicator_month_budget = current_user.budgets.for_month(Date.current).sum(:monthly_limit)
+
+    @indicator_budget_percent = if @indicator_month_budget.to_f.positive?
+      ((@indicator_month_expenses.to_f / @indicator_month_budget.to_f) * 100).round(1)
+    else
+      0
+    end
+
+    # 3. Tareas cerradas esta semana
+    @indicator_tasks_completed = ProjectTask
+      .joins(:project)
+      .where(projects: { user_id: current_user.id }, completed: true)
+      .where(updated_at: week_range)
+      .count
+
+    # 4. Bloqueos abiertos (sin límite de fecha)
+    @indicator_open_blockers = current_user.daily_reports
+      .where.not(blockers: [ nil, "" ])
+      .where(blockers_resolved: false)
+      .count
+
+    # 5. Reportes enviados esta semana
+    @indicator_reports_sent = current_user.daily_reports.where(report_date: week_range).count
+    @indicator_reports_target = 5 # días de trabajo
+
+    # 6. Balance semanal
+    week_transactions = current_user.transactions.where(date: week_range)
+    week_income = week_transactions.where(transaction_type: :income).sum(:amount)
+    week_expenses = week_transactions.where(transaction_type: :expense).sum(:amount)
+    @indicator_weekly_balance = week_income - week_expenses
   end
 end
