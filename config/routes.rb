@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index"
   get "guide", to: "guides#show"
+  
+  # Search routes
+  get "search", to: "search#index", as: :search
+  get "search/results", to: "search#results", as: :search_results
 
   resource :session
   resources :passwords, param: :token

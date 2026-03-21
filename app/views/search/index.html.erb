@@ -1,0 +1,200 @@
+<div class="chaotic-container">
+  <div style="margin-bottom: 2rem;">
+    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">BÚSQUEDA GLOBAL</h1>
+    
+    <form method="get" action="<%= search_path %>" style="display: flex; gap: 0.8rem; margin-bottom: 2rem;">
+      <input 
+        type="text" 
+        name="q" 
+        value="<%= @query %>" 
+        placeholder="Busca transacciones, reportes, proyectos..." 
+        class="search-input"
+        style="flex: 1; padding: 1rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;"
+        autofocus
+      />
+      <button type="submit" class="btn-chaos" style="padding: 1rem 2rem;">BUSCAR</button>
+    </form>
+  </div>
+
+  <% if @query.present? %>
+    <% if @total_count > 0 %>
+      <div style="margin-bottom: 2rem;">
+        <p style="color: #666; font-size: 0.95rem;">
+          Se encontraron <strong><%= @total_count %></strong> resultado<%= @total_count == 1 ? '' : 's' %> para "<strong><%= @query %></strong>"
+        </p>
+      </div>
+
+      <% @results.each do |model_type, records| %>
+        <% if records.any? %>
+          <section style="margin-bottom: 2.5rem;">
+            <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee;">
+              <%= model_type.to_s.humanize %>
+              <span style="font-size: 0.85rem; color: #999; font-weight: 400;">(<%= records.size %>)</span>
+            </h2>
+
+            <div style="display: grid; gap: 1rem;">
+              <% records.each do |record| %>
+                <% case model_type %>
+                  <% when :transactions %>
+                    <div class="search-result-card">
+                      <%= link_to transaction_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                        <div style="font-size: 1.5rem;">💰</div>
+                        <div style="flex: 1;">
+                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                            <%= record.description %>
+                          </h3>
+                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                            <%= record.transaction_type.humanize %> · L. <%= number_with_precision(record.amount, precision: 2) %> · <%= record.category %>
+                          </p>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% when :daily_reports %>
+                    <div class="search-result-card">
+                      <%= link_to daily_report_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                        <div style="font-size: 1.5rem;">📝</div>
+                        <div style="flex: 1;">
+                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                            <%= record.work_title %>
+                          </h3>
+                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                            Reporte · <%= record.report_date.strftime('%d/%m/%Y') %>
+                          </p>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% when :projects %>
+                    <div class="search-result-card">
+                      <%= link_to project_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                        <div style="font-size: 1.5rem;">📊</div>
+                        <div style="flex: 1;">
+                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                            <%= record.name %>
+                          </h3>
+                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                            <%= record.description&.truncate(60) || "Proyecto sin descripción" %>
+                          </p>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% when :project_tasks %>
+                    <div class="search-result-card">
+                      <%= link_to project_project_task_path(record.project, record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                        <div style="font-size: 1.5rem;"><%= record.completed? ? '✅' : '◻️' %></div>
+                        <div style="flex: 1;">
+                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                            <%= record.name %>
+                          </h3>
+                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                            Tarea · <%= record.project.name %>
+                          </p>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% when :habits %>
+                    <div class="search-result-card">
+                      <%= link_to habit_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                        <div style="font-size: 1.5rem;">🎯</div>
+                        <div style="flex: 1;">
+                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                            <%= record.name %>
+                          </h3>
+                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                            Hábito
+                          </p>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% when :shopping_items %>
+                    <div class="search-result-card">
+                      <%= link_to shopping_item_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                        <div style="font-size: 1.5rem;">🛒</div>
+                        <div style="flex: 1;">
+                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                            <%= record.name %>
+                          </h3>
+                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                            Compra · <%= record.quantity %> <%= record.unit %>
+                          </p>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% when :budgets %>
+                    <div class="search-result-card">
+                      <%= link_to budget_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                        <div style="font-size: 1.5rem;">💳</div>
+                        <div style="flex: 1;">
+                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                            <%= record.category %>
+                          </h3>
+                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                            Presupuesto · L. <%= number_with_precision(record.monthly_limit, precision: 2) %>
+                          </p>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% when :anonymous_forms %>
+                    <div class="search-result-card">
+                      <%= link_to anonymous_form_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                        <div style="font-size: 1.5rem;">📋</div>
+                        <div style="flex: 1;">
+                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                            <%= record.title %>
+                          </h3>
+                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                            Formulario · <%= record.description&.truncate(50) || "Sin descripción" %>
+                          </p>
+                        </div>
+                      <% end %>
+                    </div>
+                <% end %>
+              <% end %>
+            </div>
+          </section>
+        <% end %>
+      <% end %>
+    <% else %>
+      <div style="text-align: center; padding: 3rem 1rem;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+        <p style="font-size: 1.1rem; color: #666;">No se encontraron resultados para "<strong><%= @query %></strong>"</p>
+        <p style="color: #999; margin-top: 0.5rem;">Intenta con otros términos de búsqueda</p>
+      </div>
+    <% end %>
+  <% else %>
+    <div style="text-align: center; padding: 3rem 1rem;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">🔎</div>
+      <p style="font-size: 1.1rem; color: #666;">Busca en toda tu información</p>
+      <p style="color: #999; margin-top: 0.5rem;">Transacciones, reportes, proyectos, hábitos y más</p>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  .search-input {
+    transition: all 0.3s ease;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--primary-color, #007bff) !important;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  }
+
+  .search-result-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+    transition: all 0.2s ease;
+  }
+
+  .search-result-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-color: #d0d0d0;
+    background-color: #fafafa;
+  }
+
+  .search-result-card a {
+    display: block;
+  }
+</style>
