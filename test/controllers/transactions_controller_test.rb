@@ -24,6 +24,12 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get show" do
+    get transaction_path(@transaction)
+    assert_response :success
+    assert_match "DETALLE", response.body
+  end
+
   test "should destroy transaction" do
     assert_difference("Transaction.count", -1) do
       delete transaction_path(@transaction, month: Date.current.strftime("%Y-%m"))

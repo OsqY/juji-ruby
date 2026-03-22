@@ -1,5 +1,5 @@
 class TransactionsController < ApplicationController
-  before_action :set_transaction, only: %i[ destroy ]
+  before_action :set_transaction, only: %i[ show destroy ]
 
   def index
     load_index_data(parse_month)
@@ -8,6 +8,9 @@ class TransactionsController < ApplicationController
   def new
     @transaction = current_user.transactions.new
     load_category_options
+  end
+
+  def show
   end
 
   def create
