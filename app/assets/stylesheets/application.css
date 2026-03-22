@@ -700,6 +700,14 @@ select {
   box-sizing: border-box;
   transition: all 0.2s;
   margin-top: 0.5rem;
+  border-radius: 0 !important;
+}
+
+button,
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+  border-radius: 0 !important;
 }
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):focus,
