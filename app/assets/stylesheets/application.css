@@ -839,22 +839,22 @@ input[type="submit"].btn-chaos {
 
 [data-theme="brat"] .btn-chaos,
 [data-theme="brat"] input[type="submit"].btn-chaos {
-  background: #111 !important;
-  color: #8ACE00 !important;
+  background: #6a9622 !important;
+  color: #111 !important;
 }
 
 [data-theme="brat"] .btn-chaos:hover,
 [data-theme="brat"] input[type="submit"].btn-chaos:hover {
-  background: #2b2b2b !important;
-  color: #d8ff8f !important;
-  box-shadow: 8px 8px 0px #111;
+  background: #7eaf2a !important;
+  color: #111 !important;
+  box-shadow: 8px 8px 0px #2f4d10;
 }
 
 [data-theme="brat"] .btn-chaos:active,
 [data-theme="brat"] input[type="submit"].btn-chaos:active {
-  box-shadow: 2px 2px 0px #111;
-  background: #111 !important;
-  color: #d8ff8f !important;
+  box-shadow: 2px 2px 0px #2f4d10;
+  background: #5f8b1f !important;
+  color: #111 !important;
 }
 
 /* Sticky Action Bar */
