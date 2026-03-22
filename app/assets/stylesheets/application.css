@@ -81,6 +81,23 @@
   --expense-text: #f5f5f5;
 }
 
+[data-theme="brat"][data-brat-font="helvetica"] body,
+[data-theme="brat"][data-brat-font="helvetica"] input,
+[data-theme="brat"][data-brat-font="helvetica"] textarea,
+[data-theme="brat"][data-brat-font="helvetica"] select,
+[data-theme="brat"][data-brat-font="helvetica"] button {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+[data-theme="brat"][data-brat-font="helvetica"] h1,
+[data-theme="brat"][data-brat-font="helvetica"] h2,
+[data-theme="brat"][data-brat-font="helvetica"] h3,
+[data-theme="brat"][data-brat-font="helvetica"] .brand-mark {
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700;900&display=swap');
 
 body {
@@ -873,50 +890,41 @@ input[type="submit"].btn-chaos {
 
 /* Theme Switcher */
 .theme-picker {
-  display: flex;
-  gap: 0.2rem;
+  display: inline-flex;
+  gap: 0.25rem;
   background: var(--muted-gray);
-  padding: 0.15rem;
+  padding: 0.2rem;
   border: 2px solid var(--ink);
   margin-left: auto;
-}
-
-.theme-option {
-  cursor: pointer;
-  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border: 2px solid transparent;
-  transition: all 0.2s;
-  position: relative;
-}
-
-.theme-option:hover {
-  background: var(--highlight);
-}
-
-.theme-option input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-.theme-option i {
-  color: var(--ink);
-  opacity: 0.58;
-}
-
-.theme-option input:checked+i {
-  opacity: 1;
-  color: var(--accent-blue);
 }
 
 .theme-picker-compact {
   margin-left: 0;
+}
+
+.theme-picker-dropdown {
+  min-width: 160px;
+}
+
+.theme-select-compact {
+  width: auto !important;
+  margin: 0 !important;
+  min-width: 112px;
+  padding: 0.32rem 0.5rem !important;
+  font-size: 0.62rem !important;
+  font-weight: 900;
+  text-transform: uppercase;
+  border: 2px solid var(--ink) !important;
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+  box-shadow: none !important;
+  line-height: 1.2;
+}
+
+.brat-font-select {
+  min-width: 132px;
+  display: none;
 }
 
 /* Icons */
@@ -924,12 +932,6 @@ input[type="submit"].btn-chaos {
   width: 22px;
   height: 22px;
   stroke-width: 3px;
-}
-
-.theme-option .lucide {
-  width: 12px;
-  height: 12px;
-  stroke-width: 2.4px;
 }
 
 /* Custom Calendar Picker */
@@ -1280,15 +1282,13 @@ nav.chaos-nav {
 
 [data-theme="neon"] .nav-link:hover,
 [data-theme="neon"] .nav-link.is-active,
-[data-theme="neon"] .nav-link-solid,
-[data-theme="neon"] .theme-option:hover {
+[data-theme="neon"] .nav-link-solid {
   background: var(--highlight);
 }
 
 [data-theme="brat"] .nav-link:hover,
 [data-theme="brat"] .nav-link.is-active,
-[data-theme="brat"] .nav-link-solid,
-[data-theme="brat"] .theme-option:hover {
+[data-theme="brat"] .nav-link-solid {
   background: #b9f24a;
 }
 
@@ -1334,11 +1334,6 @@ nav.chaos-nav {
 [data-theme="brat"] .theme-picker {
   background: #a4e82d;
   border-color: #111;
-}
-
-[data-theme="brat"] .theme-option input:checked + i {
-  color: #111;
-  opacity: 1;
 }
 
 [data-theme="brat"] .search-result-item:hover,

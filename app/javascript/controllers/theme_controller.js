@@ -1,47 +1,46 @@
 import { Controller } from "@hotwired/stimulus"
-import { createIcons, Sun, Moon, Palette, Zap, Square } from "lucide"
 
 export default class ThemeController extends Controller {
-    static targets = ["select"]
+    static targets = ["themeSelect", "bratFontSelect"]
 
     connect() {
-        this.refreshIcons = this.initIcons.bind(this)
-        document.addEventListener("turbo:render", this.refreshIcons)
-        document.addEventListener("turbo:frame-load", this.refreshIcons)
-
         const theme = localStorage.getItem("theme") || "light"
+        const bratFont = localStorage.getItem("bratFont") || "helvetica"
         this.applyTheme(theme)
-        this.initIcons()
-
-        // Auto-select the radio/option if needed
-        const radio = this.element.querySelector(`input[value="${theme}"]`)
-        if (radio) radio.checked = true
-    }
-
-    disconnect() {
-        document.removeEventListener("turbo:render", this.refreshIcons)
-        document.removeEventListener("turbo:frame-load", this.refreshIcons)
-    }
-
-    initIcons() {
-        createIcons({
-            icons: {
-                Sun,
-                Moon,
-                Palette,
-                Zap,
-                Square
-            }
-        })
+        this.applyBratFont(bratFont)
+        this.syncSelectValues(theme, bratFont)
     }
 
     switch(event) {
         const theme = event.target.value
         this.applyTheme(theme)
         localStorage.setItem("theme", theme)
+        this.syncBratFontVisibility(theme)
     }
 
     applyTheme(theme) {
         document.documentElement.dataset.theme = theme
+        this.syncBratFontVisibility(theme)
+    }
+
+    switchFont(event) {
+        const bratFont = event.target.value
+        this.applyBratFont(bratFont)
+        localStorage.setItem("bratFont", bratFont)
+    }
+
+    applyBratFont(bratFont) {
+        document.documentElement.dataset.bratFont = bratFont
+    }
+
+    syncSelectValues(theme, bratFont) {
+        if (this.hasThemeSelectTarget) this.themeSelectTarget.value = theme
+        if (this.hasBratFontSelectTarget) this.bratFontSelectTarget.value = bratFont
+        this.syncBratFontVisibility(theme)
+    }
+
+    syncBratFontVisibility(theme) {
+        if (!this.hasBratFontSelectTarget) return
+        this.bratFontSelectTarget.style.display = theme === "brat" ? "inline-block" : "none"
     }
 }

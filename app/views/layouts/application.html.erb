@@ -161,28 +161,19 @@
           </div>
         </details>
 
-        <div class="theme-picker theme-picker-compact">
-        <label class="theme-option" title="Modo Claro" for="theme_light">
-          <input type="radio" name="theme" id="theme_light" value="light" data-action="change->theme#switch">
-          <i data-lucide="sun"></i>
-        </label>
-        <label class="theme-option" title="Modo Oscuro" for="theme_dark">
-          <input type="radio" name="theme" id="theme_dark" value="dark" data-action="change->theme#switch">
-          <i data-lucide="moon"></i>
-        </label>
-        <label class="theme-option" title="Vintage" for="theme_vintage">
-          <input type="radio" name="theme" id="theme_vintage" value="vintage" data-action="change->theme#switch">
-          <i data-lucide="palette"></i>
-        </label>
-        <label class="theme-option" title="Neon" for="theme_neon">
-          <input type="radio" name="theme" id="theme_neon" value="neon" data-action="change->theme#switch">
-          <i data-lucide="zap"></i>
-        </label>
-        <label class="theme-option" title="Brat" for="theme_brat">
-          <input type="radio" name="theme" id="theme_brat" value="brat" data-action="change->theme#switch">
-          <i data-lucide="square"></i>
-        </label>
-      </div>
+        <div class="theme-picker theme-picker-dropdown">
+          <select class="theme-select-compact" data-theme-target="themeSelect" data-action="change->theme#switch">
+            <option value="light">CLARO</option>
+            <option value="dark">OSCURO</option>
+            <option value="vintage">VINTAGE</option>
+            <option value="neon">NEON</option>
+            <option value="brat">JUJI</option>
+          </select>
+          <select class="theme-select-compact brat-font-select" data-theme-target="bratFontSelect" data-action="change->theme#switchFont">
+            <option value="helvetica">FUENTE: SIMPLE</option>
+            <option value="inter">FUENTE: INTER</option>
+          </select>
+        </div>
       </div>
     </nav>
     <main class="chaotic-container" style="padding-top: 6rem;">
