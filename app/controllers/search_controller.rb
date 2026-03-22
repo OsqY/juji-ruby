@@ -27,7 +27,7 @@ class SearchController < ApplicationController
     # Organizar para JSON
     formatted_results = {}
     results.each do |model_name, records|
-      formatted_results[model_name.to_s.humanize] = records.map { |record| format_result(record, model_name) }
+      formatted_results[model_name.to_s] = records.map { |record| format_result(record, model_name) }
     end
 
     render json: {
@@ -42,8 +42,8 @@ class SearchController < ApplicationController
   def apply_filters(results)
     filtered = {}
     type_filter = params[:type]&.to_sym
-    from_date = params[:from_date].present? ? Date.parse(params[:from_date]) : nil
-    to_date = params[:to_date].present? ? Date.parse(params[:to_date]) : nil
+    from_date = parse_date_param(params[:from_date])
+    to_date = parse_date_param(params[:to_date])
 
     results.each do |model_name, records|
       # Apply type filter
@@ -71,6 +71,14 @@ class SearchController < ApplicationController
     end
 
     filtered
+  end
+
+  def parse_date_param(value)
+    return nil if value.blank?
+
+    Date.iso8601(value)
+  rescue ArgumentError
+    nil
   end
 
   def get_date_field(record, model_name)

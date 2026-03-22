@@ -19,7 +19,7 @@ module NativeErrorHandling
     if hotwire_native_client?
       render_native_error(500, "Error del Servidor", "Algo salió mal. Por favor, intenta de nuevo.", "ERR")
     else
-      render "errors/500", status: :internal_server_error
+      render plain: "Internal Server Error", status: :internal_server_error
     end
   end
 
@@ -27,7 +27,7 @@ module NativeErrorHandling
     if hotwire_native_client?
       render_native_error(404, "No Encontrado", "La página que buscas no existe.", "404")
     else
-      render "errors/404", status: :not_found
+      render plain: "Not Found", status: :not_found
     end
   end
 
@@ -35,7 +35,7 @@ module NativeErrorHandling
     if hotwire_native_client?
       render_native_error(400, "Datos Incompletos", "Faltan datos requeridos para procesar tu solicitud.", "400")
     else
-      render "errors/400", status: :bad_request
+      render plain: "Bad Request", status: :bad_request
     end
   end
 

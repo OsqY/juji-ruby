@@ -78,8 +78,8 @@ export default class extends Controller {
     let totalResults = 0
 
     Object.entries(resultsData).forEach(([modelType, records]) => {
-      if (records.length > 0) {
-        groupedResults[modelType.toLowerCase().replace(/\s+/g, "_")] = records.slice(0, 5) // Limit to 5 per type
+      if (Array.isArray(records) && records.length > 0) {
+        groupedResults[modelType] = records.slice(0, 5) // Limit to 5 per type
         totalResults += records.length
       }
     })
