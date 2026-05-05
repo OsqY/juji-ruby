@@ -7,16 +7,18 @@ export default class extends Controller {
   static values = {
     spending: Object,
     habits: Object,
-    alerts: Object
+    alerts: Object,
+    balance: Object
   }
 
-  static targets = ["spendingCanvas", "habitsCanvas", "alertsCanvas"]
+  static targets = ["spendingCanvas", "habitsCanvas", "alertsCanvas", "balanceCanvas"]
 
   connect() {
     this.charts = []
     this.renderSpendingChart()
     this.renderHabitsChart()
     this.renderAlertsChart()
+    this.renderBalanceChart()
   }
 
   disconnect() {
@@ -32,17 +34,29 @@ export default class extends Controller {
       data: {
         labels,
         datasets: [{
-          label: "Gasto mensual",
+          label: "Gasto mensual (L.)",
           data,
-          borderColor: "#2563eb",
-          backgroundColor: "rgba(37, 99, 235, 0.15)",
+          borderColor: "#d63031",
+          backgroundColor: "rgba(214, 48, 49, 0.15)",
           fill: true,
-          tension: 0.3
+          tension: 0.3,
+          borderWidth: 3,
+          pointBackgroundColor: "#fff",
+          pointBorderColor: "#d63031",
+          pointBorderWidth: 2,
+          pointRadius: 4
         }]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { family: "Inter" } } },
+          y: { grid: { color: "#e5e5e5" }, ticks: { font: { family: "Inter" } } }
+        }
       }
     })
 
@@ -58,18 +72,24 @@ export default class extends Controller {
       data: {
         labels,
         datasets: [{
-          label: "Cumplimiento de habitos (%)",
+          label: "Cumplimiento de hábitos (%)",
           data,
-          backgroundColor: "rgba(16, 185, 129, 0.7)",
-          borderColor: "#10b981",
-          borderWidth: 1
+          backgroundColor: "#00b894",
+          borderColor: "#00b894",
+          borderWidth: 2,
+          borderRadius: 0,
+          borderSkipped: false
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
         scales: {
-          y: { min: 0, max: 100 }
+          y: { min: 0, max: 100, ticks: { font: { family: "Inter" } } },
+          x: { grid: { display: false }, ticks: { font: { family: "Inter" } } }
         }
       }
     })
@@ -86,17 +106,63 @@ export default class extends Controller {
       data: {
         labels,
         datasets: [{
-          label: "Alertas",
+          label: "Alertas generadas",
           data,
-          borderColor: "#f97316",
-          backgroundColor: "rgba(249, 115, 22, 0.2)",
+          borderColor: "#b97a07",
+          backgroundColor: "rgba(185, 122, 7, 0.2)",
           fill: true,
-          tension: 0.25
+          tension: 0.25,
+          borderWidth: 3,
+          pointBackgroundColor: "#fff",
+          pointBorderColor: "#b97a07",
+          pointBorderWidth: 2,
+          pointRadius: 4
         }]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { family: "Inter" } } },
+          y: { grid: { color: "#e5e5e5" }, ticks: { font: { family: "Inter" } } }
+        }
+      }
+    })
+
+    this.charts.push(chart)
+  }
+
+  renderBalanceChart() {
+    const labels = Object.keys(this.balanceValue || {})
+    const data = Object.values(this.balanceValue || {})
+
+    const chart = new Chart(this.balanceCanvasTarget, {
+      type: "bar",
+      data: {
+        labels,
+        datasets: [{
+          label: "Balance semanal (L.)",
+          data,
+          backgroundColor: data.map(v => v >= 0 ? "#00b894" : "#d63031"),
+          borderColor: data.map(v => v >= 0 ? "#00b894" : "#d63031"),
+          borderWidth: 2,
+          borderRadius: 0,
+          borderSkipped: false
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { family: "Inter" } } },
+          y: { grid: { color: "#e5e5e5" }, ticks: { font: { family: "Inter" } } }
+        }
       }
     })
 

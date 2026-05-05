@@ -54,7 +54,7 @@
   --ink: #ddffd8;
   --highlight: #63ff59;
   --accent-blue: #b05bff;
-  --muted-gray: #181327;
+  --muted-gray: #211a3a;
   --tone-green-dark: #0f3a1d;
   --tone-purple-dark: #2a0f44;
   --tone-red-dark: #7d1f2e;
@@ -395,15 +395,15 @@ svg {
 [data-theme="dark"] .section-label,
 [data-theme="neon"] .section-label {
   background: var(--highlight);
-  color: #fff;
+  color: var(--paper);
 }
 
 [data-theme="neon"] .section-label {
-  color: var(--tone-green-dark) !important;
+  color: var(--paper) !important;
 }
 
 [data-theme="neon"] .section-label[style*="var(--accent-blue)"] {
-  color: var(--tone-purple-dark) !important;
+  color: var(--paper) !important;
 }
 
 .section-title {
@@ -745,7 +745,7 @@ input[type="reset"] {
 input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):focus,
 textarea:focus {
   outline: none;
-  background: white !important;
+  background: var(--paper) !important;
   box-shadow: 8px 8px 0px var(--highlight);
 }
 
@@ -1017,8 +1017,8 @@ input[type="submit"].btn-chaos {
 
 .calendar-picker select {
   flex: 1;
-  background: white !important;
-  color: black !important;
+  background: var(--paper) !important;
+  color: var(--ink) !important;
   border: 4px solid var(--ink);
   font-weight: 900;
   text-transform: uppercase;
@@ -1262,7 +1262,7 @@ nav.chaos-nav {
 [data-theme="neon"] .nav-logout-btn,
 [data-theme="neon"] .delete-btn-link,
 [data-theme="neon"] .card-action-link {
-  color: var(--tone-green-dark);
+  color: var(--ink);
 }
 
 [data-theme="brat"] .nav-link,
@@ -1285,7 +1285,7 @@ nav.chaos-nav {
 [data-theme="neon"] .nav-link:hover,
 [data-theme="neon"] .nav-link.is-active,
 [data-theme="neon"] .nav-link-solid {
-  color: var(--tone-green-dark);
+  color: var(--paper);
 }
 
 [data-theme="brat"] .nav-link:hover,
@@ -1361,6 +1361,74 @@ nav.chaos-nav {
 
 [data-theme="neon"] .nav-logout-btn:hover {
   color: var(--tone-red-dark);
+}
+
+/* ============================================================
+   THEME CONTRAST FIXES — Neon & Brat
+   ============================================================ */
+
+/* Neon: low-opacity elements become invisible on dark backgrounds */
+[data-theme="neon"] .daily-metadata,
+[data-theme="neon"] .card-actions,
+[data-theme="neon"] .delete-btn-link,
+[data-theme="neon"] .brand-tag,
+[data-theme="neon"] .nav-user,
+[data-theme="neon"] .nav-link-soft {
+  opacity: 1 !important;
+  color: var(--ink);
+}
+
+[data-theme="neon"] .card-actions-divider {
+  opacity: 0.35;
+}
+
+[data-theme="neon"] .daily-calendar-cell.is-outside {
+  opacity: 0.25;
+  background: color-mix(in srgb, var(--paper) 80%, var(--muted-gray));
+}
+
+[data-theme="neon"] .report-section-block {
+  border-color: color-mix(in srgb, var(--ink) 55%, var(--accent-blue));
+}
+
+[data-theme="neon"] .blocker-text-resolved {
+  opacity: 0.55;
+}
+
+/* Brat: nav hover contrast on green background */
+[data-theme="brat"] .nav-link:hover,
+[data-theme="brat"] .nav-link.is-active {
+  background: #111;
+  color: #b9f24a;
+}
+
+[data-theme="brat"] .nav-link-solid {
+  background: #111;
+  color: #b9f24a;
+}
+
+[data-theme="brat"] .nav-logout-btn {
+  background: #c8f080;
+}
+
+[data-theme="brat"] .nav-logout-btn:hover {
+  background: #dff7a8;
+}
+
+/* Ensure text visibility on brat's bright green */
+[data-theme="brat"] .daily-metadata,
+[data-theme="brat"] .card-actions,
+[data-theme="brat"] .brand-tag,
+[data-theme="brat"] .nav-user {
+  opacity: 1 !important;
+}
+
+[data-theme="brat"] .delete-btn-link {
+  opacity: 0.7;
+}
+
+[data-theme="brat"] .delete-btn-link:hover {
+  opacity: 1;
 }
 
 @keyframes navDrop {

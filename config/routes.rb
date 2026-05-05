@@ -36,6 +36,11 @@ Rails.application.routes.draw do
     patch :mark_all_as_read, on: :collection
   end
   resources :anonymous_forms, only: %i[ index new create show destroy ]
+  resources :whiteboards, only: %i[ index new create show destroy ]
+
+  scope "/w/:token", as: :public_whiteboard do
+    get "/", to: "whiteboards#public_show"
+  end
 
   scope "/f/:token", as: :public_anonymous_form do
     get "/", to: "public_anonymous_forms#show"

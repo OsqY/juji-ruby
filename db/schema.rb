@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_21_153417) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_21_023415) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -210,6 +210,39 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_21_153417) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  create_table "whiteboard_collaborators", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.integer "whiteboard_id", null: false
+    t.index ["user_id"], name: "index_whiteboard_collaborators_on_user_id"
+    t.index ["whiteboard_id", "user_id"], name: "index_whiteboard_collaborators_on_whiteboard_id_and_user_id", unique: true
+    t.index ["whiteboard_id"], name: "index_whiteboard_collaborators_on_whiteboard_id"
+  end
+
+  create_table "whiteboard_strokes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.json "stroke_data"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.integer "whiteboard_id", null: false
+    t.index ["user_id"], name: "index_whiteboard_strokes_on_user_id"
+    t.index ["whiteboard_id"], name: "index_whiteboard_strokes_on_whiteboard_id"
+  end
+
+  create_table "whiteboards", force: :cascade do |t|
+    t.string "background_color", default: "#FFFFFF"
+    t.datetime "created_at", null: false
+    t.integer "height", default: 800
+    t.string "name"
+    t.string "token"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.integer "width", default: 1200
+    t.index ["token"], name: "index_whiteboards_on_token", unique: true
+    t.index ["user_id"], name: "index_whiteboards_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "anonymous_form_questions", "anonymous_forms"
@@ -226,4 +259,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_21_153417) do
   add_foreign_key "sessions", "users"
   add_foreign_key "shopping_items", "users"
   add_foreign_key "transactions", "users"
+  add_foreign_key "whiteboard_collaborators", "users"
+  add_foreign_key "whiteboard_collaborators", "whiteboards"
+  add_foreign_key "whiteboard_strokes", "users"
+  add_foreign_key "whiteboard_strokes", "whiteboards"
+  add_foreign_key "whiteboards", "users"
 end

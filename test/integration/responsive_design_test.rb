@@ -2,7 +2,7 @@
 # Tests para verificar que la app es responsive en diferentes tamaños de pantalla
 
 require "test_helper"
-require "capybara/mini_test"
+require "capybara/minitest"
 
 class ResponsiveDesignTest < ActionDispatch::IntegrationTest
   include Capybara::DSL

@@ -21,6 +21,14 @@ export default class ThemeController extends Controller {
     applyTheme(theme) {
         document.documentElement.dataset.theme = theme
         this.syncBratFontVisibility(theme)
+        this.updateThemeColor(theme)
+    }
+
+    updateThemeColor(theme) {
+        const meta = document.getElementById('theme-color-meta')
+        if (!meta) return
+        const colors = { light: '#FFFFFF', dark: '#121212', vintage: '#f4ecd8', neon: '#0b0a12', brat: '#8ACE00' }
+        meta.content = colors[theme] || '#FFFFFF'
     }
 
     switchFont(event) {

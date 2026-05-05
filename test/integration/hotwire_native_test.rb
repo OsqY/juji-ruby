@@ -2,7 +2,7 @@
 # Tests para verificar que Hotwire Native funciona correctamente
 
 require "test_helper"
-require "capybara/mini_test"
+require "capybara/minitest"
 
 class HotwireNativeTest < ActionDispatch::IntegrationTest
   include Capybara::DSL

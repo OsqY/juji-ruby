@@ -35,6 +35,7 @@
       <% budgets_active = controller_name == "budgets" %>
       <% shopping_active = controller_name == "shopping_items" %>
       <% forms_active = controller_name == "anonymous_forms" %>
+      <% whiteboards_active = controller_name == "whiteboards" %>
       <% notifications_active = controller_name == "notifications" %>
       <% guide_active = controller_name == "guides" %>
       <% login_active = controller_name == "sessions" && action_name == "new" %>
@@ -75,8 +76,8 @@
               border: 1px solid var(--border-color, #ddd);
               border-radius: 4px;
               font-size: 0.9rem;
-              background: var(--bg-color, white);
-              color: var(--text-color, #333);
+              background: var(--paper);
+              color: var(--ink);
               transition: all 0.2s ease;
             "
           />
@@ -94,8 +95,8 @@
             z-index: 1000;
             max-height: 300px;
             overflow-y: auto;
-            background: var(--bg-color, white);
-            border: 1px solid var(--border-color, #ddd);
+            background: var(--paper);
+            border: 1px solid var(--muted-gray);
             border-radius: 4px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             display: none;
@@ -113,6 +114,7 @@
         <%= link_to "BUSQUEDA", search_path, class: "nav-link #{'is-active' if current_page?(search_path)}" %>
         <%= link_to t("guide.nav"), guide_path, class: "nav-link #{'is-active' if guide_active}" %>
         <%= link_to "FORMULARIOS", anonymous_forms_path, class: "nav-link #{'is-active' if forms_active}" %>
+        <%= link_to "PIZARRAS", whiteboards_path, class: "nav-link #{'is-active' if whiteboards_active}" %>
 
         <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
           <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if reports_group_active %>">REPORTES</summary>

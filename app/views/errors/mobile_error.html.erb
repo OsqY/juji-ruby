@@ -8,6 +8,46 @@
   <title><%= @title || "Error" %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
   <style>
+    :root {
+      --paper: #FFFFFF;
+      --ink: #1A1A1A;
+      --muted-gray: #F0F0F0;
+      --highlight: #FFF200;
+      --accent-blue: #0055FF;
+    }
+
+    [data-theme="dark"] {
+      --paper: #121212;
+      --ink: #F0F0F0;
+      --muted-gray: #1E1E1E;
+      --highlight: #E11D48;
+      --accent-blue: #38BDF8;
+    }
+
+    [data-theme="neon"] {
+      --paper: #0b0a12;
+      --ink: #ddffd8;
+      --muted-gray: #211a3a;
+      --highlight: #63ff59;
+      --accent-blue: #b05bff;
+    }
+
+    [data-theme="brat"] {
+      --paper: #8ACE00;
+      --ink: #111111;
+      --muted-gray: #96db00;
+      --highlight: #111111;
+      --accent-blue: #2b2b2b;
+    }
+
+    [data-theme="vintage"] {
+      --paper: #f4ecd8;
+      --ink: #433422;
+      --muted-gray: #e9edc9;
+      --highlight: #d4a373;
+      --accent-blue: #606c38;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -16,19 +56,14 @@
 
     body {
       font-family: 'Archivo Black', 'Inter', sans-serif;
-      background-color: #FFFFFF;
-      color: #1A1A1A;
+      background-color: var(--paper);
+      color: var(--ink);
       padding: max(20px, env(safe-area-inset-left)) max(20px, env(safe-area-inset-right)) 20px;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding-bottom: max(80px, env(safe-area-inset-bottom));
-    }
-
-    [data-theme="dark"] {
-      background-color: #121212;
-      color: #F0F0F0;
     }
 
     .error-container {
@@ -65,7 +100,11 @@
       font-size: 1rem;
       line-height: 1.6;
       margin-bottom: 2rem;
-      opacity: 0.7;
+      opacity: 0.85;
+    }
+
+    [data-theme="neon"] .error-message {
+      opacity: 1;
     }
 
     .error-actions {
@@ -78,23 +117,16 @@
       display: inline-block;
       padding: 12px 20px;
       min-height: 48px;
-      background-color: #1A1A1A;
-      color: #FFFFFF;
+      background-color: var(--ink);
+      color: var(--paper);
       text-decoration: none;
-      border: 3px solid #1A1A1A;
-      border-radius: 4px;
+      border: 3px solid var(--ink);
       font-weight: 900;
       font-size: 0.9rem;
       cursor: pointer;
       -webkit-appearance: none;
       appearance: none;
       transition: all 0.2s;
-    }
-
-    [data-theme="dark"] .error-action-btn {
-      background-color: #F0F0F0;
-      color: #1A1A1A;
-      border-color: #F0F0F0;
     }
 
     .error-action-btn:active {
@@ -104,44 +136,36 @@
 
     .error-action-btn.secondary {
       background-color: transparent;
-      color: #1A1A1A;
-    }
-
-    [data-theme="dark"] .error-action-btn.secondary {
-      color: #F0F0F0;
+      color: var(--ink);
     }
 
     .error-details {
       margin-top: 3rem;
       padding-top: 2rem;
-      border-top: 2px dashed #f0f0f0;
+      border-top: 2px dashed var(--muted-gray);
       text-align: left;
-    }
-
-    [data-theme="dark"] .error-details {
-      border-top-color: #1E1E1E;
     }
 
     .error-details h3 {
       font-size: 0.8rem;
       font-weight: 900;
       text-transform: uppercase;
-      opacity: 0.5;
+      opacity: 0.7;
       margin-bottom: 0.5rem;
+    }
+
+    [data-theme="neon"] .error-details h3 {
+      opacity: 1;
     }
 
     .error-details p {
       font-size: 0.75rem;
       font-family: monospace;
-      background-color: #f0f0f0;
+      background-color: var(--muted-gray);
+      color: var(--ink);
       padding: 0.75rem;
-      border-radius: 4px;
       overflow-x: auto;
       word-break: break-all;
-    }
-
-    [data-theme="dark"] .error-details p {
-      background-color: #1E1E1E;
     }
   </style>
 </head>

@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :anonymous_forms, dependent: :destroy
   has_many :anonymous_form_responses, dependent: :nullify
   has_many :notifications, dependent: :destroy
+  has_many :whiteboards, dependent: :destroy
+  has_many :whiteboard_collaborators, dependent: :destroy
+  has_many :shared_whiteboards, through: :whiteboard_collaborators, source: :whiteboard
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
