@@ -27,7 +27,7 @@ export default class ThemeController extends Controller {
     updateThemeColor(theme) {
         const meta = document.getElementById('theme-color-meta')
         if (!meta) return
-        const colors = { light: '#FFFFFF', dark: '#121212', vintage: '#f4ecd8', neon: '#0b0a12', brat: '#8ACE00' }
+        const colors = { light: '#FFFFFF', dark: '#121212', vintage: '#f4ecd8', neon: '#0b0a12', brat: '#8ACE00', comic: '#F5F0E6', superhero: '#F0EDE5' }
         meta.content = colors[theme] || '#FFFFFF'
     }
 

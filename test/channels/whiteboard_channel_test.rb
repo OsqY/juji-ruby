@@ -41,14 +41,15 @@ class WhiteboardChannelTest < ActionCable::Channel::TestCase
     stroke_data = { "tool" => "pen", "color" => "#000", "width" => 3, "points" => [[0, 0], [10, 10]] }
 
     assert_difference -> { @whiteboard.whiteboard_strokes.count }, 1 do
-      perform :draw, stroke: stroke_data
+      perform :draw, stroke: stroke_data, client_id: "test-client-id"
     end
 
     assert_broadcast_on(@whiteboard, {
       type: "stroke",
       stroke: stroke_data,
       user_id: @owner.id,
-      stroke_id: @whiteboard.whiteboard_strokes.last.id
+      stroke_id: @whiteboard.whiteboard_strokes.last.id,
+      client_id: "test-client-id"
     })
   end
 

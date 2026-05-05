@@ -10,3 +10,4 @@ pin "lucide" # @0.564.0
 pin "html2canvas" # @1.4.1
 pin "chart.js" # @4.5.1
 pin "@kurkle/color", to: "@kurkle--color.js" # @0.3.4
+pin "roughjs" # @4.6.6
