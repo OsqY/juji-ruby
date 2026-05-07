@@ -1,4 +1,4 @@
-# oh-my-kimichan project settings
+# oh-my-kimi project settings
 [project]
 name = "my-project"
 description = ""
@@ -12,8 +12,8 @@ yolo_mode = false                # safe guards still block secrets/destructive s
 [runtime]
 # auto chooses lite on <=18GB RAM hosts to make 16GB laptops usable.
 resource_profile = "auto"        # auto | lite | standard
-mcp_scope = "project"            # limit MCP discovery to project scope
-skills_scope = "project"         # limit skills discovery to project scope
+mcp_scope = "project"            # all | project | none — fresh projects use omk-project only
+skills_scope = "project"         # all | project | none — fresh projects use packaged project skills only
 max_workers = 1                  # can override with OMK_MAX_WORKERS
 max_output_mb = 4                # cap buffered shell/quality output
 wire_output_mb = 1               # cap per-task retained wire output
@@ -33,8 +33,8 @@ build = "auto"
 
 [memory]
 # Project-local ontology graph is the default source of truth for project/session memory.
-# Optional external Neo4j credentials must stay in env vars or a secret manager.
-backend = "local_graph"    # file | local_graph | neo4j | dual | kuzu
+# Use backend = "kuzu" for the embedded Kuzu ontology graph backend.
+backend = "local_graph"    # local_graph | kuzu
 scope = "project-session"
 strict = true               # fail memory writes if the selected graph backend is unavailable
 mirror_files = true         # keep .omk/memory/*.md as readable mirrors
@@ -45,15 +45,6 @@ path = ".omk/memory/graph-state.json"
 ontology = "omk-ontology-mindmap-v1"
 query = "graphql-lite"
 
-[neo4j]
-uri_env = "OMK_NEO4J_URI"
-username_env = "OMK_NEO4J_USERNAME"
-password_env = "OMK_NEO4J_PASSWORD"
-database_env = "OMK_NEO4J_DATABASE"
-uri = "bolt://localhost:7687"
-username = "neo4j"
-database = "neo4j"
-auth = "basic"             # basic | none
 
 [locale]
 # UI language: en (default) | ko | ja
@@ -62,9 +53,9 @@ language = "en"
 [theme]
 # Custom logo image path for terminal welcome banner
 # Relative paths are resolved from project root; absolute paths also work
-# Example: logo_image = "kimichan.png"  or  logo_image = "M:\oh-my-kimichan\kimichan.png"
+# Example: logo_image = "kimicat.png"  or  logo_image = "M:\oh-my-kimi\kimicat.png"
 # Supported formats: PNG, JPEG, GIF (high-res on iTerm/Konsole, else ANSI block)
-logo_image = "kimichan.png"
+logo_image = "kimicat.png"
 
 [router]
 default_model = "kimi-k2.6"

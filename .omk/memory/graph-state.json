@@ -1,0 +1,5284 @@
+{
+  "version": 1,
+  "ontology": {
+    "version": "omk-ontology-mindmap-v1",
+    "description": "Project-local ontology for Kimi/OMK memory. Memories are decomposed into mind-map nodes for goals, topics, decisions, tasks, risks, commands, files, evidence, provider routes, provider fallbacks, questions, answers, constraints, and concepts.",
+    "classes": [
+      "Project",
+      "Session",
+      "Memory",
+      "MemoryVersion",
+      "Goal",
+      "Topic",
+      "Decision",
+      "Task",
+      "Risk",
+      "Command",
+      "File",
+      "Evidence",
+      "Provider",
+      "ProviderRoute",
+      "ProviderFallback",
+      "Constraint",
+      "Question",
+      "Answer",
+      "Concept"
+    ],
+    "relationTypes": [
+      "HAS_SESSION",
+      "HAS_MEMORY",
+      "WROTE",
+      "UPDATES",
+      "HAS_GOAL",
+      "HAS_TOPIC",
+      "HAS_DECISION",
+      "HAS_TASK",
+      "HAS_RISK",
+      "HAS_COMMAND",
+      "HAS_FILE",
+      "HAS_EVIDENCE",
+      "USES_PROVIDER",
+      "HAS_PROVIDER_ROUTE",
+      "ROUTES_TO",
+      "FALLS_BACK_TO",
+      "HAS_PROVIDER_FALLBACK",
+      "HAS_CONSTRAINT",
+      "HAS_QUESTION",
+      "HAS_ANSWER",
+      "HAS_CONCEPT",
+      "CHILD_OF",
+      "PART_OF",
+      "DEPENDS_ON",
+      "BLOCKED_BY",
+      "EVIDENCED_BY",
+      "TOUCHES_FILE"
+    ]
+  },
+  "project": {
+    "key": "juji-ruby:b00453ddf2ec",
+    "name": "my-project",
+    "root": "/home/osqy/Desktop/rails/juji-ruby"
+  },
+  "updatedAt": "2026-05-07T02:56:11.519Z",
+  "nodes": [
+    {
+      "id": "Project:5a6601aae25ff11baddf73c3",
+      "type": "Project",
+      "labels": [
+        "OmkProject",
+        "Project"
+      ],
+      "label": "my-project",
+      "summary": "/home/osqy/Desktop/rails/juji-ruby",
+      "tags": [
+        "project"
+      ],
+      "properties": {
+        "key": "juji-ruby:b00453ddf2ec",
+        "root": "/home/osqy/Desktop/rails/juji-ruby"
+      },
+      "createdAt": "2026-05-07T02:56:11.472Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Session:e5de07c26181e349a660f7f1",
+      "type": "Session",
+      "labels": [
+        "OmkSession",
+        "Session"
+      ],
+      "label": "chat-2026-05-07T02-56-11-449Z-46327",
+      "summary": "Session for my-project",
+      "tags": [
+        "session"
+      ],
+      "properties": {
+        "key": "juji-ruby:b00453ddf2ec:chat-2026-05-07T02-56-11-449Z-46327",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327",
+        "projectKey": "juji-ruby:b00453ddf2ec"
+      },
+      "createdAt": "2026-05-07T02:56:11.472Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Memory:904502ee7636eda7f139a2f4",
+      "type": "Memory",
+      "labels": [
+        "OmkMemory",
+        "Memory"
+      ],
+      "label": "project",
+      "path": "project",
+      "content": "{\"key\":\"juji-ruby:b00453ddf2ec\",\"name\":\"my-project\"}",
+      "summary": "{\"key\":\"juji-ruby:b00453ddf2ec\",\"name\":\"my-project\"}",
+      "tags": [
+        "memory",
+        "project"
+      ],
+      "properties": {
+        "key": "juji-ruby:b00453ddf2ec:244210e48437b6556980a70249a99369934a352429034cef9d7bd253b3bf2c01",
+        "path": "project",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327",
+        "source": "omk-chat-bootstrap"
+      },
+      "createdAt": "2026-05-07T02:56:11.472Z",
+      "updatedAt": "2026-05-07T02:56:11.488Z"
+    },
+    {
+      "id": "MemoryVersion:2a327b9b771d4027b2a7dfe4",
+      "type": "MemoryVersion",
+      "labels": [
+        "OmkMemoryVersion",
+        "MemoryVersion"
+      ],
+      "label": "project@2026-05-07T02:56:11.472Z",
+      "path": "project",
+      "content": "{\"key\":\"juji-ruby:b00453ddf2ec\",\"name\":\"my-project\"}",
+      "summary": "{\"key\":\"juji-ruby:b00453ddf2ec\",\"name\":\"my-project\"}",
+      "tags": [
+        "memory-version",
+        "project"
+      ],
+      "properties": {
+        "key": "juji-ruby:b00453ddf2ec:chat-2026-05-07T02-56-11-449Z-46327:5b913092dcb9d8f43340a389d07bc05e59b174af8a84c3d65dbb7c3d40eb1229",
+        "path": "project",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327",
+        "source": "omk-chat-bootstrap"
+      },
+      "createdAt": "2026-05-07T02:56:11.472Z",
+      "updatedAt": "2026-05-07T02:56:11.472Z"
+    },
+    {
+      "id": "MemoryVersion:f1a26c2314beee4eb6b0a915",
+      "type": "MemoryVersion",
+      "labels": [
+        "OmkMemoryVersion",
+        "MemoryVersion"
+      ],
+      "label": "project@2026-05-07T02:56:11.488Z",
+      "path": "project",
+      "content": "{\"key\":\"juji-ruby:b00453ddf2ec\",\"name\":\"my-project\"}",
+      "summary": "{\"key\":\"juji-ruby:b00453ddf2ec\",\"name\":\"my-project\"}",
+      "tags": [
+        "memory-version",
+        "project"
+      ],
+      "properties": {
+        "key": "juji-ruby:b00453ddf2ec:chat-2026-05-07T02-56-11-449Z-46327:5aeb7492c80d9d2ec6b8d298ea9173ec68e4775c42d7056d05891ecabac48fc6",
+        "path": "project",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327",
+        "source": "omk-chat-bootstrap"
+      },
+      "createdAt": "2026-05-07T02:56:11.488Z",
+      "updatedAt": "2026-05-07T02:56:11.488Z"
+    },
+    {
+      "id": "Topic:d6ac09600cefeacd38b3e9da",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "{\"key\":\"juji-ruby:b00453ddf2ec\",\"name\":\"my-project\"}",
+      "summary": "{\"key\":\"juji-ruby:b00453ddf2ec\",\"name\":\"my-project\"}",
+      "tags": [
+        "key",
+        "juji-ruby",
+        "b00453ddf2ec",
+        "name",
+        "my-project"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:904502ee7636eda7f139a2f4",
+        "line": 1,
+        "level": null,
+        "path": "project",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.488Z",
+      "updatedAt": "2026-05-07T02:56:11.488Z"
+    },
+    {
+      "id": "Memory:d4118661b03a48a88a01bd5f",
+      "type": "Memory",
+      "labels": [
+        "OmkMemory",
+        "Memory"
+      ],
+      "label": "daily/2026-05-06/plan.md",
+      "path": "daily/2026-05-06/plan.md",
+      "content": "# 2026-05-06 OMK Chat Plan\n\n**Run ID:** chat-2026-05-07T02-56-11-449Z-46327\n**Generated by:** omk chat bootstrap\n\n## Purpose\n- Start every chat with a dated workspace for planning, issue triage, and verification evidence.\n- Keep ontology-backed memory available before the root coordinator starts.\n- Make required init state visible without overwriting user-authored docs.\n\n## Today Plan\n1. Review `init-checklist.md` and resolve missing critical init artifacts first.\n2. Use `improvements.md` as th…",
+      "summary": "2026-05-06 OMK Chat Plan",
+      "tags": [
+        "memory",
+        "daily",
+        "2026",
+        "05",
+        "06",
+        "plan",
+        "md"
+      ],
+      "properties": {
+        "key": "juji-ruby:b00453ddf2ec:f2ca0ca384986bd40e3e1584b4d95ff7bba10747306bf5995c6c98cf837301db",
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327",
+        "source": "omk-chat-bootstrap"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "MemoryVersion:d62c56122fcae9d089f681bb",
+      "type": "MemoryVersion",
+      "labels": [
+        "OmkMemoryVersion",
+        "MemoryVersion"
+      ],
+      "label": "daily/2026-05-06/plan.md@2026-05-07T02:56:11.492Z",
+      "path": "daily/2026-05-06/plan.md",
+      "content": "# 2026-05-06 OMK Chat Plan\n\n**Run ID:** chat-2026-05-07T02-56-11-449Z-46327\n**Generated by:** omk chat bootstrap\n\n## Purpose\n- Start every chat with a dated workspace for planning, issue triage, and verification evidence.\n- Keep ontology-backed memory available before the root coordinator starts.\n- Make required init state visible without overwriting user-authored docs.\n\n## Today Plan\n1. Review `init-checklist.md` and resolve missing critical init artifacts first.\n2. Use `improvements.md` as the active improvement backlog.\n3. Use `critical-issues.md` for blocking defects, safety risks, and verification gaps.\n4. Record command evidence before claiming work is complete.\n\n## Stop Condition\n- Critical init artifacts are present.\n- Ontology graph exists at `.omk/memory/graph-state.json`.\n- Any new code/docs changes have explicit verification evidence.\n",
+      "summary": "2026-05-06 OMK Chat Plan",
+      "tags": [
+        "memory-version",
+        "daily",
+        "2026",
+        "05",
+        "06",
+        "plan",
+        "md"
+      ],
+      "properties": {
+        "key": "juji-ruby:b00453ddf2ec:chat-2026-05-07T02-56-11-449Z-46327:d788d7c8d9efd91d03aef9bb815b7cb8756702312645fc6d730b1b6bfe59f66d",
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327",
+        "source": "omk-chat-bootstrap"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Topic:d36e13dfc29df467734e4030",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "2026-05-06 OMK Chat Plan",
+      "summary": "2026-05-06 OMK Chat Plan",
+      "tags": [
+        "2026-05-06",
+        "omk",
+        "chat",
+        "plan"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 1,
+        "level": 1,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Topic:ecc2a6a2525ff6aed5512aee",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Run ID: chat-2026-05-07T02-56-11-449Z-46327",
+      "summary": "Run ID: chat-2026-05-07T02-56-11-449Z-46327",
+      "tags": [
+        "run",
+        "chat-2026-05-07t02-56-11-449z-46327"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 3,
+        "level": null,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Topic:2251d4394c1e87b30c537f96",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Generated by: omk chat bootstrap",
+      "summary": "Generated by: omk chat bootstrap",
+      "tags": [
+        "generated",
+        "omk",
+        "chat",
+        "bootstrap"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 4,
+        "level": null,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Topic:1f08f2854a2357e4f9614610",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Purpose",
+      "summary": "Purpose",
+      "tags": [
+        "purpose"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 6,
+        "level": 2,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Evidence:226e64e0b249cb5044191fcd",
+      "type": "Evidence",
+      "labels": [
+        "OmkEvidence",
+        "Evidence"
+      ],
+      "label": "Start every chat with a dated workspace for planning, issue triage, and verification evidence.",
+      "summary": "Start every chat with a dated workspace for planning, issue triage, and verification evidence.",
+      "tags": [
+        "start",
+        "every",
+        "chat",
+        "with",
+        "dated",
+        "workspace",
+        "for",
+        "planning",
+        "issue",
+        "triage",
+        "and",
+        "verification"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 7,
+        "level": null,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Topic:c251188786277bde65b39cee",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Keep ontology-backed memory available before the root coordinator starts.",
+      "summary": "Keep ontology-backed memory available before the root coordinator starts.",
+      "tags": [
+        "keep",
+        "ontology-backed",
+        "memory",
+        "available",
+        "before",
+        "the",
+        "root",
+        "coordinator",
+        "starts"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 8,
+        "level": null,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Topic:afb78794f9e6066e518d80cc",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Make required init state visible without overwriting user-authored docs.",
+      "summary": "Make required init state visible without overwriting user-authored docs.",
+      "tags": [
+        "make",
+        "required",
+        "init",
+        "state",
+        "visible",
+        "without",
+        "overwriting",
+        "user-authored",
+        "docs"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 9,
+        "level": null,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Topic:c919e7a15007a6e4a8817723",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Today Plan",
+      "summary": "Today Plan",
+      "tags": [
+        "today",
+        "plan"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 11,
+        "level": 2,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Topic:e621d0fb9cc17a56670dd479",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Review init-checklist.md and resolve missing critical init artifacts first.",
+      "summary": "Review init-checklist.md and resolve missing critical init artifacts first.",
+      "tags": [
+        "review",
+        "init-checklist",
+        "and",
+        "resolve",
+        "missing",
+        "critical",
+        "init",
+        "artifacts",
+        "first"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 12,
+        "level": null,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "File:94d8545374856c46527b49b4",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": "init-checklist.md",
+      "path": "init-checklist.md",
+      "summary": "Referenced by daily/2026-05-06/plan.md",
+      "tags": [
+        "file",
+        "init",
+        "checklist",
+        "md"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "path": "init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Topic:fc65a328a5bb9b6af4add6ee",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Use improvements.md as the active improvement backlog.",
+      "summary": "Use improvements.md as the active improvement backlog.",
+      "tags": [
+        "use",
+        "improvements",
+        "the",
+        "active",
+        "improvement",
+        "backlog"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 13,
+        "level": null,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "File:002717437bd0be9f3c9dd4dd",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": "improvements.md",
+      "path": "improvements.md",
+      "summary": "Referenced by daily/2026-05-06/plan.md",
+      "tags": [
+        "file",
+        "improvements",
+        "md"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "path": "improvements.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Topic:4422cc1f9814856a4c8f39af",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Use critical-issues.md for blocking defects, safety risks, and verification gaps.",
+      "summary": "Use critical-issues.md for blocking defects, safety risks, and verification gaps.",
+      "tags": [
+        "use",
+        "critical-issues",
+        "for",
+        "blocking",
+        "defects",
+        "safety",
+        "risks",
+        "and",
+        "verification",
+        "gaps"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 14,
+        "level": null,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "File:364c5896960ce783b3cfee34",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": "critical-issues.md",
+      "path": "critical-issues.md",
+      "summary": "Referenced by daily/2026-05-06/plan.md",
+      "tags": [
+        "file",
+        "critical",
+        "issues",
+        "md"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "path": "critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Evidence:49b59ba834984e1daed7d60f",
+      "type": "Evidence",
+      "labels": [
+        "OmkEvidence",
+        "Evidence"
+      ],
+      "label": "Record command evidence before claiming work is complete.",
+      "summary": "Record command evidence before claiming work is complete.",
+      "tags": [
+        "record",
+        "command",
+        "evidence",
+        "before",
+        "claiming",
+        "work",
+        "complete"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 15,
+        "level": null,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Topic:6597c80047827cbdb5698d2e",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Stop Condition",
+      "summary": "Stop Condition",
+      "tags": [
+        "stop",
+        "condition"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 17,
+        "level": 2,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Topic:c0669abebecc1ade9311da41",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Critical init artifacts are present.",
+      "summary": "Critical init artifacts are present.",
+      "tags": [
+        "critical",
+        "init",
+        "artifacts",
+        "are",
+        "present"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 18,
+        "level": null,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Topic:95f1aa7877944cf5421b2b09",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Ontology graph exists at .omk/memory/graph-state.json.",
+      "summary": "Ontology graph exists at .omk/memory/graph-state.json.",
+      "tags": [
+        "ontology",
+        "graph",
+        "exists",
+        "omk",
+        "memory",
+        "graph-state",
+        "json"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 19,
+        "level": null,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "File:ae286ae262736696c50fa585",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/memory/graph-state.json.",
+      "path": ".omk/memory/graph-state.json.",
+      "summary": "Referenced by daily/2026-05-06/plan.md",
+      "tags": [
+        "file",
+        "omk",
+        "memory",
+        "graph",
+        "state",
+        "json"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "path": ".omk/memory/graph-state.json.",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Evidence:a3c3ac32bec64f1debd7f9b7",
+      "type": "Evidence",
+      "labels": [
+        "OmkEvidence",
+        "Evidence"
+      ],
+      "label": "Any new code/docs changes have explicit verification evidence.",
+      "summary": "Any new code/docs changes have explicit verification evidence.",
+      "tags": [
+        "any",
+        "new",
+        "code",
+        "docs",
+        "changes",
+        "have",
+        "explicit",
+        "verification",
+        "evidence"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "line": 20,
+        "level": null,
+        "path": "daily/2026-05-06/plan.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "File:0e38039cef83d62840bf69cd",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": "code/docs",
+      "path": "code/docs",
+      "summary": "Referenced by daily/2026-05-06/plan.md",
+      "tags": [
+        "file",
+        "code",
+        "docs"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f",
+        "path": "code/docs",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "Memory:a761cfdbe99142a14344e04d",
+      "type": "Memory",
+      "labels": [
+        "OmkMemory",
+        "Memory"
+      ],
+      "label": "daily/2026-05-06/improvements.md",
+      "path": "daily/2026-05-06/improvements.md",
+      "content": "# 2026-05-06 Improvements\n\n## Current Improvement Backlog\n### Optional init/support artifacts to add or refresh\n- None detected.\n\n### Critical init artifacts currently blocking reliable chat startup\n- None detected.\n\n\n## Suggested Focus\n- Keep `omk chat` startup idempotent and non-destructive.\n- Prefer local graph memory for default ontology state.\n- Keep generated daily docs small, dated, and safe to edit by hand.\n",
+      "summary": "2026-05-06 Improvements",
+      "tags": [
+        "memory",
+        "daily",
+        "2026",
+        "05",
+        "06",
+        "improvements",
+        "md"
+      ],
+      "properties": {
+        "key": "juji-ruby:b00453ddf2ec:df90aee8aea225f08490c817536b23f5237cc4f41f8b5aa11b68a06be2204edb",
+        "path": "daily/2026-05-06/improvements.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327",
+        "source": "omk-chat-bootstrap"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "MemoryVersion:2a92d3a09d9f4419c3ea3db3",
+      "type": "MemoryVersion",
+      "labels": [
+        "OmkMemoryVersion",
+        "MemoryVersion"
+      ],
+      "label": "daily/2026-05-06/improvements.md@2026-05-07T02:56:11.497Z",
+      "path": "daily/2026-05-06/improvements.md",
+      "content": "# 2026-05-06 Improvements\n\n## Current Improvement Backlog\n### Optional init/support artifacts to add or refresh\n- None detected.\n\n### Critical init artifacts currently blocking reliable chat startup\n- None detected.\n\n\n## Suggested Focus\n- Keep `omk chat` startup idempotent and non-destructive.\n- Prefer local graph memory for default ontology state.\n- Keep generated daily docs small, dated, and safe to edit by hand.\n",
+      "summary": "2026-05-06 Improvements",
+      "tags": [
+        "memory-version",
+        "daily",
+        "2026",
+        "05",
+        "06",
+        "improvements",
+        "md"
+      ],
+      "properties": {
+        "key": "juji-ruby:b00453ddf2ec:chat-2026-05-07T02-56-11-449Z-46327:6a2e56b8bc7599042f9c0127ca7b19d50b2c60bc75dd4d941a39c1b9e867b603",
+        "path": "daily/2026-05-06/improvements.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327",
+        "source": "omk-chat-bootstrap"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "Topic:7dbc1042a354307e532c8ad2",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "2026-05-06 Improvements",
+      "summary": "2026-05-06 Improvements",
+      "tags": [
+        "2026-05-06",
+        "improvements"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d",
+        "line": 1,
+        "level": 1,
+        "path": "daily/2026-05-06/improvements.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "Topic:dd5494ad2ca34d7c789c2e5f",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Current Improvement Backlog",
+      "summary": "Current Improvement Backlog",
+      "tags": [
+        "current",
+        "improvement",
+        "backlog"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d",
+        "line": 3,
+        "level": 2,
+        "path": "daily/2026-05-06/improvements.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "Topic:0dbec2cc8b45445f34440b1b",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Optional init/support artifacts to add or refresh",
+      "summary": "Optional init/support artifacts to add or refresh",
+      "tags": [
+        "optional",
+        "init",
+        "support",
+        "artifacts",
+        "add",
+        "refresh"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d",
+        "line": 4,
+        "level": 3,
+        "path": "daily/2026-05-06/improvements.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "File:14981d5591e6daf60d7e714c",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": "init/support",
+      "path": "init/support",
+      "summary": "Referenced by daily/2026-05-06/improvements.md",
+      "tags": [
+        "file",
+        "init",
+        "support"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d",
+        "path": "init/support",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "Topic:199f24bb99cb616311e51c5d",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "None detected.",
+      "summary": "None detected.",
+      "tags": [
+        "none",
+        "detected"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d",
+        "line": 5,
+        "level": null,
+        "path": "daily/2026-05-06/improvements.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "Topic:cc3980cadc6818eb2fb774cb",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Critical init artifacts currently blocking reliable chat startup",
+      "summary": "Critical init artifacts currently blocking reliable chat startup",
+      "tags": [
+        "critical",
+        "init",
+        "artifacts",
+        "currently",
+        "blocking",
+        "reliable",
+        "chat",
+        "startup"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d",
+        "line": 7,
+        "level": 3,
+        "path": "daily/2026-05-06/improvements.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "Topic:71539f55d35b458bb2f21569",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "None detected.",
+      "summary": "None detected.",
+      "tags": [
+        "none",
+        "detected"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d",
+        "line": 8,
+        "level": null,
+        "path": "daily/2026-05-06/improvements.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "Topic:d8e6549ab112e5e8f2159a24",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Suggested Focus",
+      "summary": "Suggested Focus",
+      "tags": [
+        "suggested",
+        "focus"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d",
+        "line": 11,
+        "level": 2,
+        "path": "daily/2026-05-06/improvements.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "Topic:d5e47994a619bb4153d6b5d2",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Keep omk chat startup idempotent and non-destructive.",
+      "summary": "Keep omk chat startup idempotent and non-destructive.",
+      "tags": [
+        "keep",
+        "omk",
+        "chat",
+        "startup",
+        "idempotent",
+        "and",
+        "non-destructive"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d",
+        "line": 12,
+        "level": null,
+        "path": "daily/2026-05-06/improvements.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "Topic:d019f3eeef991443ee17a06f",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Prefer local graph memory for default ontology state.",
+      "summary": "Prefer local graph memory for default ontology state.",
+      "tags": [
+        "prefer",
+        "local",
+        "graph",
+        "memory",
+        "for",
+        "default",
+        "ontology",
+        "state"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d",
+        "line": 13,
+        "level": null,
+        "path": "daily/2026-05-06/improvements.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "Topic:df2b77b6862bb16a0edad79c",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Keep generated daily docs small, dated, and safe to edit by hand.",
+      "summary": "Keep generated daily docs small, dated, and safe to edit by hand.",
+      "tags": [
+        "keep",
+        "generated",
+        "daily",
+        "docs",
+        "small",
+        "dated",
+        "and",
+        "safe",
+        "edit",
+        "hand"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d",
+        "line": 14,
+        "level": null,
+        "path": "daily/2026-05-06/improvements.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "type": "Memory",
+      "labels": [
+        "OmkMemory",
+        "Memory"
+      ],
+      "label": "daily/2026-05-06/critical-issues.md",
+      "path": "daily/2026-05-06/critical-issues.md",
+      "content": "# 2026-05-06 Critical Issues\n\n## Critical Init Status\n- No critical init artifacts were missing when this daily file was generated.\n### Missing critical artifacts\n- None detected.\n\n\n## Critical Artifacts Present\n- ✅ `AGENTS.md` — top-level operating contract\n- ✅ `.kimi/AGENTS.md` — Kimi-specific operating rules\n- ✅ `.omk/config.toml` — OMK project runtime settings\n- ✅ `.omk/agents/root.yaml` — root coordinator agent\n- ✅ `.omk/mcp.json` — project MCP registry\n- ✅ `.omk/hooks/pre-shell-guard.sh` …",
+      "summary": "2026-05-06 Critical Issues",
+      "tags": [
+        "memory",
+        "daily",
+        "2026",
+        "05",
+        "06",
+        "critical",
+        "issues",
+        "md"
+      ],
+      "properties": {
+        "key": "juji-ruby:b00453ddf2ec:a3c8c55eebccc2e150e5b7c333623a3f378ec3723f932f84d89dfb0e4bb67ee2",
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327",
+        "source": "omk-chat-bootstrap"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "MemoryVersion:6113612bda78343f8dd56f02",
+      "type": "MemoryVersion",
+      "labels": [
+        "OmkMemoryVersion",
+        "MemoryVersion"
+      ],
+      "label": "daily/2026-05-06/critical-issues.md@2026-05-07T02:56:11.503Z",
+      "path": "daily/2026-05-06/critical-issues.md",
+      "content": "# 2026-05-06 Critical Issues\n\n## Critical Init Status\n- No critical init artifacts were missing when this daily file was generated.\n### Missing critical artifacts\n- None detected.\n\n\n## Critical Artifacts Present\n- ✅ `AGENTS.md` — top-level operating contract\n- ✅ `.kimi/AGENTS.md` — Kimi-specific operating rules\n- ✅ `.omk/config.toml` — OMK project runtime settings\n- ✅ `.omk/agents/root.yaml` — root coordinator agent\n- ✅ `.omk/mcp.json` — project MCP registry\n- ✅ `.omk/hooks/pre-shell-guard.sh` — destructive shell guard\n- ✅ `.omk/hooks/protect-secrets.sh` — secret write guard\n- ✅ `.omk/memory/graph-state.json` — local ontology graph database\n\n## Escalation Rule\n- Treat missing shell/secret guards, root agent config, MCP registry, or ontology graph as critical until restored.\n",
+      "summary": "2026-05-06 Critical Issues",
+      "tags": [
+        "memory-version",
+        "daily",
+        "2026",
+        "05",
+        "06",
+        "critical",
+        "issues",
+        "md"
+      ],
+      "properties": {
+        "key": "juji-ruby:b00453ddf2ec:chat-2026-05-07T02-56-11-449Z-46327:934133a9f181cecef8d7051b8d65319827fc840dad2b0f402c474f95391bef33",
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327",
+        "source": "omk-chat-bootstrap"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:411a60a7174535569c65a8fc",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "2026-05-06 Critical Issues",
+      "summary": "2026-05-06 Critical Issues",
+      "tags": [
+        "2026-05-06",
+        "critical",
+        "issues"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 1,
+        "level": 1,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:e7601432855358701dc3a34a",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Critical Init Status",
+      "summary": "Critical Init Status",
+      "tags": [
+        "critical",
+        "init",
+        "status"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 3,
+        "level": 2,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:9d24cef8a6a4b4e118158c68",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "No critical init artifacts were missing when this daily file was generated.",
+      "summary": "No critical init artifacts were missing when this daily file was generated.",
+      "tags": [
+        "critical",
+        "init",
+        "artifacts",
+        "were",
+        "missing",
+        "when",
+        "this",
+        "daily",
+        "file",
+        "was",
+        "generated"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 4,
+        "level": null,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:6d63f6fea5b71d3254e7a909",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Missing critical artifacts",
+      "summary": "Missing critical artifacts",
+      "tags": [
+        "missing",
+        "critical",
+        "artifacts"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 5,
+        "level": 3,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:4fbb195d73c106fa7dc725f1",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "None detected.",
+      "summary": "None detected.",
+      "tags": [
+        "none",
+        "detected"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 6,
+        "level": null,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:b8adbcc505182b55130516af",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Critical Artifacts Present",
+      "summary": "Critical Artifacts Present",
+      "tags": [
+        "critical",
+        "artifacts",
+        "present"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 9,
+        "level": 2,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:c49ed69e1bbaef418007686e",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ AGENTS.md — top-level operating contract",
+      "summary": "✅ AGENTS.md — top-level operating contract",
+      "tags": [
+        "agents",
+        "top-level",
+        "operating",
+        "contract"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 10,
+        "level": null,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "File:0fdab866dad2a6509469189c",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": "AGENTS.md",
+      "path": "AGENTS.md",
+      "summary": "Referenced by daily/2026-05-06/critical-issues.md",
+      "tags": [
+        "file",
+        "agents",
+        "md"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "path": "AGENTS.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Provider:ae10ccf576da5df003a68849",
+      "type": "Provider",
+      "labels": [
+        "OmkProvider",
+        "Provider"
+      ],
+      "label": "✅ .kimi/AGENTS.md — Kimi-specific operating rules",
+      "summary": "✅ .kimi/AGENTS.md — Kimi-specific operating rules",
+      "tags": [
+        "kimi",
+        "agents",
+        "kimi-specific",
+        "operating",
+        "rules"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 11,
+        "level": null,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "File:705ba35a2134f6cd0fafa7fb",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".kimi/AGENTS.md",
+      "path": ".kimi/AGENTS.md",
+      "summary": "Referenced by daily/2026-05-06/critical-issues.md",
+      "tags": [
+        "file",
+        "kimi",
+        "agents",
+        "md"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "path": ".kimi/AGENTS.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Provider:5aacac9878bc3400b5a3498c",
+      "type": "Provider",
+      "labels": [
+        "OmkProvider",
+        "Provider"
+      ],
+      "label": "✅ .omk/config.toml — OMK project runtime settings",
+      "summary": "✅ .omk/config.toml — OMK project runtime settings",
+      "tags": [
+        "omk",
+        "config",
+        "toml",
+        "project",
+        "runtime",
+        "settings"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 12,
+        "level": null,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "File:a6d8a091b5973eff1efcb2d1",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/config.toml",
+      "path": ".omk/config.toml",
+      "summary": "Referenced by daily/2026-05-06/critical-issues.md",
+      "tags": [
+        "file",
+        "omk",
+        "config",
+        "toml"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "path": ".omk/config.toml",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:2e756707954fa60db93b9911",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ .omk/agents/root.yaml — root coordinator agent",
+      "summary": "✅ .omk/agents/root.yaml — root coordinator agent",
+      "tags": [
+        "omk",
+        "agents",
+        "root",
+        "yaml",
+        "coordinator",
+        "agent"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 13,
+        "level": null,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "File:5775679c87978bd6399d10d8",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/agents/root.yaml",
+      "path": ".omk/agents/root.yaml",
+      "summary": "Referenced by daily/2026-05-06/critical-issues.md",
+      "tags": [
+        "file",
+        "omk",
+        "agents",
+        "root",
+        "yaml"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "path": ".omk/agents/root.yaml",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:d1bc96314d02b370ea9060f1",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ .omk/mcp.json — project MCP registry",
+      "summary": "✅ .omk/mcp.json — project MCP registry",
+      "tags": [
+        "omk",
+        "mcp",
+        "json",
+        "project",
+        "registry"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 14,
+        "level": null,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "File:8a430ed8084fc4cf9ae9b62a",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/mcp.json",
+      "path": ".omk/mcp.json",
+      "summary": "Referenced by daily/2026-05-06/critical-issues.md",
+      "tags": [
+        "file",
+        "omk",
+        "mcp",
+        "json"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "path": ".omk/mcp.json",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:c7e26ab4f77885fd5d29d12a",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ .omk/hooks/pre-shell-guard.sh — destructive shell guard",
+      "summary": "✅ .omk/hooks/pre-shell-guard.sh — destructive shell guard",
+      "tags": [
+        "omk",
+        "hooks",
+        "pre-shell-guard",
+        "destructive",
+        "shell",
+        "guard"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 15,
+        "level": null,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "File:c0bc36fc37f18c1338041e82",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/hooks/pre-shell-guard.sh",
+      "path": ".omk/hooks/pre-shell-guard.sh",
+      "summary": "Referenced by daily/2026-05-06/critical-issues.md",
+      "tags": [
+        "file",
+        "omk",
+        "hooks",
+        "pre",
+        "shell",
+        "guard",
+        "sh"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "path": ".omk/hooks/pre-shell-guard.sh",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:75c8d4bd0f8f0b3248aaf9c5",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ .omk/hooks/protect-secrets.sh — secret write guard",
+      "summary": "✅ .omk/hooks/protect-secrets.sh — secret write guard",
+      "tags": [
+        "omk",
+        "hooks",
+        "protect-secrets",
+        "secret",
+        "write",
+        "guard"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 16,
+        "level": null,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "File:59fa8fd85696cd2d7e228ad6",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/hooks/protect-secrets.sh",
+      "path": ".omk/hooks/protect-secrets.sh",
+      "summary": "Referenced by daily/2026-05-06/critical-issues.md",
+      "tags": [
+        "file",
+        "omk",
+        "hooks",
+        "protect",
+        "secrets",
+        "sh"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "path": ".omk/hooks/protect-secrets.sh",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:99a1b6871d5e82b128421b0c",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ .omk/memory/graph-state.json — local ontology graph database",
+      "summary": "✅ .omk/memory/graph-state.json — local ontology graph database",
+      "tags": [
+        "omk",
+        "memory",
+        "graph-state",
+        "json",
+        "local",
+        "ontology",
+        "graph",
+        "database"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 17,
+        "level": null,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "File:8ad193e7f3d3bf78e0d99f07",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/memory/graph-state.json",
+      "path": ".omk/memory/graph-state.json",
+      "summary": "Referenced by daily/2026-05-06/critical-issues.md",
+      "tags": [
+        "file",
+        "omk",
+        "memory",
+        "graph",
+        "state",
+        "json"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "path": ".omk/memory/graph-state.json",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:ca0b2952d656334195779852",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Escalation Rule",
+      "summary": "Escalation Rule",
+      "tags": [
+        "escalation",
+        "rule"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 19,
+        "level": 2,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Topic:bdbd84b0a50231986e642110",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Treat missing shell/secret guards, root agent config, MCP registry, or ontology graph as critical until restored.",
+      "summary": "Treat missing shell/secret guards, root agent config, MCP registry, or ontology graph as critical until restored.",
+      "tags": [
+        "treat",
+        "missing",
+        "shell",
+        "secret",
+        "guards",
+        "root",
+        "agent",
+        "config",
+        "mcp",
+        "registry",
+        "ontology",
+        "graph"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "line": 20,
+        "level": null,
+        "path": "daily/2026-05-06/critical-issues.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "File:ff24f088ea2cf644149b31c9",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": "shell/secret",
+      "path": "shell/secret",
+      "summary": "Referenced by daily/2026-05-06/critical-issues.md",
+      "tags": [
+        "file",
+        "shell",
+        "secret"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e",
+        "path": "shell/secret",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "Memory:2b10081f51882388ece1f4e1",
+      "type": "Memory",
+      "labels": [
+        "OmkMemory",
+        "Memory"
+      ],
+      "label": "daily/2026-05-06/init-checklist.md",
+      "path": "daily/2026-05-06/init-checklist.md",
+      "content": "# 2026-05-06 Required Init Checklist\n\n**Run ID:** chat-2026-05-07T02-56-11-449Z-46327\n**Ontology graph:** `.omk/memory/graph-state.json`\n\n## Required Artifacts\n- ✅ `AGENTS.md` — critical; top-level operating contract\n- ✅ `.kimi/AGENTS.md` — critical; Kimi-specific operating rules\n- ✅ `DESIGN.md` — support; design/brand source of truth\n- ✅ `.omk/config.toml` — critical; OMK project runtime settings\n- ✅ `.omk/agents/root.yaml` — critical; root coordinator agent\n- ✅ `.omk/mcp.json` — critical; pro…",
+      "summary": "2026-05-06 Required Init Checklist",
+      "tags": [
+        "memory",
+        "daily",
+        "2026",
+        "05",
+        "06",
+        "init",
+        "checklist",
+        "md"
+      ],
+      "properties": {
+        "key": "juji-ruby:b00453ddf2ec:bd999218b268c40aa840dd99a5d58400e5858ee1a493137d8255adfad35df10f",
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327",
+        "source": "omk-chat-bootstrap"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "MemoryVersion:8434d7f8aa0ed17268fe5558",
+      "type": "MemoryVersion",
+      "labels": [
+        "OmkMemoryVersion",
+        "MemoryVersion"
+      ],
+      "label": "daily/2026-05-06/init-checklist.md@2026-05-07T02:56:11.519Z",
+      "path": "daily/2026-05-06/init-checklist.md",
+      "content": "# 2026-05-06 Required Init Checklist\n\n**Run ID:** chat-2026-05-07T02-56-11-449Z-46327\n**Ontology graph:** `.omk/memory/graph-state.json`\n\n## Required Artifacts\n- ✅ `AGENTS.md` — critical; top-level operating contract\n- ✅ `.kimi/AGENTS.md` — critical; Kimi-specific operating rules\n- ✅ `DESIGN.md` — support; design/brand source of truth\n- ✅ `.omk/config.toml` — critical; OMK project runtime settings\n- ✅ `.omk/agents/root.yaml` — critical; root coordinator agent\n- ✅ `.omk/mcp.json` — critical; project MCP registry\n- ✅ `.omk/lsp.json` — support; TypeScript LSP config\n- ✅ `.omk/hooks/pre-shell-guard.sh` — critical; destructive shell guard\n- ✅ `.omk/hooks/protect-secrets.sh` — critical; secret write guard\n- ✅ `.omk/memory/graph-state.json` — critical; local ontology graph database\n- ✅ `.kimi/mcp.json` — support; Kimi project MCP bridge\n- ✅ `.kimi/skills` — support; Kimi skill directory\n- ✅ `.agents/skills` — support; portable skill directory\n\n## Recovery Command\n```bash\nomk init\nomk doctor\n```\n",
+      "summary": "2026-05-06 Required Init Checklist",
+      "tags": [
+        "memory-version",
+        "daily",
+        "2026",
+        "05",
+        "06",
+        "init",
+        "checklist",
+        "md"
+      ],
+      "properties": {
+        "key": "juji-ruby:b00453ddf2ec:chat-2026-05-07T02-56-11-449Z-46327:ce99448275f220a72160a6b200687312efec658b83c12601d984c96f76145907",
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327",
+        "source": "omk-chat-bootstrap"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:189902b403a225a7810f0720",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "2026-05-06 Required Init Checklist",
+      "summary": "2026-05-06 Required Init Checklist",
+      "tags": [
+        "2026-05-06",
+        "required",
+        "init",
+        "checklist"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 1,
+        "level": 1,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:fe8228f88cfc67fedb1d1c5c",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Run ID: chat-2026-05-07T02-56-11-449Z-46327",
+      "summary": "Run ID: chat-2026-05-07T02-56-11-449Z-46327",
+      "tags": [
+        "run",
+        "chat-2026-05-07t02-56-11-449z-46327"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 3,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:d4186f918b51d264ae26428c",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Ontology graph: .omk/memory/graph-state.json",
+      "summary": "Ontology graph: .omk/memory/graph-state.json",
+      "tags": [
+        "ontology",
+        "graph",
+        "omk",
+        "memory",
+        "graph-state",
+        "json"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 4,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:0f7d7ecd21f01f1cf22b9a69",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/memory/graph-state.json",
+      "path": ".omk/memory/graph-state.json",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "omk",
+        "memory",
+        "graph",
+        "state",
+        "json"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": ".omk/memory/graph-state.json",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:818a43f527f12a93aecb411b",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Required Artifacts",
+      "summary": "Required Artifacts",
+      "tags": [
+        "required",
+        "artifacts"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 6,
+        "level": 2,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:6a4a8ca0a874eef15e55758b",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ AGENTS.md — critical; top-level operating contract",
+      "summary": "✅ AGENTS.md — critical; top-level operating contract",
+      "tags": [
+        "agents",
+        "critical",
+        "top-level",
+        "operating",
+        "contract"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 7,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:a6841a357ca29e72e3e36bee",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": "AGENTS.md",
+      "path": "AGENTS.md",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "agents",
+        "md"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": "AGENTS.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Provider:8b31d865bb29a58ba9a690b2",
+      "type": "Provider",
+      "labels": [
+        "OmkProvider",
+        "Provider"
+      ],
+      "label": "✅ .kimi/AGENTS.md — critical; Kimi-specific operating rules",
+      "summary": "✅ .kimi/AGENTS.md — critical; Kimi-specific operating rules",
+      "tags": [
+        "kimi",
+        "agents",
+        "critical",
+        "kimi-specific",
+        "operating",
+        "rules"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 8,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:48748fda2a649887412434a6",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".kimi/AGENTS.md",
+      "path": ".kimi/AGENTS.md",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "kimi",
+        "agents",
+        "md"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": ".kimi/AGENTS.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:f0ea6b7cde9c02a15e481051",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ DESIGN.md — support; design/brand source of truth",
+      "summary": "✅ DESIGN.md — support; design/brand source of truth",
+      "tags": [
+        "design",
+        "support",
+        "brand",
+        "source",
+        "truth"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 9,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:3ce83825a7947fcbfbaa79ab",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": "DESIGN.md",
+      "path": "DESIGN.md",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "design",
+        "md"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": "DESIGN.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:64ac6309018e4de21c179f66",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": "design/brand",
+      "path": "design/brand",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "design",
+        "brand"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": "design/brand",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Provider:6098c6b9a20640907377ea0b",
+      "type": "Provider",
+      "labels": [
+        "OmkProvider",
+        "Provider"
+      ],
+      "label": "✅ .omk/config.toml — critical; OMK project runtime settings",
+      "summary": "✅ .omk/config.toml — critical; OMK project runtime settings",
+      "tags": [
+        "omk",
+        "config",
+        "toml",
+        "critical",
+        "project",
+        "runtime",
+        "settings"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 10,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:2d12a460b2ac916456f3991b",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/config.toml",
+      "path": ".omk/config.toml",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "omk",
+        "config",
+        "toml"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": ".omk/config.toml",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:6a2cc365bd4810b385d6a209",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ .omk/agents/root.yaml — critical; root coordinator agent",
+      "summary": "✅ .omk/agents/root.yaml — critical; root coordinator agent",
+      "tags": [
+        "omk",
+        "agents",
+        "root",
+        "yaml",
+        "critical",
+        "coordinator",
+        "agent"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 11,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:a4e26a29d9477557aa977590",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/agents/root.yaml",
+      "path": ".omk/agents/root.yaml",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "omk",
+        "agents",
+        "root",
+        "yaml"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": ".omk/agents/root.yaml",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:c84b87bcc6ffed029b7fadc6",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ .omk/mcp.json — critical; project MCP registry",
+      "summary": "✅ .omk/mcp.json — critical; project MCP registry",
+      "tags": [
+        "omk",
+        "mcp",
+        "json",
+        "critical",
+        "project",
+        "registry"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 12,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:80b4181cafd3e467c88fd25c",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/mcp.json",
+      "path": ".omk/mcp.json",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "omk",
+        "mcp",
+        "json"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": ".omk/mcp.json",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:b18294a3cc7a205439b8849e",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ .omk/lsp.json — support; TypeScript LSP config",
+      "summary": "✅ .omk/lsp.json — support; TypeScript LSP config",
+      "tags": [
+        "omk",
+        "lsp",
+        "json",
+        "support",
+        "typescript",
+        "config"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 13,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:2549d08d0f228237ebe112a1",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/lsp.json",
+      "path": ".omk/lsp.json",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "omk",
+        "lsp",
+        "json"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": ".omk/lsp.json",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:2424f086aa14e93265d4092b",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ .omk/hooks/pre-shell-guard.sh — critical; destructive shell guard",
+      "summary": "✅ .omk/hooks/pre-shell-guard.sh — critical; destructive shell guard",
+      "tags": [
+        "omk",
+        "hooks",
+        "pre-shell-guard",
+        "critical",
+        "destructive",
+        "shell",
+        "guard"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 14,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:2479edb858eefaa19e0ada58",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/hooks/pre-shell-guard.sh",
+      "path": ".omk/hooks/pre-shell-guard.sh",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "omk",
+        "hooks",
+        "pre",
+        "shell",
+        "guard",
+        "sh"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": ".omk/hooks/pre-shell-guard.sh",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:45a89b371238d566624db0fe",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ .omk/hooks/protect-secrets.sh — critical; secret write guard",
+      "summary": "✅ .omk/hooks/protect-secrets.sh — critical; secret write guard",
+      "tags": [
+        "omk",
+        "hooks",
+        "protect-secrets",
+        "critical",
+        "secret",
+        "write",
+        "guard"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 15,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:21665397289f73cd4a52450f",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".omk/hooks/protect-secrets.sh",
+      "path": ".omk/hooks/protect-secrets.sh",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "omk",
+        "hooks",
+        "protect",
+        "secrets",
+        "sh"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": ".omk/hooks/protect-secrets.sh",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:fa619f6fed9fefbbc5bbe3df",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ .omk/memory/graph-state.json — critical; local ontology graph database",
+      "summary": "✅ .omk/memory/graph-state.json — critical; local ontology graph database",
+      "tags": [
+        "omk",
+        "memory",
+        "graph-state",
+        "json",
+        "critical",
+        "local",
+        "ontology",
+        "graph",
+        "database"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 16,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Provider:5d74770c746bcb2c713b1678",
+      "type": "Provider",
+      "labels": [
+        "OmkProvider",
+        "Provider"
+      ],
+      "label": "✅ .kimi/mcp.json — support; Kimi project MCP bridge",
+      "summary": "✅ .kimi/mcp.json — support; Kimi project MCP bridge",
+      "tags": [
+        "kimi",
+        "mcp",
+        "json",
+        "support",
+        "project",
+        "bridge"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 17,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:09ccf14bfbb669587357300a",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".kimi/mcp.json",
+      "path": ".kimi/mcp.json",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "kimi",
+        "mcp",
+        "json"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": ".kimi/mcp.json",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Provider:7fc1031306646837ca7a81b7",
+      "type": "Provider",
+      "labels": [
+        "OmkProvider",
+        "Provider"
+      ],
+      "label": "✅ .kimi/skills — support; Kimi skill directory",
+      "summary": "✅ .kimi/skills — support; Kimi skill directory",
+      "tags": [
+        "kimi",
+        "skills",
+        "support",
+        "skill",
+        "directory"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 18,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:2806059c4980ee58d596aa36",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".kimi/skills",
+      "path": ".kimi/skills",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "kimi",
+        "skills"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": ".kimi/skills",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:44e6db83c107f873d7d89318",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "✅ .agents/skills — support; portable skill directory",
+      "summary": "✅ .agents/skills — support; portable skill directory",
+      "tags": [
+        "agents",
+        "skills",
+        "support",
+        "portable",
+        "skill",
+        "directory"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 19,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "File:9939ac188b5f37fe07cf3da2",
+      "type": "File",
+      "labels": [
+        "OmkFile",
+        "File"
+      ],
+      "label": ".agents/skills",
+      "path": ".agents/skills",
+      "summary": "Referenced by daily/2026-05-06/init-checklist.md",
+      "tags": [
+        "file",
+        "agents",
+        "skills"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "path": ".agents/skills",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:d35dca7b4a48d8f6b3874a58",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "Recovery Command",
+      "summary": "Recovery Command",
+      "tags": [
+        "recovery",
+        "command"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 21,
+        "level": 2,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:e0de3c0e8b71b1018fa4c94c",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "omk init",
+      "summary": "omk init",
+      "tags": [
+        "omk",
+        "init"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 23,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "Topic:ead8655ce5778183a046c2e8",
+      "type": "Topic",
+      "labels": [
+        "OmkTopic",
+        "Topic"
+      ],
+      "label": "omk doctor",
+      "summary": "omk doctor",
+      "tags": [
+        "omk",
+        "doctor"
+      ],
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1",
+        "line": 24,
+        "level": null,
+        "path": "daily/2026-05-06/init-checklist.md",
+        "projectKey": "juji-ruby:b00453ddf2ec",
+        "sessionId": "chat-2026-05-07T02-56-11-449Z-46327"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    }
+  ],
+  "edges": [
+    {
+      "id": "HAS_SESSION:1c1821d22cc5bfa66faa240f",
+      "type": "HAS_SESSION",
+      "from": "Project:5a6601aae25ff11baddf73c3",
+      "to": "Session:e5de07c26181e349a660f7f1",
+      "label": "has session",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.472Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_MEMORY:5b3a0bdf4ce9a822a061404f",
+      "type": "HAS_MEMORY",
+      "from": "Project:5a6601aae25ff11baddf73c3",
+      "to": "Memory:904502ee7636eda7f139a2f4",
+      "label": "has memory",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.472Z",
+      "updatedAt": "2026-05-07T02:56:11.488Z"
+    },
+    {
+      "id": "WROTE:9d9173663dc7c6460885cd33",
+      "type": "WROTE",
+      "from": "Session:e5de07c26181e349a660f7f1",
+      "to": "MemoryVersion:2a327b9b771d4027b2a7dfe4",
+      "label": "wrote",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.472Z",
+      "updatedAt": "2026-05-07T02:56:11.472Z"
+    },
+    {
+      "id": "UPDATES:7dbdcaabbb9bf2ce7444f76f",
+      "type": "UPDATES",
+      "from": "MemoryVersion:2a327b9b771d4027b2a7dfe4",
+      "to": "Memory:904502ee7636eda7f139a2f4",
+      "label": "updates",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.472Z",
+      "updatedAt": "2026-05-07T02:56:11.472Z"
+    },
+    {
+      "id": "WROTE:43cf82f4e7f5ba39d66e2214",
+      "type": "WROTE",
+      "from": "Session:e5de07c26181e349a660f7f1",
+      "to": "MemoryVersion:f1a26c2314beee4eb6b0a915",
+      "label": "wrote",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.488Z",
+      "updatedAt": "2026-05-07T02:56:11.488Z"
+    },
+    {
+      "id": "UPDATES:49a04cf185a2bb0ec95f8cfe",
+      "type": "UPDATES",
+      "from": "MemoryVersion:f1a26c2314beee4eb6b0a915",
+      "to": "Memory:904502ee7636eda7f139a2f4",
+      "label": "updates",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.488Z",
+      "updatedAt": "2026-05-07T02:56:11.488Z"
+    },
+    {
+      "id": "HAS_TOPIC:67fa98d7494c23106848ce97",
+      "type": "HAS_TOPIC",
+      "from": "Memory:904502ee7636eda7f139a2f4",
+      "to": "Topic:d6ac09600cefeacd38b3e9da",
+      "label": "has topic",
+      "properties": {
+        "generatedFrom": "Memory:904502ee7636eda7f139a2f4"
+      },
+      "createdAt": "2026-05-07T02:56:11.488Z",
+      "updatedAt": "2026-05-07T02:56:11.488Z"
+    },
+    {
+      "id": "PART_OF:c73ddb4e01217684fa701570",
+      "type": "PART_OF",
+      "from": "Topic:d6ac09600cefeacd38b3e9da",
+      "to": "Memory:904502ee7636eda7f139a2f4",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:904502ee7636eda7f139a2f4"
+      },
+      "createdAt": "2026-05-07T02:56:11.488Z",
+      "updatedAt": "2026-05-07T02:56:11.488Z"
+    },
+    {
+      "id": "HAS_MEMORY:0f6984aadb98c0885fd9328d",
+      "type": "HAS_MEMORY",
+      "from": "Project:5a6601aae25ff11baddf73c3",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "has memory",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "WROTE:3044d765c40a00f95d54fb2d",
+      "type": "WROTE",
+      "from": "Session:e5de07c26181e349a660f7f1",
+      "to": "MemoryVersion:d62c56122fcae9d089f681bb",
+      "label": "wrote",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "UPDATES:ab14a11001d57e3e00cca1ca",
+      "type": "UPDATES",
+      "from": "MemoryVersion:d62c56122fcae9d089f681bb",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "updates",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_TOPIC:336fccb9cf8fd880517ce115",
+      "type": "HAS_TOPIC",
+      "from": "Memory:d4118661b03a48a88a01bd5f",
+      "to": "Topic:d36e13dfc29df467734e4030",
+      "label": "has topic",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:fcdcc5de484ff1c5721caf53",
+      "type": "PART_OF",
+      "from": "Topic:d36e13dfc29df467734e4030",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:f4926859cb909e881a612590",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:d36e13dfc29df467734e4030",
+      "to": "Topic:ecc2a6a2525ff6aed5512aee",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:7c169f52167a8218f27b7837",
+      "type": "PART_OF",
+      "from": "Topic:ecc2a6a2525ff6aed5512aee",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:7d6397fbd9efa8f89f04a739",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:d36e13dfc29df467734e4030",
+      "to": "Topic:2251d4394c1e87b30c537f96",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:43ecdb66016c35a1593d132d",
+      "type": "PART_OF",
+      "from": "Topic:2251d4394c1e87b30c537f96",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:b251cfaa51beccbfe0c12b0c",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:d36e13dfc29df467734e4030",
+      "to": "Topic:1f08f2854a2357e4f9614610",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:1b75359f793edd9f3ef769aa",
+      "type": "PART_OF",
+      "from": "Topic:1f08f2854a2357e4f9614610",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:176fcd2b037fee0c2e68b8cf",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:1f08f2854a2357e4f9614610",
+      "to": "Evidence:226e64e0b249cb5044191fcd",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:b5911d89606d94e3cb6411ea",
+      "type": "PART_OF",
+      "from": "Evidence:226e64e0b249cb5044191fcd",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:5dc37c3c7de3968933f04dfd",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:1f08f2854a2357e4f9614610",
+      "to": "Topic:c251188786277bde65b39cee",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:42c7397f85b2a56c1d1c3664",
+      "type": "PART_OF",
+      "from": "Topic:c251188786277bde65b39cee",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:6b9d4cb007e0cee1d66f221e",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:1f08f2854a2357e4f9614610",
+      "to": "Topic:afb78794f9e6066e518d80cc",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:98c5f20bdea86f7340b3fa97",
+      "type": "PART_OF",
+      "from": "Topic:afb78794f9e6066e518d80cc",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:cfed76174f481a5f08388272",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:d36e13dfc29df467734e4030",
+      "to": "Topic:c919e7a15007a6e4a8817723",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:3075bb34242bb3005818d368",
+      "type": "PART_OF",
+      "from": "Topic:c919e7a15007a6e4a8817723",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:0be61dc4973b40095b4926a9",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:c919e7a15007a6e4a8817723",
+      "to": "Topic:e621d0fb9cc17a56670dd479",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:74692fdc85b537da14df8cbf",
+      "type": "PART_OF",
+      "from": "Topic:e621d0fb9cc17a56670dd479",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "TOUCHES_FILE:cc2231e783061b3c6cde25af",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:e621d0fb9cc17a56670dd479",
+      "to": "File:94d8545374856c46527b49b4",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_FILE:94be06061a37615116530a86",
+      "type": "HAS_FILE",
+      "from": "Memory:d4118661b03a48a88a01bd5f",
+      "to": "File:94d8545374856c46527b49b4",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:fc7ff418357b49e80b88325e",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:c919e7a15007a6e4a8817723",
+      "to": "Topic:fc65a328a5bb9b6af4add6ee",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:43e03631b1f9b3a0c82dc804",
+      "type": "PART_OF",
+      "from": "Topic:fc65a328a5bb9b6af4add6ee",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "TOUCHES_FILE:4443fb436ffbb48b77b0e6f9",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:fc65a328a5bb9b6af4add6ee",
+      "to": "File:002717437bd0be9f3c9dd4dd",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_FILE:db4b4ca1f5ac0fa29b0be74f",
+      "type": "HAS_FILE",
+      "from": "Memory:d4118661b03a48a88a01bd5f",
+      "to": "File:002717437bd0be9f3c9dd4dd",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:5e01070a789c14fd448645a5",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:c919e7a15007a6e4a8817723",
+      "to": "Topic:4422cc1f9814856a4c8f39af",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:7096e0decae41e7ddacae554",
+      "type": "PART_OF",
+      "from": "Topic:4422cc1f9814856a4c8f39af",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "TOUCHES_FILE:0f2f39e566995ce4e2a9f990",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:4422cc1f9814856a4c8f39af",
+      "to": "File:364c5896960ce783b3cfee34",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_FILE:c4edd6f5f9af3f5609c4a319",
+      "type": "HAS_FILE",
+      "from": "Memory:d4118661b03a48a88a01bd5f",
+      "to": "File:364c5896960ce783b3cfee34",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:f22ee69ba358843e46fb2299",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:c919e7a15007a6e4a8817723",
+      "to": "Evidence:49b59ba834984e1daed7d60f",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:e24a7680f91319c8a9099c2d",
+      "type": "PART_OF",
+      "from": "Evidence:49b59ba834984e1daed7d60f",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:9e669965e865a28830831536",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:d36e13dfc29df467734e4030",
+      "to": "Topic:6597c80047827cbdb5698d2e",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:465d4228328ad5269878dd0b",
+      "type": "PART_OF",
+      "from": "Topic:6597c80047827cbdb5698d2e",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:60c82ee07dce44de0b563ebf",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:6597c80047827cbdb5698d2e",
+      "to": "Topic:c0669abebecc1ade9311da41",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:2a3c636fda74016c041ead8b",
+      "type": "PART_OF",
+      "from": "Topic:c0669abebecc1ade9311da41",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:389d3db7ca5170c51501bfb1",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:6597c80047827cbdb5698d2e",
+      "to": "Topic:95f1aa7877944cf5421b2b09",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:4afeffb121792e8c230351a8",
+      "type": "PART_OF",
+      "from": "Topic:95f1aa7877944cf5421b2b09",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "TOUCHES_FILE:2d87bd0c93c30121396d7c16",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:95f1aa7877944cf5421b2b09",
+      "to": "File:ae286ae262736696c50fa585",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_FILE:7d827b80aba6e0c8ba27df6b",
+      "type": "HAS_FILE",
+      "from": "Memory:d4118661b03a48a88a01bd5f",
+      "to": "File:ae286ae262736696c50fa585",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_CONCEPT:3e2420a2728d8f796c40a202",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:6597c80047827cbdb5698d2e",
+      "to": "Evidence:a3c3ac32bec64f1debd7f9b7",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "PART_OF:dacc53b707afe2d78a83626a",
+      "type": "PART_OF",
+      "from": "Evidence:a3c3ac32bec64f1debd7f9b7",
+      "to": "Memory:d4118661b03a48a88a01bd5f",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "TOUCHES_FILE:63f35b0f26f8be4ff49f5545",
+      "type": "TOUCHES_FILE",
+      "from": "Evidence:a3c3ac32bec64f1debd7f9b7",
+      "to": "File:0e38039cef83d62840bf69cd",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_FILE:d8a36ee8206e92a891509a8c",
+      "type": "HAS_FILE",
+      "from": "Memory:d4118661b03a48a88a01bd5f",
+      "to": "File:0e38039cef83d62840bf69cd",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:d4118661b03a48a88a01bd5f"
+      },
+      "createdAt": "2026-05-07T02:56:11.492Z",
+      "updatedAt": "2026-05-07T02:56:11.492Z"
+    },
+    {
+      "id": "HAS_MEMORY:d1c4e7ef0a2593462f1babb3",
+      "type": "HAS_MEMORY",
+      "from": "Project:5a6601aae25ff11baddf73c3",
+      "to": "Memory:a761cfdbe99142a14344e04d",
+      "label": "has memory",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "WROTE:5e1cf61a628c8fa3274019e5",
+      "type": "WROTE",
+      "from": "Session:e5de07c26181e349a660f7f1",
+      "to": "MemoryVersion:2a92d3a09d9f4419c3ea3db3",
+      "label": "wrote",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "UPDATES:3a2bd185b3601eb23430d919",
+      "type": "UPDATES",
+      "from": "MemoryVersion:2a92d3a09d9f4419c3ea3db3",
+      "to": "Memory:a761cfdbe99142a14344e04d",
+      "label": "updates",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "HAS_TOPIC:4a1d00b0baee6cf9f1f1b0c6",
+      "type": "HAS_TOPIC",
+      "from": "Memory:a761cfdbe99142a14344e04d",
+      "to": "Topic:7dbc1042a354307e532c8ad2",
+      "label": "has topic",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "PART_OF:698380e1c40ea440c0d88c9c",
+      "type": "PART_OF",
+      "from": "Topic:7dbc1042a354307e532c8ad2",
+      "to": "Memory:a761cfdbe99142a14344e04d",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "HAS_CONCEPT:0b61608eddf96a58c60c8bd5",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:7dbc1042a354307e532c8ad2",
+      "to": "Topic:dd5494ad2ca34d7c789c2e5f",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "PART_OF:e2028089a3692114ff0ad643",
+      "type": "PART_OF",
+      "from": "Topic:dd5494ad2ca34d7c789c2e5f",
+      "to": "Memory:a761cfdbe99142a14344e04d",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "HAS_CONCEPT:a1399b4e385a4e6c270159e0",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:dd5494ad2ca34d7c789c2e5f",
+      "to": "Topic:0dbec2cc8b45445f34440b1b",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "PART_OF:916709db3c51bbec20019af9",
+      "type": "PART_OF",
+      "from": "Topic:0dbec2cc8b45445f34440b1b",
+      "to": "Memory:a761cfdbe99142a14344e04d",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "TOUCHES_FILE:a273329ebcdfb04541fd55da",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:0dbec2cc8b45445f34440b1b",
+      "to": "File:14981d5591e6daf60d7e714c",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "HAS_FILE:cb07e415f7735e43f4236867",
+      "type": "HAS_FILE",
+      "from": "Memory:a761cfdbe99142a14344e04d",
+      "to": "File:14981d5591e6daf60d7e714c",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "HAS_CONCEPT:6357f89116a7903aff515095",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:0dbec2cc8b45445f34440b1b",
+      "to": "Topic:199f24bb99cb616311e51c5d",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "PART_OF:2ccb1e8cc5d2c9736e1d97cf",
+      "type": "PART_OF",
+      "from": "Topic:199f24bb99cb616311e51c5d",
+      "to": "Memory:a761cfdbe99142a14344e04d",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "HAS_CONCEPT:e6bdcdc7ba54cb7b3a5d7767",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:dd5494ad2ca34d7c789c2e5f",
+      "to": "Topic:cc3980cadc6818eb2fb774cb",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "PART_OF:b267e53d59a7152105b8031a",
+      "type": "PART_OF",
+      "from": "Topic:cc3980cadc6818eb2fb774cb",
+      "to": "Memory:a761cfdbe99142a14344e04d",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "HAS_CONCEPT:f9e8870b76d4608d549f2551",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:cc3980cadc6818eb2fb774cb",
+      "to": "Topic:71539f55d35b458bb2f21569",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "PART_OF:79c9c7e8579844d41003a09f",
+      "type": "PART_OF",
+      "from": "Topic:71539f55d35b458bb2f21569",
+      "to": "Memory:a761cfdbe99142a14344e04d",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "HAS_CONCEPT:0113b2f295fdbf54d8f7cf7f",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:7dbc1042a354307e532c8ad2",
+      "to": "Topic:d8e6549ab112e5e8f2159a24",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "PART_OF:a36a8fe417e6790e052c7f72",
+      "type": "PART_OF",
+      "from": "Topic:d8e6549ab112e5e8f2159a24",
+      "to": "Memory:a761cfdbe99142a14344e04d",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "HAS_CONCEPT:508545c8803a39cca1b420e4",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:d8e6549ab112e5e8f2159a24",
+      "to": "Topic:d5e47994a619bb4153d6b5d2",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "PART_OF:daed9d0e1498a66065045543",
+      "type": "PART_OF",
+      "from": "Topic:d5e47994a619bb4153d6b5d2",
+      "to": "Memory:a761cfdbe99142a14344e04d",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "HAS_CONCEPT:612364458f9e8b5eefe4d7b8",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:d8e6549ab112e5e8f2159a24",
+      "to": "Topic:d019f3eeef991443ee17a06f",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "PART_OF:e7a066f203b9b901eaa38cbf",
+      "type": "PART_OF",
+      "from": "Topic:d019f3eeef991443ee17a06f",
+      "to": "Memory:a761cfdbe99142a14344e04d",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "HAS_CONCEPT:9ae90d89779d7e7e371e610e",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:d8e6549ab112e5e8f2159a24",
+      "to": "Topic:df2b77b6862bb16a0edad79c",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "PART_OF:8fe47f473914573dbd0fd35b",
+      "type": "PART_OF",
+      "from": "Topic:df2b77b6862bb16a0edad79c",
+      "to": "Memory:a761cfdbe99142a14344e04d",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:a761cfdbe99142a14344e04d"
+      },
+      "createdAt": "2026-05-07T02:56:11.497Z",
+      "updatedAt": "2026-05-07T02:56:11.497Z"
+    },
+    {
+      "id": "HAS_MEMORY:3c249826ed6e69c6aa6ae843",
+      "type": "HAS_MEMORY",
+      "from": "Project:5a6601aae25ff11baddf73c3",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "has memory",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "WROTE:252edb754b0ef8d86ffd3bfc",
+      "type": "WROTE",
+      "from": "Session:e5de07c26181e349a660f7f1",
+      "to": "MemoryVersion:6113612bda78343f8dd56f02",
+      "label": "wrote",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "UPDATES:207e02ad15d73d8b8b6d9934",
+      "type": "UPDATES",
+      "from": "MemoryVersion:6113612bda78343f8dd56f02",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "updates",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_TOPIC:77efa71197ead7f98540c59c",
+      "type": "HAS_TOPIC",
+      "from": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "to": "Topic:411a60a7174535569c65a8fc",
+      "label": "has topic",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:50b16710ee27d74954e76a51",
+      "type": "PART_OF",
+      "from": "Topic:411a60a7174535569c65a8fc",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:6b99b65dda43527250447d02",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:411a60a7174535569c65a8fc",
+      "to": "Topic:e7601432855358701dc3a34a",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:2d23bc56e965b9a245f13546",
+      "type": "PART_OF",
+      "from": "Topic:e7601432855358701dc3a34a",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:375d1cec83fe945858d93a82",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:e7601432855358701dc3a34a",
+      "to": "Topic:9d24cef8a6a4b4e118158c68",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:10a7f9af33719b98f74b8d0d",
+      "type": "PART_OF",
+      "from": "Topic:9d24cef8a6a4b4e118158c68",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:c4223761c9713dda3e0eff9a",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:e7601432855358701dc3a34a",
+      "to": "Topic:6d63f6fea5b71d3254e7a909",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:ca54cadda2df0871803aa6de",
+      "type": "PART_OF",
+      "from": "Topic:6d63f6fea5b71d3254e7a909",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:cc942e20c254ca64def904ef",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:6d63f6fea5b71d3254e7a909",
+      "to": "Topic:4fbb195d73c106fa7dc725f1",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:de3a3824e63b7d80119f3c84",
+      "type": "PART_OF",
+      "from": "Topic:4fbb195d73c106fa7dc725f1",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:fc7b21f0985ef6d42c0eae24",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:411a60a7174535569c65a8fc",
+      "to": "Topic:b8adbcc505182b55130516af",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:eae57936fd38d981ab3abfbd",
+      "type": "PART_OF",
+      "from": "Topic:b8adbcc505182b55130516af",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:725997ed9fbfd1a5557582df",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:b8adbcc505182b55130516af",
+      "to": "Topic:c49ed69e1bbaef418007686e",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:0b1573444f3a76911ddf4c40",
+      "type": "PART_OF",
+      "from": "Topic:c49ed69e1bbaef418007686e",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "TOUCHES_FILE:e456cd3baa96dc360eec17e2",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:c49ed69e1bbaef418007686e",
+      "to": "File:0fdab866dad2a6509469189c",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_FILE:3eba42d772de0efc15bea543",
+      "type": "HAS_FILE",
+      "from": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "to": "File:0fdab866dad2a6509469189c",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:f9344465de03c0267d0c586c",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:b8adbcc505182b55130516af",
+      "to": "Provider:ae10ccf576da5df003a68849",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:d1ed5b15d298a3b866029c77",
+      "type": "PART_OF",
+      "from": "Provider:ae10ccf576da5df003a68849",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "TOUCHES_FILE:c7fd8ec6c41f43fdd0a69e8f",
+      "type": "TOUCHES_FILE",
+      "from": "Provider:ae10ccf576da5df003a68849",
+      "to": "File:705ba35a2134f6cd0fafa7fb",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_FILE:28c9d1ce070df7bbfc7bd448",
+      "type": "HAS_FILE",
+      "from": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "to": "File:705ba35a2134f6cd0fafa7fb",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:f1e5f58d7c4fcedc21537511",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:b8adbcc505182b55130516af",
+      "to": "Provider:5aacac9878bc3400b5a3498c",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:9fef3759569be0f7ba82d349",
+      "type": "PART_OF",
+      "from": "Provider:5aacac9878bc3400b5a3498c",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "TOUCHES_FILE:d1cf1e60034d73a536cb1103",
+      "type": "TOUCHES_FILE",
+      "from": "Provider:5aacac9878bc3400b5a3498c",
+      "to": "File:a6d8a091b5973eff1efcb2d1",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_FILE:baecf89f7a74118273bd6131",
+      "type": "HAS_FILE",
+      "from": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "to": "File:a6d8a091b5973eff1efcb2d1",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:596a67b2213154bdc61048ef",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:b8adbcc505182b55130516af",
+      "to": "Topic:2e756707954fa60db93b9911",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:47bb8b94174905f1d4eb8b05",
+      "type": "PART_OF",
+      "from": "Topic:2e756707954fa60db93b9911",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "TOUCHES_FILE:11c17d0a4ee55f48ec1bfec1",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:2e756707954fa60db93b9911",
+      "to": "File:5775679c87978bd6399d10d8",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_FILE:d2523e5bfcc056a3bcf51fac",
+      "type": "HAS_FILE",
+      "from": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "to": "File:5775679c87978bd6399d10d8",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:bfaf79ec38eb4405341397e4",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:b8adbcc505182b55130516af",
+      "to": "Topic:d1bc96314d02b370ea9060f1",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:1827fb086c726057c830b7f1",
+      "type": "PART_OF",
+      "from": "Topic:d1bc96314d02b370ea9060f1",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "TOUCHES_FILE:453ccffa133ed80bd324fb37",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:d1bc96314d02b370ea9060f1",
+      "to": "File:8a430ed8084fc4cf9ae9b62a",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_FILE:4a5586e01302e48c2b88f0dc",
+      "type": "HAS_FILE",
+      "from": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "to": "File:8a430ed8084fc4cf9ae9b62a",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:e0c3af51c23e6e5030e2adc1",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:b8adbcc505182b55130516af",
+      "to": "Topic:c7e26ab4f77885fd5d29d12a",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:93074e6a1a6a422d3784cc9f",
+      "type": "PART_OF",
+      "from": "Topic:c7e26ab4f77885fd5d29d12a",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "TOUCHES_FILE:1e49412d9230167869ea2795",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:c7e26ab4f77885fd5d29d12a",
+      "to": "File:c0bc36fc37f18c1338041e82",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_FILE:d3d7015f9129aa566422936a",
+      "type": "HAS_FILE",
+      "from": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "to": "File:c0bc36fc37f18c1338041e82",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:c119cb057140e86f598ae249",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:b8adbcc505182b55130516af",
+      "to": "Topic:75c8d4bd0f8f0b3248aaf9c5",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:0f3586725bec2cf355b86dbd",
+      "type": "PART_OF",
+      "from": "Topic:75c8d4bd0f8f0b3248aaf9c5",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "TOUCHES_FILE:a1638dc3d934c0b3dc283b75",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:75c8d4bd0f8f0b3248aaf9c5",
+      "to": "File:59fa8fd85696cd2d7e228ad6",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_FILE:479899a3097e823cac71d805",
+      "type": "HAS_FILE",
+      "from": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "to": "File:59fa8fd85696cd2d7e228ad6",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:8a1be55f132046e51df302ab",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:b8adbcc505182b55130516af",
+      "to": "Topic:99a1b6871d5e82b128421b0c",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:c61e7aa3bc02c2e2a3d6220d",
+      "type": "PART_OF",
+      "from": "Topic:99a1b6871d5e82b128421b0c",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "TOUCHES_FILE:707a2dabb1e6a82ea82358c8",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:99a1b6871d5e82b128421b0c",
+      "to": "File:8ad193e7f3d3bf78e0d99f07",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_FILE:85dd429bad6f32afa7452968",
+      "type": "HAS_FILE",
+      "from": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "to": "File:8ad193e7f3d3bf78e0d99f07",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:bdba37a8b2ed0a2fe7a0a82e",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:411a60a7174535569c65a8fc",
+      "to": "Topic:ca0b2952d656334195779852",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:acafcf7edba4341d7bc7a197",
+      "type": "PART_OF",
+      "from": "Topic:ca0b2952d656334195779852",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_CONCEPT:0937e58937cb7ea5b2e3c70f",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:ca0b2952d656334195779852",
+      "to": "Topic:bdbd84b0a50231986e642110",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "PART_OF:d91162c093fc4c97b54c8e41",
+      "type": "PART_OF",
+      "from": "Topic:bdbd84b0a50231986e642110",
+      "to": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "TOUCHES_FILE:b345670a1257c6ff965b3769",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:bdbd84b0a50231986e642110",
+      "to": "File:ff24f088ea2cf644149b31c9",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_FILE:1f994e0afbb092296be3b698",
+      "type": "HAS_FILE",
+      "from": "Memory:06ccfeb8c1ada5ea8507bc1e",
+      "to": "File:ff24f088ea2cf644149b31c9",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:06ccfeb8c1ada5ea8507bc1e"
+      },
+      "createdAt": "2026-05-07T02:56:11.503Z",
+      "updatedAt": "2026-05-07T02:56:11.503Z"
+    },
+    {
+      "id": "HAS_MEMORY:b34d7d11cc725a3edde6262b",
+      "type": "HAS_MEMORY",
+      "from": "Project:5a6601aae25ff11baddf73c3",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "has memory",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "WROTE:0aedd97a73a01ca8c8f552c5",
+      "type": "WROTE",
+      "from": "Session:e5de07c26181e349a660f7f1",
+      "to": "MemoryVersion:8434d7f8aa0ed17268fe5558",
+      "label": "wrote",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "UPDATES:a784a03fcaa9876ac5b3f22f",
+      "type": "UPDATES",
+      "from": "MemoryVersion:8434d7f8aa0ed17268fe5558",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "updates",
+      "properties": {},
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_TOPIC:ebc786bd2a5dbf9a82a70e84",
+      "type": "HAS_TOPIC",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "Topic:189902b403a225a7810f0720",
+      "label": "has topic",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:780054e01f5c53410c663d53",
+      "type": "PART_OF",
+      "from": "Topic:189902b403a225a7810f0720",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:bd0d26eecd1ebbc0ebd407d9",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:189902b403a225a7810f0720",
+      "to": "Topic:fe8228f88cfc67fedb1d1c5c",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:895b833718d92889579ebc90",
+      "type": "PART_OF",
+      "from": "Topic:fe8228f88cfc67fedb1d1c5c",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:082510838edbc0833156e195",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:189902b403a225a7810f0720",
+      "to": "Topic:d4186f918b51d264ae26428c",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:90ceaf51ca6364b709e16b0f",
+      "type": "PART_OF",
+      "from": "Topic:d4186f918b51d264ae26428c",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:c697d9c30f4b33c717f075a3",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:d4186f918b51d264ae26428c",
+      "to": "File:0f7d7ecd21f01f1cf22b9a69",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:05780ad50b91ce96638cbe93",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:0f7d7ecd21f01f1cf22b9a69",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:830c415398cb0df811678ba9",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:189902b403a225a7810f0720",
+      "to": "Topic:818a43f527f12a93aecb411b",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:f0feb0dc1bda63a8a5380984",
+      "type": "PART_OF",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:83b3addf53b3c9118d7862c7",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Topic:6a4a8ca0a874eef15e55758b",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:0c64abe42bb7bcdb1218af3e",
+      "type": "PART_OF",
+      "from": "Topic:6a4a8ca0a874eef15e55758b",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:5b3a1073bf736a061dc4aab2",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:6a4a8ca0a874eef15e55758b",
+      "to": "File:a6841a357ca29e72e3e36bee",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:49bda0c736b456eba7baa69f",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:a6841a357ca29e72e3e36bee",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:f4f0855441b9fea4b5a567c8",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Provider:8b31d865bb29a58ba9a690b2",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:ce665973110e6f134c8a1c15",
+      "type": "PART_OF",
+      "from": "Provider:8b31d865bb29a58ba9a690b2",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:11f672f2d58ff6e5df94b2df",
+      "type": "TOUCHES_FILE",
+      "from": "Provider:8b31d865bb29a58ba9a690b2",
+      "to": "File:48748fda2a649887412434a6",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:742e256847d0fce02d6f3251",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:48748fda2a649887412434a6",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:a4dc4abea764350a0c851bcf",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Topic:f0ea6b7cde9c02a15e481051",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:20eac40189b85e2992994475",
+      "type": "PART_OF",
+      "from": "Topic:f0ea6b7cde9c02a15e481051",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:2caf46b0e6a57c06ee768de2",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:f0ea6b7cde9c02a15e481051",
+      "to": "File:3ce83825a7947fcbfbaa79ab",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:1ee55f85f288f51654496489",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:3ce83825a7947fcbfbaa79ab",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:1f9453b1c914c4693dc2feb7",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:f0ea6b7cde9c02a15e481051",
+      "to": "File:64ac6309018e4de21c179f66",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:5e000f3e9b08be461dfece58",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:64ac6309018e4de21c179f66",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:8712438d2b9e8f8be2e00729",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Provider:6098c6b9a20640907377ea0b",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:9c273bbf79a1979bb54c0bd0",
+      "type": "PART_OF",
+      "from": "Provider:6098c6b9a20640907377ea0b",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:98c932d61b859b1adf6ae3bb",
+      "type": "TOUCHES_FILE",
+      "from": "Provider:6098c6b9a20640907377ea0b",
+      "to": "File:2d12a460b2ac916456f3991b",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:5ede0b0a365b213cc8a54c47",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:2d12a460b2ac916456f3991b",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:293790148d58cc2115242117",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Topic:6a2cc365bd4810b385d6a209",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:94d66dba028bd7400d44bc33",
+      "type": "PART_OF",
+      "from": "Topic:6a2cc365bd4810b385d6a209",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:e1e8c7b9b91216cbc085e008",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:6a2cc365bd4810b385d6a209",
+      "to": "File:a4e26a29d9477557aa977590",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:203c90cd5618581ff494b8d6",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:a4e26a29d9477557aa977590",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:babfc8ca3b117eeab2724f75",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Topic:c84b87bcc6ffed029b7fadc6",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:bdd3c242cb2e9b9d765b6966",
+      "type": "PART_OF",
+      "from": "Topic:c84b87bcc6ffed029b7fadc6",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:48040b14ed1e814be8fc9296",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:c84b87bcc6ffed029b7fadc6",
+      "to": "File:80b4181cafd3e467c88fd25c",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:dee0605505d6ec7ecd909414",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:80b4181cafd3e467c88fd25c",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:619fa241efa3db0ec5c5af74",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Topic:b18294a3cc7a205439b8849e",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:5bd5842dff11bf5077f82b78",
+      "type": "PART_OF",
+      "from": "Topic:b18294a3cc7a205439b8849e",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:a41bcbe8b8eefaecbeb0ecac",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:b18294a3cc7a205439b8849e",
+      "to": "File:2549d08d0f228237ebe112a1",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:c92201817b16259fb6292129",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:2549d08d0f228237ebe112a1",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:d18c9bcbc82cbf6270729743",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Topic:2424f086aa14e93265d4092b",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:25d9c421235a327b0a3d870f",
+      "type": "PART_OF",
+      "from": "Topic:2424f086aa14e93265d4092b",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:6010946efc1c921100fb499d",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:2424f086aa14e93265d4092b",
+      "to": "File:2479edb858eefaa19e0ada58",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:6028e3b527d9a625e0f48611",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:2479edb858eefaa19e0ada58",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:dd3d2fdce16c275e1c904af7",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Topic:45a89b371238d566624db0fe",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:aee10d0fc9676b70e446fa13",
+      "type": "PART_OF",
+      "from": "Topic:45a89b371238d566624db0fe",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:5307fb75c44bc8c08a3241bf",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:45a89b371238d566624db0fe",
+      "to": "File:21665397289f73cd4a52450f",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:5fe5efb54699e0ea5a404e08",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:21665397289f73cd4a52450f",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:82b9b6189822b83a8db3a744",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Topic:fa619f6fed9fefbbc5bbe3df",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:47035566db1042a89e449806",
+      "type": "PART_OF",
+      "from": "Topic:fa619f6fed9fefbbc5bbe3df",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:63cbd3755e17fbc33a272214",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:fa619f6fed9fefbbc5bbe3df",
+      "to": "File:0f7d7ecd21f01f1cf22b9a69",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:8156213cf49fab6b53e26351",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Provider:5d74770c746bcb2c713b1678",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:129b2c37fb79d5e77b29b1c3",
+      "type": "PART_OF",
+      "from": "Provider:5d74770c746bcb2c713b1678",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:f4b7d28e0d1d0b06e30a40c7",
+      "type": "TOUCHES_FILE",
+      "from": "Provider:5d74770c746bcb2c713b1678",
+      "to": "File:09ccf14bfbb669587357300a",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:03be1a54948c9999271de2d4",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:09ccf14bfbb669587357300a",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:ce74aa1f8734dffde764bd41",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Provider:7fc1031306646837ca7a81b7",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:addcd7af12ae4e20cf92cc69",
+      "type": "PART_OF",
+      "from": "Provider:7fc1031306646837ca7a81b7",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:94b8ba389841db3c80f9533c",
+      "type": "TOUCHES_FILE",
+      "from": "Provider:7fc1031306646837ca7a81b7",
+      "to": "File:2806059c4980ee58d596aa36",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:976674012b24cbcd071f5d7b",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:2806059c4980ee58d596aa36",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:bb7f8119dbce8eb6f8cd600f",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:818a43f527f12a93aecb411b",
+      "to": "Topic:44e6db83c107f873d7d89318",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:e6a28d809e343ee394d41e0c",
+      "type": "PART_OF",
+      "from": "Topic:44e6db83c107f873d7d89318",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "TOUCHES_FILE:557b43782f1511354a8f7128",
+      "type": "TOUCHES_FILE",
+      "from": "Topic:44e6db83c107f873d7d89318",
+      "to": "File:9939ac188b5f37fe07cf3da2",
+      "label": "touches file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_FILE:716dbd4917bf5669a76924ff",
+      "type": "HAS_FILE",
+      "from": "Memory:2b10081f51882388ece1f4e1",
+      "to": "File:9939ac188b5f37fe07cf3da2",
+      "label": "has file",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:f109bd986600d3793d5e0fde",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:189902b403a225a7810f0720",
+      "to": "Topic:d35dca7b4a48d8f6b3874a58",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:0fe3d2325d4e65e096150485",
+      "type": "PART_OF",
+      "from": "Topic:d35dca7b4a48d8f6b3874a58",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:253c1312e13e694a130a331c",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:d35dca7b4a48d8f6b3874a58",
+      "to": "Topic:e0de3c0e8b71b1018fa4c94c",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:32801797e7b793c1a555a30d",
+      "type": "PART_OF",
+      "from": "Topic:e0de3c0e8b71b1018fa4c94c",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "HAS_CONCEPT:056eb2b95e1f3817fbdb9004",
+      "type": "HAS_CONCEPT",
+      "from": "Topic:d35dca7b4a48d8f6b3874a58",
+      "to": "Topic:ead8655ce5778183a046c2e8",
+      "label": "has concept",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    },
+    {
+      "id": "PART_OF:22f78781a91edbe6fbebabc7",
+      "type": "PART_OF",
+      "from": "Topic:ead8655ce5778183a046c2e8",
+      "to": "Memory:2b10081f51882388ece1f4e1",
+      "label": "part of",
+      "properties": {
+        "generatedFrom": "Memory:2b10081f51882388ece1f4e1"
+      },
+      "createdAt": "2026-05-07T02:56:11.519Z",
+      "updatedAt": "2026-05-07T02:56:11.519Z"
+    }
+  ]
+}

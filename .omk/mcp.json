@@ -1,10 +1,14 @@
 {
   "mcpServers": {
     "omk-project": {
-      "command": "node",
+      "command": "bash",
       "args": [
-        "/usr/local/lib/node_modules/oh-my-kimichan/dist/mcp/omk-project-server.js"
-      ]
+        "-lc",
+        "exec '/home/osqy/.nvm/versions/node/v26.0.0/bin/node' '/home/osqy/.nvm/versions/node/v26.0.0/lib/node_modules/@oh-my-kimi/cli/dist/mcp/omk-project-server.js'"
+      ],
+      "env": {
+        "OMK_PROJECT_ROOT": "/home/osqy/Desktop/rails/juji-ruby"
+      }
     }
   }
 }

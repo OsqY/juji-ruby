@@ -1,16 +1,16 @@
 {
   "branch": "main",
   "recentCommits": [
+    "bda9423 vendor?",
+    "c6a2a2a added whiteboard and comic feature",
+    "84f210d wip: before omk feature",
     "ce13af0 Make brat font switch apply app-wide visibly\\n\\n- Use CSS variables for brat body/heading fonts - Apply brat font selection to body, headings, nav, controls, and key labels - Keep default brat font simple (cover-like) with optional Inter mode\\n\\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>",
     "8a31ece Add brat font subselector and compact dropdown theme picker\\n\\n- Replace icon theme picker with compact dropdown selector\\n- Add brat-only font subselector (Simple/Inter) with persistence\\n- Apply simple cover-like font style for brat mode - Rename brat option label to JUJI for cover-inspired look\\n\\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>",
     "9e46562 Replace placeholder show pages used by global search\\n\\n- Add real  action and view layout - Replace placeholder  with full detail view - Replace placeholder  with full detail view - Add controller coverage for transactions show response\\n\\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>",
     "8ba41c7 Refine brat buttons and search page visual consistency\\n\\n- Replace harsh black brat buttons with tonal green variant\\n- Remove white cards/filters in global search for brat theme\\n- Fix search bar/dropdown visual seam and focus treatment\\n- Align search controls with neobrutalist squared styling\\n\\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>",
     "6c0b32b Unify UI to neobrutalism in forms and weekly metrics\\n\\n- Force square corners for form controls and button inputs\\n- Redesign weekly dashboard indicators to match neobrutalist language\\n- Remove rounded card/progress styling from weekly metrics\\n\\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>",
     "7296c9f Fix search stability and improve brat contrast\\n\\n- Fix search index template branching syntax error\\n- Keep JSON search result keys machine-friendly for Stimulus\\n- Harden date filter parsing to ignore invalid dates\\n- Improve brat theme contrast for buttons and labels\\n- Add search controller regression coverage\\n\\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>",
-    "7d213d0 Agregar soporte para el nuevo tema \"brat\" en CSS y actualizar los íconos en las vistas y controladores para mejorar la legibilidad. También se ajustan los mensajes de error y se implementan pruebas para la búsqueda de artículos por cantidad.",
-    "5a59b53 Fix Heroku build by adding matrix gem for prawn on Ruby 3.3",
-    "7b4ef1d Fix exports controller auth callback compatibility",
-    "4810976 Agregar funcionalidad de exportación (CSV/PDF) y pruebas para el controlador de exportaciones"
+    "7d213d0 Agregar soporte para el nuevo tema \"brat\" en CSS y actualizar los íconos en las vistas y controladores para mejorar la legibilidad. También se ajustan los mensajes de error y se implementan pruebas para la búsqueda de artículos por cantidad."
   ],
   "changedFiles": [],
   "untrackedFiles": []
