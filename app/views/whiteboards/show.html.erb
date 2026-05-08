@@ -1,3 +1,5 @@
+<% content_for :hide_nav, true %>
+
 <div class="whiteboard-wrapper" data-controller="whiteboard"
   data-whiteboard-id-value="<%= @whiteboard.id %>"
   data-whiteboard-token-value="<%= @whiteboard.token %>"
@@ -12,12 +14,16 @@
     </div>
 
     <div class="whiteboard-toolbar-group whiteboard-tools">
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="pen" data-action="click->whiteboard#setTool">LÁPIZ</button>
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="line" data-action="click->whiteboard#setTool">LÍNEA</button>
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="arrow" data-action="click->whiteboard#setTool">FLECHA</button>
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="rect" data-action="click->whiteboard#setTool">RECT</button>
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="circle" data-action="click->whiteboard#setTool">CÍRCULO</button>
-      <button type="button" class="btn-chaos btn-tool btn-tool-eraser" data-whiteboard-target="toolBtn" data-tool="eraser" data-action="click->whiteboard#setTool">GOMA</button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="pen" data-action="click->whiteboard#setTool" title="Lápiz (1)"><i data-lucide="pencil"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="pencil" data-action="click->whiteboard#setTool" title="Pincel áspero (P)"><i data-lucide="wand-2"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="line" data-action="click->whiteboard#setTool" title="Línea (2)"><i data-lucide="minus" class="tool-icon-line"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="arrow" data-action="click->whiteboard#setTool" title="Flecha (3)"><i data-lucide="arrow-right"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="rect" data-action="click->whiteboard#setTool" title="Rectángulo (4)"><i data-lucide="square"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="circle" data-action="click->whiteboard#setTool" title="Círculo (5)"><i data-lucide="circle"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="triangle" data-action="click->whiteboard#setTool" title="Triángulo (T)"><i data-lucide="triangle"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="star" data-action="click->whiteboard#setTool" title="Estrella (S)"><i data-lucide="star"></i></button>
+      <button type="button" class="btn-chaos btn-tool btn-tool-eraser" data-whiteboard-target="toolBtn" data-tool="eraser" data-action="click->whiteboard#setTool" title="Goma (6)"><i data-lucide="eraser"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="select" data-action="click->whiteboard#setTool" title="Seleccionar (7 / V)"><i data-lucide="mouse-pointer-2"></i></button>
     </div>
 
     <div class="whiteboard-toolbar-group whiteboard-options">

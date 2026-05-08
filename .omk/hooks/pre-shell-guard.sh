@@ -47,4 +47,23 @@ for pattern in "${BLOCKED[@]}"; do
   fi
 done
 
+# Release/deploy guard. These commands are not destructive like rm -rf, but
+# they can publish external state. Require explicit opt-in plus fresh evidence.
+RELEASE_GUARDED=(
+  "git push"
+  "npm publish"
+  "pnpm publish"
+  "yarn npm publish"
+  "gh release create"
+  "gh workflow run"
+  "npm version"
+)
+
+for pattern in "${RELEASE_GUARDED[@]}"; do
+  if [[ "$FULL" == *"$pattern"* ]] && [[ "${OMK_ALLOW_RELEASE:-0}" != "1" ]]; then
+    echo '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Release/deploy command blocked by OMK release guard. Re-run with OMK_ALLOW_RELEASE=1 only after an explicit user request and fresh verification evidence."}}'
+    exit 0
+  fi
+done
+
 echo '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"allow"}}'

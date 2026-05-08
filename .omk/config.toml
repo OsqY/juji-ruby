@@ -12,8 +12,8 @@ yolo_mode = false                # safe guards still block secrets/destructive s
 [runtime]
 # auto chooses lite on <=18GB RAM hosts to make 16GB laptops usable.
 resource_profile = "auto"        # auto | lite | standard
-mcp_scope = "project"            # all | project | none — fresh projects use omk-project only
-skills_scope = "project"         # all | project | none — fresh projects use packaged project skills only
+mcp_scope = "project"            # all | project | none — project keeps only omk-project in .kimi/mcp.json
+skills_scope = "project"         # all | project | none — all reads user ~/.kimi/skills without copying them
 max_workers = 1                  # can override with OMK_MAX_WORKERS
 max_output_mb = 4                # cap buffered shell/quality output
 wire_output_mb = 1               # cap per-task retained wire output

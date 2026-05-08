@@ -38,7 +38,7 @@ class WhiteboardChannelTest < ActionCable::Channel::TestCase
     stub_connection(current_user: @owner)
     subscribe(whiteboard_id: @whiteboard.id)
 
-    stroke_data = { "tool" => "pen", "color" => "#000", "width" => 3, "points" => [[0, 0], [10, 10]] }
+    stroke_data = { "tool" => "pen", "color" => "#000", "width" => 3, "points" => [ [ 0, 0 ], [ 10, 10 ] ] }
 
     assert_difference -> { @whiteboard.whiteboard_strokes.count }, 1 do
       perform :draw, stroke: stroke_data, client_id: "test-client-id"
@@ -54,7 +54,7 @@ class WhiteboardChannelTest < ActionCable::Channel::TestCase
   end
 
   test "clear action destroys all strokes and broadcasts" do
-    @whiteboard.whiteboard_strokes.create!(user: @owner, stroke_data: { "points" => [[0, 0]] })
+    @whiteboard.whiteboard_strokes.create!(user: @owner, stroke_data: { "points" => [ [ 0, 0 ] ] })
     stub_connection(current_user: @owner)
     subscribe(whiteboard_id: @whiteboard.id)
 
@@ -67,12 +67,47 @@ class WhiteboardChannelTest < ActionCable::Channel::TestCase
 
   test "non-owner cannot clear" do
     @whiteboard.add_collaborator(@collaborator)
-    @whiteboard.whiteboard_strokes.create!(user: @owner, stroke_data: { "points" => [[0, 0]] })
+    @whiteboard.whiteboard_strokes.create!(user: @owner, stroke_data: { "points" => [ [ 0, 0 ] ] })
     stub_connection(current_user: @collaborator)
     subscribe(whiteboard_id: @whiteboard.id)
 
     assert_no_difference -> { @whiteboard.whiteboard_strokes.count } do
       perform :clear
+    end
+  end
+
+  test "delete action destroys strokes and broadcasts" do
+    stroke1 = @whiteboard.whiteboard_strokes.create!(user: @owner, stroke_data: { "shape" => "rect", "x" => 0, "y" => 0, "w" => 10, "h" => 10 })
+    stroke2 = @whiteboard.whiteboard_strokes.create!(user: @owner, stroke_data: { "shape" => "circle", "x" => 5, "y" => 5, "w" => 10, "h" => 10 })
+    stub_connection(current_user: @owner)
+    subscribe(whiteboard_id: @whiteboard.id)
+
+    assert_difference -> { @whiteboard.whiteboard_strokes.count }, -2 do
+      perform :delete, stroke_ids: [ stroke1.id, stroke2.id ]
+    end
+
+    assert_broadcast_on(@whiteboard, { type: "delete", stroke_ids: [ stroke1.id, stroke2.id ] })
+  end
+
+  test "collaborator can delete own strokes" do
+    @whiteboard.add_collaborator(@collaborator)
+    stroke = @whiteboard.whiteboard_strokes.create!(user: @collaborator, stroke_data: { "points" => [ [ 0, 0 ] ] })
+    stub_connection(current_user: @collaborator)
+    subscribe(whiteboard_id: @whiteboard.id)
+
+    assert_difference -> { @whiteboard.whiteboard_strokes.count }, -1 do
+      perform :delete, stroke_ids: [ stroke.id ]
+    end
+  end
+
+  test "collaborator cannot delete owner strokes" do
+    @whiteboard.add_collaborator(@collaborator)
+    stroke = @whiteboard.whiteboard_strokes.create!(user: @owner, stroke_data: { "points" => [ [ 0, 0 ] ] })
+    stub_connection(current_user: @collaborator)
+    subscribe(whiteboard_id: @whiteboard.id)
+
+    assert_no_difference -> { @whiteboard.whiteboard_strokes.count } do
+      perform :delete, stroke_ids: [ stroke.id ]
     end
   end
 end

@@ -2017,6 +2017,17 @@ nav.chaos-nav {
   box-shadow: 3px 3px 0px var(--highlight) !important;
 }
 
+.btn-tool .lucide {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.5px;
+  display: block;
+}
+
+.tool-icon-line {
+  transform: rotate(-45deg);
+}
+
 .btn-tool:hover {
   box-shadow: 4px 4px 0px var(--accent-blue) !important;
 }
@@ -2138,11 +2149,14 @@ nav.chaos-nav {
 
 @keyframes superheroWobble {
   0%   { transform: rotate(0deg) scale(1); }
-  15%  { transform: rotate(-3deg) scale(1.04); }
-  30%  { transform: rotate(2.5deg) scale(1.02); }
-  45%  { transform: rotate(-2deg) scale(1.03); }
-  60%  { transform: rotate(1.5deg) scale(1.01); }
-  75%  { transform: rotate(-1deg) scale(1.02); }
+  3%   { transform: rotate(-12deg) scale(1.08); }
+  8%   { transform: rotate(10deg) scale(1.06); }
+  14%  { transform: rotate(-7deg) scale(1.05); }
+  22%  { transform: rotate(4.5deg) scale(1.04); }
+  32%  { transform: rotate(-2.5deg) scale(1.025); }
+  44%  { transform: rotate(1.2deg) scale(1.015); }
+  58%  { transform: rotate(-0.6deg) scale(1.008); }
+  74%  { transform: rotate(0.3deg) scale(1.003); }
   100% { transform: rotate(0deg) scale(1); }
 }
 
@@ -2162,7 +2176,7 @@ nav.chaos-nav {
 
 [data-theme="superhero"] .nav-link:hover,
 [data-theme="superhero"] .nav-dropdown-toggle:hover {
-  animation: superheroWobble 0.5s ease-in-out;
+  animation: superheroWobble 3s ease-out;
 }
 
 [data-theme="superhero"] .report-section-block:hover,
@@ -2170,7 +2184,7 @@ nav.chaos-nav {
 [data-theme="superhero"] .guide-card:hover,
 [data-theme="superhero"] .budget-item:hover,
 [data-theme="superhero"] .type-card:hover {
-  animation: superheroWobble 0.6s ease-in-out;
+  animation: superheroWobble 3s ease-out;
 }
 
 [data-theme="superhero"] input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):hover,
@@ -2185,7 +2199,7 @@ nav.chaos-nav {
 
 [data-theme="superhero"] .card-action-link:hover,
 [data-theme="superhero"] .card-export-btn:hover {
-  animation: superheroWobble 0.4s ease-in-out;
+  animation: superheroWobble 3s ease-out;
 }
 
 [data-theme="superhero"] .daily-calendar-cell:hover {

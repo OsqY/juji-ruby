@@ -95,6 +95,7 @@
     </main>
 
     <!-- Bottom Navigation for Native Apps -->
+    <% unless content_for(:hide_nav) %>
     <nav class="chaos-nav mobile-nav" data-controller="nav-dropdown" data-action="click->nav-dropdown#closeOnLinkClick">
       <% dashboard_active = controller_name == "dashboard" %>
       <% reports_active = controller_name == "daily_reports" && action_name != "new" %>
@@ -151,5 +152,6 @@
         <% end %>
       </div>
     </nav>
+    <% end %>
   </body>
 </html>

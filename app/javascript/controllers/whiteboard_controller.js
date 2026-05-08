@@ -204,6 +204,10 @@ export default class extends Controller {
   }
 
   renderFreehand(strokeData) {
+    if (strokeData.rough) {
+      this.renderRoughFreehand(strokeData)
+      return
+    }
     this.ctx.beginPath()
     this.ctx.moveTo(strokeData.points[0][0], strokeData.points[0][1])
     for (let i = 1; i < strokeData.points.length; i++) {
@@ -214,6 +218,17 @@ export default class extends Controller {
     this.ctx.lineCap = "round"
     this.ctx.lineJoin = "round"
     this.ctx.stroke()
+  }
+
+  renderRoughFreehand(strokeData) {
+    const options = {
+      stroke: strokeData.color || "#000",
+      strokeWidth: strokeData.width || 3,
+      roughness: 2,
+      bowing: 1.5
+    }
+    const path = strokeData.points.map((p, i) => (i === 0 ? `M ${p[0]} ${p[1]}` : `L ${p[0]} ${p[1]}`)).join(" ")
+    this.roughCanvas.path(path, options)
   }
 
   renderShape(strokeData) {
@@ -240,6 +255,32 @@ export default class extends Controller {
         const cx = strokeData.x + strokeData.w / 2
         const cy = strokeData.y + strokeData.h / 2
         this.roughCanvas.ellipse(cx, cy, strokeData.w, strokeData.h, options)
+        break
+      }
+      case "triangle": {
+        const x = strokeData.x
+        const y = strokeData.y
+        const w = strokeData.w
+        const h = strokeData.h
+        this.roughCanvas.polygon([
+          [x + w / 2, y],
+          [x + w, y + h],
+          [x, y + h]
+        ], options)
+        break
+      }
+      case "star": {
+        const cx = strokeData.x + strokeData.w / 2
+        const cy = strokeData.y + strokeData.h / 2
+        const outerR = Math.min(strokeData.w, strokeData.h) / 2
+        const innerR = outerR * 0.4
+        const points = []
+        for (let i = 0; i < 10; i++) {
+          const r = i % 2 === 0 ? outerR : innerR
+          const angle = (Math.PI * i) / 5 - Math.PI / 2
+          points.push([cx + r * Math.cos(angle), cy + r * Math.sin(angle)])
+        }
+        this.roughCanvas.polygon(points, options)
         break
       }
     }
@@ -308,6 +349,8 @@ export default class extends Controller {
           }
         case "rect":
         case "circle":
+        case "triangle":
+        case "star":
           return { x: strokeData.x, y: strokeData.y, w: strokeData.w, h: strokeData.h }
       }
     }
@@ -355,6 +398,32 @@ export default class extends Controller {
         const cx = strokeData.x + strokeData.w / 2
         const cy = strokeData.y + strokeData.h / 2
         roughOverlay.ellipse(cx, cy, strokeData.w, strokeData.h, options)
+        break
+      }
+      case "triangle": {
+        const x = strokeData.x
+        const y = strokeData.y
+        const w = strokeData.w
+        const h = strokeData.h
+        roughOverlay.polygon([
+          [x + w / 2, y],
+          [x + w, y + h],
+          [x, y + h]
+        ], options)
+        break
+      }
+      case "star": {
+        const cx = strokeData.x + strokeData.w / 2
+        const cy = strokeData.y + strokeData.h / 2
+        const outerR = Math.min(strokeData.w, strokeData.h) / 2
+        const innerR = outerR * 0.4
+        const points = []
+        for (let i = 0; i < 10; i++) {
+          const r = i % 2 === 0 ? outerR : innerR
+          const angle = (Math.PI * i) / 5 - Math.PI / 2
+          points.push([cx + r * Math.cos(angle), cy + r * Math.sin(angle)])
+        }
+        roughOverlay.polygon(points, options)
         break
       }
     }
@@ -499,7 +568,7 @@ export default class extends Controller {
     this.isDrawing = true
     const point = this.getPoint(event)
 
-    if (this.tool === "pen" || this.tool === "eraser") {
+    if (this.tool === "pen" || this.tool === "pencil" || this.tool === "eraser") {
       this.currentPoints = [point]
       this.drawPoint(point)
     } else if (this.tool === "select") {
@@ -524,7 +593,7 @@ export default class extends Controller {
     event.preventDefault()
     const point = this.getPoint(event)
 
-    if (this.tool === "pen" || this.tool === "eraser") {
+    if (this.tool === "pen" || this.tool === "pencil" || this.tool === "eraser") {
       this.currentPoints.push(point)
       this.renderLineSegment(this.currentPoints[this.currentPoints.length - 2], point)
     } else if (this.tool !== "select") {
@@ -543,13 +612,14 @@ export default class extends Controller {
     this.isDrawing = false
     event.preventDefault()
 
-    if (this.tool === "pen" || this.tool === "eraser") {
+    if (this.tool === "pen" || this.tool === "pencil" || this.tool === "eraser") {
       if (this.currentPoints.length > 1) {
         const strokeData = {
           tool: this.tool,
           color: this.tool === "eraser" ? this.bgValue : this.color,
           width: this.lineWidth,
-          points: this.currentPoints
+          points: this.currentPoints,
+          rough: this.tool === "pencil"
         }
         const stroke = { stroke: strokeData, user_id: this.userIdValue, stroke_id: null, client_id: this.clientId }
         this.strokes.push(stroke)
@@ -774,6 +844,20 @@ export default class extends Controller {
         const h = Math.abs(end[1] - start[1])
         return { ...base, shape: "circle", x, y, w, h }
       }
+      case "triangle": {
+        const x = Math.min(start[0], end[0])
+        const y = Math.min(start[1], end[1])
+        const w = Math.abs(end[0] - start[0])
+        const h = Math.abs(end[1] - start[1])
+        return { ...base, shape: "triangle", x, y, w, h }
+      }
+      case "star": {
+        const x = Math.min(start[0], end[0])
+        const y = Math.min(start[1], end[1])
+        const w = Math.abs(end[0] - start[0])
+        const h = Math.abs(end[1] - start[1])
+        return { ...base, shape: "star", x, y, w, h }
+      }
       default:
         return null
     }
@@ -939,6 +1023,9 @@ export default class extends Controller {
     if (event.key === "5") this.activateTool("circle")
     if (event.key === "6") this.activateTool("eraser")
     if (event.key === "7" || event.key === "v") this.activateTool("select")
+    if (event.key === "p" || event.key === "P") this.activateTool("pencil")
+    if (event.key === "t" || event.key === "T") this.activateTool("triangle")
+    if (event.key === "s" || event.key === "S") this.activateTool("star")
   }
 
   handleKeyUp(event) {

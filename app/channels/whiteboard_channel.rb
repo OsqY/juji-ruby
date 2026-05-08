@@ -58,6 +58,29 @@ class WhiteboardChannel < ApplicationCable::Channel
     end
   end
 
+  def delete(data)
+    return unless @whiteboard
+    return unless can_draw?
+
+    stroke_ids = Array(data["stroke_ids"]).compact.map(&:to_i)
+    return if stroke_ids.empty?
+
+    # Only allow deleting own strokes (or any stroke for board owner)
+    scope = @whiteboard.whiteboard_strokes.where(id: stroke_ids)
+    unless can_clear?
+      if current_user
+        scope = scope.where(user: current_user)
+      else
+        scope = scope.where(user_id: nil)
+      end
+    end
+
+    destroyed_ids = scope.pluck(:id)
+    scope.destroy_all
+
+    broadcast_to(@whiteboard, { type: "delete", stroke_ids: destroyed_ids })
+  end
+
   private
     def transmit_existing_strokes
       strokes = @whiteboard.whiteboard_strokes.order(:created_at).map do |s|

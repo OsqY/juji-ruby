@@ -41,8 +41,8 @@ For non-trivial tasks:
 1. Read project instructions.
 2. Create todos.
 3. Launch an appropriate subagent:
-   - explore for repository discovery
-   - plan for architecture/refactor/risky work
+   - explorer for repository discovery
+   - planner for architecture/refactor/risky work
    - coder for implementation
 4. Read relevant skills.
 5. Use MCP if useful.

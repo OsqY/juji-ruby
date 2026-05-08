@@ -24,6 +24,7 @@
   </head>
 
   <body data-controller="theme frame-state">
+    <% unless content_for(:hide_nav) %>
     <nav class="chaos-nav" data-controller="nav-dropdown" data-action="click->nav-dropdown#closeOnLinkClick">
       <% dashboard_active = controller_name == "dashboard" %>
       <% reports_active = controller_name == "daily_reports" && action_name != "new" %>
@@ -180,6 +181,7 @@
         </div>
       </div>
     </nav>
+    <% end %>
     <main class="chaotic-container" style="padding-top: 6rem;">
       <%= yield %>
     </main>
