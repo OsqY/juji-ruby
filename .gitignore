@@ -32,4 +32,20 @@
 
 # Ignore key files for decrypting credentials and more.
 /config/*.key
+
+# Ignore kimi/omk and AI assistant artifacts
+/.kimi
+/.omk
+/docs
+CLAUDE.md
+GEMINI.md
+HOTWIRE_NATIVE_CHANGELOG.md
+HOTWIRE_NATIVE_CHECKLIST.md
+HOTWIRE_NATIVE_DEPLOYMENT.md
+HOTWIRE_NATIVE_MAINTENANCE.md
+TESTING_ANALYSIS.md
+TESTING_QUICK_REFERENCE.txt
+TESTING_QUICK_START.md
+TESTING_README.md
+TESTING_SUMMARY.txt
 omk

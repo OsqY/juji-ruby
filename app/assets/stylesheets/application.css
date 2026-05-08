@@ -1967,6 +1967,235 @@ nav.chaos-nav {
   }
 }
 
+/* Whiteboard Full-Screen Layout */
+.whiteboard-wrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  z-index: 900;
+}
+
+.whiteboard-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 3px solid var(--ink);
+  background: var(--paper);
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.whiteboard-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.whiteboard-title {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.whiteboard-meta {
+  font-size: 0.7rem;
+  font-weight: 800;
+  opacity: 0.6;
+}
+
+.whiteboard-tools {
+  flex-wrap: wrap;
+}
+
+.btn-tool {
+  padding: 0.4rem 0.7rem !important;
+  font-size: 0.7rem !important;
+  box-shadow: 3px 3px 0px var(--highlight) !important;
+}
+
+.btn-tool:hover {
+  box-shadow: 4px 4px 0px var(--accent-blue) !important;
+}
+
+.btn-tool-eraser {
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+}
+
+.btn-tool-danger {
+  background: var(--expense-bg) !important;
+  color: var(--expense-text) !important;
+}
+
+.whiteboard-options {
+  gap: 0.75rem;
+}
+
+.whiteboard-color {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 3px solid var(--ink);
+  cursor: pointer;
+  background: none;
+}
+
+.whiteboard-width {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.whiteboard-width label {
+  font-size: 0.6rem;
+  margin: 0;
+}
+
+.whiteboard-width input[type="range"] {
+  width: 80px;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.whiteboard-actions {
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+.whiteboard-status {
+  font-size: 0.7rem;
+  font-weight: 700;
+  opacity: 0.6;
+}
+
+.whiteboard-zoom {
+  font-size: 0.7rem;
+  font-weight: 700;
+  opacity: 0.6;
+  min-width: 36px;
+  text-align: right;
+}
+
+.whiteboard-canvas-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: var(--muted-gray);
+  cursor: crosshair;
+}
+
+.whiteboard-canvas-area canvas {
+  display: block;
+  touch-action: none;
+}
+
+.whiteboard-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 920px) {
+  .whiteboard-toolbar {
+    gap: 0.5rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .whiteboard-actions {
+    margin-left: 0;
+  }
+
+  .btn-tool {
+    padding: 0.35rem 0.55rem !important;
+    font-size: 0.62rem !important;
+  }
+
+  .whiteboard-title {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .whiteboard-toolbar {
+    padding: 0.35rem 0.5rem;
+  }
+
+  .whiteboard-options {
+    order: 99;
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   SUPERHERO WOBBLE / SPRING EFFECT
+   ============================================================ */
+
+@keyframes superheroWobble {
+  0%   { transform: rotate(0deg) scale(1); }
+  15%  { transform: rotate(-3deg) scale(1.04); }
+  30%  { transform: rotate(2.5deg) scale(1.02); }
+  45%  { transform: rotate(-2deg) scale(1.03); }
+  60%  { transform: rotate(1.5deg) scale(1.01); }
+  75%  { transform: rotate(-1deg) scale(1.02); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+@keyframes superheroSpring {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.08) translateY(-3px); }
+  50%  { transform: scale(0.96) translateY(1px); }
+  70%  { transform: scale(1.04) translateY(-2px); }
+  85%  { transform: scale(0.98) translateY(0px); }
+  100% { transform: scale(1) translateY(0px); }
+}
+
+[data-theme="superhero"] .btn-chaos:hover,
+[data-theme="superhero"] input[type="submit"].btn-chaos:hover {
+  animation: superheroSpring 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="superhero"] .nav-link:hover,
+[data-theme="superhero"] .nav-dropdown-toggle:hover {
+  animation: superheroWobble 0.5s ease-in-out;
+}
+
+[data-theme="superhero"] .report-section-block:hover,
+[data-theme="superhero"] .dashboard-card:hover,
+[data-theme="superhero"] .guide-card:hover,
+[data-theme="superhero"] .budget-item:hover,
+[data-theme="superhero"] .type-card:hover {
+  animation: superheroWobble 0.6s ease-in-out;
+}
+
+[data-theme="superhero"] input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):hover,
+[data-theme="superhero"] textarea:hover,
+[data-theme="superhero"] select:hover {
+  animation: superheroSpring 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="superhero"] .delete-btn-link:hover {
+  animation: superheroSpring 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="superhero"] .card-action-link:hover,
+[data-theme="superhero"] .card-export-btn:hover {
+  animation: superheroWobble 0.4s ease-in-out;
+}
+
+[data-theme="superhero"] .daily-calendar-cell:hover {
+  animation: superheroSpring 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="superhero"] .whiteboard-toolbar .btn-tool:hover {
+  animation: superheroSpring 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
 /* Inline Drawer / Modal Panel */
 .inline-drawer-shell {
   position: fixed;

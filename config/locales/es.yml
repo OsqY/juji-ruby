@@ -7,11 +7,14 @@ es:
       reports: "Reportes"
       finance: "Finanzas"
       productivity: "Productividad"
+      whiteboards: "Pizarras"
+      forms: "Formularios"
       tips: "Tips"
     whats_new:
       title: "Flujo actualizado"
-      drawer: "Ahora los formularios principales se abren en panel lateral para no perder el contexto de la lista."
-      turbo: "Las acciones frecuentes actualizan secciones con Turbo para una experiencia mas fluida."
+      whiteboard: "Pizarras colaborativas con lienzo infinito: dibuja en tiempo real y comparte el link con cualquiera, incluso sin cuenta."
+      forms: "Formularios anonimos para recolectar respuestas sin que el remitente necesite registrarse."
+      search: "Busqueda global con Cmd+K para encontrar reportes, transacciones, proyectos y mas."
     reports:
       title: "Como usar reportes diarios"
       step_1: "Desde Reportes, usa 'Nuevo reporte +' para abrir el panel lateral."
@@ -27,6 +30,16 @@ es:
       step_1: "Crea proyectos con meta y descripcion para mantener claridad."
       step_2: "Agrega tareas por proyecto y marcalas como completadas."
       step_3: "Complementa con habitos y lista de compras para rutina diaria."
+    whiteboards:
+      title: "Como usar pizarras"
+      step_1: "Crea una pizarra y comparte el link publico. Cualquiera puede dibujar, incluso sin cuenta."
+      step_2: "Usa lapiz, formas, flechas y goma. Haz zoom con la rueda del raton y panea con espacio + arrastre."
+      step_3: "Exporta como PNG cuando termines. Las pizarras se sincronizan en tiempo real."
+    forms:
+      title: "Como usar formularios"
+      step_1: "Crea un formulario anonimo con las preguntas que necesites."
+      step_2: "Comparte el link publico para recolectar respuestas sin registro."
+      step_3: "Revisa las respuestas y estadisticas desde el detalle del formulario."
     tips:
       title: "Recomendaciones"
       item_1: "Usa el dashboard para revisar bloqueos e indicadores del mes."
@@ -37,6 +50,8 @@ es:
       open_reports: "Abrir reportes"
       open_finance: "Abrir finanzas"
       open_projects: "Abrir proyectos"
+      open_whiteboards: "Abrir pizarras"
+      open_forms: "Abrir formularios"
 
   common:
     edit: "Editar"

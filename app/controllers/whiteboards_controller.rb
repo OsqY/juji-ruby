@@ -50,8 +50,8 @@ class WhiteboardsController < ApplicationController
 
     def whiteboard_params
       params.require(:whiteboard).permit(:name, :width, :height, :background_color).tap do |whitelisted|
-        whitelisted[:width] ||= 1200
-        whitelisted[:height] ||= 800
+        whitelisted[:width] ||= 4000
+        whitelisted[:height] ||= 4000
       end
     end
 end

@@ -7,8 +7,9 @@
   <section class="report-section-block" style="margin-bottom: 1.5rem;">
     <span class="section-label"><%= t("guide.labels.what_is_new") %></span>
     <h2 class="section-title" style="margin-top: 0.8rem;"><%= t("guide.whats_new.title") %></h2>
-    <p class="report-text" style="font-size: 1rem; margin-top: 0.8rem;"><%= t("guide.whats_new.drawer") %></p>
-    <p class="report-text" style="font-size: 1rem;"><%= t("guide.whats_new.turbo") %></p>
+    <p class="report-text" style="font-size: 1rem; margin-top: 0.8rem;"><%= t("guide.whats_new.whiteboard") %></p>
+    <p class="report-text" style="font-size: 1rem;"><%= t("guide.whats_new.forms") %></p>
+    <p class="report-text" style="font-size: 1rem;"><%= t("guide.whats_new.search") %></p>
   </section>
 
   <div class="guide-grid">
@@ -48,6 +49,32 @@
       </ol>
       <div class="guide-actions">
         <%= link_to t("guide.quick_actions.open_projects"), projects_path, class: "btn-chaos", style: "font-size: 0.85rem; padding: 0.7rem 1rem;" %>
+      </div>
+    </section>
+
+    <section class="guide-card report-section-block">
+      <span class="section-label" style="background: #8B5CF6; color: white;"><%= t("guide.labels.whiteboards") %></span>
+      <h3 class="section-title"><%= t("guide.whiteboards.title") %></h3>
+      <ol class="guide-steps">
+        <li><%= t("guide.whiteboards.step_1") %></li>
+        <li><%= t("guide.whiteboards.step_2") %></li>
+        <li><%= t("guide.whiteboards.step_3") %></li>
+      </ol>
+      <div class="guide-actions">
+        <%= link_to t("guide.quick_actions.open_whiteboards"), whiteboards_path, class: "btn-chaos", style: "font-size: 0.85rem; padding: 0.7rem 1rem;" %>
+      </div>
+    </section>
+
+    <section class="guide-card report-section-block">
+      <span class="section-label" style="background: #F59E0B; color: white;"><%= t("guide.labels.forms") %></span>
+      <h3 class="section-title"><%= t("guide.forms.title") %></h3>
+      <ol class="guide-steps">
+        <li><%= t("guide.forms.step_1") %></li>
+        <li><%= t("guide.forms.step_2") %></li>
+        <li><%= t("guide.forms.step_3") %></li>
+      </ol>
+      <div class="guide-actions">
+        <%= link_to t("guide.quick_actions.open_forms"), anonymous_forms_path, class: "btn-chaos", style: "font-size: 0.85rem; padding: 0.7rem 1rem;" %>
       </div>
     </section>
 

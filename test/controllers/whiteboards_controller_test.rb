@@ -48,7 +48,7 @@ class WhiteboardsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@user)
     get whiteboard_path(@whiteboard)
     assert_response :success
-    assert_select "h1", /TEST BOARD/
+    assert_select ".whiteboard-title", /TEST BOARD/
   end
 
   test "collaborator can view whiteboard" do
@@ -61,7 +61,7 @@ class WhiteboardsControllerTest < ActionDispatch::IntegrationTest
   test "public show with token" do
     get public_whiteboard_path(token: @whiteboard.token)
     assert_response :success
-    assert_select "h1", /TEST BOARD/
+    assert_select ".whiteboard-title", /TEST BOARD/
   end
 
   test "destroy whiteboard" do

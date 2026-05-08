@@ -16,8 +16,7 @@ class WhiteboardChannel < ApplicationCable::Channel
 
   def draw(data)
     return unless @whiteboard
-    return unless current_user
-    return unless @whiteboard.collaborator?(current_user)
+    return unless can_draw?
 
     stroke = @whiteboard.whiteboard_strokes.create!(
       user: current_user,
@@ -35,8 +34,7 @@ class WhiteboardChannel < ApplicationCable::Channel
 
   def clear
     return unless @whiteboard
-    return unless current_user
-    return unless @whiteboard.user_id == current_user.id
+    return unless can_clear?
 
     @whiteboard.whiteboard_strokes.destroy_all
     broadcast_to(@whiteboard, { type: "clear" })
@@ -44,10 +42,16 @@ class WhiteboardChannel < ApplicationCable::Channel
 
   def undo(data)
     return unless @whiteboard
-    return unless current_user
-    return unless @whiteboard.collaborator?(current_user)
+    return unless can_draw?
 
-    stroke = @whiteboard.whiteboard_strokes.where(user: current_user).order(created_at: :desc).first
+    scope = @whiteboard.whiteboard_strokes
+    if current_user
+      scope = scope.where(user: current_user)
+    else
+      scope = scope.where(user_id: nil)
+    end
+
+    stroke = scope.order(created_at: :desc).first
     if stroke
       stroke.destroy
       broadcast_to(@whiteboard, { type: "undo", stroke_id: stroke.id })
@@ -69,5 +73,13 @@ class WhiteboardChannel < ApplicationCable::Channel
 
     def public_access?
       params[:token].present? && @whiteboard.token == params[:token]
+    end
+
+    def can_draw?
+      current_user ? @whiteboard.collaborator?(current_user) : public_access?
+    end
+
+    def can_clear?
+      current_user ? @whiteboard.user_id == current_user.id : false
     end
 end

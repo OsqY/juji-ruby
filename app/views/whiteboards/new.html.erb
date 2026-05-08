@@ -23,6 +23,9 @@
       <%= f.color_field :background_color, value: "#FFFFFF" %>
     </div>
 
+    <%= f.hidden_field :width, value: 4000 %>
+    <%= f.hidden_field :height, value: 4000 %>
+
     <div class="form-actions" style="position: static; box-shadow: none; padding: 0; border: none;">
       <%= f.submit "CREAR PIZARRA", class: "btn-chaos" %>
       <%= link_to "CANCELAR", whiteboards_path, class: "nav-link" %>

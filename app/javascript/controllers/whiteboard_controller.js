@@ -7,8 +7,6 @@ export default class extends Controller {
     id: Number,
     token: String,
     userId: String,
-    width: Number,
-    height: Number,
     bg: String,
     strokes: Array
   }
@@ -28,6 +26,7 @@ export default class extends Controller {
     this.undoStack = []
     this.selectedStrokeIds = new Set()
     this.canDraw = true
+    this.clientId = this.generateClientId()
 
     // Viewport transform
     this.scale = 1
@@ -38,6 +37,7 @@ export default class extends Controller {
     this.setupChannel()
     this.setupKeyboard()
     this.setupTouch()
+    this.setupResize()
     this.updateToolButtons()
     this.updateZoomDisplay()
     this.statusTarget.textContent = "Conectando..."
@@ -49,6 +49,11 @@ export default class extends Controller {
     }
     this.removeTouchListeners()
     this.removeKeyboardListeners()
+    window.removeEventListener("resize", this.resizeHandler)
+  }
+
+  generateClientId() {
+    return "guest_" + Math.random().toString(36).substring(2, 10)
   }
 
   // ===== Canvas Setup =====
@@ -58,41 +63,55 @@ export default class extends Controller {
     this.ctx = this.canvas.getContext("2d")
     this.roughCanvas = rough.canvas(this.canvas)
 
-    const w = this.widthValue || 1200
-    const h = this.heightValue || 800
-
-    this.canvas.width = w
-    this.canvas.height = h
-    this.canvas.style.width = `${w}px`
-    this.canvas.style.height = `${h}px`
-    this.canvas.style.maxWidth = "100%"
-    this.canvas.style.display = "block"
-    this.canvas.style.cursor = "crosshair"
-    this.canvas.style.touchAction = "none"
-
-    if (this.hasOverlayTarget) {
-      this.overlay = this.overlayTarget
-      this.overlayCtx = this.overlay.getContext("2d")
-      this.overlay.width = w
-      this.overlay.height = h
-      this.overlay.style.width = `${w}px`
-      this.overlay.style.height = `${h}px`
-      this.overlay.style.maxWidth = "100%"
-      this.overlay.style.position = "absolute"
-      this.overlay.style.top = "0"
-      this.overlay.style.left = "0"
-      this.overlay.style.pointerEvents = "none"
-      this.overlay.style.display = "block"
-    }
+    this.resizeCanvas()
 
     this.redraw()
 
     // Load existing strokes
     this.strokesValue.forEach(item => {
-      const stroke = { stroke: item.stroke, user_id: item.user_id, stroke_id: item.stroke_id }
+      const stroke = { stroke: item.stroke, user_id: item.user_id, stroke_id: item.stroke_id, client_id: item.client_id }
       this.strokes.push(stroke)
     })
     this.renderAllStrokes()
+  }
+
+  resizeCanvas() {
+    const container = this.canvas.parentElement
+    const dpr = window.devicePixelRatio || 1
+    const w = container.clientWidth
+    const h = container.clientHeight
+
+    this.canvas.width = w * dpr
+    this.canvas.height = h * dpr
+    this.canvas.style.width = `${w}px`
+    this.canvas.style.height = `${h}px`
+    this.ctx.scale(dpr, dpr)
+
+    if (this.hasOverlayTarget) {
+      this.overlay = this.overlayTarget
+      this.overlayCtx = this.overlay.getContext("2d")
+      this.overlay.width = w * dpr
+      this.overlay.height = h * dpr
+      this.overlay.style.width = `${w}px`
+      this.overlay.style.height = `${h}px`
+      this.overlay.style.position = "absolute"
+      this.overlay.style.top = "0"
+      this.overlay.style.left = "0"
+      this.overlay.style.pointerEvents = "none"
+      this.overlayCtx.scale(dpr, dpr)
+    }
+
+    this.viewWidth = w
+    this.viewHeight = h
+  }
+
+  setupResize() {
+    this.resizeHandler = () => {
+      const oldTransform = this.ctx.getTransform()
+      this.resizeCanvas()
+      this.redraw()
+    }
+    window.addEventListener("resize", this.resizeHandler)
   }
 
   // ===== Viewport / Transform =====
@@ -112,18 +131,20 @@ export default class extends Controller {
   }
 
   setTransform() {
-    this.ctx.setTransform(this.scale, 0, 0, this.scale, this.offsetX, this.offsetY)
+    const dpr = window.devicePixelRatio || 1
+    this.ctx.setTransform(dpr * this.scale, 0, 0, dpr * this.scale, dpr * this.offsetX, dpr * this.offsetY)
   }
 
   resetTransform() {
-    this.ctx.setTransform(1, 0, 0, 1, 0, 0)
+    const dpr = window.devicePixelRatio || 1
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
   }
 
   // ===== Grid =====
 
   drawGrid() {
-    const w = this.widthValue || 1200
-    const h = this.heightValue || 800
+    const w = this.viewWidth || 1200
+    const h = this.viewHeight || 800
     const bg = this.bgValue || "#ffffff"
 
     this.ctx.fillStyle = bg
@@ -297,6 +318,8 @@ export default class extends Controller {
 
   clearOverlay() {
     if (this.overlayCtx) {
+      const dpr = window.devicePixelRatio || 1
+      this.overlayCtx.setTransform(dpr, 0, 0, dpr, 0, 0)
       this.overlayCtx.clearRect(0, 0, this.overlay.width, this.overlay.height)
     }
   }
@@ -528,21 +551,21 @@ export default class extends Controller {
           width: this.lineWidth,
           points: this.currentPoints
         }
-        const stroke = { stroke: strokeData, user_id: this.userIdValue, stroke_id: null }
+        const stroke = { stroke: strokeData, user_id: this.userIdValue, stroke_id: null, client_id: this.clientId }
         this.strokes.push(stroke)
         this.undoStack = []
-        this.channel.perform("draw", { stroke: strokeData })
+        this.channel.perform("draw", { stroke: strokeData, client_id: this.clientId })
       }
     } else if (this.shapeStart) {
       const endPoint = this.getPoint(event)
       this.clearOverlay()
       const strokeData = this.buildShapeStroke(this.shapeStart, endPoint)
       if (strokeData) {
-        const stroke = { stroke: strokeData, user_id: this.userIdValue, stroke_id: null }
+        const stroke = { stroke: strokeData, user_id: this.userIdValue, stroke_id: null, client_id: this.clientId }
         this.strokes.push(stroke)
         this.undoStack = []
         this.renderStroke(strokeData)
-        this.channel.perform("draw", { stroke: strokeData })
+        this.channel.perform("draw", { stroke: strokeData, client_id: this.clientId })
       }
       this.shapeStart = null
     }
@@ -810,7 +833,12 @@ export default class extends Controller {
 
   undo() {
     if (this.strokes.length === 0) return
-    const last = this.strokes.pop()
+    const last = this.strokes[this.strokes.length - 1]
+    // Only undo our own strokes
+    const isMine = last.user_id === this.userIdValue || last.client_id === this.clientId
+    if (!isMine) return
+
+    this.strokes.pop()
     this.undoStack.push(last)
     this.redraw()
     if (last.stroke_id) {
@@ -823,7 +851,7 @@ export default class extends Controller {
     const stroke = this.undoStack.pop()
     this.strokes.push(stroke)
     this.redraw()
-    this.channel.perform("draw", { stroke: stroke.stroke })
+    this.channel.perform("draw", { stroke: stroke.stroke, client_id: this.clientId })
   }
 
   // ===== Clear =====
