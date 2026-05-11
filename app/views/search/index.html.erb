@@ -74,6 +74,7 @@
               <option value="shopping_items" <%= 'selected' if params[:type] == 'shopping_items' %>>Compras</option>
               <option value="budgets" <%= 'selected' if params[:type] == 'budgets' %>>Presupuestos</option>
               <option value="anonymous_forms" <%= 'selected' if params[:type] == 'anonymous_forms' %>>Formularios</option>
+              <option value="chat_rooms" <%= 'selected' if params[:type] == 'chat_rooms' %>>Salas de Chat</option>
             </select>
           </div>
 
@@ -237,6 +238,20 @@
                           </h3>
                           <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
                             Formulario · <%= record.description&.truncate(50) || "Sin descripción" %>
+                          </p>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% when :chat_rooms %>
+                    <div class="search-result-card">
+                      <%= link_to chat_room_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                        <div style="font-size: 1.5rem;">CH</div>
+                        <div style="flex: 1;">
+                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                            <%= record.name %>
+                          </h3>
+                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                            Sala <%= record.room_type.humanize %> · <%= record.description&.truncate(50) || "Sin descripción" %>
                           </p>
                         </div>
                       <% end %>

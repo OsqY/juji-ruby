@@ -38,6 +38,31 @@ Rails.application.routes.draw do
   resources :anonymous_forms, only: %i[ index new create show destroy ]
   resources :whiteboards, only: %i[ index new create show destroy ]
 
+  resources :chat_rooms, path: "salas" do
+    member do
+      post :join
+      post :leave
+      post :invite
+      delete :kick
+    end
+    resources :messages, only: [:create], module: :chat_rooms
+  end
+
+  resources :friends, only: [:index, :create, :destroy] do
+    collection do
+      get :pending
+      post :accept
+      post :reject
+    end
+  end
+
+  scope "/c/:token", as: :public_chat_room do
+    get "/", to: "chat_rooms#public_show"
+    post "/join", to: "chat_rooms#public_join"
+  end
+
+  get "/friends/accept/:token", to: "friends#accept_invitation", as: :friend_invitation
+
   scope "/w/:token", as: :public_whiteboard do
     get "/", to: "whiteboards#public_show"
   end

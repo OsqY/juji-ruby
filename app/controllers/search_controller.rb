@@ -173,6 +173,15 @@ class SearchController < ApplicationController
         type: 'form',
         icon: "FRM"
       }
+    when :chat_rooms
+      {
+        id: record.id,
+        title: record.name,
+        subtitle: "#{record.room_type.humanize} · #{record.description&.truncate(40) || 'Sala de chat'}",
+        url: chat_room_path(record),
+        type: 'chat_room',
+        icon: "CHT"
+      }
     else
       {
         id: record.id,

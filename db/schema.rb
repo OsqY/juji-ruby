@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_22_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_10_070103) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -86,6 +86,34 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_22_000001) do
     t.index ["user_id"], name: "index_budgets_on_user_id"
   end
 
+  create_table "chat_room_members", force: :cascade do |t|
+    t.integer "chat_room_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "joined_at", null: false
+    t.integer "role", default: 2, null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["chat_room_id", "user_id"], name: "index_chat_room_members_on_chat_room_id_and_user_id", unique: true
+    t.index ["chat_room_id"], name: "index_chat_room_members_on_chat_room_id"
+    t.index ["user_id"], name: "index_chat_room_members_on_user_id"
+  end
+
+  create_table "chat_rooms", force: :cascade do |t|
+    t.datetime "archived_at"
+    t.integer "capacity"
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "entry_code"
+    t.string "name", null: false
+    t.integer "owner_id", null: false
+    t.integer "room_type", default: 0, null: false
+    t.string "token", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_chat_rooms_on_owner_id"
+    t.index ["room_type"], name: "index_chat_rooms_on_room_type"
+    t.index ["token"], name: "index_chat_rooms_on_token", unique: true
+  end
+
   create_table "daily_reports", force: :cascade do |t|
     t.text "additional_details"
     t.text "blockers"
@@ -100,6 +128,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_22_000001) do
     t.text "yesterday"
     t.index ["report_date"], name: "index_daily_reports_on_report_date"
     t.index ["user_id"], name: "index_daily_reports_on_user_id"
+  end
+
+  create_table "friendships", force: :cascade do |t|
+    t.datetime "accepted_at"
+    t.integer "addressee_id", null: false
+    t.datetime "created_at", null: false
+    t.string "invitation_token", null: false
+    t.integer "requester_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["addressee_id"], name: "index_friendships_on_addressee_id"
+    t.index ["invitation_token"], name: "index_friendships_on_invitation_token", unique: true
+    t.index ["requester_id", "addressee_id"], name: "index_friendships_on_requester_id_and_addressee_id", unique: true
+    t.index ["requester_id"], name: "index_friendships_on_requester_id"
   end
 
   create_table "habit_logs", force: :cascade do |t|
@@ -117,6 +159,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_22_000001) do
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.index ["user_id"], name: "index_habits_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer "chat_room_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.integer "message_type", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["chat_room_id", "created_at"], name: "index_messages_on_chat_room_id_and_created_at"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -204,6 +257,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_22_000001) do
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.string "display_name"
     t.string "email_address", null: false
     t.string "password_digest", null: false
     t.datetime "updated_at", null: false

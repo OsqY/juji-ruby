@@ -57,6 +57,13 @@ class SearchService
       .order(created_at: :desc)
       .limit(limit)
 
+    # Salas de Chat Públicas
+    results[:chat_rooms] = ChatRoom.searchable
+      .excluding_direct_messages
+      .where("LOWER(name) LIKE ? OR LOWER(description) LIKE ?", "%#{query}%", "%#{query}%")
+      .order(created_at: :desc)
+      .limit(limit)
+
     results
   end
 

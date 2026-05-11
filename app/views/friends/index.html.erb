@@ -1,0 +1,52 @@
+<div class="chaotic-container">
+  <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <h1 style="font-size: 2.5rem; margin: 0;">AMIGOS</h1>
+    <%= link_to "SOLICITUDES PENDIENTES", pending_friends_path, class: "btn-chaos", style: "padding: 0.75rem 1.5rem; text-decoration: none; font-size: 0.85rem;" %>
+  </div>
+
+  <div style="margin-bottom: 2rem; padding: 1.5rem; border: 3px solid var(--ink); background: var(--paper);">
+    <h2 style="font-size: 1.1rem; font-weight: 700; margin: 0 0 1rem; text-transform: uppercase;">Agregar amigo</h2>
+    <%= form_with url: friends_path, method: :post, style: "display: flex; gap: 0.5rem; flex-wrap: wrap;" do |f| %>
+      <%= f.email_field :email,
+          placeholder: "Correo electrónico",
+          required: true,
+          style: "flex: 1; min-width: 200px; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); font-size: 1rem;"
+      %>
+      <%= f.submit "ENVIAR SOLICITUD", class: "btn-chaos", style: "padding: 0.75rem 1.5rem;" %>
+    <% end %>
+  </div>
+
+  <% if @friends.any? %>
+    <section style="margin-bottom: 2.5rem;">
+      <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee;">
+        Mis Amigos <span style="font-size: 0.85rem; color: #999; font-weight: 400;">(<%= @friends.count %>)</span>
+      </h2>
+      <div style="display: grid; gap: 1rem;">
+        <% @friends.each do |friend| %>
+          <div class="search-result-card" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-weight: 700;"><%= friend.display_name_or_email %></div>
+              <div style="font-size: 0.85rem; color: #666;"><%= friend.email_address %></div>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <% dm = current_user.dm_with(friend) %>
+              <% if dm %>
+                <%= link_to "CHAT", dm, class: "btn-chaos", style: "padding: 0.5rem 1rem; text-decoration: none; font-size: 0.85rem;" %>
+              <% else %>
+                <%= button_to "INICIAR CHAT", chat_rooms_path(chat_room: { name: "DM: #{current_user.display_name_or_email} & #{friend.display_name_or_email}", room_type: :direct_message, description: "Conversación privada" }, friend_email: friend.email_address), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.85rem;" %>
+              <% end %>
+              <% friendship = current_user.friendship_with(friend) %>
+              <%= button_to "ELIMINAR", friend_path(friendship), method: :delete, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.85rem; background: #c00; color: #fff;", data: { turbo_confirm: "¿Eliminar amistad?" } %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% else %>
+    <div style="text-align: center; padding: 3rem 1rem;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+      <p style="font-size: 1.1rem; color: #666;">Aún no tienes amigos</p>
+      <p style="color: #999; margin-top: 0.5rem;">Envía una solicitud usando el correo electrónico</p>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,79 @@
+<div class="chaotic-container">
+  <div style="margin-bottom: 1.5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; padding: 0.2rem 0.5rem; border: 2px solid var(--ink); background: var(--muted-gray);">
+            <%= @chat_room.room_type %>
+          </span>
+          <% if @chat_room.capacity.present? %>
+            <span style="font-size: 0.75rem; color: #666;"><%= @chat_room.member_count %>/<%= @chat_room.capacity %></span>
+          <% end %>
+        </div>
+        <h1 style="font-size: 2rem; margin: 0;"><%= @chat_room.name %></h1>
+        <p style="margin: 0.5rem 0 0; color: #666;"><%= @chat_room.description %></p>
+      </div>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <% if @chat_room.owner?(current_user) || @chat_room.admin_or_owner?(current_user) %>
+          <%= button_to "INVITAR", invite_chat_room_path(@chat_room), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.8rem;" %>
+        <% end %>
+        <%= button_to "SALIR", leave_chat_room_path(@chat_room), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.8rem;", data: { turbo_confirm: "¿Salir de la sala?" } %>
+        <% if @chat_room.owner?(current_user) %>
+          <%= button_to "ELIMINAR", chat_room_path(@chat_room), method: :delete, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.8rem; background: #c00; color: #fff;", data: { turbo_confirm: "¿Eliminar esta sala?" } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 250px; gap: 1.5rem;">
+    <div>
+      <div id="messages"
+           data-controller="chat-room"
+           data-chat-room-room-id-value="<%= @chat_room.id %>"
+           style="border: 3px solid var(--ink); background: var(--paper); height: 500px; overflow-y: auto; padding: 1rem; margin-bottom: 1rem;">
+        <% @messages.each do |message| %>
+          <%= render "messages/message", message: message %>
+        <% end %>
+      </div>
+
+      <% if @chat_room.can_speak?(current_user) %>
+        <%= form_with model: [@chat_room, Message.new],
+                      url: chat_room_messages_path(@chat_room),
+                      data: { action: "submit->chat-room#submit" } do |f| %>
+          <div style="display: flex; gap: 0.5rem;">
+            <%= f.text_field :content,
+                placeholder: "Escribe un mensaje...",
+                autocomplete: "off",
+                data: { chat_room_target: "input" },
+                style: "flex: 1; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); font-size: 1rem;"
+            %>
+            <%= f.submit "ENVIAR", class: "btn-chaos", style: "padding: 0.75rem 1.5rem;" %>
+          </div>
+        <% end %>
+      <% else %>
+        <div style="padding: 1rem; border: 3px solid #ccc; text-align: center; color: #666;">
+          No puedes escribir en esta sala.
+        </div>
+      <% end %>
+    </div>
+
+    <div>
+      <div style="border: 3px solid var(--ink); background: var(--paper); padding: 1rem;">
+        <h3 style="font-size: 1rem; font-weight: 700; margin: 0 0 1rem; text-transform: uppercase;">Miembros</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <% @members.each do |member| %>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-weight: 600; font-size: 0.9rem;"><%= member.user.display_name_or_email %></div>
+                <div style="font-size: 0.75rem; color: #666; text-transform: uppercase;"><%= member.role %></div>
+              </div>
+              <% if @chat_room.admin_or_owner?(current_user) && member.user != current_user && !member.owner? %>
+                <%= button_to "X", kick_chat_room_path(@chat_room, user_id: member.user.id), method: :delete, class: "btn-chaos", style: "padding: 0.25rem 0.5rem; font-size: 0.7rem; min-width: auto;", data: { turbo_confirm: "¿Expulsar?" } %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

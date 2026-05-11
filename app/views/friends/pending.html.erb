@@ -1,0 +1,57 @@
+<div class="chaotic-container">
+  <h1 style="font-size: 2.5rem; margin-bottom: 2rem;">SOLICITUDES PENDIENTES</h1>
+
+  <% if @received_requests.any? %>
+    <section style="margin-bottom: 2.5rem;">
+      <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee;">
+        Recibidas <span style="font-size: 0.85rem; color: #999; font-weight: 400;">(<%= @received_requests.count %>)</span>
+      </h2>
+      <div style="display: grid; gap: 1rem;">
+        <% @received_requests.each do |req| %>
+          <div class="search-result-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <div style="font-weight: 700;"><%= req.requester.display_name_or_email %></div>
+              <div style="font-size: 0.85rem; color: #666;"><%= req.requester.email_address %></div>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <%= button_to "ACEPTAR", accept_friends_path(id: req.id), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.85rem;" %>
+              <%= button_to "RECHAZAR", reject_friends_path(id: req.id), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.85rem; background: #c00; color: #fff;" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
+  <% if @sent_requests.any? %>
+    <section style="margin-bottom: 2.5rem;">
+      <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee;">
+        Enviadas <span style="font-size: 0.85rem; color: #999; font-weight: 400;">(<%= @sent_requests.count %>)</span>
+      </h2>
+      <div style="display: grid; gap: 1rem;">
+        <% @sent_requests.each do |req| %>
+          <div class="search-result-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <div style="font-weight: 700;"><%= req.addressee.display_name_or_email %></div>
+              <div style="font-size: 0.85rem; color: #666;"><%= req.addressee.email_address %></div>
+            </div>
+            <div style="font-size: 0.85rem; color: #999;">
+              Pendiente
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
+  <% if @received_requests.empty? && @sent_requests.empty? %>
+    <div style="text-align: center; padding: 3rem 1rem;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">📭</div>
+      <p style="font-size: 1.1rem; color: #666;">No hay solicitudes pendientes</p>
+    </div>
+  <% end %>
+
+  <div style="margin-top: 2rem;">
+    <%= link_to "← Volver a amigos", friends_path, style: "text-decoration: none; color: var(--ink); font-weight: 700;" %>
+  </div>
+</div>

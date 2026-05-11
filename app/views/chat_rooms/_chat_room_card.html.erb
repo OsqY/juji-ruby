@@ -1,0 +1,29 @@
+<div class="search-result-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+  <div style="flex: 1;">
+    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+      <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; padding: 0.2rem 0.5rem; border: 2px solid var(--ink); background: var(--muted-gray);">
+        <%= room.room_type %>
+      </span>
+      <% if room.capacity.present? %>
+        <span style="font-size: 0.75rem; color: #666;">
+          <%= room.member_count %>/<%= room.capacity %>
+        </span>
+      <% end %>
+    </div>
+    <h3 style="margin: 0; font-size: 1.1rem;">
+      <%= link_to room.name, room, style: "text-decoration: none; color: inherit;" %>
+    </h3>
+    <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: #666;">
+      <%= room.description&.truncate(80) || "Sin descripción" %>
+    </p>
+  </div>
+  <div style="display: flex; gap: 0.5rem;">
+    <% if is_member %>
+      <%= link_to "ENTRAR", room, class: "btn-chaos", style: "padding: 0.5rem 1rem; text-decoration: none; font-size: 0.85rem;" %>
+    <% elsif room.can_join?(current_user) %>
+      <%= button_to "UNIRSE", join_chat_room_path(room), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.85rem;" %>
+    <% else %>
+      <span style="font-size: 0.8rem; color: #999; padding: 0.5rem 1rem; border: 2px solid #ccc;">LLENA</span>
+    <% end %>
+  </div>
+</div>

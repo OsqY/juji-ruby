@@ -37,6 +37,8 @@
       <% shopping_active = controller_name == "shopping_items" %>
       <% forms_active = controller_name == "anonymous_forms" %>
       <% whiteboards_active = controller_name == "whiteboards" %>
+      <% chat_active = controller_name == "chat_rooms" %>
+      <% friends_active = controller_name == "friends" %>
       <% notifications_active = controller_name == "notifications" %>
       <% guide_active = controller_name == "guides" %>
       <% login_active = controller_name == "sessions" && action_name == "new" %>
@@ -116,6 +118,8 @@
         <%= link_to t("guide.nav"), guide_path, class: "nav-link #{'is-active' if guide_active}" %>
         <%= link_to "FORMULARIOS", anonymous_forms_path, class: "nav-link #{'is-active' if forms_active}" %>
         <%= link_to "PIZARRAS", whiteboards_path, class: "nav-link #{'is-active' if whiteboards_active}" %>
+        <%= link_to "CHAT", chat_rooms_path, class: "nav-link #{'is-active' if chat_active}" %>
+        <%= link_to "AMIGOS", friends_path, class: "nav-link #{'is-active' if friends_active}" %>
 
         <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
           <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if reports_group_active %>">REPORTES</summary>
