@@ -46,7 +46,7 @@ module NativeErrorHandling
     @marker = marker
     @details = Rails.env.development? ? "Code: #{code}" : nil
 
-    render "errors/mobile_error", status: code, layout: false
+    render "errors/mobile_error", status: code, layout: false, formats: [:html]
   end
 
   def render_validation_errors(entity)

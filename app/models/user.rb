@@ -24,8 +24,11 @@ class User < ApplicationRecord
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
+  before_validation :generate_invite_token
+
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true, length: { minimum: 6 }, if: -> { new_record? || password.present? }
+  validates :invite_token, presence: true, uniqueness: true
 
   def display_name_or_email
     display_name.presence || email_address
@@ -59,4 +62,18 @@ class User < ApplicationRecord
             .where(chat_room_members: { user_id: other_user.id })
             .first
   end
+
+  def invite_url
+    Rails.application.routes.url_helpers.user_invite_url(token: invite_token)
+  end
+
+  def ensure_invite_token!
+    return if invite_token.present?
+    update_column(:invite_token, SecureRandom.urlsafe_base64(16))
+  end
+
+  private
+    def generate_invite_token
+      self.invite_token ||= SecureRandom.urlsafe_base64(16)
+    end
 end

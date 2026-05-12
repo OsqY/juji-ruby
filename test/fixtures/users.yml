@@ -1,9 +1,13 @@
 <% password_digest = BCrypt::Password.create("password") %>
+<% invite_token_one = SecureRandom.urlsafe_base64(16) %>
+<% invite_token_two = SecureRandom.urlsafe_base64(16) %>
 
 one:
   email_address: one@example.com
   password_digest: <%= password_digest %>
+  invite_token: <%= invite_token_one %>
 
 two:
   email_address: two@example.com
   password_digest: <%= password_digest %>
+  invite_token: <%= invite_token_two %>

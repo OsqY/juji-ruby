@@ -16,7 +16,7 @@ module NativeResponseOptimization
     return unless hotwire_native_client?
 
     # Configurar respuestas más eficientes para Hotwire Native
-    request.variant.touch(:native)
+    # La selección de layout móvil ya se maneja en ApplicationController#set_layout
   end
 
   def ensure_native_headers

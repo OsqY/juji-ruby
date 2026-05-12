@@ -110,16 +110,14 @@
       <% reports_group_active = reports_active || report_new_active %>
       <% productivity_group_active = projects_active || habits_active || shopping_active %>
       <% finance_group_active = finance_active || finance_new_active || budgets_active %>
+      <% social_group_active = chat_active || friends_active %>
+      <% tools_group_active = forms_active || whiteboards_active %>
       <% account_group_active = login_active || register_active || recovery_active %>
 
       <div class="nav-primary" role="navigation" aria-label="Secciones principales">
         <%= link_to "DASHBOARD", dashboard_path, class: "nav-link #{'is-active' if dashboard_active}" %>
         <%= link_to "BUSQUEDA", search_path, class: "nav-link #{'is-active' if current_page?(search_path)}" %>
         <%= link_to t("guide.nav"), guide_path, class: "nav-link #{'is-active' if guide_active}" %>
-        <%= link_to "FORMULARIOS", anonymous_forms_path, class: "nav-link #{'is-active' if forms_active}" %>
-        <%= link_to "PIZARRAS", whiteboards_path, class: "nav-link #{'is-active' if whiteboards_active}" %>
-        <%= link_to "CHAT", chat_rooms_path, class: "nav-link #{'is-active' if chat_active}" %>
-        <%= link_to "AMIGOS", friends_path, class: "nav-link #{'is-active' if friends_active}" %>
 
         <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
           <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if reports_group_active %>">REPORTES</summary>
@@ -144,6 +142,22 @@
             <%= link_to "VER FINANZAS", transactions_path, class: "nav-link #{'is-active' if finance_active}", role: "menuitem" %>
             <%= link_to "NUEVA TRANSACCIÓN", new_transaction_path, class: "nav-link nav-link-create #{'is-active' if finance_new_active}", role: "menuitem" %>
             <%= link_to "PRESUPUESTOS", budgets_path, class: "nav-link #{'is-active' if budgets_active}", role: "menuitem" %>
+          </div>
+        </details>
+
+        <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
+          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if tools_group_active %>">HERRAMIENTAS</summary>
+          <div class="nav-dropdown-menu" role="menu" aria-label="Sección herramientas">
+            <%= link_to "FORMULARIOS", anonymous_forms_path, class: "nav-link #{'is-active' if forms_active}", role: "menuitem" %>
+            <%= link_to "PIZARRAS", whiteboards_path, class: "nav-link #{'is-active' if whiteboards_active}", role: "menuitem" %>
+          </div>
+        </details>
+
+        <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
+          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if social_group_active %>">SOCIAL</summary>
+          <div class="nav-dropdown-menu" role="menu" aria-label="Sección social">
+            <%= link_to "CHAT", chat_rooms_path, class: "nav-link #{'is-active' if chat_active}", role: "menuitem" %>
+            <%= link_to "AMIGOS", friends_path, class: "nav-link #{'is-active' if friends_active}", role: "menuitem" %>
           </div>
         </details>
       </div>

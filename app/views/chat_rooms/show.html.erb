@@ -39,7 +39,7 @@
       <% if @chat_room.can_speak?(current_user) %>
         <%= form_with model: [@chat_room, Message.new],
                       url: chat_room_messages_path(@chat_room),
-                      data: { action: "submit->chat-room#submit" } do |f| %>
+                      data: { action: "submit->chat-room#submit", turbo: false } do |f| %>
           <div style="display: flex; gap: 0.5rem;">
             <%= f.text_field :content,
                 placeholder: "Escribe un mensaje...",

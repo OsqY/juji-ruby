@@ -5,15 +5,25 @@
   </div>
 
   <div style="margin-bottom: 2rem; padding: 1.5rem; border: 3px solid var(--ink); background: var(--paper);">
-    <h2 style="font-size: 1.1rem; font-weight: 700; margin: 0 0 1rem; text-transform: uppercase;">Agregar amigo</h2>
-    <%= form_with url: friends_path, method: :post, style: "display: flex; gap: 0.5rem; flex-wrap: wrap;" do |f| %>
-      <%= f.email_field :email,
-          placeholder: "Correo electrónico",
-          required: true,
-          style: "flex: 1; min-width: 200px; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); font-size: 1rem;"
-      %>
-      <%= f.submit "ENVIAR SOLICITUD", class: "btn-chaos", style: "padding: 0.75rem 1.5rem;" %>
-    <% end %>
+    <h2 style="font-size: 1.1rem; font-weight: 700; margin: 0 0 1rem; text-transform: uppercase;">Tu link de invitación</h2>
+    <p style="margin: 0 0 1rem; color: #666; font-size: 0.9rem;">Comparte este link para que otros te envíen una solicitud de amistad.</p>
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <input
+        type="text"
+        id="invite-link"
+        value="<%= current_user.invite_url %>"
+        readonly
+        style="flex: 1; min-width: 200px; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); font-size: 1rem;"
+      />
+      <button
+        type="button"
+        class="btn-chaos"
+        style="padding: 0.75rem 1.5rem;"
+        onclick="navigator.clipboard.writeText(document.getElementById('invite-link').value); this.textContent='COPIADO'; setTimeout(()=>this.textContent='COPIAR',1500)"
+      >
+        COPIAR
+      </button>
+    </div>
   </div>
 
   <% if @friends.any? %>
@@ -46,7 +56,7 @@
     <div style="text-align: center; padding: 3rem 1rem;">
       <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
       <p style="font-size: 1.1rem; color: #666;">Aún no tienes amigos</p>
-      <p style="color: #999; margin-top: 0.5rem;">Envía una solicitud usando el correo electrónico</p>
+      <p style="color: #999; margin-top: 0.5rem;">Comparte tu link de invitación para conectar con otros</p>
     </div>
   <% end %>
 </div>

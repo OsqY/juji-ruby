@@ -48,7 +48,7 @@ Rails.application.routes.draw do
     resources :messages, only: [:create], module: :chat_rooms
   end
 
-  resources :friends, only: [:index, :create, :destroy] do
+  resources :friends, only: [:index, :destroy] do
     collection do
       get :pending
       post :accept
@@ -62,6 +62,7 @@ Rails.application.routes.draw do
   end
 
   get "/friends/accept/:token", to: "friends#accept_invitation", as: :friend_invitation
+  get "/invite/:token", to: "friends#accept_user_invite", as: :user_invite
 
   scope "/w/:token", as: :public_whiteboard do
     get "/", to: "whiteboards#public_show"

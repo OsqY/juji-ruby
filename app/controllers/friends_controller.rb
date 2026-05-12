@@ -5,6 +5,7 @@ class FriendsController < ApplicationController
     @friends = current_user.friends
     @sent_requests = current_user.friendships_requested.pending
     @received_requests = current_user.friendships_received.pending
+    current_user.ensure_invite_token!
   end
 
   def pending
@@ -12,32 +13,35 @@ class FriendsController < ApplicationController
     @received_requests = current_user.friendships_received.pending.includes(:requester)
   end
 
-  def create
-    addressee = User.find_by(email_address: params[:email]&.strip&.downcase)
+  def accept_user_invite
+    inviter = User.find_by!(invite_token: params[:token])
 
-    if addressee.nil?
-      redirect_to friends_path, alert: "Usuario no encontrado."
+    unless authenticated?
+      session[:after_login_redirect] = user_invite_path(token: params[:token])
+      redirect_to new_session_path, alert: "Inicia sesión para enviar una solicitud de amistad."
       return
     end
 
-    if addressee == current_user
+    if inviter == current_user
       redirect_to friends_path, alert: "No puedes enviarte una solicitud a ti mismo."
       return
     end
 
-    if current_user.friend_with?(addressee)
-      redirect_to friends_path, alert: "Ya son amigos."
+    if current_user.friend_with?(inviter)
+      redirect_to friends_path, notice: "Ya eres amigo de #{inviter.display_name_or_email}."
       return
     end
 
-    existing = current_user.friendship_with(addressee)
+    existing = current_user.friendship_with(inviter)
     if existing&.pending?
-      redirect_to friends_path, alert: "Ya existe una solicitud pendiente."
+      redirect_to friends_path, notice: "Ya existe una solicitud pendiente con #{inviter.display_name_or_email}."
       return
     end
 
-    @friendship = current_user.friendships_requested.create!(addressee: addressee)
-    redirect_to friends_path, notice: "Solicitud enviada. Link de invitación: #{@friendship.invitation_url}"
+    current_user.friendships_requested.create!(addressee: inviter)
+    redirect_to friends_path, notice: "Solicitud enviada a #{inviter.display_name_or_email}."
+  rescue ActiveRecord::RecordNotFound
+    redirect_to friends_path, alert: "Link de invitación no válido."
   rescue ActiveRecord::RecordInvalid => e
     redirect_to friends_path, alert: "No se pudo enviar la solicitud: #{e.message}"
   end

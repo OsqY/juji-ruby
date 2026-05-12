@@ -14,10 +14,9 @@ class MobileInteractionTest < ActionDispatch::IntegrationTest
       password: 'password'
     }
     
-    # Simular solicitud nativa con Turbo
+    # Simular solicitud nativa
     get dashboard_path, headers: {
-      'User-Agent' => 'TurboNative/1.0',
-      'Accept' => 'text/vnd.turbo-stream.html'
+      'User-Agent' => 'TurboNative/1.0'
     }
     
     assert_response :success
@@ -86,15 +85,16 @@ class MobileInteractionTest < ActionDispatch::IntegrationTest
       password: 'password'
     }
     
-    # Intentar crear transacción sin datos requeridos
+    # Intentar crear transacción con datos inválidos (vacíos)
     post transactions_path, params: {
-      transaction: {}
+      transaction: { amount: '', description: '', category: '', date: '', transaction_type: '' }
     }, headers: {
       'User-Agent' => 'TurboNative/1.0'
     }
     
     assert response.status == 422 ||
-           response.body.include?('validation'),
+           response.body.include?('Datos Incompletos') ||
+           response.body.include?('Validación'),
       "Validation errors not handled properly"
   end
 
@@ -109,7 +109,9 @@ class MobileInteractionTest < ActionDispatch::IntegrationTest
       @user.transactions.create!(
         amount: 10 + i,
         category: 'food',
-        date: Date.today - i.days
+        date: Date.today - i.days,
+        description: "Compra #{i}",
+        transaction_type: 'expense'
       )
     end
     
