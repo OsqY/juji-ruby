@@ -25,7 +25,7 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 # Export functionality
-gem "prawn", "~> 2.4"
+gem "prawn", "~> 2.5"
 gem "csv"
 gem "matrix"
 
