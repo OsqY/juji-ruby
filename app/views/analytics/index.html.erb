@@ -1,14 +1,14 @@
 <div class="chaotic-container">
   <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
-    <h1 style="font-size: 3.4rem;">ANALÍTICAS<br>JUJI</h1>
-    <p style="font-weight: 700; opacity: 0.6; text-align: right;">Métricas de gastos, hábitos y proyectos</p>
+    <h1 style="font-size: 3.4rem;"><%= t('.title') %><br>JUJI</h1>
+    <p style="font-weight: 700; opacity: 0.6; text-align: right;"><%= t('.subtitle') %></p>
   </div>
 
   <div class="report-grid" style="margin-bottom: 3rem;">
     <!-- Resumen de gastos -->
     <div class="report-column">
       <div class="report-section-block">
-        <span class="section-label" style="background: var(--expense-text); color: var(--expense-bg);">GASTOS ÚLTIMOS 30 DÍAS</span>
+        <span class="section-label" style="background: var(--expense-text); color: var(--expense-bg);"><%= t('.expenses_30d') %></span>
         <div style="font-size: 2.8rem; font-weight: 900; margin-top: 1rem; letter-spacing: -1px;">
           L. <%= number_with_precision(@expense_summary[:total], precision: 2) %>
         </div>
@@ -26,19 +26,19 @@
     <!-- Estado de proyectos -->
     <div class="report-column">
       <div class="report-section-block">
-        <span class="section-label" style="background: var(--accent-blue); color: white;">ESTADO DE PROYECTOS</span>
+        <span class="section-label" style="background: var(--accent-blue); color: white;"><%= t('.project_status') %></span>
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem;">
           <div style="text-align: center;">
             <div style="font-size: 2.2rem; font-weight: 900;"><%= @project_status[:active] %></div>
-            <div style="font-size: 0.7rem; font-weight: 900; opacity: 0.5; margin-top: 0.3rem;">ACTIVOS</div>
+            <div style="font-size: 0.7rem; font-weight: 900; opacity: 0.5; margin-top: 0.3rem;"><%= t('.active') %></div>
           </div>
           <div style="text-align: center;">
             <div style="font-size: 2.2rem; font-weight: 900;"><%= @project_status[:completed] %></div>
-            <div style="font-size: 0.7rem; font-weight: 900; opacity: 0.5; margin-top: 0.3rem;">COMPLETADOS</div>
+            <div style="font-size: 0.7rem; font-weight: 900; opacity: 0.5; margin-top: 0.3rem;"><%= t('.completed') %></div>
           </div>
           <div style="text-align: center;">
             <div style="font-size: 2.2rem; font-weight: 900; color: var(--expense-text);"><%= @project_status[:overdue] %></div>
-            <div style="font-size: 0.7rem; font-weight: 900; opacity: 0.5; margin-top: 0.3rem;">VENCIDOS</div>
+            <div style="font-size: 0.7rem; font-weight: 900; opacity: 0.5; margin-top: 0.3rem;"><%= t('.overdue') %></div>
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@
     <!-- Progreso de proyectos -->
     <div class="report-column">
       <div class="report-section-block">
-        <span class="section-label" style="background: var(--ink); color: var(--paper);">PROGRESO DE PROYECTOS</span>
+        <span class="section-label" style="background: var(--ink); color: var(--paper);"><%= t('.project_progress') %></span>
         <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
           <% @project_progress.first(5).each do |project| %>
             <div>
@@ -58,7 +58,7 @@
               <div style="width: 100%; height: 12px; background: var(--muted-gray); border: 3px solid var(--ink); overflow: hidden;">
                 <div style="width: <%= project[:progress] %>%; height: 100%; background: var(--highlight); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);"></div>
               </div>
-              <div style="font-size: 0.7rem; font-weight: 700; opacity: 0.5; margin-top: 0.2rem;"><%= project[:completed] %>/<%= project[:total] %> tareas</div>
+              <div style="font-size: 0.7rem; font-weight: 700; opacity: 0.5; margin-top: 0.2rem;"><%= project[:completed] %>/<%= project[:total] %> <%= t('.tasks') %></div>
             </div>
           <% end %>
         </div>
@@ -73,42 +73,46 @@
     data-analytics-chart-habits-value="<%= @habit_completion.to_json %>"
     data-analytics-chart-alerts-value="<%= @alerts_trend.to_json %>"
     data-analytics-chart-balance-value="<%= @weekly_balance.to_json %>"
+    data-i18n-monthly-spending="<%= t('analytics.charts.monthly_spending') %>"
+    data-i18n-habit-completion="<%= t('analytics.charts.habit_completion') %>"
+    data-i18n-alerts-generated="<%= t('analytics.charts.alerts_generated') %>"
+    data-i18n-weekly-balance="<%= t('analytics.charts.weekly_balance') %>"
   >
-    <h2 class="section-title" style="margin-bottom: 2rem; border-bottom: 6px solid var(--ink); display: inline-block;">TENDENCIAS</h2>
+    <h2 class="section-title" style="margin-bottom: 2rem; border-bottom: 6px solid var(--ink); display: inline-block;"><%= t('.trends') %></h2>
 
     <div class="report-grid" style="margin-bottom: 2rem;">
-      <div class="report-column" style="grid-column: span 6;">
+      <div class="report-column">
         <div class="report-section-block">
-          <span class="section-label">GASTO MENSUAL</span>
+          <span class="section-label"><%= t('.monthly_spending') %></span>
           <div style="height: 300px; margin-top: 1rem; background: var(--paper); border: 3px solid var(--ink); padding: 0.5rem;">
-            <canvas data-analytics-chart-target="spendingCanvas"></canvas>
+            <canvas data-analytics-chart-target="spendingCanvas" aria-label="<%= t('.chart_aria.spending') %>"></canvas>
           </div>
         </div>
       </div>
 
-      <div class="report-column" style="grid-column: span 6;">
+      <div class="report-column">
         <div class="report-section-block">
-          <span class="section-label">CUMPLIMIENTO DE HÁBITOS</span>
+          <span class="section-label"><%= t('.habit_completion') %></span>
           <div style="height: 300px; margin-top: 1rem; background: var(--paper); border: 3px solid var(--ink); padding: 0.5rem;">
-            <canvas data-analytics-chart-target="habitsCanvas"></canvas>
+            <canvas data-analytics-chart-target="habitsCanvas" aria-label="<%= t('.chart_aria.habits') %>"></canvas>
           </div>
         </div>
       </div>
 
-      <div class="report-column" style="grid-column: span 6;">
+      <div class="report-column">
         <div class="report-section-block">
-          <span class="section-label">ALERTAS EN EL TIEMPO</span>
+          <span class="section-label"><%= t('.alerts_over_time') %></span>
           <div style="height: 300px; margin-top: 1rem; background: var(--paper); border: 3px solid var(--ink); padding: 0.5rem;">
-            <canvas data-analytics-chart-target="alertsCanvas"></canvas>
+            <canvas data-analytics-chart-target="alertsCanvas" aria-label="<%= t('.chart_aria.alerts') %>"></canvas>
           </div>
         </div>
       </div>
 
-      <div class="report-column" style="grid-column: span 6;">
+      <div class="report-column">
         <div class="report-section-block">
-          <span class="section-label">BALANCE SEMANAL</span>
+          <span class="section-label"><%= t('.weekly_balance') %></span>
           <div style="height: 300px; margin-top: 1rem; background: var(--paper); border: 3px solid var(--ink); padding: 0.5rem;">
-            <canvas data-analytics-chart-target="balanceCanvas"></canvas>
+            <canvas data-analytics-chart-target="balanceCanvas" aria-label="<%= t('.chart_aria.balance') %>"></canvas>
           </div>
         </div>
       </div>

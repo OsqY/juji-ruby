@@ -2,13 +2,18 @@ import { Controller } from "@hotwire/stimulus"
 
 export default class extends Controller {
   static targets = ["input", "results", "form"]
-  static values = { debounceDelay: 300 }
+  static values = { debounceDelay: 300, searchPath: String, userId: String }
 
   connect() {
     this.setupKeyboardShortcut()
     this.selectedIndex = -1
     this.MAX_HISTORY = 10
-    this.STORAGE_KEY = "search_history"
+    this.STORAGE_KEY = `search_history_${this.userIdValue || "guest"}`
+    this.i18n = {
+      recentSearches: this.element.dataset.i18nRecentSearches || "Busquedas Recientes",
+      noResults: this.element.dataset.i18nNoResults || "No se encontraron resultados para",
+      untitled: this.element.dataset.i18nUntitled || "Sin titulo"
+    }
   }
 
   setupKeyboardShortcut() {
@@ -32,7 +37,7 @@ export default class extends Controller {
         return
       }
 
-      fetch(`/search/results?q=${encodeURIComponent(query)}`, {
+      fetch(`${this.searchPathValue || "/search/results"}?q=${encodeURIComponent(query)}`, {
         headers: { "Accept": "application/json" }
       })
         .then(response => response.json())
@@ -53,7 +58,7 @@ export default class extends Controller {
     }
 
     let html = '<div class="search-dropdown"><div class="search-group">'
-      html += '<h3 class="search-group-title">Busquedas Recientes</h3>'
+      html += `<h3 class="search-group-title">${this.i18n.recentSearches}</h3>`
     
     history.forEach((query, index) => {
       html += `
@@ -90,7 +95,7 @@ export default class extends Controller {
     if (totalResults === 0) {
       this.resultsTarget.innerHTML = `
         <div class="search-no-results">
-          <p>No se encontraron resultados para "<strong>${this.escapeHtml(query)}</strong>"</p>
+          <p>${this.i18n.noResults} "<strong>${this.escapeHtml(query)}</strong>"</p>
         </div>
       `
       this.resultsTarget.style.display = 'block'
@@ -128,12 +133,12 @@ export default class extends Controller {
     }
 
     const icon = icons[modelType] || "DOC"
-    const title = this.escapeHtml(record.title || record.name || "Sin titulo")
+    const title = this.escapeHtml(record.title || record.name || this.i18n.untitled)
     const subtitle = this.escapeHtml(record.subtitle || record.description || "")
 
     return `
       <a href="${record.url}" class="search-result-item" data-model="${modelType}" data-index="${index}">
-        <span class="search-result-icon">${icon}</span>
+        <span class="search-result-icon" aria-hidden="true">${icon}</span>
         <div class="search-result-content">
           <div class="search-result-title">${title}</div>
           ${subtitle ? `<div class="search-result-subtitle">${subtitle}</div>` : ''}

@@ -5,56 +5,65 @@
   data-whiteboard-token-value="<%= @whiteboard.token %>"
   data-whiteboard-user-id-value="<%= current_user&.id || 'guest' %>"
   data-whiteboard-bg-value="<%= @whiteboard.background_color %>"
-  data-whiteboard-strokes-value="<%= @strokes.map { |s| { stroke: s.stroke_data, user_id: s.user_id, stroke_id: s.id } }.to_json %>">
+  data-whiteboard-strokes-value="<%= @strokes.map { |s| { stroke: s.stroke_data, user_id: s.user_id, stroke_id: s.id } }.to_json %>"
+  data-i18n-connecting="<%= t('.connecting') %>"
+  data-i18n-connected="<%= t('.connected') %>"
+  data-i18n-disconnected="<%= t('.disconnected') %>"
+  data-i18n-denied="<%= t('.denied') %>"
+  data-i18n-clear-confirm="<%= t('.clear_confirm') %>"
+  data-i18n-copied="<%= t('.copied') %>"
+  data-i18n-export-filename="<%= t('whiteboards.js.export_filename') %>">
 
   <div class="whiteboard-toolbar">
     <div class="whiteboard-toolbar-group">
       <span class="whiteboard-title"><%= @whiteboard.name.upcase %></span>
-      <span class="whiteboard-meta"><%= @whiteboard.whiteboard_strokes.count %> TRAZOS</span>
+      <span class="whiteboard-meta"><%= t('.strokes_count', count: @whiteboard.whiteboard_strokes.count) %></span>
     </div>
 
     <div class="whiteboard-toolbar-group whiteboard-tools">
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="pen" data-action="click->whiteboard#setTool" title="Lápiz (1)"><i data-lucide="pencil"></i></button>
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="pencil" data-action="click->whiteboard#setTool" title="Pincel áspero (P)"><i data-lucide="wand-2"></i></button>
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="line" data-action="click->whiteboard#setTool" title="Línea (2)"><i data-lucide="minus" class="tool-icon-line"></i></button>
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="arrow" data-action="click->whiteboard#setTool" title="Flecha (3)"><i data-lucide="arrow-right"></i></button>
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="rect" data-action="click->whiteboard#setTool" title="Rectángulo (4)"><i data-lucide="square"></i></button>
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="circle" data-action="click->whiteboard#setTool" title="Círculo (5)"><i data-lucide="circle"></i></button>
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="triangle" data-action="click->whiteboard#setTool" title="Triángulo (T)"><i data-lucide="triangle"></i></button>
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="star" data-action="click->whiteboard#setTool" title="Estrella (S)"><i data-lucide="star"></i></button>
-      <button type="button" class="btn-chaos btn-tool btn-tool-eraser" data-whiteboard-target="toolBtn" data-tool="eraser" data-action="click->whiteboard#setTool" title="Goma (6)"><i data-lucide="eraser"></i></button>
-      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="select" data-action="click->whiteboard#setTool" title="Seleccionar (7 / V)"><i data-lucide="mouse-pointer-2"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="pen" data-action="click->whiteboard#setTool" title="<%= t('.tooltips.pen') %>"><i data-lucide="pencil"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="pencil" data-action="click->whiteboard#setTool" title="<%= t('.tooltips.pencil') %>"><i data-lucide="wand-2"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="line" data-action="click->whiteboard#setTool" title="<%= t('.tooltips.line') %>"><i data-lucide="minus" class="tool-icon-line"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="arrow" data-action="click->whiteboard#setTool" title="<%= t('.tooltips.arrow') %>"><i data-lucide="arrow-right"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="rect" data-action="click->whiteboard#setTool" title="<%= t('.tooltips.rect') %>"><i data-lucide="square"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="circle" data-action="click->whiteboard#setTool" title="<%= t('.tooltips.circle') %>"><i data-lucide="circle"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="triangle" data-action="click->whiteboard#setTool" title="<%= t('.tooltips.triangle') %>"><i data-lucide="triangle"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="star" data-action="click->whiteboard#setTool" title="<%= t('.tooltips.star') %>"><i data-lucide="star"></i></button>
+      <button type="button" class="btn-chaos btn-tool btn-tool-eraser" data-whiteboard-target="toolBtn" data-tool="eraser" data-action="click->whiteboard#setTool" title="<%= t('.tooltips.eraser') %>"><i data-lucide="eraser"></i></button>
+      <button type="button" class="btn-chaos btn-tool" data-whiteboard-target="toolBtn" data-tool="select" data-action="click->whiteboard#setTool" title="<%= t('.tooltips.select') %>"><i data-lucide="mouse-pointer-2"></i></button>
     </div>
 
     <div class="whiteboard-toolbar-group whiteboard-options">
       <input type="color" data-whiteboard-target="colorPicker" data-action="change->whiteboard#setColor" value="#000000" class="whiteboard-color">
       <div class="whiteboard-width">
-        <label>GROSOR</label>
+        <label><%= t('.thickness') %></label>
         <input type="range" data-whiteboard-target="widthSlider" data-action="change->whiteboard#setWidth" min="1" max="20" value="3">
       </div>
     </div>
 
     <div class="whiteboard-toolbar-group whiteboard-actions">
-      <button type="button" class="btn-chaos btn-tool" data-action="click->whiteboard#undo">DESHACER</button>
-      <button type="button" class="btn-chaos btn-tool" data-action="click->whiteboard#redo">REHACER</button>
-      <button type="button" class="btn-chaos btn-tool btn-tool-danger" data-action="click->whiteboard#clear">LIMPIAR</button>
-      <button type="button" class="btn-chaos btn-tool" data-action="click->whiteboard#copyLink">COPIAR LINK</button>
-      <button type="button" class="btn-chaos btn-tool" data-action="click->whiteboard#exportPng">EXPORTAR PNG</button>
+      <button type="button" class="btn-chaos btn-tool" data-action="click->whiteboard#undo"><%= t('.undo') %></button>
+      <button type="button" class="btn-chaos btn-tool" data-action="click->whiteboard#redo"><%= t('.redo') %></button>
+      <button type="button" class="btn-chaos btn-tool btn-tool-danger" data-action="click->whiteboard#clear"><%= t('.clear') %></button>
+      <button type="button" class="btn-chaos btn-tool" data-action="click->whiteboard#copyLink"><%= t('.copy_link') %></button>
+      <button type="button" class="btn-chaos btn-tool" data-action="click->whiteboard#exportPng"><%= t('.export_png') %></button>
       <% if @whiteboard.user_id == current_user&.id %>
-        <%= button_to "ELIMINAR", whiteboard_path(@whiteboard), method: :delete, class: "delete-btn-link btn-tool", data: { turbo_confirm: "¿Eliminar esta pizarra?" } %>
+        <%= button_to t('common.delete'), whiteboard_path(@whiteboard), method: :delete, class: "delete-btn-link btn-tool", data: { turbo_confirm: t('.delete_confirm') } %>
       <% end %>
     </div>
 
     <div class="whiteboard-toolbar-group">
-      <span data-whiteboard-target="status" class="whiteboard-status">Conectando...</span>
+      <span data-whiteboard-target="status" class="whiteboard-status"><%= t('.connecting') %></span>
       <span data-whiteboard-target="zoomDisplay" class="whiteboard-zoom">100%</span>
     </div>
   </div>
 
   <div class="whiteboard-canvas-area">
     <canvas data-whiteboard-target="canvas"
+      aria-label="<%= t('.canvas_aria_label') %>"
+      role="application"
       data-action="mousedown->whiteboard#startDrawing mousemove->whiteboard#draw mouseup->whiteboard#stopDrawing mouseleave->whiteboard#stopDrawing wheel->whiteboard#zoom touchstart->whiteboard#startDrawing touchmove->whiteboard#draw touchend->whiteboard#stopDrawing">
     </canvas>
-    <canvas data-whiteboard-target="overlay" class="whiteboard-overlay"></canvas>
+    <canvas data-whiteboard-target="overlay" class="whiteboard-overlay" aria-hidden="true"></canvas>
   </div>
 </div>

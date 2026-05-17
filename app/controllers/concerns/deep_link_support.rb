@@ -32,7 +32,7 @@ module DeepLinkSupport
       # Usar Turbo para navegar
       respond_to do |format|
         format.html do
-          redirect_to link_info[:path], params: link_info[:params]
+          redirect_to url_for(link_info[:path], **(link_info[:params] || {}))
         end
 
         format.turbo_stream do

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <style>
+      body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+      .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+      .header { background: #1A1A1A; color: white; padding: 20px; text-align: center; }
+      .stat { background: #F0F0F0; padding: 15px; margin: 10px 0; border-radius: 5px; }
+      .stat-number { font-size: 24px; font-weight: bold; color: #0055FF; }
+      .footer { text-align: center; margin-top: 30px; font-size: 12px; color: #666; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Tu Resumen Semanal</h1>
+        <p><%= @week_start.strftime('%d/%m') %> - <%= @week_end.strftime('%d/%m/%Y') %></p>
+      </div>
+
+      <p>Hola <%= @user.display_name_or_email %>,</p>
+      <p>Aquí está tu resumen de la semana:</p>
+
+      <div class="stat">
+        <div class="stat-number"><%= @weekly_reports %></div>
+        <div>Reportes enviados</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">L. <%= number_with_precision(@weekly_expenses, precision: 2) %></div>
+        <div>Gastos de la semana</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number"><%= @weekly_habits %></div>
+        <div>Hábitos completados</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number"><%= @completed_tasks %></div>
+        <div>Tareas completadas</div>
+      </div>
+
+      <% if @streaks.any? %>
+        <h3>Tus rachas activas:</h3>
+        <% @streaks.each do |streak| %>
+          <p>🔥 <%= streak.streak_type.humanize %>: <%= streak.current_streak %> días</p>
+        <% end %>
+      <% end %>
+
+      <p><a href="<%= dashboard_url %>">Ver dashboard</a></p>
+
+      <div class="footer">
+        <p>Juji - Control personal diario</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -34,6 +34,7 @@
       <% projects_active = controller_name == "projects" %>
       <% habits_active = controller_name == "habits" %>
       <% budgets_active = controller_name == "budgets" %>
+      <% monthly_goals_active = controller_name == "monthly_goals" %>
       <% shopping_active = controller_name == "shopping_items" %>
       <% forms_active = controller_name == "anonymous_forms" %>
       <% whiteboards_active = controller_name == "whiteboards" %>
@@ -47,7 +48,7 @@
 
       <div class="nav-brand">
         <%= link_to "JUJI", root_path, class: "brand-mark" %>
-        <span class="brand-tag">archivo personal</span>
+        <span class="brand-tag"><%= t('.brand_tag') %></span>
       </div>
 
       <!-- Global Search Bar -->
@@ -55,6 +56,11 @@
         class="nav-search-wrapper" 
         data-controller="search" 
         data-action="keydown->search#handleKeydown"
+        data-search-search-path-value="<%= search_results_path %>"
+        data-search-user-id-value="<%= current_user&.id %>"
+        data-i18n-recent-searches="<%= t('search.js.recent_searches') %>"
+        data-i18n-no-results="<%= t('search.js.no_results') %>"
+        data-i18n-untitled="<%= t('search.js.untitled') %>"
         style="
           padding: 0.75rem;
           border-bottom: 1px solid var(--border-color, #eee);
@@ -65,11 +71,15 @@
           action="<%= search_path %>" 
           style="position: relative; display: flex; gap: 0.5rem;"
           data-search-target="form"
+          role="search"
+          aria-label="<%= t('.aria.global_search') %>"
         >
+          <label for="global-search" class="visually-hidden"><%= t('.aria.search_input') %></label>
           <input 
+            id="global-search"
             type="text" 
             name="q" 
-            placeholder="Buscar... (Cmd+K)" 
+            placeholder="<%= t('.search.placeholder') %>" 
             class="nav-search-input"
             data-search-target="input"
             data-action="input->search#search blur->search#hideResults"
@@ -83,6 +93,7 @@
               color: var(--ink);
               transition: all 0.2s ease;
             "
+            aria-label="<%= t('.aria.search_app') %>"
           />
         </form>
         
@@ -109,98 +120,99 @@
 
       <% reports_group_active = reports_active || report_new_active %>
       <% productivity_group_active = projects_active || habits_active || shopping_active %>
-      <% finance_group_active = finance_active || finance_new_active || budgets_active %>
+      <% finance_group_active = finance_active || finance_new_active || budgets_active || monthly_goals_active %>
       <% social_group_active = chat_active || friends_active %>
       <% tools_group_active = forms_active || whiteboards_active %>
       <% account_group_active = login_active || register_active || recovery_active %>
 
-      <div class="nav-primary" role="navigation" aria-label="Secciones principales">
-        <%= link_to "DASHBOARD", dashboard_path, class: "nav-link #{'is-active' if dashboard_active}" %>
-        <%= link_to "BUSQUEDA", search_path, class: "nav-link #{'is-active' if current_page?(search_path)}" %>
+      <div class="nav-primary" role="navigation" aria-label="<%= t('.aria.main_sections') %>">
+        <%= link_to t('.nav.dashboard'), dashboard_path, class: "nav-link #{'is-active' if dashboard_active}" %>
+        <%= link_to t('.nav.search'), search_path, class: "nav-link #{'is-active' if current_page?(search_path)}" %>
         <%= link_to t("guide.nav"), guide_path, class: "nav-link #{'is-active' if guide_active}" %>
 
         <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
-          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if reports_group_active %>">REPORTES</summary>
-          <div class="nav-dropdown-menu" role="menu" aria-label="Sección reportes">
-            <%= link_to "VER REPORTES", daily_reports_path, class: "nav-link #{'is-active' if reports_active}", role: "menuitem" %>
-            <%= link_to "NUEVO REPORTE", new_daily_report_path, class: "nav-link nav-link-create #{'is-active' if report_new_active}", role: "menuitem" %>
+          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if reports_group_active %>"><%= t('.nav.reports') %></summary>
+          <div class="nav-dropdown-menu" role="menu" aria-label="<%= t('.aria.section_reports') %>">
+            <%= link_to t('.nav.view_reports'), daily_reports_path, class: "nav-link #{'is-active' if reports_active}", role: "menuitem" %>
+            <%= link_to t('.nav.new_report'), new_daily_report_path, class: "nav-link nav-link-create #{'is-active' if report_new_active}", role: "menuitem" %>
           </div>
         </details>
 
         <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
-          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if productivity_group_active %>">PRODUCTIVIDAD</summary>
-          <div class="nav-dropdown-menu" role="menu" aria-label="Sección productividad">
-            <%= link_to "PROYECTOS", projects_path, class: "nav-link #{'is-active' if projects_active}", role: "menuitem" %>
-            <%= link_to "HÁBITOS", habits_path, class: "nav-link #{'is-active' if habits_active}", role: "menuitem" %>
-            <%= link_to "COMPRAS", shopping_items_path, class: "nav-link #{'is-active' if shopping_active}", role: "menuitem" %>
+          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if productivity_group_active %>"><%= t('.nav.productivity') %></summary>
+          <div class="nav-dropdown-menu" role="menu" aria-label="<%= t('.aria.section_productivity') %>">
+            <%= link_to t('.nav.projects'), projects_path, class: "nav-link #{'is-active' if projects_active}", role: "menuitem" %>
+            <%= link_to t('.nav.habits'), habits_path, class: "nav-link #{'is-active' if habits_active}", role: "menuitem" %>
+            <%= link_to t('.nav.shopping'), shopping_items_path, class: "nav-link #{'is-active' if shopping_active}", role: "menuitem" %>
           </div>
         </details>
 
         <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
-          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if finance_group_active %>">FINANZAS</summary>
-          <div class="nav-dropdown-menu" role="menu" aria-label="Sección finanzas">
-            <%= link_to "VER FINANZAS", transactions_path, class: "nav-link #{'is-active' if finance_active}", role: "menuitem" %>
-            <%= link_to "NUEVA TRANSACCIÓN", new_transaction_path, class: "nav-link nav-link-create #{'is-active' if finance_new_active}", role: "menuitem" %>
-            <%= link_to "PRESUPUESTOS", budgets_path, class: "nav-link #{'is-active' if budgets_active}", role: "menuitem" %>
+          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if finance_group_active %>"><%= t('.nav.finance') %></summary>
+          <div class="nav-dropdown-menu" role="menu" aria-label="<%= t('.aria.section_finance') %>">
+            <%= link_to t('.nav.view_finance'), transactions_path, class: "nav-link #{'is-active' if finance_active}", role: "menuitem" %>
+            <%= link_to t('.nav.new_transaction'), new_transaction_path, class: "nav-link nav-link-create #{'is-active' if finance_new_active}", role: "menuitem" %>
+            <%= link_to t('.nav.budgets'), budgets_path, class: "nav-link #{'is-active' if budgets_active}", role: "menuitem" %>
+            <%= link_to t('.nav.goals'), monthly_goals_path, class: "nav-link #{'is-active' if monthly_goals_active}", role: "menuitem" %>
           </div>
         </details>
 
         <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
-          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if tools_group_active %>">HERRAMIENTAS</summary>
-          <div class="nav-dropdown-menu" role="menu" aria-label="Sección herramientas">
-            <%= link_to "FORMULARIOS", anonymous_forms_path, class: "nav-link #{'is-active' if forms_active}", role: "menuitem" %>
-            <%= link_to "PIZARRAS", whiteboards_path, class: "nav-link #{'is-active' if whiteboards_active}", role: "menuitem" %>
+          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if tools_group_active %>"><%= t('.nav.tools') %></summary>
+          <div class="nav-dropdown-menu" role="menu" aria-label="<%= t('.aria.section_tools') %>">
+            <%= link_to t('.nav.forms'), anonymous_forms_path, class: "nav-link #{'is-active' if forms_active}", role: "menuitem" %>
+            <%= link_to t('.nav.whiteboards'), whiteboards_path, class: "nav-link #{'is-active' if whiteboards_active}", role: "menuitem" %>
           </div>
         </details>
 
         <details class="nav-dropdown" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
-          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if social_group_active %>">SOCIAL</summary>
-          <div class="nav-dropdown-menu" role="menu" aria-label="Sección social">
-            <%= link_to "CHAT", chat_rooms_path, class: "nav-link #{'is-active' if chat_active}", role: "menuitem" %>
-            <%= link_to "AMIGOS", friends_path, class: "nav-link #{'is-active' if friends_active}", role: "menuitem" %>
+          <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if social_group_active %>"><%= t('.nav.social') %></summary>
+          <div class="nav-dropdown-menu" role="menu" aria-label="<%= t('.aria.section_social') %>">
+            <%= link_to t('.nav.chat'), chat_rooms_path, class: "nav-link #{'is-active' if chat_active}", role: "menuitem" %>
+            <%= link_to t('.nav.friends'), friends_path, class: "nav-link #{'is-active' if friends_active}", role: "menuitem" %>
           </div>
         </details>
       </div>
 
-      <div class="nav-meta" role="navigation" aria-label="Cuenta">
+      <div class="nav-meta" role="navigation" aria-label="<%= t('.aria.account_nav') %>">
         <% if authenticated? %>
-          <%= link_to "NOTIFICACIONES", notifications_path, class: "nav-link #{'is-active' if notifications_active}" %>
+          <%= link_to t('.nav.notifications'), notifications_path, class: "nav-link #{'is-active' if notifications_active}" %>
         <% end %>
         <details class="nav-dropdown nav-dropdown-account" data-nav-dropdown-target="group" data-action="toggle->nav-dropdown#handleToggle">
           <summary class="nav-link nav-dropdown-toggle <%= 'is-active' if account_group_active %>">
-            <%= authenticated? ? "CUENTA" : "ACCESO" %>
+            <%= authenticated? ? t('.nav.account') : t('.nav.access') %>
           </summary>
-          <div class="nav-dropdown-menu nav-account-menu" role="menu" aria-label="Menú de cuenta">
+          <div class="nav-dropdown-menu nav-account-menu" role="menu" aria-label="<%= t('.aria.account_menu') %>">
             <% if authenticated? %>
               <div class="nav-user nav-user-menu"><%= current_user.email_address %></div>
-              <%= button_to "SALIR", session_path, method: :delete, class: "nav-logout-btn nav-logout-btn-menu" %>
+              <%= button_to t('.nav.logout'), session_path, method: :delete, class: "nav-logout-btn nav-logout-btn-menu" %>
             <% else %>
-              <%= link_to "ENTRAR", new_session_path, class: "nav-link nav-link-soft #{'is-active' if login_active}", role: "menuitem" %>
-              <%= link_to "REGISTRARME", new_registration_path, class: "nav-link nav-link-solid #{'is-active' if register_active}", role: "menuitem" %>
-              <%= link_to "RECUPERAR", new_password_path, class: "nav-link nav-link-soft #{'is-active' if recovery_active}", role: "menuitem" %>
+              <%= link_to t('.nav.login'), new_session_path, class: "nav-link nav-link-soft #{'is-active' if login_active}", role: "menuitem" %>
+              <%= link_to t('.nav.register'), new_registration_path, class: "nav-link nav-link-solid #{'is-active' if register_active}", role: "menuitem" %>
+              <%= link_to t('.nav.recovery'), new_password_path, class: "nav-link nav-link-soft #{'is-active' if recovery_active}", role: "menuitem" %>
             <% end %>
           </div>
         </details>
 
         <div class="theme-picker theme-picker-dropdown">
           <select class="theme-select-compact" data-theme-target="themeSelect" data-action="change->theme#switch">
-            <option value="light">CLARO</option>
-            <option value="dark">OSCURO</option>
-            <option value="vintage">VINTAGE</option>
-            <option value="neon">NEON</option>
-            <option value="brat">JUJI</option>
-            <option value="comic">COMIC</option>
-            <option value="superhero">SUPERHERO</option>
+            <option value="light"><%= t('.theme.light') %></option>
+            <option value="dark"><%= t('.theme.dark') %></option>
+            <option value="vintage"><%= t('.theme.vintage') %></option>
+            <option value="neon"><%= t('.theme.neon') %></option>
+            <option value="brat"><%= t('.theme.brat') %></option>
+            <option value="comic"><%= t('.theme.comic') %></option>
+            <option value="superhero"><%= t('.theme.superhero') %></option>
           </select>
           <select class="theme-select-compact brat-font-select" data-theme-target="bratFontSelect" data-action="change->theme#switchFont">
-            <option value="helvetica">FUENTE: SIMPLE</option>
-            <option value="inter">FUENTE: INTER</option>
+            <option value="helvetica"><%= t('.theme.font_helvetica') %></option>
+            <option value="inter"><%= t('.theme.font_inter') %></option>
           </select>
         </div>
       </div>
     </nav>
     <% end %>
-    <main class="chaotic-container" style="padding-top: 6rem;">
+    <main class="chaotic-container nav-spaced">
       <%= yield %>
     </main>
   </body>

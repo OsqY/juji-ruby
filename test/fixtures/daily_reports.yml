@@ -1,6 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  user: one
   report_date: 2026-02-17
   work_title: Implementacion del dashboard de dailies
   worked_by: dev1@example.com
@@ -10,6 +11,7 @@ one:
   additional_details: MyText
 
 two:
+  user: two
   report_date: 2026-02-18
   work_title: Ajustes de formulario y estilos
   worked_by: dev2@example.com

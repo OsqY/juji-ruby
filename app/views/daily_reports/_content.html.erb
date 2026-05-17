@@ -81,7 +81,7 @@
     </section>
 
     <% @daily_reports.each do |report| %>
-      <section class="report-card" data-controller="export">
+      <section class="report-card" data-controller="export" data-i18n-generating="<%= t('exports.js.generating') %>" data-i18n-error="<%= t('exports.js.error') %>">
         <div data-export-target="card">
           <div class="daily-header">
             <div class="daily-date">

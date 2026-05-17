@@ -129,15 +129,24 @@ class ChatRoomsController < ApplicationController
       return
     end
 
-    if @chat_room.owner?(current_user) || (member.member? && !member.admin?)
+    if @chat_room.owner?(current_user)
       member.destroy
-      redirect_to @chat_room, notice: "Miembro expulsado."
+    elsif @chat_room.admin_or_owner?(current_user) && member.member?
+      member.destroy
     else
       redirect_to @chat_room, alert: "No puedes expulsar a este miembro."
+      return
     end
+
+    redirect_to @chat_room, notice: "Miembro expulsado."
   end
 
   def destroy
+    unless @chat_room.owner?(current_user)
+      redirect_to @chat_room, alert: "No tienes permiso para eliminar esta sala."
+      return
+    end
+
     @chat_room.update!(archived_at: Time.current)
     redirect_to chat_rooms_path, notice: "Sala eliminada."
   end

@@ -13,6 +13,12 @@ class Budget < ApplicationRecord
   private
     def normalize_fields
       self.category = category.to_s.strip.downcase
-      self.month = month.to_date.beginning_of_month if month.present?
+      if month.present?
+        self.month = begin
+          month.to_date.beginning_of_month
+        rescue ArgumentError
+          month
+        end
+      end
     end
 end

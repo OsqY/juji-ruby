@@ -1,6 +1,4 @@
 class AnalyticsController < ApplicationController
-  before_action :authenticate_user!
-  
   def index
     @spending_monthly = AnalyticsService.spending_by_month(current_user, months: 12)
     @spending_category = AnalyticsService.spending_by_category(current_user, limit: 5)

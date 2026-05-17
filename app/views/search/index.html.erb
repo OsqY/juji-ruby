@@ -1,11 +1,14 @@
 <div class="chaotic-container">
   <div style="margin-bottom: 2rem;">
-    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">BÚSQUEDA GLOBAL</h1>
+    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;"><%= t('.title') %></h1>
     
     <div 
       class="search-wrapper" 
       data-controller="search" 
       data-action="keydown->search#handleKeydown"
+      data-i18n-recent-searches="<%= t('search.js.recent_searches') %>"
+      data-i18n-no-results="<%= t('search.js.no_results') %>"
+      data-i18n-untitled="<%= t('search.js.untitled') %>"
       style="position: relative; margin-bottom: 2rem;"
     >
       <form 
@@ -18,14 +21,14 @@
           type="text" 
           name="q" 
           value="<%= @query %>" 
-          placeholder="Busca transacciones, reportes, proyectos... (Cmd+K)" 
+          placeholder="<%= t('.placeholder') %>" 
           class="search-input"
           data-search-target="input"
           data-action="input->search#search blur->search#hideResults"
           style="flex: 1; padding: 0.9rem 1rem; border: 4px solid var(--ink); border-radius: 0; font-size: 1rem; background: var(--paper); color: var(--ink);"
           autofocus
         />
-        <button type="submit" class="btn-chaos search-submit-btn" style="padding: 0.9rem 2rem;">BUSCAR</button>
+        <button type="submit" class="btn-chaos search-submit-btn" style="padding: 0.9rem 2rem;"><%= t('.submit') %></button>
       </form>
       
       <div 
@@ -52,7 +55,7 @@
     <!-- Advanced Filters (Optional) -->
     <details style="margin-bottom: 2rem; padding: 1rem; background: var(--muted-gray); border-radius: 0; border: 3px solid var(--ink);">
       <summary style="cursor: pointer; font-weight: 900; color: var(--ink); padding: 0.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.8px;">
-        Filtros Avanzados
+        <%= t('.filters_title') %>
       </summary>
       
       <form method="get" action="<%= search_path %>" style="margin-top: 1rem;">
@@ -62,26 +65,26 @@
           <!-- Type Filter -->
           <div>
             <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">
-              Tipo de contenido
+              <%= t('.content_type') %>
             </label>
             <select name="type" style="width: 100%; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink);">
-              <option value="">Todos los tipos</option>
-              <option value="transactions" <%= 'selected' if params[:type] == 'transactions' %>>Transacciones</option>
-              <option value="daily_reports" <%= 'selected' if params[:type] == 'daily_reports' %>>Reportes</option>
-              <option value="projects" <%= 'selected' if params[:type] == 'projects' %>>Proyectos</option>
-              <option value="project_tasks" <%= 'selected' if params[:type] == 'project_tasks' %>>Tareas</option>
-              <option value="habits" <%= 'selected' if params[:type] == 'habits' %>>Habitos</option>
-              <option value="shopping_items" <%= 'selected' if params[:type] == 'shopping_items' %>>Compras</option>
-              <option value="budgets" <%= 'selected' if params[:type] == 'budgets' %>>Presupuestos</option>
-              <option value="anonymous_forms" <%= 'selected' if params[:type] == 'anonymous_forms' %>>Formularios</option>
-              <option value="chat_rooms" <%= 'selected' if params[:type] == 'chat_rooms' %>>Salas de Chat</option>
+              <option value=""><%= t('.all_types') %></option>
+              <option value="transactions" <%= 'selected' if params[:type] == 'transactions' %>><%= t('.types.transactions') %></option>
+              <option value="daily_reports" <%= 'selected' if params[:type] == 'daily_reports' %>><%= t('.types.daily_reports') %></option>
+              <option value="projects" <%= 'selected' if params[:type] == 'projects' %>><%= t('.types.projects') %></option>
+              <option value="project_tasks" <%= 'selected' if params[:type] == 'project_tasks' %>><%= t('.types.project_tasks') %></option>
+              <option value="habits" <%= 'selected' if params[:type] == 'habits' %>><%= t('.types.habits') %></option>
+              <option value="shopping_items" <%= 'selected' if params[:type] == 'shopping_items' %>><%= t('.types.shopping_items') %></option>
+              <option value="budgets" <%= 'selected' if params[:type] == 'budgets' %>><%= t('.types.budgets') %></option>
+              <option value="anonymous_forms" <%= 'selected' if params[:type] == 'anonymous_forms' %>><%= t('.types.anonymous_forms') %></option>
+              <option value="chat_rooms" <%= 'selected' if params[:type] == 'chat_rooms' %>><%= t('.types.chat_rooms') %></option>
             </select>
           </div>
 
           <!-- Date Range -->
           <div>
             <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">
-              Desde
+              <%= t('.from') %>
             </label>
             <input 
               type="date" 
@@ -93,7 +96,7 @@
 
           <div>
             <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">
-              Hasta
+              <%= t('.to') %>
             </label>
             <input 
               type="date" 
@@ -105,8 +108,8 @@
         </div>
 
         <div style="display: flex; gap: 0.5rem;">
-          <button type="submit" class="btn-chaos" style="padding: 0.75rem 1.5rem;">Aplicar Filtros</button>
-          <a href="<%= search_path %>" style="padding: 0.75rem 1.5rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); cursor: pointer; text-decoration: none; font-weight: 900; text-transform: uppercase; font-size: 0.8rem;">Limpiar</a>
+          <button type="submit" class="btn-chaos" style="padding: 0.75rem 1.5rem;"><%= t('.apply') %></button>
+          <a href="<%= search_path %>" style="padding: 0.75rem 1.5rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); cursor: pointer; text-decoration: none; font-weight: 900; text-transform: uppercase; font-size: 0.8rem;"><%= t('.clear') %></a>
         </div>
       </form>
     </details>
@@ -115,7 +118,7 @@
     <% if @total_count > 0 %>
       <div style="margin-bottom: 2rem;">
         <p style="color: #666; font-size: 0.95rem;">
-          Se encontraron <strong><%= @total_count %></strong> resultado<%= @total_count == 1 ? '' : 's' %> para "<strong><%= @query %></strong>"
+          <%= t('.results_found_html', count: @total_count, query: @query) %>
         </p>
       </div>
 
@@ -153,7 +156,7 @@
                             <%= record.work_title %>
                           </h3>
                           <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            Reporte · <%= record.report_date.strftime('%d/%m/%Y') %>
+                            <%= t('.result_labels.report') %> · <%= record.report_date.strftime('%d/%m/%Y') %>
                           </p>
                         </div>
                       <% end %>
@@ -167,7 +170,7 @@
                             <%= record.name %>
                           </h3>
                           <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            <%= record.description&.truncate(60) || "Proyecto sin descripción" %>
+                            <%= record.description&.truncate(60) || t('.result_labels.project_no_desc') %>
                           </p>
                         </div>
                       <% end %>
@@ -181,7 +184,7 @@
                             <%= record.name %>
                           </h3>
                           <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            Tarea · <%= record.project.name %>
+                            <%= t('.result_labels.task') %> · <%= record.project.name %>
                           </p>
                         </div>
                       <% end %>
@@ -195,7 +198,7 @@
                             <%= record.name %>
                           </h3>
                           <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            Hábito
+                            <%= t('.result_labels.habit') %>
                           </p>
                         </div>
                       <% end %>
@@ -209,7 +212,7 @@
                             <%= record.name %>
                           </h3>
                           <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            Compra · Cantidad: <%= record.quantity %>
+                            <%= t('.result_labels.shopping') %> · <%= t('.result_labels.quantity') %>: <%= record.quantity %>
                           </p>
                         </div>
                       <% end %>
@@ -223,7 +226,7 @@
                             <%= record.category %>
                           </h3>
                           <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            Presupuesto · L. <%= number_with_precision(record.monthly_limit, precision: 2) %>
+                            <%= t('.result_labels.budget') %> · L. <%= number_with_precision(record.monthly_limit, precision: 2) %>
                           </p>
                         </div>
                       <% end %>
@@ -237,7 +240,7 @@
                             <%= record.title %>
                           </h3>
                           <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            Formulario · <%= record.description&.truncate(50) || "Sin descripción" %>
+                            <%= t('.result_labels.form') %> · <%= record.description&.truncate(50) || t('.result_labels.no_description') %>
                           </p>
                         </div>
                       <% end %>
@@ -251,7 +254,7 @@
                             <%= record.name %>
                           </h3>
                           <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            Sala <%= record.room_type.humanize %> · <%= record.description&.truncate(50) || "Sin descripción" %>
+                            <%= t('.result_labels.room') %> <%= record.room_type.humanize %> · <%= record.description&.truncate(50) || t('.result_labels.no_description') %>
                           </p>
                         </div>
                       <% end %>
@@ -264,16 +267,16 @@
       <% end %>
     <% else %>
       <div style="text-align: center; padding: 3rem 1rem;">
-        <div style="font-size: 3rem; margin-bottom: 1rem;">BUSCAR</div>
-        <p style="font-size: 1.1rem; color: #666;">No se encontraron resultados para "<strong><%= @query %></strong>"</p>
-        <p style="color: #999; margin-top: 0.5rem;">Intenta con otros términos de búsqueda</p>
+        <div style="font-size: 3rem; margin-bottom: 1rem;"><%= t('.submit') %></div>
+        <p style="font-size: 1.1rem; color: #666;"><%= t('.no_results_html', query: @query) %></p>
+        <p style="color: #999; margin-top: 0.5rem;"><%= t('.try_again') %></p>
       </div>
     <% end %>
   <% else %>
     <div style="text-align: center; padding: 3rem 1rem;">
-      <div style="font-size: 3rem; margin-bottom: 1rem;">BUSQUEDA</div>
-      <p style="font-size: 1.1rem; color: #666;">Busca en toda tu información</p>
-      <p style="color: #999; margin-top: 0.5rem;">Transacciones, reportes, proyectos, hábitos y más</p>
+      <div style="font-size: 3rem; margin-bottom: 1rem;"><%= t('.title') %></div>
+      <p style="font-size: 1.1rem; color: #666;"><%= t('.empty_title') %></p>
+      <p style="color: #999; margin-top: 0.5rem;"><%= t('.empty_subtitle') %></p>
     </div>
   <% end %>
 </div>
@@ -320,7 +323,7 @@
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-    color: #999;
+    color: color-mix(in srgb, var(--ink) 50%, transparent);
     margin: 0;
     margin-top: 0.5rem;
   }
@@ -342,14 +345,14 @@
 
   .search-result-item:hover,
   .search-history-item:hover {
-    background-color: #f5f5f5;
-    border-left-color: #007bff;
+    background-color: var(--muted-gray);
+    border-left-color: var(--accent-blue);
   }
 
   .search-result-item.is-selected,
   .search-history-item.is-selected {
-    background-color: #e8f4ff;
-    border-left-color: #007bff;
+    background-color: color-mix(in srgb, var(--accent-blue) 15%, var(--paper));
+    border-left-color: var(--accent-blue);
   }
 
   .search-history-item {
@@ -377,7 +380,7 @@
   .search-result-title {
     font-size: 0.9rem;
     font-weight: 500;
-    color: #222;
+    color: var(--ink);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -386,7 +389,7 @@
 
   .search-result-subtitle {
     font-size: 0.8rem;
-    color: #999;
+    color: color-mix(in srgb, var(--ink) 50%, transparent);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -396,35 +399,12 @@
   .search-no-results {
     padding: 1.5rem;
     text-align: center;
-    color: #999;
+    color: color-mix(in srgb, var(--ink) 50%, transparent);
     font-size: 0.9rem;
   }
 
   .search-wrapper {
     position: relative;
-  }
-
-  [data-theme="brat"] .search-submit-btn.btn-chaos,
-  [data-theme="brat"] .search-submit-btn.btn-chaos:hover,
-  [data-theme="brat"] .search-submit-btn.btn-chaos:active {
-    background: #6a9622 !important;
-    color: #111 !important;
-    box-shadow: 6px 6px 0 #2f4d10 !important;
-  }
-
-  [data-theme="brat"] .search-results-container,
-  [data-theme="brat"] .search-result-card,
-  [data-theme="brat"] details {
-    background: #a4e82d !important;
-    border-color: #1b2a0f !important;
-  }
-
-  [data-theme="brat"] .search-result-item:hover,
-  [data-theme="brat"] .search-history-item:hover,
-  [data-theme="brat"] .search-result-item.is-selected,
-  [data-theme="brat"] .search-history-item.is-selected {
-    background: #b9f24a !important;
-    border-left-color: #1b2a0f !important;
   }
 
   @media (max-width: 640px) {

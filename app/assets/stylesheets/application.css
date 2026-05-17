@@ -14,6 +14,16 @@
   --income-text: #2D5A27;
   --expense-bg: #FFEBEB;
   --expense-text: #D63031;
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 [data-theme="dark"] {
@@ -87,6 +97,30 @@
 [data-theme="brat"][data-brat-font="inter"] {
   --brat-font-body: 'Inter', sans-serif;
   --brat-font-heading: 'Inter', sans-serif;
+}
+
+/* Brat theme search overrides */
+[data-theme="brat"] .search-submit-btn.btn-chaos,
+[data-theme="brat"] .search-submit-btn.btn-chaos:hover,
+[data-theme="brat"] .search-submit-btn.btn-chaos:active {
+  background: #6a9622 !important;
+  color: #111 !important;
+  box-shadow: 6px 6px 0 #2f4d10 !important;
+}
+
+[data-theme="brat"] .search-results-container,
+[data-theme="brat"] .search-result-card,
+[data-theme="brat"] details {
+  background: #a4e82d !important;
+  border-color: #1b2a0f !important;
+}
+
+[data-theme="brat"] .search-result-item:hover,
+[data-theme="brat"] .search-history-item:hover,
+[data-theme="brat"] .search-result-item.is-selected,
+[data-theme="brat"] .search-history-item.is-selected {
+  background: #b9f24a !important;
+  border-left-color: #1b2a0f !important;
 }
 
 [data-theme="comic"] {
@@ -2250,6 +2284,21 @@ nav.chaos-nav {
   text-transform: uppercase;
   cursor: pointer;
   padding: 0.35rem 0.6rem;
+}
+
+/* Layout utilities */
+.nav-spaced {
+  padding-top: 6rem;
+}
+
+@media (max-width: 768px) {
+  .nav-spaced {
+    padding-top: 10rem;
+  }
+
+  .chat-room-layout {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 @media (max-width: 680px) {

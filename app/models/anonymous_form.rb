@@ -12,6 +12,9 @@ class AnonymousForm < ApplicationRecord
   validates :token, presence: true, uniqueness: true
   validates :response_limit, numericality: { only_integer: true, greater_than: 0 }
   validate :must_have_questions
+  validate :questions_count_within_limit
+
+  MAX_QUESTIONS = 50
 
   def open_for_responses?
     responses_count < response_limit
@@ -30,5 +33,12 @@ class AnonymousForm < ApplicationRecord
       return if questions.reject(&:marked_for_destruction?).any?
 
       errors.add(:base, "Debe agregar al menos una pregunta")
+    end
+
+    def questions_count_within_limit
+      active_questions = questions.reject(&:marked_for_destruction?).count
+      if active_questions > MAX_QUESTIONS
+        errors.add(:base, "No puede tener más de #{MAX_QUESTIONS} preguntas")
+      end
     end
 end

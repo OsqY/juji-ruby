@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <style>
+      body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+      .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+      .header { background: #1A1A1A; color: white; padding: 20px; text-align: center; }
+      .alert { background: #FFEBEB; border-left: 4px solid #D63031; padding: 15px; margin: 10px 0; }
+      .alert-warning { background: #FFF3CD; border-left: 4px solid #FFC107; }
+      .footer { text-align: center; margin-top: 30px; font-size: 12px; color: #666; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Juji - Alertas</h1>
+      </div>
+
+      <p>Hola <%= @user.display_name_or_email %>,</p>
+      <p>Tienes <strong><%= @alert_count %></strong> alerta(s) pendiente(s):</p>
+
+      <% @alerts.each do |alert| %>
+        <div class="alert <%= 'alert-warning' if alert.notification_type == 'no_report_3_days' %>">
+          <strong><%= alert.message %></strong>
+        </div>
+      <% end %>
+
+      <p><a href="<%= dashboard_url %>">Ver dashboard</a></p>
+
+      <div class="footer">
+        <p>Juji - Control personal diario</p>
+      </div>
+    </div>
+  </body>
+</html>

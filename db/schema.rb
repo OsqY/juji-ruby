@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_11_204245) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_17_221748) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -109,6 +109,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_11_204245) do
     t.integer "room_type", default: 0, null: false
     t.string "token", null: false
     t.datetime "updated_at", null: false
+    t.index ["archived_at"], name: "index_chat_rooms_on_archived_at"
+    t.index ["owner_id", "archived_at"], name: "index_chat_rooms_on_owner_id_and_archived_at"
     t.index ["owner_id"], name: "index_chat_rooms_on_owner_id"
     t.index ["room_type"], name: "index_chat_rooms_on_room_type"
     t.index ["token"], name: "index_chat_rooms_on_token", unique: true
@@ -122,11 +124,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_11_204245) do
     t.date "report_date"
     t.text "today"
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.string "work_title"
     t.string "worked_by"
     t.text "yesterday"
     t.index ["report_date"], name: "index_daily_reports_on_report_date"
+    t.index ["user_id", "report_date"], name: "index_daily_reports_on_user_id_and_report_date", unique: true
     t.index ["user_id"], name: "index_daily_reports_on_user_id"
   end
 
@@ -134,14 +137,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_11_204245) do
     t.datetime "accepted_at"
     t.integer "addressee_id", null: false
     t.datetime "created_at", null: false
+    t.string "friendship_pair", null: false
     t.string "invitation_token", null: false
     t.integer "requester_id", null: false
     t.integer "status", default: 0, null: false
     t.datetime "updated_at", null: false
+    t.index ["addressee_id", "status"], name: "index_friendships_on_addressee_id_and_status"
     t.index ["addressee_id"], name: "index_friendships_on_addressee_id"
+    t.index ["friendship_pair"], name: "index_friendships_on_friendship_pair", unique: true
     t.index ["invitation_token"], name: "index_friendships_on_invitation_token", unique: true
     t.index ["requester_id", "addressee_id"], name: "index_friendships_on_requester_id_and_addressee_id", unique: true
     t.index ["requester_id"], name: "index_friendships_on_requester_id"
+    t.index ["status"], name: "index_friendships_on_status"
   end
 
   create_table "habit_logs", force: :cascade do |t|
@@ -150,6 +157,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_11_204245) do
     t.integer "habit_id", null: false
     t.date "log_date"
     t.datetime "updated_at", null: false
+    t.index ["habit_id", "log_date"], name: "index_habit_logs_on_habit_id_and_log_date", unique: true
     t.index ["habit_id"], name: "index_habit_logs_on_habit_id"
   end
 
@@ -172,6 +180,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_11_204245) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "monthly_goals", force: :cascade do |t|
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.decimal "current_value", precision: 10, scale: 2, default: "0.0"
+    t.text "description"
+    t.string "goal_type", null: false
+    t.date "month", null: false
+    t.integer "status", default: 0
+    t.decimal "target_value", precision: 10, scale: 2, null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id", "goal_type"], name: "index_monthly_goals_on_user_id_and_goal_type"
+    t.index ["user_id", "month"], name: "index_monthly_goals_on_user_id_and_month"
+    t.index ["user_id"], name: "index_monthly_goals_on_user_id"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "message"
@@ -180,6 +205,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_11_204245) do
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.index ["notification_type"], name: "index_notifications_on_notification_type"
+    t.index ["user_id", "read_at"], name: "index_notifications_on_user_id_and_read_at"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -250,16 +276,46 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_11_204245) do
     t.string "description", null: false
     t.integer "transaction_type", default: 0, null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.integer "user_id", null: false
+    t.index ["category"], name: "index_transactions_on_category"
     t.index ["date"], name: "index_transactions_on_date"
+    t.index ["user_id", "date"], name: "index_transactions_on_user_id_and_date"
     t.index ["user_id"], name: "index_transactions_on_user_id"
+  end
+
+  create_table "user_achievements", force: :cascade do |t|
+    t.string "achievement_type"
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "icon"
+    t.string "title"
+    t.datetime "unlocked_at"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id", "achievement_type"], name: "index_user_achievements_on_user_id_and_achievement_type", unique: true
+    t.index ["user_id"], name: "index_user_achievements_on_user_id"
+  end
+
+  create_table "user_streaks", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "current_streak", default: 0
+    t.date "last_activity_date"
+    t.integer "longest_streak", default: 0
+    t.string "streak_type", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id", "streak_type"], name: "index_user_streaks_on_user_id_and_streak_type", unique: true
+    t.index ["user_id"], name: "index_user_streaks_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "display_name"
     t.string "email_address", null: false
+    t.string "email_frequency", default: "daily"
     t.string "invite_token"
+    t.datetime "last_email_sent_at"
+    t.boolean "notify_by_email", default: false
     t.string "password_digest", null: false
     t.datetime "updated_at", null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
@@ -278,11 +334,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_11_204245) do
 
   create_table "whiteboard_strokes", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.json "stroke_data"
+    t.json "stroke_data", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.integer "whiteboard_id", null: false
     t.index ["user_id"], name: "index_whiteboard_strokes_on_user_id"
+    t.index ["whiteboard_id", "created_at"], name: "index_whiteboard_strokes_on_whiteboard_id_and_created_at"
     t.index ["whiteboard_id"], name: "index_whiteboard_strokes_on_whiteboard_id"
   end
 
@@ -306,15 +363,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_11_204245) do
   add_foreign_key "anonymous_form_responses", "users"
   add_foreign_key "anonymous_forms", "users"
   add_foreign_key "budgets", "users"
+  add_foreign_key "chat_room_members", "chat_rooms"
+  add_foreign_key "chat_room_members", "users"
+  add_foreign_key "chat_rooms", "users", column: "owner_id"
   add_foreign_key "daily_reports", "users"
+  add_foreign_key "friendships", "users", column: "addressee_id"
+  add_foreign_key "friendships", "users", column: "requester_id"
   add_foreign_key "habit_logs", "habits"
   add_foreign_key "habits", "users"
+  add_foreign_key "messages", "chat_rooms"
+  add_foreign_key "messages", "users"
+  add_foreign_key "monthly_goals", "users"
   add_foreign_key "notifications", "users"
   add_foreign_key "project_tasks", "projects"
   add_foreign_key "projects", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "shopping_items", "users"
   add_foreign_key "transactions", "users"
+  add_foreign_key "user_achievements", "users"
+  add_foreign_key "user_streaks", "users"
   add_foreign_key "whiteboard_collaborators", "users"
   add_foreign_key "whiteboard_collaborators", "whiteboards"
   add_foreign_key "whiteboard_strokes", "users"

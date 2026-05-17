@@ -1,10 +1,10 @@
 <div class="chaotic-container" style="max-width: 600px;">
-  <h1 style="font-size: 3rem; margin-bottom: 2rem;">NUEVA PIZARRA</h1>
+  <h1 style="font-size: 3rem; margin-bottom: 2rem;"><%= t('.title') %></h1>
 
   <%= form_with model: @whiteboard, class: "report-section-block", style: "padding: 2rem;" do |f| %>
     <% if @whiteboard.errors.any? %>
       <div style="margin-bottom: 1.5rem; padding: 1rem; background: var(--expense-bg); border: 3px solid var(--expense-text);">
-        <p style="font-weight: 800; margin: 0;"><%= @whiteboard.errors.count %> ERRORES:</p>
+        <p style="font-weight: 800; margin: 0;"><%= @whiteboard.errors.count %> <%= t('.errors_count') %></p>
         <ul style="margin: 0.5rem 0 0; padding-left: 1.2rem;">
           <% @whiteboard.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
@@ -14,12 +14,12 @@
     <% end %>
 
     <div class="form-group">
-      <%= f.label :name, "NOMBRE DE LA PIZARRA" %>
-      <%= f.text_field :name, placeholder: "Ej. Lluvia de ideas", required: true %>
+      <%= f.label :name, t('.name_label') %>
+      <%= f.text_field :name, placeholder: t('.name_placeholder'), required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.label :background_color, "COLOR DE FONDO" %>
+      <%= f.label :background_color, t('.bg_color_label') %>
       <%= f.color_field :background_color, value: "#FFFFFF" %>
     </div>
 
@@ -27,8 +27,8 @@
     <%= f.hidden_field :height, value: 4000 %>
 
     <div class="form-actions" style="position: static; box-shadow: none; padding: 0; border: none;">
-      <%= f.submit "CREAR PIZARRA", class: "btn-chaos" %>
-      <%= link_to "CANCELAR", whiteboards_path, class: "nav-link" %>
+      <%= f.submit t('.submit'), class: "btn-chaos" %>
+      <%= link_to t('common.cancel'), whiteboards_path, class: "nav-link" %>
     </div>
   <% end %>
 </div>

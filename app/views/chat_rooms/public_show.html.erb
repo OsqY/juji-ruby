@@ -6,7 +6,7 @@
       </span>
     </div>
     <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;"><%= @chat_room.name %></h1>
-    <p style="color: #666; margin-bottom: 1.5rem;"><%= @chat_room.description || "Sin descripción" %></p>
+    <p style="color: #666; margin-bottom: 1.5rem;"><%= @chat_room.description || t('.no_description') %></p>
 
     <div style="margin-bottom: 2rem;">
       <p style="font-size: 0.9rem; color: #666;">
@@ -16,29 +16,29 @@
     </div>
 
     <% if @is_member %>
-      <%= link_to "ENTRAR A LA SALA", @chat_room, class: "btn-chaos", style: "padding: 0.75rem 2rem; text-decoration: none;" %>
+      <%= link_to t('.enter_room'), @chat_room, class: "btn-chaos", style: "padding: 0.75rem 2rem; text-decoration: none;" %>
     <% elsif authenticated? && @can_join %>
       <% if @chat_room.private_code? %>
         <%= form_with url: public_chat_room_join_path(token: @chat_room.token), method: :post do |f| %>
           <div style="margin-bottom: 1rem;">
             <%= f.text_field :entry_code,
-                placeholder: "Código de acceso",
+                placeholder: t('.entry_code_placeholder'),
                 required: true,
                 style: "width: 100%; max-width: 300px; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); font-size: 1rem; text-align: center;"
             %>
           </div>
-          <%= f.submit "UNIRSE", class: "btn-chaos", style: "padding: 0.75rem 2rem;" %>
+          <%= f.submit t('.join'), class: "btn-chaos", style: "padding: 0.75rem 2rem;" %>
         <% end %>
       <% else %>
-        <%= button_to "UNIRSE A LA SALA", public_chat_room_join_path(token: @chat_room.token), method: :post, class: "btn-chaos", style: "padding: 0.75rem 2rem;" %>
+        <%= button_to t('.join_room'), public_chat_room_join_path(token: @chat_room.token), method: :post, class: "btn-chaos", style: "padding: 0.75rem 2rem;" %>
       <% end %>
     <% elsif @chat_room.full? %>
       <div style="padding: 1rem; border: 3px solid #c00; color: #c00; font-weight: 700;">
-        Sala llena
+        <%= t('.room_full') %>
       </div>
     <% elsif !authenticated? %>
-      <p style="margin-bottom: 1rem;">Inicia sesión para unirte.</p>
-      <%= link_to "INICIAR SESIÓN", new_session_path, class: "btn-chaos", style: "padding: 0.75rem 2rem; text-decoration: none;" %>
+      <p style="margin-bottom: 1rem;"><%= t('.login_to_join') %></p>
+      <%= link_to t('.login'), new_session_path, class: "btn-chaos", style: "padding: 0.75rem 2rem; text-decoration: none;" %>
     <% end %>
   </div>
 </div>

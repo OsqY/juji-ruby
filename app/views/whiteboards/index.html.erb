@@ -1,23 +1,23 @@
 <div class="chaotic-container">
   <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
-    <h1 style="font-size: 3rem;">PIZARRAS</h1>
-    <%= link_to "NUEVA PIZARRA", new_whiteboard_path, class: "btn-chaos", style: "padding: 0.9rem 1.2rem;" %>
+    <h1 style="font-size: 3rem;"><%= t('.title') %></h1>
+    <%= link_to t('.new'), new_whiteboard_path, class: "btn-chaos", style: "padding: 0.9rem 1.2rem;" %>
   </div>
 
   <% if @whiteboards.any? %>
-    <h2 class="section-title" style="margin-bottom: 1.5rem;">MIS PIZARRAS</h2>
+    <h2 class="section-title" style="margin-bottom: 1.5rem;"><%= t('.my_whiteboards') %></h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-bottom: 3rem;">
       <% @whiteboards.each do |wb| %>
         <section class="report-section-block" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem;">
           <div>
             <h2 class="section-title" style="font-size: 1.4rem; margin-bottom: 0.4rem;"><%= wb.name %></h2>
             <p style="font-size: 0.78rem; font-weight: 800; opacity: 0.6;">
-              <%= wb.whiteboard_strokes.count %> TRAZOS | <%= wb.width %>x<%= wb.height %>
+              <%= t('.strokes_count', count: wb.whiteboard_strokes.count) %> | <%= wb.width %>x<%= wb.height %>
             </p>
           </div>
           <div style="display: flex; gap: 0.7rem; margin-top: auto; flex-wrap: wrap;">
-            <%= link_to "ABRIR", whiteboard_path(wb), class: "btn-chaos", style: "padding: 0.6rem 1rem; font-size: 0.8rem;" %>
-            <%= button_to "ELIMINAR", whiteboard_path(wb), method: :delete, class: "delete-btn-link", data: { turbo_confirm: "¿Eliminar esta pizarra?" } %>
+            <%= link_to t('.open'), whiteboard_path(wb), class: "btn-chaos", style: "padding: 0.6rem 1rem; font-size: 0.8rem;" %>
+            <%= button_to t('common.delete'), whiteboard_path(wb), method: :delete, class: "delete-btn-link", data: { turbo_confirm: t('.delete_confirm') } %>
           </div>
         </section>
       <% end %>
@@ -25,18 +25,18 @@
   <% end %>
 
   <% if @shared_whiteboards.any? %>
-    <h2 class="section-title" style="margin-bottom: 1.5rem;">COMPARTIDAS CONMIGO</h2>
+    <h2 class="section-title" style="margin-bottom: 1.5rem;"><%= t('.shared_with_me') %></h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
       <% @shared_whiteboards.each do |wb| %>
         <section class="report-section-block" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem;">
           <div>
             <h2 class="section-title" style="font-size: 1.4rem; margin-bottom: 0.4rem;"><%= wb.name %></h2>
             <p style="font-size: 0.78rem; font-weight: 800; opacity: 0.6;">
-              DE <%= wb.user.email_address.upcase %> | <%= wb.whiteboard_strokes.count %> TRAZOS
+              <%= t('.from_user') %> <%= wb.user.email_address.upcase %> | <%= t('.strokes_count', count: wb.whiteboard_strokes.count) %>
             </p>
           </div>
           <div style="display: flex; gap: 0.7rem; margin-top: auto; flex-wrap: wrap;">
-            <%= link_to "ABRIR", whiteboard_path(wb), class: "btn-chaos", style: "padding: 0.6rem 1rem; font-size: 0.8rem;" %>
+            <%= link_to t('.open'), whiteboard_path(wb), class: "btn-chaos", style: "padding: 0.6rem 1rem; font-size: 0.8rem;" %>
           </div>
         </section>
       <% end %>
@@ -45,8 +45,8 @@
 
   <% if @whiteboards.empty? && @shared_whiteboards.empty? %>
     <section class="report-section-block" style="text-align: center; padding: 3rem;">
-      <h2 class="section-title">SIN PIZARRAS</h2>
-      <p class="report-text">Crea tu primera pizarra colaborativa y compártela.</p>
+      <h2 class="section-title"><%= t('.empty_title') %></h2>
+      <p class="report-text"><%= t('.empty_text') %></p>
     </section>
   <% end %>
 </div>

@@ -1,0 +1,21 @@
+one:
+  user: one
+  title: "Ahorro mensual"
+  description: "Meta de ahorro para el mes"
+  goal_type: savings
+  target_value: 5000.00
+  current_value: 2500.00
+  month: <%= Date.current.beginning_of_month %>
+  status: 0
+  category: "ahorro"
+
+two:
+  user: two
+  title: "Límite de gastos"
+  description: "No gastar más de X en comida"
+  goal_type: expense_limit
+  target_value: 3000.00
+  current_value: 1500.00
+  month: <%= Date.current.beginning_of_month %>
+  status: 0
+  category: "comida"

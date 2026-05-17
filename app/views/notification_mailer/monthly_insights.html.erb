@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <style>
+      body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+      .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+      .header { background: #1A1A1A; color: white; padding: 20px; text-align: center; }
+      .stat { background: #F0F0F0; padding: 15px; margin: 10px 0; border-radius: 5px; }
+      .insight { background: #E1FFEC; border-left: 4px solid #2D5A27; padding: 15px; margin: 10px 0; }
+      .footer { text-align: center; margin-top: 30px; font-size: 12px; color: #666; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Insights de <%= I18n.l(Date.current, format: '%B %Y') %></h1>
+      </div>
+
+      <p>Hola <%= @user.display_name_or_email %>,</p>
+
+      <h3>Resumen financiero</h3>
+      <div class="stat">
+        <div>Ingresos: L. <%= number_with_precision(@monthly_income, precision: 2) %></div>
+        <div>Gastos: L. <%= number_with_precision(@monthly_expenses, precision: 2) %></div>
+        <div>Balance: L. <%= number_with_precision(@monthly_balance, precision: 2) %></div>
+      </div>
+
+      <h3>Top categorías de gasto</h3>
+      <% @top_expenses.each do |category, amount| %>
+        <div><%= category %>: L. <%= number_with_precision(amount, precision: 2) %></div>
+      <% end %>
+
+      <h3>Tasa de hábitos: <%= @habit_rate %>%</h3>
+
+      <h3>Recomendaciones</h3>
+      <% @insights.each do |insight| %>
+        <div class="insight"><%= insight %></div>
+      <% end %>
+
+      <p><a href="<%= analytics_url %>">Ver análisis completo</a></p>
+
+      <div class="footer">
+        <p>Juji - Control personal diario</p>
+      </div>
+    </div>
+  </body>
+</html>

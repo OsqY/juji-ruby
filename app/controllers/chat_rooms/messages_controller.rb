@@ -23,7 +23,7 @@ module ChatRooms
 
     private
       def set_chat_room
-        @chat_room = ChatRoom.active.find(params[:chat_room_id])
+        @chat_room = current_user.joined_chat_rooms.active.find(params[:chat_room_id])
       end
 
       def message_params

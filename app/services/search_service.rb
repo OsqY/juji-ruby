@@ -1,7 +1,7 @@
 class SearchService
   # Realiza búsqueda global en múltiples modelos
   def self.perform(query, user, limit: 10)
-    return {} if query.blank?
+    return {} if query.blank? || user.nil?
 
     query = query.strip.downcase
     results = {}
@@ -67,10 +67,54 @@ class SearchService
     results
   end
 
-  # Retorna el recuento total de resultados
+  # Retorna el recuento total de resultados usando SQL COUNT
   def self.count(query, user)
-    results = perform(query, user, limit: 1000) # Usar límite alto para contar
-    results.sum { |_, records| records.size }
+    return 0 if query.blank? || user.nil?
+
+    query = query.strip.downcase
+    total = 0
+
+    total += user.transactions
+      .where("LOWER(description) LIKE ? OR LOWER(category) LIKE ?", "%#{query}%", "%#{query}%")
+      .count
+
+    total += user.daily_reports
+      .where("LOWER(work_title) LIKE ? OR LOWER(yesterday) LIKE ? OR LOWER(today) LIKE ? OR LOWER(blockers) LIKE ? OR LOWER(additional_details) LIKE ?",
+             "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
+      .count
+
+    total += user.projects
+      .where("LOWER(name) LIKE ? OR LOWER(description) LIKE ?", "%#{query}%", "%#{query}%")
+      .count
+
+    total += ProjectTask
+      .joins(:project)
+      .where(projects: { user_id: user.id })
+      .where("LOWER(project_tasks.name) LIKE ?", "%#{query}%")
+      .count
+
+    total += user.habits
+      .where("LOWER(name) LIKE ?", "%#{query}%")
+      .count
+
+    total += user.shopping_items
+      .where("LOWER(name) LIKE ? OR LOWER(CAST(quantity AS TEXT)) LIKE ?", "%#{query}%", "%#{query}%")
+      .count
+
+    total += user.budgets
+      .where("LOWER(category) LIKE ?", "%#{query}%")
+      .count
+
+    total += user.anonymous_forms
+      .where("LOWER(title) LIKE ? OR LOWER(description) LIKE ?", "%#{query}%", "%#{query}%")
+      .count
+
+    total += ChatRoom.searchable
+      .excluding_direct_messages
+      .where("LOWER(name) LIKE ? OR LOWER(description) LIKE ?", "%#{query}%", "%#{query}%")
+      .count
+
+    total
   end
 
   # Retorna resultados organizados para mostrar

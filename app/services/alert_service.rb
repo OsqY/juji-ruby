@@ -1,15 +1,21 @@
 class AlertService
   def self.check_all_users
     alerts_count = 0
-    User.find_each { |user| alerts_count += check_for_user(user).count }
+    User.find_each do |user|
+      begin
+        alerts_count += check_for_user(user).count
+      rescue => e
+        Rails.logger.error("Alert check failed for user #{user.id}: #{e.message}")
+      end
+    end
     alerts_count
   end
 
   def self.check_for_user(user)
     alerts = []
     
-    budget_alert = check_budget_exceeded(user)
-    alerts << budget_alert if budget_alert
+    budget_alerts = check_budget_exceeded(user)
+    alerts.concat(budget_alerts)
     
     report_alert = check_no_reports_3_days(user)
     alerts << report_alert if report_alert
@@ -17,14 +23,15 @@ class AlertService
     progress_alert = check_project_no_progress(user)
     alerts << progress_alert if progress_alert
     
-    # Create notifications in DB
-    alerts.each { |alert| create_notification(user, alert[:type], alert[:message]) }
+    # Create or update notifications in DB
+    alerts.each { |alert| create_or_update_notification(user, alert[:type], alert[:message]) }
     
     alerts
   end
 
   def self.check_budget_exceeded(user)
     current_month = Time.zone.today.beginning_of_month
+    alerts = []
 
     user.budgets.where(month: current_month).each do |budget|
       total_spent = user.transactions
@@ -34,7 +41,7 @@ class AlertService
 
       if total_spent > budget.monthly_limit
         overage = total_spent - budget.monthly_limit
-        return {
+        alerts << {
           type: :budget_exceeded,
           level: :danger,
           title: "Presupuesto superado",
@@ -43,7 +50,7 @@ class AlertService
       end
     end
     
-    nil
+    alerts
   end
 
   def self.check_no_reports_3_days(user)
@@ -75,8 +82,10 @@ class AlertService
     days_threshold = AlertsConfig::DAYS_PROJECT_NO_PROGRESS
     stale_projects = []
     
-    # Check all projects for staleness
-    user.projects.each do |project|
+    # Check all projects for staleness, excluding projects with zero tasks
+    user.projects.includes(:project_tasks).each do |project|
+      next if project.project_tasks.empty?
+      
       last_task = project.project_tasks.order(updated_at: :desc).first
       
       if last_task.nil? || (Time.zone.today - last_task.updated_at.to_date).to_i >= days_threshold
@@ -84,9 +93,9 @@ class AlertService
       end
     end
     
-    if stale_projects.empty?
-      nil
-    elsif stale_projects.length == 1
+    return nil if stale_projects.empty?
+    
+    if stale_projects.length == 1
       {
         type: :project_no_progress,
         level: :warning,
@@ -113,12 +122,11 @@ class AlertService
 
   private
 
-  def self.create_notification(user, type, message)
-    user.notifications.find_or_create_by(
-      notification_type: type
-    ) do |notification|
-      notification.message = message
-      notification.read_at = nil
-    end
+  def self.create_or_update_notification(user, type, message)
+    notification = user.notifications.find_or_initialize_by(notification_type: type)
+    notification.message = message
+    notification.read_at = nil
+    notification.save!
+    notification
   end
 end

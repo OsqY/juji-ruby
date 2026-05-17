@@ -37,6 +37,11 @@ class HabitsController < ApplicationController
     log.completed = !log.completed
     log.save
 
+    if log.completed
+      UserStreak.record_activity!(current_user, "daily_habit")
+      UserAchievement.check_first_time_achievements!(current_user)
+    end
+
     load_index_data
 
     respond_to do |format|

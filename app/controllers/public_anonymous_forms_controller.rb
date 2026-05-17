@@ -27,7 +27,7 @@ class PublicAnonymousFormsController < ApplicationController
       end
     end
 
-    if @response.errors.empty? && @response.new_record?
+    if @response.errors.empty? && @response.new_record? && @anonymous_form.responses.exists?(user: current_user)
       @response.errors.add(:base, "Ya respondiste este formulario")
     end
 

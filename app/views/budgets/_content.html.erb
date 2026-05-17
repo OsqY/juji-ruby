@@ -3,6 +3,9 @@
   <div class="chaotic-container">
     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
       <h1 style="font-size: 3.6rem;">PRESUPUESTOS</h1>
+      <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+        <%= render "shared/export_actions", model: "budgets" %>
+      </div>
     </div>
 
     <section class="report-section-block" style="margin-bottom: 2rem;">

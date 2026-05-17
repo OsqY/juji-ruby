@@ -22,12 +22,17 @@ class User < ApplicationRecord
   has_many :friendships_requested, class_name: "Friendship", foreign_key: :requester_id, dependent: :destroy
   has_many :friendships_received, class_name: "Friendship", foreign_key: :addressee_id, dependent: :destroy
 
+  has_many :monthly_goals, dependent: :destroy
+  has_many :user_streaks, dependent: :destroy
+  has_many :user_achievements, dependent: :destroy
+
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
   before_validation :generate_invite_token
 
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true, length: { minimum: 6 }, if: -> { new_record? || password.present? }
+  validates :display_name, length: { maximum: 50 }, allow_blank: true
   validates :invite_token, presence: true, uniqueness: true
 
   def display_name_or_email
@@ -35,8 +40,8 @@ class User < ApplicationRecord
   end
 
   def friends
-    requested_friends = friendships_requested.active.map(&:addressee)
-    received_friends = friendships_received.active.map(&:requester)
+    requested_friends = friendships_requested.active.includes(:addressee).map(&:addressee)
+    received_friends = friendships_received.active.includes(:requester).map(&:requester)
     (requested_friends + received_friends).uniq
   end
 

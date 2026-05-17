@@ -21,22 +21,27 @@ Rails.application.routes.draw do
     patch :toggle_blocker, on: :member
   end
   resources :transactions, except: [ :edit, :update ]
-  resources :budgets
-  resources :projects do
-    resources :project_tasks do
+  resources :budgets, only: %i[ index create destroy ]
+  resources :projects, only: %i[ index create destroy ] do
+    resources :project_tasks, only: %i[ create update destroy ] do
       post :toggle, on: :member
     end
   end
-  resources :habits do
+  resources :habits, only: %i[ index create destroy ] do
     post :toggle, on: :member
   end
-  resources :shopping_items
-  resources :notifications do
+  resources :shopping_items, only: %i[ index create update destroy ]
+  resources :notifications, only: %i[ index ] do
     patch :mark_as_read, on: :member
     patch :mark_all_as_read, on: :collection
   end
   resources :anonymous_forms, only: %i[ index new create show destroy ]
   resources :whiteboards, only: %i[ index new create show destroy ]
+  resources :monthly_goals, except: %i[ show ] do
+    member do
+      post :check_progress
+    end
+  end
 
   resources :chat_rooms, path: "salas" do
     member do

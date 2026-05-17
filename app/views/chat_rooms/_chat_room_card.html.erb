@@ -14,16 +14,16 @@
       <%= link_to room.name, room, style: "text-decoration: none; color: inherit;" %>
     </h3>
     <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: #666;">
-      <%= room.description&.truncate(80) || "Sin descripción" %>
+      <%= room.description&.truncate(80) || t('.no_description') %>
     </p>
   </div>
   <div style="display: flex; gap: 0.5rem;">
     <% if is_member %>
-      <%= link_to "ENTRAR", room, class: "btn-chaos", style: "padding: 0.5rem 1rem; text-decoration: none; font-size: 0.85rem;" %>
+      <%= link_to t('.enter'), room, class: "btn-chaos", style: "padding: 0.5rem 1rem; text-decoration: none; font-size: 0.85rem;" %>
     <% elsif room.can_join?(current_user) %>
-      <%= button_to "UNIRSE", join_chat_room_path(room), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.85rem;" %>
+      <%= button_to t('.join'), join_chat_room_path(room), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.85rem;" %>
     <% else %>
-      <span style="font-size: 0.8rem; color: #999; padding: 0.5rem 1rem; border: 2px solid #ccc;">LLENA</span>
+      <span style="font-size: 0.8rem; color: #999; padding: 0.5rem 1rem; border: 2px solid #ccc;"><%= t('.full') %></span>
     <% end %>
   </div>
 </div>

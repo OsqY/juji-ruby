@@ -3,7 +3,7 @@ require "test_helper"
 class ChatRoomsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
-    log_in_as(@user)
+    sign_in_as(@user)
   end
 
   test "should get index" do
@@ -43,8 +43,67 @@ class ChatRoomsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to chat_rooms_url
   end
 
+  test "owner can destroy room" do
+    room = ChatRoom.create!(name: "Room", owner: @user, room_type: :open)
+    room.add_member(@user, role: :owner)
+    delete chat_room_url(room)
+    assert_redirected_to chat_rooms_url
+    assert room.reload.archived_at.present?
+  end
+
+  test "non-owner cannot destroy room" do
+    room = ChatRoom.create!(name: "Room", owner: users(:two), room_type: :open)
+    room.add_member(@user, role: :member)
+    delete chat_room_url(room)
+    assert_redirected_to chat_room_url(room)
+    assert room.reload.archived_at.nil?
+  end
+
+  test "owner can invite" do
+    room = ChatRoom.create!(name: "Room", owner: @user, room_type: :open)
+    room.add_member(@user, role: :owner)
+    post invite_chat_room_url(room)
+    assert_redirected_to public_chat_room_url(token: room.token)
+  end
+
+  test "non-admin cannot invite" do
+    room = ChatRoom.create!(name: "Room", owner: users(:two), room_type: :open)
+    room.add_member(@user, role: :member)
+    post invite_chat_room_url(room)
+    assert_redirected_to chat_room_url(room)
+  end
+
+  test "owner can kick member" do
+    room = ChatRoom.create!(name: "Room", owner: @user, room_type: :open)
+    room.add_member(@user, role: :owner)
+    room.add_member(users(:two), role: :member)
+    delete kick_chat_room_url(room), params: { user_id: users(:two).id }
+    assert_redirected_to chat_room_url(room)
+    assert_not room.member?(users(:two))
+  end
+
+  test "cannot kick owner" do
+    room = ChatRoom.create!(name: "Room", owner: @user, room_type: :open)
+    room.add_member(@user, role: :owner)
+    delete kick_chat_room_url(room), params: { user_id: @user.id }
+    assert_redirected_to chat_room_url(room)
+  end
+
+  test "public show with token" do
+    room = ChatRoom.create!(name: "Room", owner: @user, room_type: :open)
+    get public_chat_room_url(token: room.token)
+    assert_response :success
+  end
+
+  test "public join authenticated" do
+    room = ChatRoom.create!(name: "Room", owner: users(:two), room_type: :open)
+    post public_chat_room_join_url(token: room.token)
+    assert_redirected_to chat_room_url(room)
+    assert room.member?(@user)
+  end
+
   private
-    def log_in_as(user)
+    def sign_in_as(user)
       post session_url, params: { email_address: user.email_address, password: "password" }
     end
 end

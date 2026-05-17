@@ -5,9 +5,10 @@ module NativeErrorHandling
   extend ActiveSupport::Concern
 
   included do
-    rescue_from StandardError, with: :handle_standard_error
     rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
     rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
+    rescue_from ActionController::RoutingError, with: :handle_not_found
+    rescue_from ActiveRecord::RecordInvalid, with: :handle_standard_error
   end
 
   private

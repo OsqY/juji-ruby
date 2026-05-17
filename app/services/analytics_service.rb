@@ -34,22 +34,29 @@ class AnalyticsService
     end_date = Time.zone.today
     start_date = end_date - months.months
     
+    # Pre-cargar todos los logs en un solo query y agrupar por mes en Ruby
+    all_logs = HabitLog
+      .joins(:habit)
+      .where(habits: { user_id: user.id })
+      .where("log_date BETWEEN ? AND ?", start_date, end_date)
+      .select(:log_date, :completed)
+    
+    # Agrupar por mes
+    logs_by_month = {}
+    all_logs.each do |log|
+      month_key = log.log_date.beginning_of_month
+      logs_by_month[month_key] ||= { total: 0, completed: 0 }
+      logs_by_month[month_key][:total] += 1
+      logs_by_month[month_key][:completed] += 1 if log.completed
+    end
+    
     data = {}
     months.times do |i|
       date = start_date + i.months
       month_start = date.beginning_of_month
-      month_end = date.end_of_month
       
-      logs = user.habits.flat_map do |habit|
-        habit.habit_logs.where("log_date BETWEEN ? AND ?", month_start, month_end)
-      end
-      
-      if logs.any?
-        completed = logs.count { |log| log.completed }
-        rate = (completed.to_f / logs.count * 100).round(1)
-      else
-        rate = 0
-      end
+      stats = logs_by_month[month_start] || { total: 0, completed: 0 }
+      rate = stats[:total] > 0 ? (stats[:completed].to_f / stats[:total] * 100).round(1) : 0
       
       key = date.strftime("%b %Y")
       data[key] = rate
@@ -59,12 +66,12 @@ class AnalyticsService
   end
 
   def self.project_status(user)
-    all_projects = user.projects
+    all_projects = user.projects.includes(:project_tasks)
     
     {
-      active: all_projects.select { |p| p.target_date.blank? || p.target_date > Time.zone.today }.count,
-      completed: all_projects.count { |p| p.project_tasks.all? { |t| t.completed } },
-      overdue: all_projects.select { |p| p.target_date.present? && p.target_date < Time.zone.today }.count
+      active: all_projects.count { |p| p.target_date.blank? || p.target_date > Time.zone.today },
+      completed: all_projects.count { |p| p.project_tasks.any? && p.project_tasks.all?(&:completed) },
+      overdue: all_projects.count { |p| p.target_date.present? && p.target_date < Time.zone.today }
     }
   end
 
@@ -114,9 +121,9 @@ class AnalyticsService
   end
 
   def self.project_progress(user)
-    projects = user.projects.map do |project|
-      total_tasks = project.project_tasks.count
-      completed_tasks = project.project_tasks.where(completed: true).count
+    projects = user.projects.includes(:project_tasks).map do |project|
+      total_tasks = project.project_tasks.size
+      completed_tasks = project.project_tasks.count(&:completed)
       progress = total_tasks > 0 ? (completed_tasks.to_f / total_tasks * 100).round(1) : 0
       
       {

@@ -5,6 +5,7 @@ class ChatRoomMember < ApplicationRecord
   enum :role, { owner: 0, admin: 1, member: 2 }
 
   validates :user_id, uniqueness: { scope: :chat_room_id }
+  validates :role, presence: true
   validates :joined_at, presence: true
 
   after_create :create_join_message, if: -> { member? }

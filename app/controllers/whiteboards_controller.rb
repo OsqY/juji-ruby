@@ -33,6 +33,11 @@ class WhiteboardsController < ApplicationController
   end
 
   def destroy
+    unless @whiteboard.user_id == current_user.id
+      redirect_to whiteboards_path, alert: "No tienes permiso para eliminar esta pizarra."
+      return
+    end
+
     @whiteboard.destroy
     redirect_to whiteboards_path, notice: "Pizarra eliminada."
   end

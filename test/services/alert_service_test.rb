@@ -32,9 +32,10 @@ class AlertServiceTest < ActiveSupport::TestCase
       transaction_type: :expense
     )
     
-    alert = AlertService.check_budget_exceeded(@user)
+    alerts = AlertService.check_budget_exceeded(@user)
     
-    assert_not_nil alert
+    assert_not_empty alerts
+    alert = alerts.first
     assert_equal :danger, alert[:level]
     assert_includes alert[:title].downcase, "presupuesto"
     assert alert[:message].include?("50.00")
@@ -55,9 +56,9 @@ class AlertServiceTest < ActiveSupport::TestCase
       transaction_type: :expense
     )
     
-    alert = AlertService.check_budget_exceeded(@user)
+    alerts = AlertService.check_budget_exceeded(@user)
     
-    assert_nil alert
+    assert_empty alerts
   end
 
   test "check_budget_exceeded returns nil when no budget defined" do
@@ -69,9 +70,9 @@ class AlertServiceTest < ActiveSupport::TestCase
       transaction_type: :expense
     )
     
-    alert = AlertService.check_budget_exceeded(@user)
+    alerts = AlertService.check_budget_exceeded(@user)
     
-    assert_nil alert
+    assert_empty alerts
   end
 
   test "check_budget_exceeded returns nil when no transactions" do
@@ -81,9 +82,9 @@ class AlertServiceTest < ActiveSupport::TestCase
       monthly_limit: 100
     )
     
-    alert = AlertService.check_budget_exceeded(@user)
+    alerts = AlertService.check_budget_exceeded(@user)
     
-    assert_nil alert
+    assert_empty alerts
   end
 
   # =============== NO REPORTS ALERT ===============
@@ -348,10 +349,10 @@ class AlertServiceTest < ActiveSupport::TestCase
       transaction_type: :expense
     )
     
-    alert = AlertService.check_budget_exceeded(@user)
+    alerts = AlertService.check_budget_exceeded(@user)
     
-    assert_not_nil alert
-    assert alert[:message].include?("50.00")
+    assert_not_empty alerts
+    assert alerts.any? { |a| a[:message].include?("50.00") }
   end
 
   test "check_no_reports_3_days counts correctly across weeks" do
@@ -378,9 +379,8 @@ class AlertServiceTest < ActiveSupport::TestCase
     # Project with no tasks has no updated_at, should not trigger alert
     alert = AlertService.check_project_no_progress(@user)
     
-    # Might or might not have alert depending on implementation
-    # Just checking it doesn't crash
-    assert_not_nil alert || alert.nil?
+    # Just checking it doesn't crash — empty projects should not cause errors
+    assert true
   end
 
   test "alert messages use proper formatting" do
@@ -397,7 +397,8 @@ class AlertServiceTest < ActiveSupport::TestCase
       transaction_type: :expense
     )
     
-    alert = AlertService.check_budget_exceeded(@user)
+    alerts = AlertService.check_budget_exceeded(@user)
+    alert = alerts.first
     
     # Check that amount is formatted with 2 decimals
     assert alert[:message].match?(/L\. \d+\.\d{2}/)

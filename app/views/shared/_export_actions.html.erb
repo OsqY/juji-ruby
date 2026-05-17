@@ -1,12 +1,12 @@
 <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
-  <%= button_to "EXPORTAR CSV",
+  <%= button_to t('exports.actions.csv'),
       exports_path(model: model, format: "csv"),
       method: :post,
       form: { data: { turbo: false } },
       class: "btn-chaos",
       style: "padding: 0.7rem 1rem; font-size: 0.75rem; letter-spacing: 0.5px;" %>
 
-  <%= button_to "EXPORTAR PDF",
+  <%= button_to t('exports.actions.pdf'),
       exports_path(model: model, format: "pdf"),
       method: :post,
       form: { data: { turbo: false } },

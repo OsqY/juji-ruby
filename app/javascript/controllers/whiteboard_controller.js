@@ -27,6 +27,15 @@ export default class extends Controller {
     this.selectedStrokeIds = new Set()
     this.canDraw = true
     this.clientId = this.generateClientId()
+    this.i18n = {
+      connecting: this.element.dataset.i18nConnecting || "Conectando...",
+      connected: this.element.dataset.i18nConnected || "Conectado.",
+      disconnected: this.element.dataset.i18nDisconnected || "Desconectado.",
+      denied: this.element.dataset.i18nDenied || "Acceso denegado.",
+      clearConfirm: this.element.dataset.i18nClearConfirm || "¿Limpiar toda la pizarra?",
+      copied: this.element.dataset.i18nCopied || "¡COPIADO!",
+      exportFilename: this.element.dataset.i18nExportFilename || "pizarra-%{id}.png"
+    }
 
     // Viewport transform
     this.scale = 1
@@ -40,7 +49,7 @@ export default class extends Controller {
     this.setupResize()
     this.updateToolButtons()
     this.updateZoomDisplay()
-    this.statusTarget.textContent = "Conectando..."
+    this.statusTarget.textContent = this.i18n.connecting
   }
 
   disconnect() {
@@ -169,7 +178,11 @@ export default class extends Controller {
   }
 
   getGridColor() {
-    const bg = this.bgValue || "#ffffff"
+    let bg = this.bgValue || "#ffffff"
+    // Normalize 3-char hex to 6-char
+    if (/^#[0-9A-Fa-f]{3}$/.test(bg)) {
+      bg = "#" + bg[1] + bg[1] + bg[2] + bg[2] + bg[3] + bg[3]
+    }
     const hex = bg.replace("#", "")
     const r = parseInt(hex.substring(0, 2), 16) || 255
     const g = parseInt(hex.substring(2, 4), 16) || 255
@@ -486,15 +499,15 @@ export default class extends Controller {
       { channel: "WhiteboardChannel", ...params },
       {
         connected: () => {
-          this.statusTarget.textContent = "Conectado."
+          this.statusTarget.textContent = this.i18n.connected
           this.canDraw = true
         },
         disconnected: () => {
-          this.statusTarget.textContent = "Desconectado."
+          this.statusTarget.textContent = this.i18n.disconnected
           this.canDraw = false
         },
         rejected: () => {
-          this.statusTarget.textContent = "Acceso denegado."
+          this.statusTarget.textContent = this.i18n.denied
           this.canDraw = false
         },
         received: (data) => {
@@ -941,7 +954,7 @@ export default class extends Controller {
   // ===== Clear =====
 
   clear(event) {
-    if (confirm("¿Limpiar toda la pizarra?")) {
+    if (confirm(this.i18n.clearConfirm)) {
       this.channel.perform("clear")
     }
   }
@@ -958,15 +971,17 @@ export default class extends Controller {
     this.offsetY = 0
     this.redraw()
 
-    const link = document.createElement("a")
-    link.download = `pizarra-${this.idValue}.png`
-    link.href = this.canvas.toDataURL("image/png")
-    link.click()
-
-    this.scale = oldScale
-    this.offsetX = oldOffsetX
-    this.offsetY = oldOffsetY
-    this.redraw()
+    try {
+      const link = document.createElement("a")
+      link.download = this.i18n.exportFilename.replace('%{id}', this.idValue)
+      link.href = this.canvas.toDataURL("image/png")
+      link.click()
+    } finally {
+      this.scale = oldScale
+      this.offsetX = oldOffsetX
+      this.offsetY = oldOffsetY
+      this.redraw()
+    }
   }
 
   // ===== Copy link =====
@@ -976,7 +991,7 @@ export default class extends Controller {
     navigator.clipboard.writeText(url).then(() => {
       const btn = event.currentTarget
       const original = btn.textContent
-      btn.textContent = "¡COPIADO!"
+      btn.textContent = this.i18n.copied
       setTimeout(() => btn.textContent = original, 1500)
     })
   }
@@ -1005,7 +1020,10 @@ export default class extends Controller {
     if (event.key === "Shift") {
       this.isShiftPressed = true
     }
-    if (event.key === "Delete" || event.key === "Backspace") {
+    const tag = event.target.tagName.toLowerCase()
+    const isInput = tag === "input" || tag === "textarea" || tag === "select"
+
+    if (!isInput && (event.key === "Delete" || event.key === "Backspace")) {
       this.deleteSelected()
     }
     if ((event.ctrlKey || event.metaKey) && event.key === "z") {
@@ -1016,16 +1034,16 @@ export default class extends Controller {
         this.undo()
       }
     }
-    if (event.key === "1") this.activateTool("pen")
-    if (event.key === "2") this.activateTool("line")
-    if (event.key === "3") this.activateTool("arrow")
-    if (event.key === "4") this.activateTool("rect")
-    if (event.key === "5") this.activateTool("circle")
-    if (event.key === "6") this.activateTool("eraser")
-    if (event.key === "7" || event.key === "v") this.activateTool("select")
-    if (event.key === "p" || event.key === "P") this.activateTool("pencil")
-    if (event.key === "t" || event.key === "T") this.activateTool("triangle")
-    if (event.key === "s" || event.key === "S") this.activateTool("star")
+    if (!isInput && event.key === "1") this.activateTool("pen")
+    if (!isInput && event.key === "2") this.activateTool("line")
+    if (!isInput && event.key === "3") this.activateTool("arrow")
+    if (!isInput && event.key === "4") this.activateTool("rect")
+    if (!isInput && event.key === "5") this.activateTool("circle")
+    if (!isInput && event.key === "6") this.activateTool("eraser")
+    if (!isInput && (event.key === "7" || event.key === "v")) this.activateTool("select")
+    if (!isInput && (event.key === "p" || event.key === "P")) this.activateTool("pencil")
+    if (!isInput && (event.key === "t" || event.key === "T")) this.activateTool("triangle")
+    if (!isInput && (event.key === "s" || event.key === "S")) this.activateTool("star")
   }
 
   handleKeyUp(event) {

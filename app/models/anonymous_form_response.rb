@@ -8,6 +8,9 @@ class AnonymousFormResponse < ApplicationRecord
 
   validate :form_capacity_available, on: :create
   validate :authenticated_user_only_once, on: :create
+  validate :answers_size_within_limit
+
+  MAX_ANSWERS_SIZE = 100.kilobytes
 
   private
     def broadcast_realtime_updates
@@ -43,5 +46,14 @@ class AnonymousFormResponse < ApplicationRecord
       return unless anonymous_form.responses.where(user_id: user_id).exists?
 
       errors.add(:base, "Ya respondiste este formulario")
+    end
+
+    def answers_size_within_limit
+      return unless answers.present?
+
+      data_size = answers.to_json.bytesize
+      if data_size > MAX_ANSWERS_SIZE
+        errors.add(:answers, "son demasiado grandes (máximo #{MAX_ANSWERS_SIZE / 1.kilobyte} KB)")
+      end
     end
 end

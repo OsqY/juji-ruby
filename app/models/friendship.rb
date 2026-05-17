@@ -5,10 +5,13 @@ class Friendship < ApplicationRecord
   enum :status, { pending: 0, accepted: 1, rejected: 2, blocked: 3 }
 
   before_validation :generate_invitation_token, on: :create
+  before_validation :set_friendship_pair
 
   validates :requester_id, uniqueness: { scope: :addressee_id, message: "ya existe una solicitud" }
+  validates :friendship_pair, presence: true, uniqueness: true
   validates :invitation_token, presence: true, uniqueness: true
   validate :cannot_friend_self
+  validate :reverse_friendship_does_not_exist
 
   scope :active, -> { where(status: :accepted) }
   scope :pending_for, ->(user) { where(addressee: user, status: :pending) }
@@ -41,5 +44,18 @@ class Friendship < ApplicationRecord
 
     def cannot_friend_self
       errors.add(:addressee, "no puedes ser amigo de ti mismo") if requester_id == addressee_id
+    end
+
+    def reverse_friendship_does_not_exist
+      return unless requester_id.present? && addressee_id.present?
+
+      if Friendship.exists?(requester_id: addressee_id, addressee_id: requester_id)
+        errors.add(:base, "Ya existe una solicitud de amistad entre estos usuarios")
+      end
+    end
+
+    def set_friendship_pair
+      return unless requester_id.present? && addressee_id.present?
+      self.friendship_pair = "#{[requester_id, addressee_id].min}:#{[requester_id, addressee_id].max}"
     end
 end

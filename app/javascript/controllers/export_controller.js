@@ -11,7 +11,7 @@ export default class extends Controller {
         const paperColor = getComputedStyle(document.body).getPropertyValue("--paper").trim() || "#ffffff"
 
         const originalText = button.innerHTML
-        button.innerHTML = "GENERANDO..."
+        button.innerHTML = this.element.dataset.i18nGenerating || "GENERANDO..."
         button.disabled = true
 
         let captureHost = null
@@ -60,7 +60,7 @@ export default class extends Controller {
             link.click()
         } catch (error) {
             console.error("Export failed", error)
-            alert("Error al exportar la imagen. Intentalo de nuevo.")
+            alert(this.element.dataset.i18nError || "Error al exportar la imagen. Intentalo de nuevo.")
         } finally {
             if (captureHost) captureHost.remove()
             button.innerHTML = originalText

@@ -1,10 +1,11 @@
 class ExportsController < ApplicationController
   def create
-    model_name = params[:model]
-    format = params[:format] || "csv"
+    permitted = params.permit(:model, :format, :date_from, :date_to, :category, :status)
+    model_name = permitted[:model]
+    format = permitted[:format] || "csv"
     
     # Build filters from params
-    filters = build_filters(params)
+    filters = build_filters(permitted)
     
     # Validate model
     unless valid_model?(model_name)
@@ -21,7 +22,8 @@ class ExportsController < ApplicationController
         render json: { error: "Unsupported format" }, status: :unprocessable_entity
       end
     rescue => e
-      render json: { error: e.message }, status: :unprocessable_entity
+      Rails.logger.error("Export failed: #{e.message}")
+      render json: { error: "Export failed. Please try again." }, status: :unprocessable_entity
     end
   end
 
@@ -52,18 +54,18 @@ class ExportsController < ApplicationController
   end
 
   def valid_model?(model_name)
-    %w[transactions reports projects habits].include?(model_name)
+    %w[transactions reports projects habits budgets shopping_items].include?(model_name)
   end
 
   def build_filters(params)
     filters = {}
     
     if params[:date_from].present?
-      filters[:date_from] = Date.parse(params[:date_from])
+      filters[:date_from] = parse_date_safely(params[:date_from])
     end
     
     if params[:date_to].present?
-      filters[:date_to] = Date.parse(params[:date_to])
+      filters[:date_to] = parse_date_safely(params[:date_to])
     end
     
     if params[:category].present?
@@ -75,5 +77,12 @@ class ExportsController < ApplicationController
     end
     
     filters
+  end
+
+  def parse_date_safely(value)
+    return nil if value.blank?
+    Date.parse(value)
+  rescue ArgumentError
+    nil
   end
 end

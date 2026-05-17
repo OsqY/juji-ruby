@@ -32,6 +32,7 @@ gem "matrix"
 # Hotwire Native support
 gem "rack-cors", "~> 2.0"
 gem "user_agent_parser", ">= 2.0"
+gem "rack-attack", "~> 6.7"
 
 group :development, :test do
   gem "sqlite3", ">= 2.1"

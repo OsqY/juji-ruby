@@ -9,6 +9,7 @@ class Whiteboard < ApplicationRecord
   validates :name, presence: true
   validates :token, presence: true, uniqueness: true
   validates :width, :height, numericality: { greater_than: 0 }
+  validates :background_color, format: { with: /\A#[0-9A-Fa-f]{6}\z/, message: "debe ser un color hexadecimal válido" }, allow_blank: true
 
   def to_param
     id.to_s

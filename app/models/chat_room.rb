@@ -13,7 +13,7 @@ class ChatRoom < ApplicationRecord
   validates :capacity, numericality: { greater_than: 0, only_integer: true }, allow_nil: true
 
   scope :active, -> { where(archived_at: nil) }
-  scope :public_rooms, -> { active.where(room_type: [room_types[:public], room_types[:channel]]) }
+  scope :public_rooms, -> { active.where(room_type: [room_types[:open], room_types[:channel]]) }
   scope :searchable, -> { active.where(room_type: [room_types[:open], room_types[:channel]]) }
   scope :excluding_direct_messages, -> { where.not(room_type: room_types[:direct_message]) }
 

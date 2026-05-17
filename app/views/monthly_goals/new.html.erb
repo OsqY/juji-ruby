@@ -1,0 +1,43 @@
+<div class="chaotic-container" style="max-width: 600px;">
+  <h1 style="font-size: 2.5rem; margin-bottom: 2rem;">NUEVA META</h1>
+
+  <%= form_with model: @monthly_goal, class: "report-section-block" do |f| %>
+    <% if @monthly_goal.errors.any? %>
+      <div style="background: var(--expense-bg); padding: 1rem; margin-bottom: 1rem; border: 3px solid var(--expense-text);">
+        <% @monthly_goal.errors.full_messages.each do |msg| %>
+          <p style="margin: 0; color: var(--expense-text);"><%= msg %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div style="margin-bottom: 1.5rem;">
+      <%= f.label :title, "TÍTULO", style: "display: block; font-size: 0.8rem; font-weight: 900; margin-bottom: 0.5rem;" %>
+      <%= f.text_field :title, placeholder: "Ej. Ahorrar L. 5000", required: true %>
+    </div>
+
+    <div style="margin-bottom: 1.5rem;">
+      <%= f.label :description, "DESCRIPCIÓN", style: "display: block; font-size: 0.8rem; font-weight: 900; margin-bottom: 0.5rem;" %>
+      <%= f.text_area :description, placeholder: "Detalles de la meta...", rows: 3 %>
+    </div>
+
+    <div style="margin-bottom: 1.5rem;">
+      <%= f.label :goal_type, "TIPO", style: "display: block; font-size: 0.8rem; font-weight: 900; margin-bottom: 0.5rem;" %>
+      <%= f.select :goal_type, MonthlyGoal.goal_types.keys.map { |k| [k.humanize, k] }, {}, required: true %>
+    </div>
+
+    <div style="margin-bottom: 1.5rem;">
+      <%= f.label :target_value, "VALOR OBJETIVO", style: "display: block; font-size: 0.8rem; font-weight: 900; margin-bottom: 0.5rem;" %>
+      <%= f.number_field :target_value, step: 0.01, min: 0.01, required: true %>
+    </div>
+
+    <div style="margin-bottom: 1.5rem;">
+      <%= f.label :category, "CATEGORÍA (opcional)", style: "display: block; font-size: 0.8rem; font-weight: 900; margin-bottom: 0.5rem;" %>
+      <%= f.text_field :category, placeholder: "Ej. food, transport..." %>
+    </div>
+
+    <div>
+      <%= f.submit "CREAR META", class: "btn-chaos" %>
+      <%= link_to "CANCELAR", monthly_goals_path, class: "nav-link", style: "margin-left: 1rem;" %>
+    </div>
+  <% end %>
+</div>
