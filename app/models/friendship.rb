@@ -7,6 +7,8 @@ class Friendship < ApplicationRecord
   before_validation :generate_invitation_token, on: :create
   before_validation :set_friendship_pair
 
+  after_create_commit :notify_addressee, if: :pending?
+
   validates :requester_id, uniqueness: { scope: :addressee_id, message: "ya existe una solicitud" }
   validates :friendship_pair, presence: true, uniqueness: true
   validates :invitation_token, presence: true, uniqueness: true
@@ -57,5 +59,14 @@ class Friendship < ApplicationRecord
     def set_friendship_pair
       return unless requester_id.present? && addressee_id.present?
       self.friendship_pair = "#{[requester_id, addressee_id].min}:#{[requester_id, addressee_id].max}"
+    end
+
+    def notify_addressee
+      PushNotificationService.send_to_user(
+        addressee,
+        title: "Nueva solicitud de amistad",
+        body: "#{requester.display_name_or_email} quiere conectar contigo",
+        data: { type: "friend_request", url: "/friends/pending" }
+      )
     end
 end

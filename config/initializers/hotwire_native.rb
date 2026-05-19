@@ -7,6 +7,7 @@ module HotwireNative
     'TurboNative',
     'Turbo-Native',
     'hotwire-native',
+    'Capacitor',
     /Turbo Native/i,
     /Hotwire Native/i,
     /TurboAndroid/i,

@@ -25,6 +25,9 @@ class AlertService
     
     # Create or update notifications in DB
     alerts.each { |alert| create_or_update_notification(user, alert[:type], alert[:message]) }
+
+    # Send push notifications for high-priority alerts
+    alerts.each { |alert| send_push_if_needed(user, alert) }
     
     alerts
   end
@@ -128,5 +131,16 @@ class AlertService
     notification.read_at = nil
     notification.save!
     notification
+  end
+
+  def self.send_push_if_needed(user, alert)
+    return unless %i[budget_exceeded no_report_3_days].include?(alert[:type])
+
+    PushNotificationService.send_to_user(
+      user,
+      title: alert[:title],
+      body: alert[:message],
+      data: { type: alert[:type], url: "/dashboard" }
+    )
   end
 end

@@ -9,11 +9,18 @@ Rails.application.routes.draw do
   # Export routes
   post "exports", to: "exports#create", as: :exports
 
+  # Push notification routes
+  post "push_notifications/register", to: "push_notifications#register"
+  delete "push_notifications/unregister", to: "push_notifications#unregister"
+
   # Analytics routes
   get "analytics", to: "analytics#index", as: :analytics
   get "analytics/data/:metric", to: "analytics#data", as: :analytics_data
 
   resource :session
+  namespace :sessions do
+    resource :validate, only: [:show], controller: "validate"
+  end
   resources :passwords, param: :token
   resources :registrations, only: %i[ new create ]
 

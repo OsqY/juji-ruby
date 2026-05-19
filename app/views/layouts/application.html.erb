@@ -23,7 +23,12 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body data-controller="theme frame-state">
+  <body data-controller="theme frame-state native-bridge offline-indicator"
+        data-native-bridge-session-id-value="<%= cookies.signed[:session_id] %>">
+    <div data-offline-indicator-target="banner"
+         style="display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: #c0392b; color: white; text-align: center; padding: 0.5rem; font-weight: 700; font-size: 0.85rem;">
+      Sin conexión a internet — Algunas funciones pueden no estar disponibles
+    </div>
     <% unless content_for(:hide_nav) %>
     <nav class="chaos-nav" data-controller="nav-dropdown" data-action="click->nav-dropdown#closeOnLinkClick">
       <% dashboard_active = controller_name == "dashboard" %>

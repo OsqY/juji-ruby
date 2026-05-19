@@ -49,3 +49,16 @@ TESTING_QUICK_START.md
 TESTING_README.md
 TESTING_SUMMARY.txt
 omk
+
+# Node / Capacitor
+node_modules/
+android/app/build/
+android/build/
+android/.gradle/
+android/captures/
+android/local.properties
+
+# iOS (future)
+ios/App/build/
+ios/App/Pods/
+ios/DerivedData/

@@ -10,6 +10,7 @@ class Message < ApplicationRecord
   scope :for_chat, -> { order(created_at: :asc) }
 
   after_create_commit :broadcast_message
+  after_create_commit :notify_members, unless: :system_message?
 
   def author_name
     user&.display_name_or_email || "Anónimo"
@@ -36,5 +37,19 @@ class Message < ApplicationRecord
           )
         }
       )
+    end
+
+    def notify_members
+      return unless user_id.present?
+
+      recipients = chat_room.members.where.not(id: user_id)
+      recipients.each do |member|
+        PushNotificationService.send_to_user(
+          member,
+          title: chat_room.name,
+          body: "#{author_name}: #{content.truncate(100)}",
+          data: { type: "chat_message", url: "/salas/#{chat_room.id}" }
+        )
+      end
     end
 end
