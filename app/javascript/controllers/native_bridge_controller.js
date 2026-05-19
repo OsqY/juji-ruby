@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import { initBridge, saveSession, clearSession, injectSessionCookie, isNative } from "../../capacitor/bridge"
+import { initPushNotifications } from "../../capacitor/push"
 
 export default class extends Controller {
   static values = {
@@ -11,6 +12,11 @@ export default class extends Controller {
 
     // Initialize native plugins (splash, status bar, back button)
     await initBridge()
+
+    // Initialize push notifications (FCM token registration)
+    initPushNotifications().catch((err) => {
+      console.warn("Push notifications init failed:", err)
+    })
 
     // Restore session if we have a stored one
     await injectSessionCookie()
