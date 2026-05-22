@@ -1,0 +1,17 @@
+<%# Usage: render "layouts/aws_page_header", title: "Reportes", subtitle: "Lista de reportes diarios", breadcrumbs: [["Home", root_path], ["Reportes", daily_reports_path]] %>
+<nav class="aws-breadcrumbs" aria-label="Breadcrumb">
+  <% breadcrumbs.each_with_index do |(name, path), index| %>
+    <% if index < breadcrumbs.length - 1 %>
+      <%= link_to name, path %>
+      <span class="crumb-sep">/</span>
+    <% else %>
+      <span class="crumb-current"><%= name %></span>
+    <% end %>
+  <% end %>
+</nav>
+<header class="aws-page-header">
+  <h1><%= title %></h1>
+  <% if local_assigns[:subtitle] %>
+    <p><%= subtitle %></p>
+  <% end %>
+</header>

@@ -1,3 +1,7 @@
+<%= render "layouts/aws_page_header", title: "METAS MENSUALES",
+  subtitle: Date.current.strftime("%B %Y").upcase,
+  breadcrumbs: [["Home", root_path], ["Metas", monthly_goals_path]] %>
+
 <div class="chaotic-container">
   <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
     <div>

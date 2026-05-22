@@ -1,0 +1,150 @@
+<nav class="aws-breadcrumbs" aria-label="Breadcrumb">
+  <%= link_to "Home", root_path %>
+  <span class="crumb-sep">/</span>
+  <span class="crumb-current">Dashboard</span>
+</nav>
+
+<header class="aws-page-header">
+  <h1>Dashboard</h1>
+  <p>Resumen general de tu actividad semanal y mensual.</p>
+</header>
+
+<div class="aws-widgets-grid">
+  <div class="aws-widget">
+    <div class="aws-widget-label">Reportes enviados</div>
+    <div class="aws-widget-value"><%= @weekly_reports_count %></div>
+    <div class="aws-widget-meta">Esta semana</div>
+  </div>
+
+  <div class="aws-widget is-success">
+    <div class="aws-widget-label">Habitos cumplidos</div>
+    <div class="aws-widget-value"><%= @weekly_habits_completed %></div>
+    <div class="aws-widget-meta">Esta semana</div>
+  </div>
+
+  <div class="aws-widget">
+    <div class="aws-widget-label">Tareas cerradas</div>
+    <div class="aws-widget-value"><%= @weekly_tasks_completed %></div>
+    <div class="aws-widget-meta">Esta semana</div>
+  </div>
+
+  <div class="aws-widget is-danger">
+    <div class="aws-widget-label">Bloqueos abiertos</div>
+    <div class="aws-widget-value"><%= @weekly_open_blockers_count %></div>
+    <div class="aws-widget-meta">Sin resolver</div>
+  </div>
+
+  <div class="aws-widget is-accent">
+    <div class="aws-widget-label">Balance semanal</div>
+    <div class="aws-widget-value">L. <%= number_with_precision @week_balance, precision: 2 %></div>
+    <div class="aws-widget-meta">
+      In: L. <%= number_with_precision @week_income, precision: 2 %> /
+      Out: L. <%= number_with_precision @week_expenses, precision: 2 %>
+    </div>
+  </div>
+
+  <div class="aws-widget">
+    <div class="aws-widget-label">Gasto vs presupuesto</div>
+    <div class="aws-widget-value"><%= @month_budget_usage_percent %>%</div>
+    <div class="aws-widget-meta">
+      L. <%= number_with_precision @month_expenses, precision: 2 %> /
+      L. <%= number_with_precision @month_budget_total, precision: 2 %>
+    </div>
+  </div>
+
+  <div class="aws-widget is-success">
+    <div class="aws-widget-label">Ingresos del mes</div>
+    <div class="aws-widget-value">L. <%= number_with_precision @month_income, precision: 2 %></div>
+    <div class="aws-widget-meta"><%= Date.current.strftime("%B %Y") %></div>
+  </div>
+
+  <div class="aws-widget is-danger">
+    <div class="aws-widget-label">Gastos del mes</div>
+    <div class="aws-widget-value">L. <%= number_with_precision @month_expenses, precision: 2 %></div>
+    <div class="aws-widget-meta"><%= Date.current.strftime("%B %Y") %></div>
+  </div>
+</div>
+
+<% if @alerts.any? %>
+  <div class="aws-card aws-mb-2">
+    <div class="aws-card-header">
+      <h3 class="aws-card-title">Alertas</h3>
+    </div>
+    <% @alerts.each do |alert| %>
+      <div class="aws-alert aws-alert-<%= alert[:level] == :danger ? 'danger' : 'warning' %> aws-mb-1">
+        <strong><%= alert[:title] %></strong> &mdash; <%= alert[:message] %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 20px;">
+  <div class="aws-card">
+    <div class="aws-card-header">
+      <h3 class="aws-card-title">Gasto por categoria</h3>
+    </div>
+    <% if @expenses_by_category.any? %>
+      <% max_expense = @expenses_by_category.map(&:last).max.to_f %>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <% @expenses_by_category.each do |category, amount| %>
+          <% width = max_expense.positive? ? ((amount.to_f / max_expense) * 100).round(1) : 0 %>
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 4px;">
+              <span style="font-weight: 500;"><%= category.to_s.titleize %></span>
+              <span style="color: var(--aws-text-secondary);">L. <%= number_with_precision amount, precision: 2 %></span>
+            </div>
+            <div style="background: var(--aws-border); height: 8px; overflow: hidden;">
+              <div style="background: var(--aws-accent); height: 100%; width: <%= width %>%;"></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p style="color: var(--aws-text-secondary); font-size: 14px;">No hay egresos este mes.</p>
+    <% end %>
+  </div>
+
+  <div class="aws-card">
+    <div class="aws-card-header">
+      <h3 class="aws-card-title">Ultimo reporte</h3>
+    </div>
+    <% if @latest_daily %>
+      <p style="font-weight: 600; margin: 0 0 4px;"><%= @latest_daily.work_title.presence || "Sin titulo" %></p>
+      <p style="color: var(--aws-text-secondary); font-size: 14px; margin: 0 0 12px;">
+        <%= @latest_daily.report_date.strftime("%d/%m/%Y") %> |
+        <%= @latest_daily.worked_by.presence || "Sin responsable" %>
+      </p>
+      <div style="font-size: 14px; color: var(--aws-text-secondary); max-height: 200px; overflow-y: auto;">
+        <%= format_as_list @latest_daily.today %>
+      </div>
+    <% else %>
+      <p style="color: var(--aws-text-secondary); font-size: 14px;">Aun no hay dailies registradas.</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="aws-card">
+  <div class="aws-card-header">
+    <h3 class="aws-card-title">Bloqueos abiertos</h3>
+  </div>
+  <% if @open_blockers.any? %>
+    <table class="aws-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Bloqueo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @open_blockers.each do |report| %>
+          <tr>
+            <td style="white-space: nowrap;"><%= report.report_date.strftime("%d/%m/%Y") %></td>
+            <td><%= truncate(report.blockers, length: 120) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p style="color: var(--aws-text-secondary); font-size: 14px;">Sin bloqueos activos.</p>
+  <% end %>
+</div>

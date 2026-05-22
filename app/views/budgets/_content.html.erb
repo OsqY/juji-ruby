@@ -1,5 +1,9 @@
 <%= turbo_frame_tag "budgets_content" do %>
   <%= render "shared/frame_flash" %>
+<%= render "layouts/aws_page_header", title: "PRESUPUESTOS",
+  subtitle: "Planificación mensual",
+  breadcrumbs: [["Home", root_path], ["Presupuestos", budgets_path]] %>
+
   <div class="chaotic-container">
     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
       <h1 style="font-size: 3.6rem;">PRESUPUESTOS</h1>

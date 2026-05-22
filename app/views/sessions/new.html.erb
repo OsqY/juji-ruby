@@ -1,4 +1,8 @@
 <%= turbo_frame_tag "session_form_content" do %>
+<%= render "layouts/aws_page_header", title: "ENTRAR",
+  subtitle: "Accede a tu archivo personal",
+  breadcrumbs: [["Home", root_path], ["Entrar", nil]] %>
+
 <div class="chaotic-container" style="max-width: 600px;">
   <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
     <h1 class="form-title">ENTRAR</h1>

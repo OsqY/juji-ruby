@@ -1,4 +1,7 @@
 <%= turbo_frame_tag "password_request_content" do %>
+<%= render "layouts/aws_page_header", title: "RECUPERAR CONTRASEÑA",
+  breadcrumbs: [["Home", root_path], ["Recuperar", nil]] %>
+
 <h1>Forgot your password?</h1>
 
 <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>

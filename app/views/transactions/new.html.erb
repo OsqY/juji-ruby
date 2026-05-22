@@ -2,6 +2,9 @@
 <% drawer_mode = frame_id == "transaction_form_panel" %>
 <%= turbo_frame_tag frame_id do %>
 <% if drawer_mode %>
+<%= render "layouts/aws_page_header", title: "NUEVA TRANSACCIÓN",
+  breadcrumbs: [["Home", root_path], ["Finanzas", transactions_path], ["Nuevo", nil]] %>
+
 <div class="inline-drawer-shell" data-controller="drawer">
   <div class="inline-drawer-backdrop" data-action="click->drawer#close"></div>
   <div class="inline-drawer-panel">

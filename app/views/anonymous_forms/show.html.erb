@@ -1,3 +1,6 @@
+<%= render "layouts/aws_page_header", title: "DETALLE FORMULARIO",
+  breadcrumbs: [["Home", root_path], ["Formularios", anonymous_forms_path], ["Detalle", nil]] %>
+
 <div class="chaotic-container" style="max-width: 980px;">
   <%= turbo_stream_from [@anonymous_form, :responses] %>
   <%= render "shared/frame_flash" %>

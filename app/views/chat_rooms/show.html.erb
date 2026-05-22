@@ -1,38 +1,33 @@
-<div class="chaotic-container">
-  <div style="margin-bottom: 1.5rem;">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
-      <div>
-        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; padding: 0.2rem 0.5rem; border: 2px solid var(--ink); background: var(--muted-gray);">
-            <%= @chat_room.room_type %>
-          </span>
-          <% if @chat_room.capacity.present? %>
-            <span style="font-size: 0.75rem; color: #666;"><%= @chat_room.member_count %>/<%= @chat_room.capacity %></span>
-          <% end %>
-        </div>
-        <h1 style="font-size: 2rem; margin: 0;"><%= @chat_room.name %></h1>
-        <p style="margin: 0.5rem 0 0; color: #666;"><%= @chat_room.description %></p>
-      </div>
-      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-        <% if @chat_room.owner?(current_user) || @chat_room.admin_or_owner?(current_user) %>
-          <%= button_to t('.invite'), invite_chat_room_path(@chat_room), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.8rem;" %>
-        <% end %>
-        <%= button_to t('.leave'), leave_chat_room_path(@chat_room), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.8rem;", data: { turbo_confirm: t('.leave_confirm') } %>
-        <% if @chat_room.owner?(current_user) %>
-          <%= button_to t('common.delete'), chat_room_path(@chat_room), method: :delete, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.8rem; background: #c00; color: #fff;", data: { turbo_confirm: t('.delete_confirm') } %>
-        <% end %>
-      </div>
-    </div>
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: @chat_room.name,
+    breadcrumbs: [["Home", root_path], ["Chat", chat_rooms_path], ["Sala", nil]] %>
+
+  <div class="aws-page-header-actions aws-mb-2">
+    <% if @chat_room.owner?(current_user) || @chat_room.admin_or_owner?(current_user) %>
+      <%= button_to t('.invite'), invite_chat_room_path(@chat_room), method: :post, class: "aws-btn aws-btn-secondary" %>
+    <% end %>
+    <%= button_to t('.leave'), leave_chat_room_path(@chat_room), method: :post, class: "aws-btn aws-btn-secondary", data: { turbo_confirm: t('.leave_confirm') } %>
+    <% if @chat_room.owner?(current_user) %>
+      <%= button_to t('common.delete'), chat_room_path(@chat_room), method: :delete, class: "aws-btn aws-btn-secondary", style: "color: #d13212; border-color: #d13212;", data: { turbo_confirm: t('.delete_confirm') } %>
+    <% end %>
   </div>
 
-  <div class="chat-room-layout" style="display: grid; grid-template-columns: 1fr 250px; gap: 1.5rem;">
+  <div style="display: grid; grid-template-columns: 1fr 260px; gap: 20px;">
     <div>
+      <div style="margin-bottom: 12px;">
+        <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; background: var(--aws-border); color: var(--aws-text-secondary);"><%= @chat_room.room_type %></span>
+        <% if @chat_room.capacity.present? %>
+          <span style="font-size: 12px; color: var(--aws-text-secondary);"><%= @chat_room.member_count %>/<%= @chat_room.capacity %></span>
+        <% end %>
+        <p style="margin: 4px 0 0; color: var(--aws-text-secondary); font-size: 13px;"><%= @chat_room.description %></p>
+      </div>
+
       <div id="messages"
            data-controller="chat-room"
            data-chat-room-room-id-value="<%= @chat_room.id %>"
            aria-live="polite"
            aria-atomic="false"
-           style="border: 3px solid var(--ink); background: var(--paper); height: 500px; overflow-y: auto; padding: 1rem; margin-bottom: 1rem;">
+           style="border: 1px solid var(--aws-border); background: #fff; height: 500px; overflow-y: auto; padding: 16px; margin-bottom: 12px;">
         <% @messages.each do |message| %>
           <%= render "messages/message", message: message %>
         <% end %>
@@ -42,39 +37,126 @@
         <%= form_with model: [@chat_room, Message.new],
                       url: chat_room_messages_path(@chat_room),
                       data: { action: "submit->chat-room#submit", turbo: false } do |f| %>
-          <div style="display: flex; gap: 0.5rem;">
+          <div style="display: flex; gap: 8px;">
             <%= f.text_field :content,
                 placeholder: t('.placeholder'),
                 autocomplete: "off",
                 aria: { label: t('.message_aria') },
                 data: { chat_room_target: "input" },
-                style: "flex: 1; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); font-size: 1rem;"
+                style: "flex: 1; padding: 8px 12px; border: 1px solid var(--aws-input-border); font-size: 14px; background: #fff;"
             %>
-            <%= f.submit t('.send'), class: "btn-chaos", style: "padding: 0.75rem 1.5rem;" %>
+            <%= f.submit t('.send'), class: "aws-btn aws-btn-primary" %>
           </div>
         <% end %>
       <% else %>
-        <div style="padding: 1rem; border: 3px solid #ccc; text-align: center; color: #666;">
+        <div style="padding: 12px; border: 1px solid var(--aws-border); text-align: center; color: var(--aws-text-secondary); font-size: 13px;">
           <%= t('.cannot_write') %>
         </div>
       <% end %>
     </div>
 
     <div>
-      <div style="border: 3px solid var(--ink); background: var(--paper); padding: 1rem;">
-        <h3 style="font-size: 1rem; font-weight: 700; margin: 0 0 1rem; text-transform: uppercase;"><%= t('.members') %></h3>
-        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+      <div class="aws-card">
+        <div class="aws-card-header">
+          <h3 class="aws-card-title"><%= t('.members') %></h3>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
           <% @members.each do |member| %>
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <div>
-                <div style="font-weight: 600; font-size: 0.9rem;"><%= member.user.display_name_or_email %></div>
-                <div style="font-size: 0.75rem; color: #666; text-transform: uppercase;"><%= member.role %></div>
+                <div style="font-weight: 600; font-size: 13px;"><%= member.user.display_name_or_email %></div>
+                <div style="font-size: 11px; color: var(--aws-text-secondary); text-transform: uppercase;"><%= member.role %></div>
               </div>
               <% if @chat_room.admin_or_owner?(current_user) && member.user != current_user && !member.owner? %>
-                <%= button_to "X", kick_chat_room_path(@chat_room, user_id: member.user.id), method: :delete, class: "btn-chaos", style: "padding: 0.25rem 0.5rem; font-size: 0.7rem; min-width: auto;", data: { turbo_confirm: t('.kick_confirm') } %>
+                <%= button_to "X", kick_chat_room_path(@chat_room, user_id: member.user.id), method: :delete, class: "aws-btn aws-btn-secondary", style: "padding: 2px 8px; font-size: 11px; min-width: auto; color: #d13212; border-color: #d13212;", data: { turbo_confirm: t('.kick_confirm') } %>
               <% end %>
             </div>
           <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="legacy-content">
+  <div class="chaotic-container">
+    <div style="margin-bottom: 1.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+            <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; padding: 0.2rem 0.5rem; border: 2px solid var(--ink); background: var(--muted-gray);">
+              <%= @chat_room.room_type %>
+            </span>
+            <% if @chat_room.capacity.present? %>
+              <span style="font-size: 0.75rem; color: #666;"><%= @chat_room.member_count %>/<%= @chat_room.capacity %></span>
+            <% end %>
+          </div>
+          <h1 style="font-size: 2rem; margin: 0;"><%= @chat_room.name %></h1>
+          <p style="margin: 0.5rem 0 0; color: #666;"><%= @chat_room.description %></p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <% if @chat_room.owner?(current_user) || @chat_room.admin_or_owner?(current_user) %>
+            <%= button_to t('.invite'), invite_chat_room_path(@chat_room), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.8rem;" %>
+          <% end %>
+          <%= button_to t('.leave'), leave_chat_room_path(@chat_room), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.8rem;", data: { turbo_confirm: t('.leave_confirm') } %>
+          <% if @chat_room.owner?(current_user) %>
+            <%= button_to t('common.delete'), chat_room_path(@chat_room), method: :delete, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.8rem; background: #c00; color: #fff;", data: { turbo_confirm: t('.delete_confirm') } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-room-layout" style="display: grid; grid-template-columns: 1fr 250px; gap: 1.5rem;">
+      <div>
+        <div id="messages"
+             data-controller="chat-room"
+             data-chat-room-room-id-value="<%= @chat_room.id %>"
+             aria-live="polite"
+             aria-atomic="false"
+             style="border: 3px solid var(--ink); background: var(--paper); height: 500px; overflow-y: auto; padding: 1rem; margin-bottom: 1rem;">
+          <% @messages.each do |message| %>
+            <%= render "messages/message", message: message %>
+          <% end %>
+        </div>
+
+        <% if @chat_room.can_speak?(current_user) %>
+          <%= form_with model: [@chat_room, Message.new],
+                        url: chat_room_messages_path(@chat_room),
+                        data: { action: "submit->chat-room#submit", turbo: false } do |f| %>
+            <div style="display: flex; gap: 0.5rem;">
+              <%= f.text_field :content,
+                  placeholder: t('.placeholder'),
+                  autocomplete: "off",
+                  aria: { label: t('.message_aria') },
+                  data: { chat_room_target: "input" },
+                  style: "flex: 1; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); font-size: 1rem;"
+              %>
+              <%= f.submit t('.send'), class: "btn-chaos", style: "padding: 0.75rem 1.5rem;" %>
+            </div>
+          <% end %>
+        <% else %>
+          <div style="padding: 1rem; border: 3px solid #ccc; text-align: center; color: #666;">
+            <%= t('.cannot_write') %>
+          </div>
+        <% end %>
+      </div>
+
+      <div>
+        <div style="border: 3px solid var(--ink); background: var(--paper); padding: 1rem;">
+          <h3 style="font-size: 1rem; font-weight: 700; margin: 0 0 1rem; text-transform: uppercase;"><%= t('.members') %></h3>
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <% @members.each do |member| %>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 600; font-size: 0.9rem;"><%= member.user.display_name_or_email %></div>
+                  <div style="font-size: 0.75rem; color: #666; text-transform: uppercase;"><%= member.role %></div>
+                </div>
+                <% if @chat_room.admin_or_owner?(current_user) && member.user != current_user && !member.owner? %>
+                  <%= button_to "X", kick_chat_room_path(@chat_room, user_id: member.user.id), method: :delete, class: "btn-chaos", style: "padding: 0.25rem 0.5rem; font-size: 0.7rem; min-width: auto;", data: { turbo_confirm: t('.kick_confirm') } %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

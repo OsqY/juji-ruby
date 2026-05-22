@@ -1,0 +1,143 @@
+<aside class="aws-sidebar" data-aws-sidebar-target="sidebar" aria-label="Navegacion principal">
+  <button class="aws-sidebar-toggle" data-action="click->aws-sidebar#toggleCollapse" aria-label="Contraer menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-aws-sidebar-target="toggleIcon"><path d="m11 17-5-5 5-5"></path><path d="m18 17-5-5 5-5"></path></svg>
+  </button>
+
+  <% dashboard_active = controller_name == "dashboard" %>
+  <% reports_active = controller_name == "daily_reports" %>
+  <% transactions_active = controller_name == "transactions" %>
+  <% budgets_active = controller_name == "budgets" %>
+  <% monthly_goals_active = controller_name == "monthly_goals" %>
+  <% projects_active = controller_name == "projects" %>
+  <% habits_active = controller_name == "habits" %>
+  <% shopping_active = controller_name == "shopping_items" %>
+  <% forms_active = controller_name == "anonymous_forms" %>
+  <% whiteboards_active = controller_name == "whiteboards" %>
+  <% chat_active = controller_name == "chat_rooms" %>
+  <% friends_active = controller_name == "friends" %>
+  <% notifications_active = controller_name == "notifications" %>
+  <% analytics_active = controller_name == "analytics" %>
+
+  <div class="aws-sidebar-section">
+    <%= link_to root_path, class: "aws-sidebar-link #{'is-active' if dashboard_active}" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>
+      <span>Dashboard</span>
+    <% end %>
+    <%= link_to analytics_path, class: "aws-sidebar-link #{'is-active' if analytics_active}" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+      <span>Analytics</span>
+    <% end %>
+  </div>
+
+  <div class="aws-sidebar-section">
+    <div class="aws-sidebar-header" data-action="click->aws-sidebar#toggleSection">
+      <span>Reportes</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+    </div>
+    <div class="aws-sidebar-links">
+      <%= link_to daily_reports_path, class: "aws-sidebar-link #{'is-active' if reports_active}" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <span>Daily Reports</span>
+      <% end %>
+      <%= link_to new_daily_report_path, class: "aws-sidebar-link" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+        <span>Nuevo reporte</span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="aws-sidebar-section">
+    <div class="aws-sidebar-header" data-action="click->aws-sidebar#toggleSection">
+      <span>Productividad</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+    </div>
+    <div class="aws-sidebar-links">
+      <%= link_to projects_path, class: "aws-sidebar-link #{'is-active' if projects_active}" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 11-7-7-7 7"></path><path d="M15 4v14"></path><path d="M8 11v7a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-7"></path></svg>
+        <span>Proyectos</span>
+      <% end %>
+      <%= link_to habits_path, class: "aws-sidebar-link #{'is-active' if habits_active}" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+        <span>Habitos</span>
+      <% end %>
+      <%= link_to shopping_items_path, class: "aws-sidebar-link #{'is-active' if shopping_active}" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+        <span>Lista de compras</span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="aws-sidebar-section">
+    <div class="aws-sidebar-header" data-action="click->aws-sidebar#toggleSection">
+      <span>Finanzas</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+    </div>
+    <div class="aws-sidebar-links">
+      <%= link_to transactions_path, class: "aws-sidebar-link #{'is-active' if transactions_active}" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        <span>Transacciones</span>
+      <% end %>
+      <%= link_to budgets_path, class: "aws-sidebar-link #{'is-active' if budgets_active}" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+        <span>Presupuestos</span>
+      <% end %>
+      <%= link_to monthly_goals_path, class: "aws-sidebar-link #{'is-active' if monthly_goals_active}" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V8"></path><path d="M5 12V2a10 10 0 0 1 14 0v10"></path><path d="M12 22a5 5 0 0 1-5-5c0-2.5 2-4 5-8 3 4 5 5.5 5 8a5 5 0 0 1-5 5Z"></path></svg>
+        <span>Metas mensuales</span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="aws-sidebar-section">
+    <div class="aws-sidebar-header" data-action="click->aws-sidebar#toggleSection">
+      <span>Herramientas</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+    </div>
+    <div class="aws-sidebar-links">
+      <%= link_to anonymous_forms_path, class: "aws-sidebar-link #{'is-active' if forms_active}" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <span>Formularios</span>
+      <% end %>
+      <%= link_to whiteboards_path, class: "aws-sidebar-link #{'is-active' if whiteboards_active}" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
+        <span>Pizarras</span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="aws-sidebar-section">
+    <div class="aws-sidebar-header" data-action="click->aws-sidebar#toggleSection">
+      <span>Social</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+    </div>
+    <div class="aws-sidebar-links">
+      <%= link_to chat_rooms_path, class: "aws-sidebar-link #{'is-active' if chat_active}" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span>Chat</span>
+      <% end %>
+      <%= link_to friends_path, class: "aws-sidebar-link #{'is-active' if friends_active}" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <span>Amigos</span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="aws-sidebar-section" style="margin-top: auto; border-top: 1px solid var(--aws-nav-border);">
+    <div class="aws-sidebar-links">
+      <div class="aws-sidebar-link" style="cursor: default; padding: 8px 16px;">
+        <select data-theme-target="themeSelect" data-action="change->theme#switch" style="background: transparent; color: var(--aws-sidebar-text); border: 1px solid var(--aws-nav-border); font-size: 12px; padding: 4px; width: 100%; cursor: pointer;">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="vintage">Vintage</option>
+          <option value="neon">Neon</option>
+          <option value="brat">Brat</option>
+          <option value="comic">Comic</option>
+          <option value="superhero">Superhero</option>
+          <option value="aws">AWS Console</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="aws-sidebar-overlay" data-aws-sidebar-target="overlay" data-action="click->aws-sidebar#closeMobile"></div>

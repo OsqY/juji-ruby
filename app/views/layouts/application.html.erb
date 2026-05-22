@@ -11,26 +11,32 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :app, "aws-console", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body data-controller="theme frame-state native-bridge offline-indicator"
+  <body data-controller="theme frame-state native-bridge offline-indicator aws-sidebar"
         data-native-bridge-session-id-value="<%= cookies.signed[:session_id] %>">
     <div data-offline-indicator-target="banner"
          style="display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: #c0392b; color: white; text-align: center; padding: 0.5rem; font-weight: 700; font-size: 0.85rem;">
-      Sin conexión a internet — Algunas funciones pueden no estar disponibles
+      Sin conexion a internet — Algunas funciones pueden no estar disponibles
     </div>
-    <% unless content_for(:hide_nav) %>
-    <nav class="chaos-nav" data-controller="nav-dropdown" data-action="click->nav-dropdown#closeOnLinkClick">
+
+    <div class="aws-layout" data-aws-sidebar-target="layout">
+      <% unless content_for(:hide_nav) %>
+        <%= render "layouts/aws_topbar" %>
+        <%= render "layouts/aws_sidebar" %>
+      <% end %>
+
+      <div class="aws-main">
+      <% unless content_for(:hide_nav) %>
+      <nav class="chaos-nav" data-controller="nav-dropdown" data-action="click->nav-dropdown#closeOnLinkClick">
       <% dashboard_active = controller_name == "dashboard" %>
       <% reports_active = controller_name == "daily_reports" && action_name != "new" %>
       <% report_new_active = controller_name == "daily_reports" && action_name == "new" %>
@@ -56,71 +62,12 @@
         <span class="brand-tag"><%= t('.brand_tag') %></span>
       </div>
 
-      <!-- Global Search Bar -->
-      <div 
-        class="nav-search-wrapper" 
-        data-controller="search" 
-        data-action="keydown->search#handleKeydown"
-        data-search-search-path-value="<%= search_results_path %>"
-        data-search-user-id-value="<%= current_user&.id %>"
-        data-i18n-recent-searches="<%= t('search.js.recent_searches') %>"
-        data-i18n-no-results="<%= t('search.js.no_results') %>"
-        data-i18n-untitled="<%= t('search.js.untitled') %>"
-        style="
-          padding: 0.75rem;
-          border-bottom: 1px solid var(--border-color, #eee);
-        "
-      >
-        <form 
-          method="get" 
-          action="<%= search_path %>" 
-          style="position: relative; display: flex; gap: 0.5rem;"
-          data-search-target="form"
-          role="search"
-          aria-label="<%= t('.aria.global_search') %>"
-        >
+      <div class="nav-search-wrapper" data-controller="search" data-action="keydown->search#handleKeydown" data-search-search-path-value="<%= search_results_path %>" data-search-user-id-value="<%= current_user&.id %>" data-i18n-recent-searches="<%= t('search.js.recent_searches') %>" data-i18n-no-results="<%= t('search.js.no_results') %>" data-i18n-untitled="<%= t('search.js.untitled') %>" style="padding: 0.75rem; border-bottom: 1px solid var(--border-color, #eee);">
+        <form method="get" action="<%= search_path %>" style="position: relative; display: flex; gap: 0.5rem;" data-search-target="form" role="search" aria-label="<%= t('.aria.global_search') %>">
           <label for="global-search" class="visually-hidden"><%= t('.aria.search_input') %></label>
-          <input 
-            id="global-search"
-            type="text" 
-            name="q" 
-            placeholder="<%= t('.search.placeholder') %>" 
-            class="nav-search-input"
-            data-search-target="input"
-            data-action="input->search#search blur->search#hideResults"
-            style="
-              flex: 1;
-              padding: 0.6rem 0.8rem;
-              border: 1px solid var(--border-color, #ddd);
-              border-radius: 4px;
-              font-size: 0.9rem;
-              background: var(--paper);
-              color: var(--ink);
-              transition: all 0.2s ease;
-            "
-            aria-label="<%= t('.aria.search_app') %>"
-          />
+          <input id="global-search" type="text" name="q" placeholder="<%= t('.search.placeholder') %>" class="nav-search-input" data-search-target="input" data-action="input->search#search blur->search#hideResults" style="flex: 1; padding: 0.6rem 0.8rem; border: 1px solid var(--border-color, #ddd); border-radius: 4px; font-size: 0.9rem; background: var(--paper); color: var(--ink); transition: all 0.2s ease;" aria-label="<%= t('.aria.search_app') %>" />
         </form>
-        
-        <div 
-          class="nav-search-results" 
-          data-search-target="results"
-          style="
-            position: absolute;
-            top: 100%;
-            left: 0.75rem;
-            right: 0.75rem;
-            margin-top: 0.5rem;
-            z-index: 1000;
-            max-height: 300px;
-            overflow-y: auto;
-            background: var(--paper);
-            border: 1px solid var(--muted-gray);
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            display: none;
-          "
-        ></div>
+        <div class="nav-search-results" data-search-target="results" style="position: absolute; top: 100%; left: 0.75rem; right: 0.75rem; margin-top: 0.5rem; z-index: 1000; max-height: 300px; overflow-y: auto; background: var(--paper); border: 1px solid var(--muted-gray); border-radius: 4px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); display: none;"></div>
       </div>
 
       <% reports_group_active = reports_active || report_new_active %>
@@ -208,6 +155,7 @@
             <option value="brat"><%= t('.theme.brat') %></option>
             <option value="comic"><%= t('.theme.comic') %></option>
             <option value="superhero"><%= t('.theme.superhero') %></option>
+            <option value="aws">AWS Console</option>
           </select>
           <select class="theme-select-compact brat-font-select" data-theme-target="bratFontSelect" data-action="change->theme#switchFont">
             <option value="helvetica"><%= t('.theme.font_helvetica') %></option>
@@ -215,10 +163,12 @@
           </select>
         </div>
       </div>
-    </nav>
-    <% end %>
-    <main class="chaotic-container nav-spaced">
-      <%= yield %>
-    </main>
+      </nav>
+      <% end %>
+      <main class="chaotic-container nav-spaced">
+        <%= yield %>
+      </main>
+      </div>
+    </div>
   </body>
 </html>

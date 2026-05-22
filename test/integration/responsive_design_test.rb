@@ -37,7 +37,7 @@ class ResponsiveDesignTest < ActionDispatch::IntegrationTest
     page.current_window.resize_to(375, 667) # Mobile medium
     
     # Debe haber navegación y elementos táctiles
-    assert page.has_css?('nav') || page.has_css?('.chaos-nav'), 
+    assert page.has_css?('.aws-topbar') || page.has_css?('.aws-sidebar') || page.has_css?('nav') || page.has_css?('.chaos-nav'), 
       "Navigation not found on mobile"
     assert page.has_css?('a, button', minimum: 1),
       "No interactive elements found"

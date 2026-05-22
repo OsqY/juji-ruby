@@ -1,150 +1,296 @@
 <%= turbo_frame_tag "transactions_content" do %>
   <%= render "shared/frame_flash" %>
-  <div class="chaotic-container">
-    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
-      <h1 style="font-size: 3.6rem;">FLUJO DE<br>CAJA</h1>
-      <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
-        <%= render "shared/export_actions", model: "transactions" %>
-        <%= link_to t("transactions.actions.new"), new_transaction_path, class: "btn-chaos", data: { turbo_frame: "transaction_form_panel" } %>
+
+  <div class="aws-content">
+    <%= render "layouts/aws_page_header", title: "FLUJO DE CAJA",
+      subtitle: "Gestion de ingresos y egresos",
+      breadcrumbs: [["Home", root_path], ["Finanzas", transactions_path]] %>
+
+    <div class="aws-page-header-actions aws-mb-2">
+      <%= link_to t("transactions.actions.new"), new_transaction_path, class: "aws-btn aws-btn-primary", data: { turbo_frame: "transaction_form_panel" } %>
+      <%= render "shared/export_actions", model: "transactions" %>
+    </div>
+
+    <div class="aws-widgets-grid aws-mb-2">
+      <div class="aws-widget is-success">
+        <div class="aws-widget-label">Ingresos del mes</div>
+        <div class="aws-widget-value">L. <%= number_with_precision @income, precision: 2 %></div>
+        <div class="aws-widget-meta"><%= @selected_month.strftime("%B %Y") %></div>
+      </div>
+      <div class="aws-widget is-danger">
+        <div class="aws-widget-label">Egresos del mes</div>
+        <div class="aws-widget-value">L. <%= number_with_precision @expenses, precision: 2 %></div>
+        <div class="aws-widget-meta"><%= @selected_month.strftime("%B %Y") %></div>
+      </div>
+      <div class="aws-widget is-accent">
+        <div class="aws-widget-label">Balance neto</div>
+        <div class="aws-widget-value">L. <%= number_with_precision @balance, precision: 2 %></div>
+        <div class="aws-widget-meta"><%= @selected_month.strftime("%B %Y") %></div>
       </div>
     </div>
 
-    <section class="report-section-block" style="margin-bottom: 2rem;">
-      <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
-        <div style="display: flex; gap: 0.5rem; align-items: center;">
-          <%= link_to "← MES ANTERIOR", transactions_path(month: @previous_month.strftime("%Y-%m")), class: "nav-link" %>
-          <strong style="letter-spacing: 1px;"><%= @selected_month.strftime("%B %Y").upcase %></strong>
-          <%= link_to "MES SIGUIENTE →", transactions_path(month: @next_month.strftime("%Y-%m")), class: "nav-link" %>
-        </div>
-        <%= link_to "IR A HOY", transactions_path(month: Date.current.strftime("%Y-%m")), class: "nav-link" %>
+    <div class="aws-card aws-mb-2">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title">Navegacion</h3>
       </div>
-    </section>
-
-    <div class="report-grid" style="margin-bottom: 2rem;">
-      <div class="report-column">
-        <div class="report-section-block" style="background: var(--income-bg); color: var(--income-text);">
-          <span class="section-label" style="background: var(--income-text); color: var(--income-bg);">INGRESOS DEL MES</span>
-          <h2 style="font-size: 2.6rem; margin-top: 1rem;">L. <%= number_with_precision @income, precision: 2 %></h2>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <%= link_to "← Mes anterior", transactions_path(month: @previous_month.strftime("%Y-%m")), class: "aws-btn aws-btn-secondary" %>
+          <strong style="font-size: 14px;"><%= @selected_month.strftime("%B %Y").upcase %></strong>
+          <%= link_to "Mes siguiente →", transactions_path(month: @next_month.strftime("%Y-%m")), class: "aws-btn aws-btn-secondary" %>
         </div>
-      </div>
-      <div class="report-column">
-        <div class="report-section-block" style="background: var(--expense-bg); color: var(--expense-text);">
-          <span class="section-label" style="background: var(--expense-text); color: var(--expense-bg);">EGRESOS DEL MES</span>
-          <h2 style="font-size: 2.6rem; margin-top: 1rem;">L. <%= number_with_precision @expenses, precision: 2 %></h2>
-        </div>
+        <%= link_to "Ir a hoy", transactions_path(month: Date.current.strftime("%Y-%m")), class: "aws-btn aws-btn-secondary" %>
       </div>
     </div>
 
-    <section class="report-card" style="margin-bottom: 3rem;">
-      <div class="daily-header">
-        <div class="daily-date">MES</div>
-        <div class="daily-metadata">BALANCE NETO</div>
+    <div class="aws-card aws-mb-2">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title">Presupuestos</h3>
       </div>
-      <h2 style="font-size: 4.5rem; letter-spacing: -2px; margin-top: 1rem;">
-        L. <%= number_with_precision @balance, precision: 2 %>
-      </h2>
-    </section>
-
-    <section class="report-section-block" style="margin-bottom: 3rem;">
-      <span class="section-label" style="background: var(--accent-blue); color: white;">PRESUPUESTOS</span>
-      <h2 class="section-title" style="margin-top: 1rem;">LÍMITE MENSUAL POR CATEGORÍA</h2>
-
-      <%= form_with model: @budget, url: budgets_path(context: "transactions"), class: "budget-form" do |f| %>
+      <%= form_with model: @budget, url: budgets_path(context: "transactions"), style: "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 16px;" do |f| %>
         <%= f.hidden_field :month, value: @selected_month.strftime("%Y-%m-%d") %>
-        <% category_options = @category_options.to_a %>
-        <% selected_category = @budget.category.to_s.strip.downcase %>
-        <% in_options = selected_category.present? && category_options.include?(selected_category) %>
-        <% selected_option = in_options ? selected_category : "__new__" %>
-        <% custom_value = in_options ? "" : selected_category %>
-        <div>
-          <label>Categoría</label>
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <%= f.label :category, "Categoria", style: "font-size: 12px; font-weight: 600; color: var(--aws-text-secondary);" %>
           <div data-controller="category-picker">
-            <%= f.hidden_field :category, value: selected_category, data: { category_picker_target: "hidden" } %>
+            <%= f.hidden_field :category, value: @budget.category.to_s.strip.downcase, data: { category_picker_target: "hidden" } %>
             <%= select_tag "budget[category_option]",
-              options_for_select([*category_options.map { |category| [category, category] }, [t("transactions.category.new"), "__new__"]], selected_option),
-                data: { category_picker_target: "select", action: "change->category-picker#selectChanged", new_value: "__new__" } %>
-
-            <div data-category-picker-target="customWrap" style="margin-top: 0.4rem;">
-              <%= text_field_tag "budget[category_custom]", custom_value, placeholder: t("transactions.category.custom_placeholder"), data: { category_picker_target: "custom", action: "input->category-picker#customChanged" } %>
+              options_for_select([*@category_options.to_a.map { |category| [category, category] }, [t("transactions.category.new"), "__new__"]], @category_options.to_a.include?(@budget.category.to_s.strip.downcase) ? @budget.category.to_s.strip.downcase : "__new__"),
+              data: { category_picker_target: "select", action: "change->category-picker#selectChanged", new_value: "__new__" } %>
+            <div data-category-picker-target="customWrap" style="margin-top: 4px;">
+              <%= text_field_tag "budget[category_custom]", @category_options.to_a.include?(@budget.category.to_s.strip.downcase) ? "" : @budget.category.to_s.strip.downcase, placeholder: t("transactions.category.custom_placeholder"), data: { category_picker_target: "custom", action: "input->category-picker#customChanged" } %>
             </div>
           </div>
         </div>
-        <div>
-          <label>Límite mensual</label>
-          <%= f.number_field :monthly_limit, step: 0.01, min: 0.01, placeholder: "0.00" %>
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <%= f.label :monthly_limit, "Limite mensual", style: "font-size: 12px; font-weight: 600; color: var(--aws-text-secondary);" %>
+          <%= f.number_field :monthly_limit, step: 0.01, min: 0.01, placeholder: "0.00", style: "padding: 4px 8px; border: 1px solid var(--aws-input-border); font-size: 14px;" %>
         </div>
-        <div style="display: flex; align-items: end;">
-          <%= f.submit "GUARDAR", class: "btn-chaos", style: "padding: 0.8rem 1rem; font-size: 0.8rem;" %>
-        </div>
+        <%= f.submit "Guardar", class: "aws-btn aws-btn-primary" %>
       <% end %>
 
-      <div class="budget-board">
-        <% @budget_rows.each do |row| %>
-          <% budget = row[:budget] %>
-          <% percent = row[:percent] %>
-          <% status = row[:status] %>
-          <div class="budget-item budget-<%= status %>">
-            <div class="budget-head">
-              <strong><%= budget.category.to_s.upcase %></strong>
-              <span>L. <%= number_with_precision row[:spent], precision: 2 %> / L. <%= number_with_precision budget.monthly_limit, precision: 2 %></span>
+      <% if @budget_rows.any? %>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <% @budget_rows.each do |row| %>
+            <% budget = row[:budget] %>
+            <% percent = row[:percent] %>
+            <% status = row[:status] %>
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+                <span style="font-weight: 600;"><%= budget.category.to_s.titleize %></span>
+                <span style="color: var(--aws-text-secondary);">L. <%= number_with_precision row[:spent], precision: 2 %> / L. <%= number_with_precision budget.monthly_limit, precision: 2 %></span>
+              </div>
+              <div style="background: var(--aws-border); height: 8px; overflow: hidden;">
+                <div style="background: <%= status == 'danger' ? '#d13212' : status == 'warning' ? '#ec7211' : '#1d8102' %>; height: 100%; width: <%= [percent, 100].min %>%; transition: width 0.3s;"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 11px; margin-top: 4px; color: var(--aws-text-secondary);">
+                <span><%= percent %>% usado</span>
+                <% if percent >= 100 %>
+                  <span style="color: #d13212; font-weight: 600;">Presupuesto superado</span>
+                <% elsif percent >= 80 %>
+                  <span style="color: #ec7211; font-weight: 600;">Alerta: 80% alcanzado</span>
+                <% end %>
+                <%= button_to "Eliminar", budget_path(budget, context: "transactions"), method: :delete, class: "aws-btn aws-btn-secondary", style: "padding: 2px 8px; font-size: 11px; color: #d13212; border-color: #d13212;", data: { turbo_confirm: "¿Eliminar presupuesto?" } %>
+              </div>
             </div>
-            <div class="budget-track">
-              <div class="budget-fill budget-fill-<%= status %>" style="width: <%= [percent, 100].min %>%;"></div>
-            </div>
-            <div class="budget-foot">
-              <span><%= percent %>% USADO</span>
-              <% if percent >= 100 %>
-                <span class="budget-alert">SUPERASTE EL PRESUPUESTO</span>
-              <% elsif percent >= 80 %>
-                <span class="budget-alert">ALERTA: 80% ALCANZADO</span>
-              <% end %>
-              <%= button_to "ELIMINAR", budget_path(budget, context: "transactions"), method: :delete, class: "delete-btn-link", data: { turbo_confirm: "¿Eliminar presupuesto?" } %>
-            </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <p style="color: var(--aws-text-secondary); font-size: 14px;">Aun no hay presupuestos para este mes.</p>
+      <% end %>
+    </div>
 
-        <% if @budget_rows.empty? %>
-          <p class="report-text" style="opacity: 0.7;">Aún no hay presupuestos para este mes.</p>
-        <% end %>
+    <div class="aws-card">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title">Historial</h3>
       </div>
-    </section>
-
-    <h2 class="section-title" style="margin-bottom: 2rem; border-bottom: 6px solid var(--ink); display: inline-block;">HISTORIAL</h2>
-
-    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-      <% @transactions.each do |t| %>
-        <div class="report-section-block" style="display: flex; justify-content: space-between; align-items: center; background: var(--paper); gap: 1rem; flex-wrap: wrap;">
-          <div>
-            <span class="section-label" style="background: <%= t.income? ? 'var(--income-text)' : 'var(--expense-text)' %>; color: <%= t.income? ? 'var(--income-bg)' : 'var(--expense-bg)' %>;">
-              <%= t.transaction_type.to_s.upcase %>
-            </span>
-            <h3 class="section-title" style="margin-top: 0.8rem;"><%= t.description.to_s.upcase %></h3>
-            <p class="report-text" style="font-size: 0.85rem; font-weight: 700; opacity: 0.6;">
-              <%= t.date.strftime("%d %B %Y").upcase %> | <%= (t.category.presence || "VARIOS").upcase %>
-            </p>
-          </div>
-          <div style="text-align: right;">
-            <h2 style="color: <%= t.income? ? 'var(--income-text)' : 'var(--expense-text)' %>; font-size: 2rem; font-family: 'Archivo Black';">
-              <%= t.income? ? '+' : '-' %>L. <%= number_with_precision t.amount, precision: 2 %>
-            </h2>
-            <div style="margin-top: 0.7rem;">
-              <%= button_to "ELIMINAR", transaction_path(t, month: @selected_month.strftime('%Y-%m')),
-                    method: :delete,
-                    data: { turbo_confirm: "¿Borrar este registro financiero?" },
-                    class: "delete-btn-link",
-                    style: "color: #D63031;" %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-
-      <% if @transactions.empty? %>
-        <div class="report-section-block" style="text-align: center; opacity: 0.5;">
-          <p class="report-text">NO HAY MOVIMIENTOS REGISTRADOS</p>
-        </div>
+      <% if @transactions.any? %>
+        <table class="aws-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Descripcion</th>
+              <th>Categoria</th>
+              <th>Tipo</th>
+              <th style="text-align: right;">Monto</th>
+              <th style="text-align: right;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @transactions.each do |t| %>
+              <tr>
+                <td style="white-space: nowrap;"><%= t.date.strftime("%d/%m/%Y") %></td>
+                <td><%= t.description %></td>
+                <td><%= t.category.presence || "Varios" %></td>
+                <td>
+                  <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 6px; background: <%= t.income? ? '#f2f8f0' : '#fdf2f2' %>; color: <%= t.income? ? '#1d8102' : '#d13212' %>;">
+                    <%= t.transaction_type %>
+                  </span>
+                </td>
+                <td style="text-align: right; font-weight: 700; color: <%= t.income? ? '#1d8102' : '#d13212' %>;">
+                  <%= t.income? ? '+' : '-' %>L. <%= number_with_precision t.amount, precision: 2 %>
+                </td>
+                <td style="text-align: right;">
+                  <%= button_to "Eliminar", transaction_path(t, month: @selected_month.strftime('%Y-%m')), method: :delete, class: "aws-btn aws-btn-secondary", style: "padding: 2px 8px; font-size: 12px; color: #d13212; border-color: #d13212;", data: { turbo_confirm: "¿Borrar este registro?" } %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p style="color: var(--aws-text-secondary); font-size: 14px;">No hay movimientos registrados.</p>
       <% end %>
     </div>
 
     <%= turbo_frame_tag "transaction_form_panel" %>
+  </div>
+
+  <div class="legacy-content">
+    <div class="chaotic-container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
+        <h1 style="font-size: 3.6rem;">FLUJO DE<br>CAJA</h1>
+        <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+          <%= render "shared/export_actions", model: "transactions" %>
+          <%= link_to t("transactions.actions.new"), new_transaction_path, class: "btn-chaos", data: { turbo_frame: "transaction_form_panel" } %>
+        </div>
+      </div>
+
+      <section class="report-section-block" style="margin-bottom: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <%= link_to "← MES ANTERIOR", transactions_path(month: @previous_month.strftime("%Y-%m")), class: "nav-link" %>
+            <strong style="letter-spacing: 1px;"><%= @selected_month.strftime("%B %Y").upcase %></strong>
+            <%= link_to "MES SIGUIENTE →", transactions_path(month: @next_month.strftime("%Y-%m")), class: "nav-link" %>
+          </div>
+          <%= link_to "IR A HOY", transactions_path(month: Date.current.strftime("%Y-%m")), class: "nav-link" %>
+        </div>
+      </section>
+
+      <div class="report-grid" style="margin-bottom: 2rem;">
+        <div class="report-column">
+          <div class="report-section-block" style="background: var(--income-bg); color: var(--income-text);">
+            <span class="section-label" style="background: var(--income-text); color: var(--income-bg);">INGRESOS DEL MES</span>
+            <h2 style="font-size: 2.6rem; margin-top: 1rem;">L. <%= number_with_precision @income, precision: 2 %></h2>
+          </div>
+        </div>
+        <div class="report-column">
+          <div class="report-section-block" style="background: var(--expense-bg); color: var(--expense-text);">
+            <span class="section-label" style="background: var(--expense-text); color: var(--expense-bg);">EGRESOS DEL MES</span>
+            <h2 style="font-size: 2.6rem; margin-top: 1rem;">L. <%= number_with_precision @expenses, precision: 2 %></h2>
+          </div>
+        </div>
+      </div>
+
+      <section class="report-card" style="margin-bottom: 3rem;">
+        <div class="daily-header">
+          <div class="daily-date">MES</div>
+          <div class="daily-metadata">BALANCE NETO</div>
+        </div>
+        <h2 style="font-size: 4.5rem; letter-spacing: -2px; margin-top: 1rem;">
+          L. <%= number_with_precision @balance, precision: 2 %>
+        </h2>
+      </section>
+
+      <section class="report-section-block" style="margin-bottom: 3rem;">
+        <span class="section-label" style="background: var(--accent-blue); color: white;">PRESUPUESTOS</span>
+        <h2 class="section-title" style="margin-top: 1rem;">LÍMITE MENSUAL POR CATEGORÍA</h2>
+
+        <%= form_with model: @budget, url: budgets_path(context: "transactions"), class: "budget-form" do |f| %>
+          <%= f.hidden_field :month, value: @selected_month.strftime("%Y-%m-%d") %>
+          <% category_options = @category_options.to_a %>
+          <% selected_category = @budget.category.to_s.strip.downcase %>
+          <% in_options = selected_category.present? && category_options.include?(selected_category) %>
+          <% selected_option = in_options ? selected_category : "__new__" %>
+          <% custom_value = in_options ? "" : selected_category %>
+          <div>
+            <label>Categoría</label>
+            <div data-controller="category-picker">
+              <%= f.hidden_field :category, value: selected_category, data: { category_picker_target: "hidden" } %>
+              <%= select_tag "budget[category_option]",
+                options_for_select([*category_options.map { |category| [category, category] }, [t("transactions.category.new"), "__new__"]], selected_option),
+                  data: { category_picker_target: "select", action: "change->category-picker#selectChanged", new_value: "__new__" } %>
+
+              <div data-category-picker-target="customWrap" style="margin-top: 0.4rem;">
+                <%= text_field_tag "budget[category_custom]", custom_value, placeholder: t("transactions.category.custom_placeholder"), data: { category_picker_target: "custom", action: "input->category-picker#customChanged" } %>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label>Límite mensual</label>
+            <%= f.number_field :monthly_limit, step: 0.01, min: 0.01, placeholder: "0.00" %>
+          </div>
+          <div style="display: flex; align-items: end;">
+            <%= f.submit "GUARDAR", class: "btn-chaos", style: "padding: 0.8rem 1rem; font-size: 0.8rem;" %>
+          </div>
+        <% end %>
+
+        <div class="budget-board">
+          <% @budget_rows.each do |row| %>
+            <% budget = row[:budget] %>
+            <% percent = row[:percent] %>
+            <% status = row[:status] %>
+            <div class="budget-item budget-<%= status %>">
+              <div class="budget-head">
+                <strong><%= budget.category.to_s.upcase %></strong>
+                <span>L. <%= number_with_precision row[:spent], precision: 2 %> / L. <%= number_with_precision budget.monthly_limit, precision: 2 %></span>
+              </div>
+              <div class="budget-track">
+                <div class="budget-fill budget-fill-<%= status %>" style="width: <%= [percent, 100].min %>%;"></div>
+              </div>
+              <div class="budget-foot">
+                <span><%= percent %>% USADO</span>
+                <% if percent >= 100 %>
+                  <span class="budget-alert">SUPERASTE EL PRESUPUESTO</span>
+                <% elsif percent >= 80 %>
+                  <span class="budget-alert">ALERTA: 80% ALCANZADO</span>
+                <% end %>
+                <%= button_to "ELIMINAR", budget_path(budget, context: "transactions"), method: :delete, class: "delete-btn-link", data: { turbo_confirm: "¿Eliminar presupuesto?" } %>
+              </div>
+            </div>
+          <% end %>
+
+          <% if @budget_rows.empty? %>
+            <p class="report-text" style="opacity: 0.7;">Aún no hay presupuestos para este mes.</p>
+          <% end %>
+        </div>
+      </section>
+
+      <h2 class="section-title" style="margin-bottom: 2rem; border-bottom: 6px solid var(--ink); display: inline-block;">HISTORIAL</h2>
+
+      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <% @transactions.each do |t| %>
+          <div class="report-section-block" style="display: flex; justify-content: space-between; align-items: center; background: var(--paper); gap: 1rem; flex-wrap: wrap;">
+            <div>
+              <span class="section-label" style="background: <%= t.income? ? 'var(--income-text)' : 'var(--expense-text)' %>; color: <%= t.income? ? 'var(--income-bg)' : 'var(--expense-bg)' %>;">
+                <%= t.transaction_type.to_s.upcase %>
+              </span>
+              <h3 class="section-title" style="margin-top: 0.8rem;"><%= t.description.to_s.upcase %></h3>
+              <p class="report-text" style="font-size: 0.85rem; font-weight: 700; opacity: 0.6;">
+                <%= t.date.strftime("%d %B %Y").upcase %> | <%= (t.category.presence || "VARIOS").upcase %>
+              </p>
+            </div>
+            <div style="text-align: right;">
+              <h2 style="color: <%= t.income? ? 'var(--income-text)' : 'var(--expense-text)' %>; font-size: 2rem; font-family: 'Archivo Black';">
+                <%= t.income? ? '+' : '-' %>L. <%= number_with_precision t.amount, precision: 2 %>
+              </h2>
+              <div style="margin-top: 0.7rem;">
+                <%= button_to "ELIMINAR", transaction_path(t, month: @selected_month.strftime('%Y-%m')),
+                      method: :delete,
+                      data: { turbo_confirm: "¿Borrar este registro financiero?" },
+                      class: "delete-btn-link",
+                      style: "color: #D63031;" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <% if @transactions.empty? %>
+          <div class="report-section-block" style="text-align: center; opacity: 0.5;">
+            <p class="report-text">NO HAY MOVIMIENTOS REGISTRADOS</p>
+          </div>
+        <% end %>
+      </div>
+
+      <%= turbo_frame_tag "transaction_form_panel" %>
+    </div>
   </div>
 <% end %>

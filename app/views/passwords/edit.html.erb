@@ -1,4 +1,7 @@
 <%= turbo_frame_tag "password_edit_content" do %>
+<%= render "layouts/aws_page_header", title: "ACTUALIZAR CONTRASEÑA",
+  breadcrumbs: [["Home", root_path], ["Actualizar", nil]] %>
+
 <h1>Update your password</h1>
 
 <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>

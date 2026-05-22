@@ -1,0 +1,39 @@
+<header class="aws-topbar" data-aws-sidebar-target="topbar">
+  <div class="aws-topbar-left">
+    <button class="aws-topbar-hamburger" data-action="click->aws-sidebar#toggleMobile" aria-label="Menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+
+    <%= link_to "JUJI", root_path, class: "aws-topbar-logo" %>
+  </div>
+
+  <div class="aws-topbar-right">
+    <div class="aws-topbar-search">
+      <form method="get" action="<%= search_path %>" role="search">
+        <input type="text" name="q" placeholder="Buscar..." aria-label="Buscar" />
+      </form>
+    </div>
+
+    <% if authenticated? %>
+      <%= link_to notifications_path, class: "aws-topbar-btn aws-topbar-badge", data: { count: (current_user.notifications.unread.count if current_user.notifications.unread.count > 0) } do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+      <% end %>
+    <% end %>
+
+    <div class="aws-topbar-account" data-controller="nav-dropdown" data-action="click->nav-dropdown#closeOnLinkClick">
+      <button class="aws-topbar-btn" data-action="click->aws-sidebar#toggleAccount">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span><%= authenticated? ? current_user.email_address.split("@").first : "Cuenta" %></span>
+      </button>
+      <div class="aws-topbar-account-menu" data-aws-sidebar-target="accountMenu">
+        <% if authenticated? %>
+          <div class="menu-header"><%= current_user.email_address %></div>
+          <%= button_to "Cerrar sesion", session_path, method: :delete, class: "menu-item" %>
+        <% else %>
+          <%= link_to "Iniciar sesion", new_session_path, class: "menu-item" %>
+          <%= link_to "Registrarse", new_registration_path, class: "menu-item" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</header>
