@@ -64,7 +64,7 @@ class InsightService
     active = goals.select(&:active?)
 
     if completed.any?
-      insights <> "Completaste #{completed.count} meta(s) este mes."
+      insights << "Completaste #{completed.count} meta(s) este mes."
     end
 
     if active.any?
