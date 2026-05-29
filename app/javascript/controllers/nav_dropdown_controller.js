@@ -24,6 +24,8 @@ export default class extends Controller {
   }
 
   closeOnLinkClick(event) {
+    if (event.target.closest("select")) return
+
     const link = event.target.closest("a[href]")
     if (!link) return
 

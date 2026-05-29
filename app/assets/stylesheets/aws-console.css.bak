@@ -6,37 +6,34 @@
    1.  CSS Custom Properties  (scoped to [data-theme="aws"])
    ----------------------------------------------------------- */
 [data-theme="aws"] {
-  /* Cloudscape Visual Refresh palette - LIGHT MODE */
-  --aws-nav-bg: #ffffff;
-  --aws-nav-hover: #f2f3f3;
-  --aws-nav-border: #e9ecef;
-  --aws-accent: #0972d3;
-  --aws-accent-hover: #033160;
-  --aws-sidebar-bg: #ffffff;
-  --aws-sidebar-hover: #f2f3f3;
-  --aws-sidebar-active-bg: #edf3ff;
+  /* Cloudscape Visual Refresh palette */
+  --aws-nav-bg: #16191f;
+  --aws-nav-hover: rgba(255, 255, 255, 0.05);
+  --aws-nav-border: #2a2e33;
+  --aws-accent: #ec7211;
+  --aws-accent-hover: #eb5f07;
+  --aws-sidebar-bg: #16191f;
+  --aws-sidebar-hover: rgba(255, 255, 255, 0.05);
+  --aws-sidebar-active-bg: rgba(255, 255, 255, 0.05);
   --aws-sidebar-active-border: #0972d3;
-  --aws-sidebar-text: #16191f;
-  --aws-sidebar-muted: #687078;
-  --aws-content-bg: #f4f4f4;
+  --aws-sidebar-text: #d5dbdb;
+  --aws-sidebar-muted: #95a5a6;
+  --aws-content-bg: #f2f3f3;
   --aws-card-bg: #ffffff;
   --aws-card-border: #eaeded;
-  --aws-card-shadow: 0 1px 1px 0 rgba(0, 28, 36, 0.3), 0 1px 3px 1px rgba(0, 28, 36, 0.15);
+  --aws-card-shadow: 0 1px 1px 0 rgba(0, 28, 36, 0.1), 0 1px 3px 1px rgba(0, 28, 36, 0.05);
   --aws-text-primary: #16191f;
-  --aws-text-secondary: #687078;
-  --aws-text-link: #0073bb;
+  --aws-text-secondary: #545b64;
+  --aws-text-link: #0972d3;
   --aws-text-link-hover: #033160;
-  --aws-border: #d5dbdb;
+  --aws-border: #eaeded;
   --aws-border-dark: #d5dbdb;
   --aws-input-bg: #ffffff;
   --aws-input-border: #d5dbdb;
   --aws-success: #1d8102;
-  --aws-warning: #ff9900;
-  --aws-error: #d13212;
-  --aws-info: #0073bb;
-  --aws-primary: #0972d3;
-  --aws-bg-primary: #edf3ff;
-  --aws-badge-bg: #ff9900;
+  --aws-warning: #d13212;
+  --aws-info: #0972d3;
+  --aws-badge-bg: #ec7211;
   --aws-badge-text: #16191f;
   --aws-table-header-bg: #fafafa;
   --aws-table-hover: #f2f3f3;
@@ -44,8 +41,8 @@
 
   /* Legacy token overrides */
   --ink: #16191f;
-  --paper: #f4f4f4;
-  --highlight: #0972d3;
+  --paper: #f2f3f3;
+  --highlight: #ec7211;
   --accent-blue: #0972d3;
   --muted-gray: #d5dbdb;
 
@@ -61,7 +58,7 @@
    ----------------------------------------------------------- */
 [data-theme="aws"] body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: "Amazon Ember", "Helvetica Neue", Roboto, Arial, sans-serif;
   background: var(--aws-content-bg);
   color: var(--aws-text-primary);
   line-height: 1.5;
@@ -73,7 +70,7 @@
 [data-theme="aws"] h2,
 [data-theme="aws"] h3,
 [data-theme="aws"] h4 {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: "Amazon Ember", "Helvetica Neue", Roboto, Arial, sans-serif;
   font-weight: 600;
   text-transform: none;
   letter-spacing: normal;
@@ -119,9 +116,9 @@
 }
 
 [data-theme="aws"] .aws-main {
-  margin-left: 240px;
-  margin-top: 48px;
-  min-height: calc(100vh - 48px);
+  margin-left: 280px;
+  margin-top: 40px;
+  min-height: calc(100vh - 40px);
   background: var(--aws-content-bg);
   transition: margin-left 0.2s ease;
 }
@@ -156,7 +153,7 @@
    ----------------------------------------------------------- */
 .aws-topbar {
   background: var(--aws-nav-bg);
-  color: var(--aws-text-primary);
+  color: #fff;
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
@@ -169,7 +166,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 48px;
+  height: 40px;
   display: flex;
 }
 
@@ -183,7 +180,7 @@
 .aws-topbar-logo {
   font-size: 16px;
   font-weight: 700;
-  color: var(--aws-text-primary);
+  color: #fff;
   text-decoration: none;
   letter-spacing: 0.5px;
   padding: 4px 8px;
@@ -193,60 +190,45 @@
 .aws-topbar-logo:hover {
   background: var(--aws-nav-hover);
   text-decoration: none;
-  color: var(--aws-text-primary);
+  color: #fff;
 }
 
 .aws-topbar-search {
   position: relative;
-  width: 320px;
+  width: 240px;
 }
 
 .aws-topbar-search input {
   width: 100%;
-  padding: 6px 12px 6px 32px;
-  border: 1px solid var(--aws-border);
-  border-radius: 2px;
-  background: var(--aws-input-bg);
-  color: var(--aws-text-primary);
-  font-size: 14px;
+  padding: 4px 8px;
+  border: 1px solid var(--aws-nav-border);
+  border-radius: 0;
+  background: #1a1e24;
+  color: #fff;
+  font-size: 13px;
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color 0.15s;
   line-height: 20px;
   box-sizing: border-box;
 }
 
-.aws-topbar-search::before {
-  content: "";
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 14px;
-  height: 14px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23687078' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  pointer-events: none;
-}
-
 .aws-topbar-search input::placeholder {
-  color: #687078;
+  color: #95a5a6;
 }
 
 .aws-topbar-search input:focus {
-  border-color: var(--aws-text-link);
-  box-shadow: 0 0 0 1px var(--aws-text-link);
+  border-color: var(--aws-accent);
+  background: #16191f;
 }
 
 .aws-topbar-btn {
   background: transparent;
   border: none;
-  color: var(--aws-text-primary);
-  padding: 6px 8px;
-  border-radius: 2px;
+  color: #d5dbdb;
+  padding: 4px 8px;
+  border-radius: 0;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -256,7 +238,7 @@
 
 .aws-topbar-btn:hover {
   background: var(--aws-nav-hover);
-  color: var(--aws-text-primary);
+  color: #fff;
   text-decoration: none;
 }
 
@@ -274,8 +256,8 @@
   position: absolute;
   top: -2px;
   right: -2px;
-  background: var(--aws-error);
-  color: #fff;
+  background: var(--aws-badge-bg);
+  color: var(--aws-badge-text);
   font-size: 10px;
   font-weight: 700;
   padding: 0 4px;
@@ -294,8 +276,8 @@
   top: calc(100% + 4px);
   right: 0;
   background: #fff;
-  border: 1px solid var(--aws-border);
-  border-radius: 2px;
+  border: 1px solid var(--aws-border-dark);
+  border-radius: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   min-width: 200px;
   z-index: 1200;
@@ -319,7 +301,7 @@
   padding: 8px 16px;
   color: var(--aws-text-primary);
   text-decoration: none;
-  font-size: 14px;
+  font-size: 13px;
   background: none;
   border: none;
   width: 100%;
@@ -335,27 +317,9 @@
   display: none;
   background: none;
   border: none;
-  color: var(--aws-text-primary);
+  color: #fff;
   cursor: pointer;
   padding: 4px;
-}
-
-/* Region selector */
-.aws-topbar-region {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  color: var(--aws-text-secondary);
-  padding: 4px 8px;
-  border: 1px solid var(--aws-border);
-  border-radius: 2px;
-  background: var(--aws-input-bg);
-  cursor: pointer;
-}
-
-.aws-topbar-region:hover {
-  background: var(--aws-nav-hover);
 }
 
 /* -----------------------------------------------------------
@@ -373,10 +337,10 @@
 
 [data-theme="aws"] .aws-sidebar {
   position: fixed;
-  top: 48px;
+  top: 40px;
   left: 0;
   bottom: 0;
-  width: 240px;
+  width: 280px;
   display: block;
 }
 
@@ -393,7 +357,7 @@
   background: transparent;
   border: none;
   border-bottom: 1px solid var(--aws-nav-border);
-  color: var(--aws-sidebar-muted);
+  color: var(--aws-sidebar-text);
   cursor: pointer;
   font-size: 12px;
 }
@@ -410,11 +374,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
-  font-size: 11px;
+  padding: 8px 16px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.5px;
   color: var(--aws-sidebar-muted);
   cursor: pointer;
   user-select: none;
@@ -438,51 +402,41 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 12px;
+  padding: 8px 16px;
   color: var(--aws-sidebar-text);
   text-decoration: none;
   font-size: 14px;
   font-weight: 400;
   border-left: 3px solid transparent;
-  transition: background 0.15s;
+  transition: background 0.1s;
   line-height: 20px;
 }
 
 .aws-sidebar-link:hover {
   background: var(--aws-sidebar-hover);
-  color: var(--aws-text-primary);
+  color: #fff;
   text-decoration: none;
 }
 
 .aws-sidebar-link.is-active {
   background: var(--aws-sidebar-active-bg);
-  color: var(--aws-text-primary);
+  color: #fff;
   border-left-color: var(--aws-sidebar-active-border);
 }
 
 .aws-sidebar-link svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
 }
 
 .aws-sidebar-badge {
   margin-left: auto;
-  background: var(--aws-border);
-  color: var(--aws-sidebar-muted);
+  background: var(--aws-nav-border);
+  color: var(--aws-sidebar-text);
   font-size: 11px;
   padding: 1px 6px;
   border-radius: 10px;
-}
-
-/* Sidebar tooltip for collapsed state */
-.aws-layout.is-collapsed .aws-sidebar-link {
-  justify-content: center;
-  padding: 8px;
-}
-
-.aws-layout.is-collapsed .aws-sidebar-link svg {
-  margin: 0;
 }
 
 /* -----------------------------------------------------------
@@ -556,9 +510,9 @@
 .aws-card {
   background: var(--aws-card-bg);
   border: 1px solid var(--aws-card-border);
-  border-radius: 2px;
+  border-radius: 0;
   box-shadow: var(--aws-card-shadow);
-  padding: 20px;
+  padding: 16px;
 }
 
 .aws-card-header {
@@ -566,11 +520,8 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
-  padding: 12px 20px;
-  margin: -20px -20px 12px;
-  background: var(--aws-table-header-bg);
+  padding-bottom: 12px;
   border-bottom: 1px solid var(--aws-divider);
-  border-radius: 2px 2px 0 0;
 }
 
 .aws-card-title {
@@ -593,7 +544,7 @@
 .aws-widget {
   background: var(--aws-card-bg);
   border: 1px solid var(--aws-card-border);
-  border-radius: 2px;
+  border-radius: 0;
   box-shadow: var(--aws-card-shadow);
   padding: 16px;
   display: flex;
@@ -601,16 +552,16 @@
 }
 
 .aws-widget-label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--aws-text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.5px;
   margin-bottom: 8px;
 }
 
 .aws-widget-value {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--aws-text-primary);
   line-height: 1.2;
@@ -627,7 +578,7 @@
 }
 
 .aws-widget.is-danger .aws-widget-value {
-  color: var(--aws-error);
+  color: var(--aws-warning);
 }
 
 .aws-widget.is-accent .aws-widget-value {
@@ -645,13 +596,11 @@
 
 .aws-table thead th {
   background: var(--aws-table-header-bg);
-  color: var(--aws-text-primary);
+  color: var(--aws-text-secondary);
   font-weight: 600;
-  font-size: 12px;
-  text-transform: uppercase;
   text-align: left;
   padding: 8px 16px;
-  border-bottom: 1px solid var(--aws-border);
+  border-bottom: 1px solid var(--aws-border-dark);
   white-space: nowrap;
 }
 
@@ -661,48 +610,8 @@
   color: var(--aws-text-primary);
 }
 
-.aws-table tbody tr {
-  height: 40px;
-}
-
 .aws-table tbody tr:hover td {
   background: var(--aws-table-hover);
-}
-
-.aws-table tbody tr.is-selected td {
-  background: var(--aws-sidebar-active-bg);
-}
-
-/* Status tags */
-.aws-tag {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 2px;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  line-height: 1.4;
-}
-
-.aws-tag-success {
-  background: var(--aws-success);
-  color: #fff;
-}
-
-.aws-tag-warning {
-  background: var(--aws-warning);
-  color: #16191f;
-}
-
-.aws-tag-error {
-  background: var(--aws-error);
-  color: #fff;
-}
-
-.aws-tag-info {
-  background: var(--aws-info);
-  color: #fff;
 }
 
 /* -----------------------------------------------------------
@@ -713,13 +622,13 @@
   align-items: center;
   gap: 6px;
   padding: 4px 16px;
-  border-radius: 2px;
+  border-radius: 0;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   text-decoration: none;
   border: 1px solid transparent;
-  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+  transition: all 0.15s;
   line-height: 20px;
 }
 
@@ -739,7 +648,7 @@
 .aws-btn-secondary {
   background: #fff;
   color: var(--aws-text-primary);
-  border-color: var(--aws-border);
+  border-color: var(--aws-border-dark);
 }
 
 .aws-btn-secondary:hover {
@@ -748,24 +657,12 @@
   color: var(--aws-text-primary);
 }
 
-.aws-btn-danger {
-  background: #fff;
-  color: var(--aws-error);
-  border-color: var(--aws-error);
-}
-
-.aws-btn-danger:hover {
-  background: #fdf3f1;
-  text-decoration: none;
-  color: var(--aws-error);
-}
-
 /* -----------------------------------------------------------
    13. Alerts & Badges
    ----------------------------------------------------------- */
 .aws-alert {
   padding: 12px 16px;
-  border-radius: 2px;
+  border-radius: 0;
   border-left: 4px solid;
   font-size: 14px;
   margin-bottom: 16px;
@@ -773,186 +670,24 @@
 
 .aws-alert-danger {
   background: #fdf2f2;
-  color: var(--aws-error);
-  border-left-color: var(--aws-error);
+  color: #d13212;
+  border-left-color: #d13212;
 }
 
 .aws-alert-warning {
   background: #fff3e0;
   color: #bf360c;
-  border-left-color: var(--aws-warning);
+  border-left-color: #ec7211;
 }
 
 .aws-alert-success {
   background: #f2f8f0;
-  color: var(--aws-success);
-  border-left-color: var(--aws-success);
-}
-
-.aws-alert-info {
-  background: #f0f8ff;
-  color: var(--aws-info);
-  border-left-color: var(--aws-info);
+  color: #1d8102;
+  border-left-color: #1d8102;
 }
 
 /* -----------------------------------------------------------
-   14. Empty States
-   ----------------------------------------------------------- */
-.aws-empty-state {
-  text-align: center;
-  padding: 48px 20px;
-}
-
-.aws-empty-state-icon {
-  color: var(--aws-border);
-  margin-bottom: 16px;
-}
-
-.aws-empty-state-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--aws-text-primary);
-  margin: 0 0 8px;
-}
-
-.aws-empty-state-desc {
-  font-size: 14px;
-  color: var(--aws-text-secondary);
-  margin: 0 0 16px;
-}
-
-/* -----------------------------------------------------------
-   15. Forms
-   ----------------------------------------------------------- */
-[data-theme="aws"] label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--aws-text-primary);
-  margin-bottom: 4px;
-}
-
-[data-theme="aws"] input[type="text"],
-[data-theme="aws"] input[type="email"],
-[data-theme="aws"] input[type="password"],
-[data-theme="aws"] input[type="number"],
-[data-theme="aws"] input[type="date"],
-[data-theme="aws"] input[type="datetime-local"],
-[data-theme="aws"] input[type="color"],
-[data-theme="aws"] textarea,
-[data-theme="aws"] select {
-  padding: 8px 12px;
-  border: 1px solid var(--aws-input-border);
-  border-radius: 2px;
-  font-size: 14px;
-  background: var(--aws-input-bg);
-  color: var(--aws-text-primary);
-  outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  font-family: inherit;
-}
-
-[data-theme="aws"] input:focus,
-[data-theme="aws"] textarea:focus,
-[data-theme="aws"] select:focus {
-  border-color: var(--aws-text-link);
-  box-shadow: 0 0 0 1px var(--aws-text-link);
-}
-
-[data-theme="aws"] input::placeholder,
-[data-theme="aws"] textarea::placeholder {
-  color: #aab7b8;
-}
-
-[data-theme="aws"] input[type="color"] {
-  padding: 4px;
-  height: 40px;
-}
-
-[data-theme="aws"] .field,
-[data-theme="aws"] .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-/* Error state */
-[data-theme="aws"] input.is-error,
-[data-theme="aws"] textarea.is-error {
-  border-color: var(--aws-error);
-}
-
-[data-theme="aws"] .field-error {
-  font-size: 12px;
-  color: var(--aws-error);
-  margin-top: 4px;
-}
-
-/* -----------------------------------------------------------
-   16. Modals / Drawers
-   ----------------------------------------------------------- */
-.aws-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 1400;
-  display: none;
-}
-
-.aws-overlay.is-visible {
-  display: block;
-}
-
-.aws-drawer {
-  position: fixed;
-  top: 48px;
-  right: 0;
-  bottom: 0;
-  width: 400px;
-  background: #fff;
-  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.15);
-  z-index: 1500;
-  transform: translateX(100%);
-  transition: transform 0.2s ease;
-  overflow-y: auto;
-}
-
-.aws-drawer.is-open {
-  transform: translateX(0);
-}
-
-.aws-drawer-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--aws-divider);
-}
-
-.aws-drawer-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--aws-text-primary);
-  margin: 0;
-}
-
-.aws-drawer-close {
-  background: none;
-  border: none;
-  color: var(--aws-text-secondary);
-  cursor: pointer;
-  padding: 4px;
-}
-
-.aws-drawer-close:hover {
-  color: var(--aws-text-primary);
-}
-
-.aws-drawer-body {
-  padding: 20px;
-}
-
-/* -----------------------------------------------------------
-   17. Responsive
+   14. Responsive
    ----------------------------------------------------------- */
 @media (max-width: 1024px) {
   .aws-widgets-grid {
@@ -1007,53 +742,7 @@
 }
 
 /* -----------------------------------------------------------
-   18. List items (clickable rows)
-   ----------------------------------------------------------- */
-.aws-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.aws-list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  border: 1px solid var(--aws-border);
-  border-bottom: none;
-  text-decoration: none;
-  color: var(--aws-text-primary);
-  background: #fff;
-  transition: background 0.15s;
-}
-
-.aws-list-item:last-child {
-  border-bottom: 1px solid var(--aws-border);
-}
-
-.aws-list-item:hover {
-  background: var(--aws-table-hover);
-  text-decoration: none;
-  color: var(--aws-text-primary);
-}
-
-.aws-list-item-title {
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.aws-list-item-meta {
-  font-size: 12px;
-  color: var(--aws-text-secondary);
-}
-
-.aws-list-item-arrow {
-  color: var(--aws-text-secondary);
-  flex-shrink: 0;
-}
-
-/* -----------------------------------------------------------
-   19. Utility helpers
+   15. Utility helpers
    ----------------------------------------------------------- */
 .aws-text-secondary {
   color: var(--aws-text-secondary);
@@ -1063,37 +752,8 @@
 .aws-mb-2 { margin-bottom: 16px; }
 .aws-mb-3 { margin-bottom: 24px; }
 
-/* -----------------------------------------------------------
-   19. Spinner / Loading
-   ----------------------------------------------------------- */
-.aws-spinner {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  border: 2px solid var(--aws-border);
-  border-top-color: var(--aws-accent);
-  border-radius: 50%;
-  animation: aws-spin 0.8s linear infinite;
-}
-
-@keyframes aws-spin {
-  to { transform: rotate(360deg); }
-}
-
-.aws-skeleton {
-  background: linear-gradient(90deg, #e9ecef 25%, #f4f4f4 50%, #e9ecef 75%);
-  background-size: 200% 100%;
-  animation: aws-skeleton-pulse 1.5s ease-in-out infinite;
-  border-radius: 2px;
-}
-
-@keyframes aws-skeleton-pulse {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
 /* ============================================================
-   20. Legacy component overrides for Cloudscape theme
+   16. Legacy component overrides for Cloudscape theme
    ============================================================ */
 
 /* Content visibility toggles */
@@ -1146,11 +806,11 @@
 }
 
 [data-theme="aws"] .aws-page-header h1 {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
   color: var(--aws-text-primary);
   margin: 0 0 4px 0;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 [data-theme="aws"] .aws-page-header p {
@@ -1160,39 +820,37 @@
 }
 
 /* -----------------------------------------------------------
-   Buttons (.btn-chaos -> Cloudscape buttons)
+   Buttons (.btn-chaos → Cloudscape buttons)
    ----------------------------------------------------------- */
 [data-theme="aws"] .btn-chaos {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 4px 16px;
+  padding: 6px 16px;
   font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
+  font-weight: 600;
+  line-height: 1.5;
   border-radius: 2px;
   border: 1px solid transparent;
   cursor: pointer;
   text-decoration: none;
   transition: background-color 0.15s, border-color 0.15s, color 0.15s;
-  background: #0972d3;
+  background: #ec7211;
   color: #fff;
 }
 
 [data-theme="aws"] .btn-chaos:hover {
-  background: #033160;
-  text-decoration: none;
-  color: #fff;
+  background: #d0630e;
 }
 
 [data-theme="aws"] a.btn-chaos:not([href*="delete"]):not([data-turbo-confirm*="delete"]):not([style*="background: #c00"]):not([style*="background:#c00"]) {
-  background: #0972d3;
+  background: #ec7211;
   color: #fff;
 }
 
 [data-theme="aws"] a.btn-chaos:not([href*="delete"]):not([data-turbo-confirm*="delete"]):not([style*="background: #c00"]):not([style*="background:#c00"]):hover {
-  background: #033160;
+  background: #d0630e;
 }
 
 /* Secondary-style buttons (delete, cancel, etc.) */
@@ -1228,15 +886,15 @@
 }
 
 /* -----------------------------------------------------------
-   Cards (.report-section-block -> Cloudscape card)
+   Cards (.report-section-block → Cloudscape card)
    ----------------------------------------------------------- */
 [data-theme="aws"] .report-section-block {
   background: #fff;
   border: 1px solid #eaeded;
-  border-radius: 2px;
+  border-radius: 0;
   padding: 20px;
   margin-bottom: 16px;
-  box-shadow: 0 1px 1px 0 rgba(0, 28, 36, 0.1), 0 1px 3px 1px rgba(0, 28, 36, 0.05);
+  box-shadow: none;
 }
 
 [data-theme="aws"] .report-section-block[style*="background: var(--income-bg)"] {
@@ -1256,10 +914,10 @@
   display: inline-block;
   background: #f2f3f3 !important;
   color: #545b64 !important;
-  font-size: 11px !important;
+  font-size: 12px !important;
   font-weight: 600 !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
+  letter-spacing: 0.5px !important;
   padding: 4px 8px !important;
   border-radius: 2px !important;
   border: none !important;
@@ -1325,6 +983,92 @@
 }
 
 /* -----------------------------------------------------------
+   Forms
+   ----------------------------------------------------------- */
+[data-theme="aws"] form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+[data-theme="aws"] .field,
+[data-theme="aws"] .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+[data-theme="aws"] label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--aws-text-primary);
+}
+
+[data-theme="aws"] input[type="text"],
+[data-theme="aws"] input[type="email"],
+[data-theme="aws"] input[type="password"],
+[data-theme="aws"] input[type="number"],
+[data-theme="aws"] input[type="date"],
+[data-theme="aws"] input[type="datetime-local"],
+[data-theme="aws"] input[type="color"],
+[data-theme="aws"] textarea,
+[data-theme="aws"] select {
+  padding: 8px 12px;
+  border: 1px solid var(--aws-border-dark);
+  border-radius: 0;
+  font-size: 14px;
+  background: var(--aws-input-bg);
+  color: var(--aws-text-primary);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+}
+
+[data-theme="aws"] input:focus,
+[data-theme="aws"] textarea:focus,
+[data-theme="aws"] select:focus {
+  border-color: var(--aws-text-link);
+  box-shadow: 0 0 0 1px var(--aws-text-link);
+}
+
+[data-theme="aws"] input::placeholder,
+[data-theme="aws"] textarea::placeholder {
+  color: #aab7b8;
+}
+
+[data-theme="aws"] input[type="color"] {
+  padding: 4px;
+  height: 40px;
+}
+
+/* -----------------------------------------------------------
+   Tables
+   ----------------------------------------------------------- */
+[data-theme="aws"] table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+[data-theme="aws"] table thead th {
+  background: var(--aws-table-header-bg);
+  color: var(--aws-text-secondary);
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--aws-border-dark);
+}
+
+[data-theme="aws"] table tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--aws-divider);
+}
+
+[data-theme="aws"] table tbody tr:hover td {
+  background: var(--aws-table-hover);
+}
+
+/* -----------------------------------------------------------
    Daily headers & metadata
    ----------------------------------------------------------- */
 [data-theme="aws"] .daily-header,
@@ -1375,11 +1119,11 @@
    Form title override
    ----------------------------------------------------------- */
 [data-theme="aws"] .form-title {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
   color: var(--aws-text-primary);
   margin: 0 0 8px 0;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 /* -----------------------------------------------------------
@@ -1389,15 +1133,14 @@
   background: #fff;
   border: 1px solid #eaeded;
   padding: 16px;
-  border-radius: 2px;
-  box-shadow: 0 1px 1px 0 rgba(0, 28, 36, 0.1), 0 1px 3px 1px rgba(0, 28, 36, 0.05);
+  border-radius: 0;
 }
 
 /* -----------------------------------------------------------
    Inline drawer (kept functional, styled for AWS)
    ----------------------------------------------------------- */
 [data-theme="aws"] .inline-drawer-panel {
-  background: var(--aws-content-bg);
+  background: var(--aws-bg);
   border-left: 1px solid var(--aws-border-dark);
   box-shadow: -4px 0 8px rgba(0,0,0,0.08);
 }
@@ -1436,7 +1179,7 @@
 [data-theme="aws"] .type-card {
   padding: 16px;
   border: 1px solid var(--aws-border-dark);
-  border-radius: 2px;
+  border-radius: 0;
   text-align: center;
   cursor: pointer;
   transition: border-color 0.15s, box-shadow 0.15s;
@@ -1473,7 +1216,6 @@
   background: #fff;
   border: 1px solid var(--aws-border-dark);
   color: var(--aws-text-primary);
-  border-radius: 2px;
 }
 
 [data-theme="aws"] .whiteboard-toolbar .btn-tool:hover {
@@ -1524,7 +1266,7 @@
 [data-theme="aws"] h1,
 [data-theme="aws"] h2,
 [data-theme="aws"] h3 {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "Amazon Ember", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 [data-theme="aws"] h1[style*="font-size: 3"],
@@ -1534,16 +1276,16 @@
 [data-theme="aws"] h1[style*="font-size: 3.4"],
 [data-theme="aws"] h1[style*="font-size: 3.5"],
 [data-theme="aws"] h1[style*="font-size: 3.6"] {
-  font-size: 24px !important;
-  font-weight: 600 !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
   color: var(--aws-text-primary) !important;
   margin: 0 0 8px 0 !important;
-  line-height: 1.3 !important;
+  line-height: 1.2 !important;
 }
 
 [data-theme="aws"] h2[style*="font-size: 1.3"],
 [data-theme="aws"] h2[style*="font-size: 1.1"] {
-  font-size: 16px !important;
+  font-size: 18px !important;
   font-weight: 600 !important;
   color: var(--aws-text-primary) !important;
   margin: 0 0 12px 0 !important;
@@ -1552,7 +1294,7 @@
 }
 
 [data-theme="aws"] h2.section-title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--aws-text-primary);
   margin: 0 0 12px 0;
@@ -1589,34 +1331,4 @@
 
 [data-theme="aws"] div[style*="border-bottom: 2px solid #eee"] {
   border-bottom: 1px solid var(--aws-divider) !important;
-}
-
-/* Topbar search input — must beat neobrutalism global rules */
-[data-theme="aws"] .aws-topbar-search input[type="text"] {
-  width: 100% !important;
-  padding: 6px 12px 6px 32px !important;
-  margin: 0 !important;
-  border: 1px solid var(--aws-border) !important;
-  border-radius: 2px !important;
-  background: var(--aws-input-bg) !important;
-  color: var(--aws-text-primary) !important;
-  font-size: 14px !important;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
-  line-height: 20px !important;
-  box-sizing: border-box !important;
-  outline: none !important;
-  transition: border-color 0.15s, box-shadow 0.15s !important;
-  box-shadow: none !important;
-}
-
-[data-theme="aws"] .aws-topbar-search input[type="text"]:focus {
-  border-color: var(--aws-text-link) !important;
-  box-shadow: 0 0 0 1px var(--aws-text-link) !important;
-  background: var(--aws-input-bg) !important;
-}
-
-[data-theme="aws"] .aws-topbar-search form {
-  margin: 0;
-  padding: 0;
-  display: flex;
 }

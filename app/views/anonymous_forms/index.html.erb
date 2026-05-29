@@ -1,49 +1,88 @@
-<%= render "layouts/aws_page_header", title: "FORMULARIOS ANÓNIMOS",
-  subtitle: "Crea formularios públicos con límite de respuestas",
-  breadcrumbs: [["Home", root_path], ["Formularios", anonymous_forms_path]] %>
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: "FORMULARIOS ANÓNIMOS",
+    subtitle: "Crea formularios públicos con límite de respuestas",
+    breadcrumbs: [["Home", root_path], ["Formularios", anonymous_forms_path]] %>
 
-<div class="chaotic-container">
-  <%= render "shared/frame_flash" %>
-
-  <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;">
-    <div>
-      <h1 style="font-size: 3rem;">FORMULARIOS ANÓNIMOS</h1>
-      <p style="font-weight: 700; opacity: 0.6;">Crea formularios públicos con límite de respuestas.</p>
-    </div>
-    <%= link_to "NUEVO FORMULARIO", new_anonymous_form_path, class: "btn-chaos", style: "padding: 0.9rem 1.2rem;" %>
+  <div class="aws-page-header-actions aws-mb-2">
+    <%= link_to "NUEVO FORMULARIO", new_anonymous_form_path, class: "aws-btn aws-btn-primary" %>
   </div>
 
   <% if @anonymous_forms.any? %>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
       <% @anonymous_forms.each do |form| %>
-        <section class="report-section-block" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem;">
-          <div>
-            <h2 class="section-title" style="font-size: 1.4rem; margin-bottom: 0.4rem;"><%= form.title %></h2>
-            <p style="font-size: 0.78rem; font-weight: 800; opacity: 0.6;">
-              <%= form.responses_count %> / <%= form.response_limit %> RESPUESTAS
-            </p>
+        <div class="aws-card">
+          <div class="aws-card-header">
+            <h3 class="aws-card-title"><%= form.title %></h3>
           </div>
-
-          <% if form.description.present? %>
-            <p class="report-text" style="font-size: 0.95rem; margin: 0;"><%= truncate(form.description, length: 120) %></p>
-          <% end %>
-
-          <p style="font-size: 0.8rem; margin: 0; font-weight: 700;">
-            <strong>Preguntas:</strong> <%= form.questions.size %>
-          </p>
-
-          <div style="display: flex; gap: 0.7rem; margin-top: auto; flex-wrap: wrap;">
-            <%= link_to "VER", anonymous_form_path(form), class: "nav-link" %>
-            <%= link_to "ABRIR LINK", public_anonymous_form_path(form.token), class: "nav-link", target: "_blank", rel: "noopener" %>
-            <%= button_to "ELIMINAR", anonymous_form_path(form), method: :delete, class: "delete-btn-link", data: { turbo_confirm: "¿Eliminar este formulario?" } %>
+          <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 12px; color: var(--aws-text-secondary);">
+              <%= form.responses_count %> / <%= form.response_limit %> respuestas
+            </div>
+            <% if form.description.present? %>
+              <p style="font-size: 14px; color: var(--aws-text-secondary); margin: 0;"><%= truncate(form.description, length: 120) %></p>
+            <% end %>
+            <div style="font-size: 12px; color: var(--aws-text-secondary);">
+              <strong>Preguntas:</strong> <%= form.questions.size %>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: auto; flex-wrap: wrap;">
+              <%= link_to "Ver", anonymous_form_path(form), class: "aws-btn aws-btn-secondary", style: "padding: 2px 8px; font-size: 12px;" %>
+              <%= link_to "Abrir link", public_anonymous_form_path(form.token), class: "aws-btn aws-btn-secondary", style: "padding: 2px 8px; font-size: 12px;", target: "_blank", rel: "noopener" %>
+              <%= button_to "Eliminar", anonymous_form_path(form), method: :delete, class: "aws-btn aws-btn-danger", style: "padding: 2px 8px; font-size: 12px;", data: { turbo_confirm: "¿Eliminar este formulario?" } %>
+            </div>
           </div>
-        </section>
+        </div>
       <% end %>
     </div>
   <% else %>
-    <section class="report-section-block" style="text-align: center; padding: 3rem;">
-      <h2 class="section-title">SIN FORMULARIOS</h2>
-      <p class="report-text">Crea tu primer formulario anónimo y comparte el enlace.</p>
-    </section>
+    <div class="aws-empty-state">
+      <p class="aws-empty-state-desc">Crea tu primer formulario anónimo y comparte el enlace.</p>
+    </div>
   <% end %>
+</div>
+
+<div class="legacy-content">
+  <div class="chaotic-container">
+    <%= render "shared/frame_flash" %>
+
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;">
+      <div>
+        <h1 style="font-size: 3rem;">FORMULARIOS ANÓNIMOS</h1>
+        <p style="font-weight: 700; opacity: 0.6;">Crea formularios públicos con límite de respuestas.</p>
+      </div>
+      <%= link_to "NUEVO FORMULARIO", new_anonymous_form_path, class: "btn-chaos", style: "padding: 0.9rem 1.2rem;" %>
+    </div>
+
+    <% if @anonymous_forms.any? %>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
+        <% @anonymous_forms.each do |form| %>
+          <section class="report-section-block" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem;">
+            <div>
+              <h2 class="section-title" style="font-size: 1.4rem; margin-bottom: 0.4rem;"><%= form.title %></h2>
+              <p style="font-size: 0.78rem; font-weight: 800; opacity: 0.6;">
+                <%= form.responses_count %> / <%= form.response_limit %> RESPUESTAS
+              </p>
+            </div>
+
+            <% if form.description.present? %>
+              <p class="report-text" style="font-size: 0.95rem; margin: 0;"><%= truncate(form.description, length: 120) %></p>
+            <% end %>
+
+            <p style="font-size: 0.8rem; margin: 0; font-weight: 700;">
+              <strong>Preguntas:</strong> <%= form.questions.size %>
+            </p>
+
+            <div style="display: flex; gap: 0.7rem; margin-top: auto; flex-wrap: wrap;">
+              <%= link_to "VER", anonymous_form_path(form), class: "nav-link" %>
+              <%= link_to "ABRIR LINK", public_anonymous_form_path(form.token), class: "nav-link", target: "_blank", rel: "noopener" %>
+              <%= button_to "ELIMINAR", anonymous_form_path(form), method: :delete, class: "delete-btn-link", data: { turbo_confirm: "¿Eliminar este formulario?" } %>
+            </div>
+          </section>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="aws-empty-state">
+        <p class="aws-empty-state-desc">Crea tu primer formulario anónimo y comparte el enlace.</p>
+      </div>
+    <% end %>
+  </div>
 </div>

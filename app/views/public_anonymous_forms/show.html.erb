@@ -1,3 +1,74 @@
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: @anonymous_form.title,
+    subtitle: @anonymous_form.description,
+    breadcrumbs: [["Home", root_path], ["Formularios", anonymous_forms_path], [@anonymous_form.title, nil]] %>
+
+  <div class="aws-card" style="max-width: 860px; margin: 0 auto;">
+    <div class="aws-card-header">
+      <h3 class="aws-card-title"><%= @anonymous_form.title %></h3>
+    </div>
+    <div style="padding: 16px;">
+      <% if @anonymous_form.description.present? %>
+        <p style="font-size: 14px; color: var(--aws-text-secondary); margin: 0 0 12px;"><%= @anonymous_form.description %></p>
+      <% end %>
+      <p style="font-size: 12px; color: var(--aws-text-secondary); margin: 0 0 16px;">
+        Quedan <%= @anonymous_form.remaining_responses %> de <%= @anonymous_form.response_limit %> respuestas disponibles.
+      </p>
+
+      <% if @anonymous_form.open_for_responses? %>
+        <%= form_with url: public_anonymous_form_responses_path(@anonymous_form.token), method: :post do %>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <% @questions.each_with_index do |question, index| %>
+              <div class="aws-card" style="padding: 16px;">
+                <p style="margin: 0 0 12px; font-weight: 600; font-size: 14px;">
+                  <%= index + 1 %>. <%= question.prompt %>
+                  <% if question.required? %>
+                    <span style="color: var(--aws-error);">*</span>
+                  <% end %>
+                </p>
+
+                <% case question.question_type %>
+                <% when "free_text" %>
+                  <%= text_area_tag "answers[#{question.id}]", params.dig(:answers, question.id.to_s), rows: 3, required: question.required?, style: "width: 100%; padding: 8px 12px; border: 1px solid var(--aws-input-border); border-radius: 2px; font-size: 14px; background: var(--aws-input-bg); color: var(--aws-text-primary);" %>
+                <% when "single_choice" %>
+                  <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <% question.options.each do |option| %>
+                      <label style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px;">
+                        <%= radio_button_tag "answers[#{question.id}]", option, params.dig(:answers, question.id.to_s) == option, required: question.required? %>
+                        <span><%= option %></span>
+                      </label>
+                    <% end %>
+                  </div>
+                <% when "multiple_choice" %>
+                  <% selected_values = Array(params.dig(:answers, question.id.to_s)) %>
+                  <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <% question.options.each do |option| %>
+                      <label style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px;">
+                        <%= check_box_tag "answers[#{question.id}][]", option, selected_values.include?(option) %>
+                        <span><%= option %></span>
+                      </label>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+
+          <div style="margin-top: 16px;">
+            <%= submit_tag "Enviar respuesta", class: "aws-btn aws-btn-primary", style: "width: 100%;" %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="aws-empty-state">
+          <p class="aws-empty-state-title">Formulario cerrado</p>
+          <p class="aws-empty-state-desc">Este formulario ya alcanzó su límite de respuestas.</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="legacy-content">
 <div class="chaotic-container" style="max-width: 860px;">
   <%= render "shared/frame_flash" %>
 
@@ -61,4 +132,5 @@
       <p class="report-text">Este formulario ya alcanzó su límite de respuestas.</p>
     </section>
   <% end %>
+</div>
 </div>

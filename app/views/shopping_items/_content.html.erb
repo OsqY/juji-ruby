@@ -1,72 +1,136 @@
 <%= turbo_frame_tag "shopping_items_content" do %>
   <%= render "shared/frame_flash" %>
-<%= render "layouts/aws_page_header", title: "LISTA DE COMPRAS",
-  subtitle: "Artículos pendientes y adquiridos",
-  breadcrumbs: [["Home", root_path], ["Compras", shopping_items_path]] %>
 
-  <div class="chaotic-container" style="max-width: 800px;">
-    <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
-      <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
-        <div>
-          <h1 class="form-title">LISTA DE COMPRAS</h1>
-          <p style="font-weight: 700; opacity: 0.6;">ARTÍCULOS PENDIENTES Y ADQUIRIDOS</p>
-        </div>
-        <%= render "shared/export_actions", model: "shopping_items" %>
-      </div>
+  <div class="aws-content">
+    <%= render "layouts/aws_page_header", title: "LISTA DE COMPRAS",
+      subtitle: "Artículos pendientes y adquiridos",
+      breadcrumbs: [["Home", root_path], ["Compras", shopping_items_path]] %>
+
+    <div class="aws-page-header-actions aws-mb-2">
+      <%= render "shared/export_actions", model: "shopping_items" %>
     </div>
 
-    <div class="report-section-block" style="margin-bottom: 3rem;">
-      <h2 class="section-title">AGREGAR ARTÍCULO</h2>
+    <div class="aws-card aws-mb-2">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title">Agregar artículo</h3>
+      </div>
       <%= form_with(model: @new_item) do |f| %>
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <div style="flex: 2; min-width: auto;">
-            <%= f.label :name, "NOMBRE DEL ARTÍCULO", style: "font-size: 0.7rem; font-weight: 900; opacity: 0.5; display: block;" %>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;">
+          <div class="field" style="flex: 2;">
+            <%= f.label :name, "Nombre del artículo" %>
             <%= f.text_field :name, placeholder: "Ej. Pan, Leche, Tornillos...", required: true %>
           </div>
-          <div style="flex: 1; min-width: auto;">
-            <%= f.label :quantity, "CANTIDAD", style: "font-size: 0.7rem; font-weight: 900; opacity: 0.5; display: block;" %>
+          <div class="field" style="flex: 1;">
+            <%= f.label :quantity, "Cantidad" %>
             <%= f.text_field :quantity, placeholder: "Ej. 2 kg, 1 pack" %>
           </div>
-          <div style="display: flex; align-items: flex-end;">
-            <%= f.submit "+", class: "btn-chaos", style: "padding: 1rem 2rem; font-size: 1.5rem;" %>
-          </div>
+          <%= f.submit "Agregar", class: "aws-btn aws-btn-primary" %>
         </div>
       <% end %>
     </div>
 
-    <div class="shopping-list-grid" style="display: flex; flex-direction: column; gap: 1rem;">
+    <div class="aws-card">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title">Artículos</h3>
+      </div>
       <% if @shopping_items.any? %>
-        <% @shopping_items.each do |item| %>
-          <div class="report-section-block" style="padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; <%= 'background: var(--muted-gray); opacity: 0.6;' if item.bought %>">
-            <div style="display: flex; align-items: center; gap: 1.5rem; flex: 1;">
-              <%= button_to shopping_item_path(item), method: :patch, class: "theme-picker", style: "padding: 0; border: none; background: none; cursor: pointer;", aria: { label: item.bought ? "Marcar como no comprado" : "Marcar como comprado" } do %>
-                <div class="theme-option" style="width: 45px; height: 45px; border-radius: 4px; border: 4px solid var(--ink); <%= item.bought ? 'background: var(--accent-blue);' : 'background: var(--paper);' %>">
-                  <% if item.bought %>
-                    <i data-lucide="check" style="color: white;" aria-hidden="true"></i>
+        <div class="aws-list">
+          <% @shopping_items.each do |item| %>
+            <div class="aws-list-item" style="display: flex; align-items: center; justify-content: space-between; <%= 'opacity: 0.6;' if item.bought %>">
+              <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                <%= button_to shopping_item_path(item), method: :patch, style: "padding: 0; border: none; background: none; cursor: pointer;", aria: { label: item.bought ? "Marcar como no comprado" : "Marcar como comprado" } do %>
+                  <div style="width: 32px; height: 32px; border-radius: 4px; border: 2px solid var(--aws-border); <%= item.bought ? 'background: var(--aws-primary);' : 'background: var(--aws-bg-primary);' %> display: flex; align-items: center; justify-content: center;">
+                    <% if item.bought %>
+                      <i data-lucide="check" style="color: white;" aria-hidden="true"></i>
+                    <% end %>
+                  </div>
+                <% end %>
+                <div>
+                  <div class="aws-list-item-title" style="<%= 'text-decoration: line-through;' if item.bought %>"><%= item.name %></div>
+                  <% if item.quantity.present? %>
+                    <div class="aws-list-item-meta"><%= item.quantity %></div>
                   <% end %>
                 </div>
-              <% end %>
-
-              <div style="flex: 1;">
-                <h3 style="margin: 0; font-size: 1.4rem; <%= 'text-decoration: strikethrough;' if item.bought %>">
-                  <%= item.name.upcase %>
-                </h3>
-                <% if item.quantity.present? %>
-                  <span style="font-size: 0.8rem; font-weight: 700; opacity: 0.5;"><%= item.quantity.upcase %></span>
-                <% end %>
               </div>
+              <%= button_to shopping_item_path(item), method: :delete, class: "aws-btn aws-btn-danger", style: "padding: 2px 8px; font-size: 12px;", data: { turbo_confirm: "¿Eliminar?" }, aria: { label: "Eliminar #{item.name}" } do %>
+                <i data-lucide="trash-2" style="color: var(--aws-text-error);" aria-hidden="true"></i>
+              <% end %>
             </div>
-
-            <%= button_to shopping_item_path(item), method: :delete, class: "delete-btn-link", data: { turbo_confirm: "¿Eliminar?" }, aria: { label: "Eliminar #{item.name}" } do %>
-              <i data-lucide="trash-2" style="color: var(--expense-text);" aria-hidden="true"></i>
-            <% end %>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       <% else %>
-        <div class="report-section-block" style="text-align: center; padding: 4rem;">
-          <p style="font-weight: 900; opacity: 0.3; font-size: 1.2rem;">LA LISTA ESTÁ VACÍA / EMPTY LIST</p>
+        <div class="aws-empty-state">
+          <p class="aws-empty-state-desc">La lista está vacía / Empty list</p>
         </div>
       <% end %>
+    </div>
+  </div>
+
+  <div class="legacy-content">
+    <div class="chaotic-container" style="max-width: 800px;">
+      <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <div>
+            <h1 class="form-title">LISTA DE COMPRAS</h1>
+            <p style="font-weight: 700; opacity: 0.6;">ARTÍCULOS PENDIENTES Y ADQUIRIDOS</p>
+          </div>
+          <%= render "shared/export_actions", model: "shopping_items" %>
+        </div>
+      </div>
+
+      <div class="report-section-block" style="margin-bottom: 3rem;">
+        <h2 class="section-title">AGREGAR ARTÍCULO</h2>
+        <%= form_with(model: @new_item) do |f| %>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <div class="field" style="flex: 2; min-width: auto;">
+              <%= f.label :name, "NOMBRE DEL ARTÍCULO" %>
+              <%= f.text_field :name, placeholder: "Ej. Pan, Leche, Tornillos...", required: true %>
+            </div>
+            <div class="field" style="flex: 1; min-width: auto;">
+              <%= f.label :quantity, "CANTIDAD" %>
+              <%= f.text_field :quantity, placeholder: "Ej. 2 kg, 1 pack" %>
+            </div>
+            <div style="display: flex; align-items: flex-end;">
+              <%= f.submit "+", class: "btn-chaos", style: "padding: 1rem 2rem; font-size: 1.5rem;" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="shopping-list-grid" style="display: flex; flex-direction: column; gap: 1rem;">
+        <% if @shopping_items.any? %>
+          <% @shopping_items.each do |item| %>
+            <div class="report-section-block" style="padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; <%= 'background: var(--muted-gray); opacity: 0.6;' if item.bought %>">
+              <div style="display: flex; align-items: center; gap: 1.5rem; flex: 1;">
+                <%= button_to shopping_item_path(item), method: :patch, class: "theme-picker", style: "padding: 0; border: none; background: none; cursor: pointer;", aria: { label: item.bought ? "Marcar como no comprado" : "Marcar como comprado" } do %>
+                  <div class="theme-option" style="width: 45px; height: 45px; border-radius: 4px; border: 4px solid var(--ink); <%= item.bought ? 'background: var(--accent-blue);' : 'background: var(--paper);' %>">
+                    <% if item.bought %>
+                      <i data-lucide="check" style="color: white;" aria-hidden="true"></i>
+                    <% end %>
+                  </div>
+                <% end %>
+
+                <div style="flex: 1;">
+                  <h3 style="margin: 0; font-size: 1.4rem; <%= 'text-decoration: strikethrough;' if item.bought %>">
+                    <%= item.name.upcase %>
+                  </h3>
+                  <% if item.quantity.present? %>
+                    <span style="font-size: 0.8rem; font-weight: 700; opacity: 0.5;"><%= item.quantity.upcase %></span>
+                  <% end %>
+                </div>
+              </div>
+
+              <%= button_to shopping_item_path(item), method: :delete, class: "aws-btn aws-btn-danger", data: { turbo_confirm: "¿Eliminar?" }, aria: { label: "Eliminar #{item.name}" } do %>
+                <i data-lucide="trash-2" style="color: var(--expense-text);" aria-hidden="true"></i>
+              <% end %>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="aws-empty-state">
+            <p class="aws-empty-state-desc">LA LISTA ESTÁ VACÍA / EMPTY LIST</p>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 <% end %>

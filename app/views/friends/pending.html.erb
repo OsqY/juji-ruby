@@ -1,60 +1,116 @@
-<%= render "layouts/aws_page_header", title: t('.title'),
-  breadcrumbs: [["Home", root_path], ["Amigos", friends_path], ["Solicitudes", nil]] %>
-
-<div class="chaotic-container">
-  <h1 style="font-size: 2.5rem; margin-bottom: 2rem;"><%= t('.title') %></h1>
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: t('.title'),
+    breadcrumbs: [["Home", root_path], ["Amigos", friends_path], ["Solicitudes", nil]] %>
 
   <% if @received_requests.any? %>
-    <section style="margin-bottom: 2.5rem;">
-      <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee;">
-        <%= t('.received') %> <span style="font-size: 0.85rem; color: #999; font-weight: 400;">(<%= @received_requests.count %>)</span>
-      </h2>
-      <div style="display: grid; gap: 1rem;">
+    <div class="aws-card aws-mb-2">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title"><%= t('.received') %> <span style="font-size: 12px; color: var(--aws-text-secondary); font-weight: 400;">(<%= @received_requests.count %>)</span></h3>
+      </div>
+      <div class="aws-list">
         <% @received_requests.each do |req| %>
-          <div class="search-result-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div class="aws-list-item" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
             <div>
-              <div style="font-weight: 700;"><%= req.requester.display_name_or_email %></div>
-              <div style="font-size: 0.85rem; color: #666;"><%= req.requester.email_address %></div>
+              <div class="aws-list-item-title"><%= req.requester.display_name_or_email %></div>
+              <div class="aws-list-item-meta"><%= req.requester.email_address %></div>
             </div>
-            <div style="display: flex; gap: 0.5rem;">
-              <%= button_to t('.accept'), accept_friends_path(id: req.id), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.85rem;" %>
-              <%= button_to t('.reject'), reject_friends_path(id: req.id), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.85rem; background: #c00; color: #fff;" %>
+            <div style="display: flex; gap: 8px;">
+              <%= button_to t('.accept'), accept_friends_path(id: req.id), method: :post, class: "aws-btn aws-btn-primary", style: "padding: 2px 8px; font-size: 12px;" %>
+              <%= button_to t('.reject'), reject_friends_path(id: req.id), method: :post, class: "aws-btn aws-btn-danger", style: "padding: 2px 8px; font-size: 12px;" %>
             </div>
           </div>
         <% end %>
       </div>
-    </section>
-  <% end %>
-
-  <% if @sent_requests.any? %>
-    <section style="margin-bottom: 2.5rem;">
-      <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee;">
-        <%= t('.sent') %> <span style="font-size: 0.85rem; color: #999; font-weight: 400;">(<%= @sent_requests.count %>)</span>
-      </h2>
-      <div style="display: grid; gap: 1rem;">
-        <% @sent_requests.each do |req| %>
-          <div class="search-result-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-            <div>
-              <div style="font-weight: 700;"><%= req.addressee.display_name_or_email %></div>
-              <div style="font-size: 0.85rem; color: #666;"><%= req.addressee.email_address %></div>
-            </div>
-            <div style="font-size: 0.85rem; color: #999;">
-              <%= t('.pending_status') %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </section>
-  <% end %>
-
-  <% if @received_requests.empty? && @sent_requests.empty? %>
-    <div style="text-align: center; padding: 3rem 1rem;">
-      <div style="font-size: 3rem; margin-bottom: 1rem;">📭</div>
-      <p style="font-size: 1.1rem; color: #666;"><%= t('.empty') %></p>
     </div>
   <% end %>
 
-  <div style="margin-top: 2rem;">
-    <%= link_to t('.back'), friends_path, style: "text-decoration: none; color: var(--ink); font-weight: 700;" %>
+  <% if @sent_requests.any? %>
+    <div class="aws-card aws-mb-2">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title"><%= t('.sent') %> <span style="font-size: 12px; color: var(--aws-text-secondary); font-weight: 400;">(<%= @sent_requests.count %>)</span></h3>
+      </div>
+      <div class="aws-list">
+        <% @sent_requests.each do |req| %>
+          <div class="aws-list-item" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <div class="aws-list-item-title"><%= req.addressee.display_name_or_email %></div>
+              <div class="aws-list-item-meta"><%= req.addressee.email_address %></div>
+            </div>
+            <span class="aws-tag aws-tag-info"><%= t('.pending_status') %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @received_requests.empty? && @sent_requests.empty? %>
+    <div class="aws-empty-state">
+      <div class="aws-empty-state-icon" style="font-size: 3rem; margin-bottom: 1rem;">📭</div>
+      <p class="aws-empty-state-desc"><%= t('.empty') %></p>
+    </div>
+  <% end %>
+
+  <div style="margin-top: 16px;">
+    <%= link_to t('.back'), friends_path, class: "aws-btn aws-btn-secondary" %>
+  </div>
+</div>
+
+<div class="legacy-content">
+  <div class="chaotic-container">
+    <h1 style="font-size: 2.5rem; margin-bottom: 2rem;"><%= t('.title') %></h1>
+
+    <% if @received_requests.any? %>
+      <section style="margin-bottom: 2.5rem;">
+        <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee;">
+          <%= t('.received') %> <span style="font-size: 0.85rem; color: #999; font-weight: 400;">(<%= @received_requests.count %>)</span>
+        </h2>
+        <div style="display: grid; gap: 1rem;">
+          <% @received_requests.each do |req| %>
+            <div class="search-result-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <div style="font-weight: 700;"><%= req.requester.display_name_or_email %></div>
+                <div style="font-size: 0.85rem; color: #666;"><%= req.requester.email_address %></div>
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <%= button_to t('.accept'), accept_friends_path(id: req.id), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.85rem;" %>
+                <%= button_to t('.reject'), reject_friends_path(id: req.id), method: :post, style: "padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 700; background: #fff; color: #D63031; border: 2px solid #D63031; cursor: pointer;" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+
+    <% if @sent_requests.any? %>
+      <section style="margin-bottom: 2.5rem;">
+        <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee;">
+          <%= t('.sent') %> <span style="font-size: 0.85rem; color: #999; font-weight: 400;">(<%= @sent_requests.count %>)</span>
+        </h2>
+        <div style="display: grid; gap: 1rem;">
+          <% @sent_requests.each do |req| %>
+            <div class="search-result-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <div style="font-weight: 700;"><%= req.addressee.display_name_or_email %></div>
+                <div style="font-size: 0.85rem; color: #666;"><%= req.addressee.email_address %></div>
+              </div>
+              <span style="display: inline-block; padding: 2px 8px; border-radius: 2px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; background: #f2f3f3; color: #687078;">
+                <%= t('.pending_status') %>
+              </span>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+
+    <% if @received_requests.empty? && @sent_requests.empty? %>
+      <div class="aws-empty-state">
+        <div class="aws-empty-state-icon" style="font-size: 3rem; margin-bottom: 1rem;">📭</div>
+        <p class="aws-empty-state-desc"><%= t('.empty') %></p>
+      </div>
+    <% end %>
+
+    <div style="margin-top: 2rem;">
+      <%= link_to t('.back'), friends_path, style: "text-decoration: none; color: var(--ink); font-weight: 700;" %>
+    </div>
   </div>
 </div>

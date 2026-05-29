@@ -1,52 +1,88 @@
-<%= render "layouts/aws_page_header", title: "NOTIFICACIONES",
-  breadcrumbs: [["Home", root_path], ["Notificaciones", nil]] %>
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: "NOTIFICACIONES",
+    breadcrumbs: [["Home", root_path], ["Notificaciones", nil]] %>
 
-<div class="chaotic-container" style="max-width: 800px;">
-  <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
-    <h1 style="font-size: 3rem;">NOTIFICACIONES</h1>
+  <div class="aws-page-header-actions aws-mb-2">
     <% if @unread_count > 0 %>
-      <%= button_to "MARCAR TODAS", mark_all_as_read_notifications_path,
+      <%= button_to "Marcar todas", mark_all_as_read_notifications_path,
           method: :patch,
-          class: "btn-chaos",
-          style: "padding: 0.7rem 1rem; font-size: 0.8rem; letter-spacing: 0.5px;" %>
+          class: "aws-btn aws-btn-secondary" %>
     <% end %>
   </div>
 
   <% if @notifications.empty? %>
-    <div class="report-section-block" style="text-align: center; padding: 3rem;">
-      <p class="report-text" style="opacity: 0.7;">No tienes notificaciones</p>
+    <div class="aws-empty-state">
+      <p class="aws-empty-state-desc">No tienes notificaciones</p>
     </div>
   <% else %>
-    <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <div class="aws-list">
       <% @notifications.each do |notification| %>
-        <div class="report-section-block" style="
-          background: <%= notification.unread? ? 'var(--muted-gray)' : 'var(--paper)' %>;
-          border-left: 6px solid <%= notification_color(notification) %>;
-          padding: 1.2rem;
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          gap: 1rem;
-        ">
+        <div class="aws-list-item" style="border-left: 4px solid <%= notification_color(notification) %>;">
           <div style="flex: 1;">
-            <p style="margin: 0; font-weight: 800; color: var(--ink);">
-              <%= notification_title(notification) %>
-            </p>
-            <p style="margin: 0.4rem 0 0; color: var(--ink); opacity: 0.75;">
-              <%= notification.message %>
-            </p>
-            <p style="margin: 0.4rem 0 0; font-size: 0.8rem; font-weight: 700; color: var(--ink); opacity: 0.55;">
-              <%= time_ago_in_words(notification.created_at) %>
-            </p>
+            <div class="aws-list-item-title"><%= notification_title(notification) %></div>
+            <div class="aws-list-item-meta"><%= notification.message %></div>
+            <div class="aws-list-item-meta"><%= time_ago_in_words(notification.created_at) %></div>
           </div>
           <% if notification.unread? %>
             <%= button_to "OK", mark_as_read_notification_path(notification),
                 method: :patch,
-                class: "btn-chaos",
-                style: "padding: 0.5rem 1rem; font-size: 0.75rem; margin-left: 0; white-space: nowrap;" %>
+                class: "aws-btn aws-btn-secondary",
+                style: "padding: 2px 8px; font-size: 12px; white-space: nowrap;" %>
           <% end %>
         </div>
       <% end %>
     </div>
   <% end %>
+</div>
+
+<div class="legacy-content">
+  <div class="chaotic-container" style="max-width: 800px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
+      <h1 style="font-size: 3rem;">NOTIFICACIONES</h1>
+      <% if @unread_count > 0 %>
+        <%= button_to "MARCAR TODAS", mark_all_as_read_notifications_path,
+            method: :patch,
+            class: "btn-chaos",
+            style: "padding: 0.7rem 1rem; font-size: 0.8rem; letter-spacing: 0.5px;" %>
+      <% end %>
+    </div>
+
+    <% if @notifications.empty? %>
+      <div class="aws-empty-state">
+        <p class="aws-empty-state-desc">No tienes notificaciones</p>
+      </div>
+    <% else %>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <% @notifications.each do |notification| %>
+          <div class="report-section-block" style="
+            background: <%= notification.unread? ? 'var(--muted-gray)' : 'var(--paper)' %>;
+            border-left: 6px solid <%= notification_color(notification) %>;
+            padding: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+          ">
+            <div style="flex: 1;">
+              <p style="margin: 0; font-weight: 800; color: var(--ink);">
+                <%= notification_title(notification) %>
+              </p>
+              <p style="margin: 0.4rem 0 0; color: var(--ink); opacity: 0.75;">
+                <%= notification.message %>
+              </p>
+              <p style="margin: 0.4rem 0 0; font-size: 0.8rem; font-weight: 700; color: var(--ink); opacity: 0.55;">
+                <%= time_ago_in_words(notification.created_at) %>
+              </p>
+            </div>
+            <% if notification.unread? %>
+              <%= button_to "OK", mark_as_read_notification_path(notification),
+                  method: :patch,
+                  class: "btn-chaos",
+                  style: "padding: 0.5rem 1rem; font-size: 0.75rem; margin-left: 0; white-space: nowrap;" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>

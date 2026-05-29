@@ -1,27 +1,27 @@
-<%= render "layouts/aws_page_header", title: t('.title'),
-  breadcrumbs: [["Home", root_path], ["Amigos", friends_path]] %>
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: t('.title'),
+    breadcrumbs: [["Home", root_path], ["Amigos", friends_path]] %>
 
-<div class="chaotic-container">
-  <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-    <h1 style="font-size: 2.5rem; margin: 0;"><%= t('.title') %></h1>
-    <%= link_to t('.pending_requests'), pending_friends_path, class: "btn-chaos", style: "padding: 0.75rem 1.5rem; text-decoration: none; font-size: 0.85rem;" %>
+  <div class="aws-page-header-actions aws-mb-2">
+    <%= link_to t('.pending_requests'), pending_friends_path, class: "aws-btn aws-btn-secondary" %>
   </div>
 
-  <div style="margin-bottom: 2rem; padding: 1.5rem; border: 3px solid var(--ink); background: var(--paper);">
-    <h2 style="font-size: 1.1rem; font-weight: 700; margin: 0 0 1rem; text-transform: uppercase;"><%= t('.invite_link_title') %></h2>
-    <p style="margin: 0 0 1rem; color: #666; font-size: 0.9rem;"><%= t('.invite_link_text') %></p>
-    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+  <div class="aws-card aws-mb-2">
+    <div class="aws-card-header">
+      <h3 class="aws-card-title"><%= t('.invite_link_title') %></h3>
+    </div>
+    <p style="margin: 0 0 12px; color: var(--aws-text-secondary); font-size: 14px;"><%= t('.invite_link_text') %></p>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
       <input
         type="text"
         id="invite-link"
         value="<%= current_user.invite_url %>"
         readonly
-        style="flex: 1; min-width: 200px; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); font-size: 1rem;"
+        style="flex: 1; min-width: 200px; padding: 8px; border: 1px solid var(--aws-border); border-radius: 2px; background: var(--aws-bg-secondary); color: var(--aws-text-primary); font-size: 14px;"
       />
       <button
         type="button"
-        class="btn-chaos"
-        style="padding: 0.75rem 1.5rem;"
+        class="aws-btn aws-btn-secondary"
         onclick="navigator.clipboard.writeText(document.getElementById('invite-link').value); this.textContent='<%= t('.copied') %>'; setTimeout(()=>this.textContent='<%= t('.copy') %>',1500)"
       >
         <%= t('.copy') %>
@@ -30,36 +30,108 @@
   </div>
 
   <% if @friends.any? %>
-    <section style="margin-bottom: 2.5rem;">
-      <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee;">
-        <%= t('.my_friends') %> <span style="font-size: 0.85rem; color: #999; font-weight: 400;">(<%= @friends.count %>)</span>
-      </h2>
-      <div style="display: grid; gap: 1rem;">
-        <% @friends.each do |friend| %>
-          <div class="search-result-card" style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <div style="font-weight: 700;"><%= friend.display_name_or_email %></div>
-              <div style="font-size: 0.85rem; color: #666;"><%= friend.email_address %></div>
-            </div>
-            <div style="display: flex; gap: 0.5rem;">
-              <% dm = current_user.dm_with(friend) %>
-              <% if dm %>
-                <%= link_to t('.chat'), dm, class: "btn-chaos", style: "padding: 0.5rem 1rem; text-decoration: none; font-size: 0.85rem;" %>
-              <% else %>
-                <%= button_to t('.start_chat'), chat_rooms_path(chat_room: { name: "DM: #{current_user.display_name_or_email} & #{friend.display_name_or_email}", room_type: :direct_message, description: "Conversación privada" }, friend_email: friend.email_address), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.85rem;" %>
-              <% end %>
-              <% friendship = current_user.friendship_with(friend) %>
-              <%= button_to t('common.delete'), friend_path(friendship), method: :delete, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.85rem; background: #c00; color: #fff;", data: { turbo_confirm: t('.delete_confirm') } %>
-            </div>
-          </div>
-        <% end %>
+    <div class="aws-card">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title"><%= t('.my_friends') %> <span style="font-size: 12px; color: var(--aws-text-secondary); font-weight: 400;">(<%= @friends.count %>)</span></h3>
       </div>
-    </section>
+      <table class="aws-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th style="text-align: right;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @friends.each do |friend| %>
+            <tr>
+              <td><%= friend.display_name_or_email %></td>
+              <td><%= friend.email_address %></td>
+              <td style="text-align: right; white-space: nowrap;">
+                <% dm = current_user.dm_with(friend) %>
+                <% if dm %>
+                  <%= link_to t('.chat'), dm, class: "aws-btn aws-btn-secondary", style: "padding: 2px 8px; font-size: 12px;" %>
+                <% else %>
+                  <%= button_to t('.start_chat'), chat_rooms_path(chat_room: { name: "DM: #{current_user.display_name_or_email} & #{friend.display_name_or_email}", room_type: :direct_message, description: "Conversación privada" }, friend_email: friend.email_address), method: :post, class: "aws-btn aws-btn-secondary", style: "padding: 2px 8px; font-size: 12px;" %>
+                <% end %>
+                <% friendship = current_user.friendship_with(friend) %>
+                <%= button_to t('common.delete'), friend_path(friendship), method: :delete, class: "aws-btn aws-btn-danger", style: "padding: 2px 8px; font-size: 12px;", data: { turbo_confirm: t('.delete_confirm') } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   <% else %>
-    <div style="text-align: center; padding: 3rem 1rem;">
-      <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
-      <p style="font-size: 1.1rem; color: #666;"><%= t('.no_friends') %></p>
-      <p style="color: #999; margin-top: 0.5rem;"><%= t('.share_invite') %></p>
+    <div class="aws-empty-state">
+      <div class="aws-empty-state-icon" style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+      <p class="aws-empty-state-desc"><%= t('.no_friends') %></p>
+      <p class="aws-empty-state-desc"><%= t('.share_invite') %></p>
     </div>
   <% end %>
+</div>
+
+<div class="legacy-content">
+  <div class="chaotic-container">
+    <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <h1 style="font-size: 2.5rem; margin: 0;"><%= t('.title') %></h1>
+      <%= link_to t('.pending_requests'), pending_friends_path, class: "btn-chaos", style: "padding: 0.75rem 1.5rem; text-decoration: none; font-size: 0.85rem;" %>
+    </div>
+
+    <div style="margin-bottom: 2rem; padding: 1.5rem; border: 3px solid var(--ink); background: var(--paper);">
+      <h2 style="font-size: 1.1rem; font-weight: 700; margin: 0 0 1rem; text-transform: uppercase;"><%= t('.invite_link_title') %></h2>
+      <p style="margin: 0 0 1rem; color: #666; font-size: 0.9rem;"><%= t('.invite_link_text') %></p>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <input
+          type="text"
+          id="invite-link"
+          value="<%= current_user.invite_url %>"
+          readonly
+          style="flex: 1; min-width: 200px; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); font-size: 1rem;"
+        />
+        <button
+          type="button"
+          class="btn-chaos"
+          style="padding: 0.75rem 1.5rem;"
+          onclick="navigator.clipboard.writeText(document.getElementById('invite-link').value); this.textContent='<%= t('.copied') %>'; setTimeout(()=>this.textContent='<%= t('.copy') %>',1500)"
+        >
+          <%= t('.copy') %>
+        </button>
+      </div>
+    </div>
+
+    <% if @friends.any? %>
+      <section style="margin-bottom: 2.5rem;">
+        <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee;">
+          <%= t('.my_friends') %> <span style="font-size: 0.85rem; color: #999; font-weight: 400;">(<%= @friends.count %>)</span>
+        </h2>
+        <div style="display: grid; gap: 1rem;">
+          <% @friends.each do |friend| %>
+            <div class="search-result-card" style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-weight: 700;"><%= friend.display_name_or_email %></div>
+                <div style="font-size: 0.85rem; color: #666;"><%= friend.email_address %></div>
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <% dm = current_user.dm_with(friend) %>
+                <% if dm %>
+                  <%= link_to t('.chat'), dm, class: "btn-chaos", style: "padding: 0.5rem 1rem; text-decoration: none; font-size: 0.85rem;" %>
+                <% else %>
+                  <%= button_to t('.start_chat'), chat_rooms_path(chat_room: { name: "DM: #{current_user.display_name_or_email} & #{friend.display_name_or_email}", room_type: :direct_message, description: "Conversación privada" }, friend_email: friend.email_address), method: :post, class: "btn-chaos", style: "padding: 0.5rem 1rem; font-size: 0.85rem;" %>
+                <% end %>
+                <% friendship = current_user.friendship_with(friend) %>
+                <%= button_to t('common.delete'), friend_path(friendship), method: :delete, class: "aws-btn aws-btn-danger", data: { turbo_confirm: t('.delete_confirm') } %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    <% else %>
+      <div class="aws-empty-state">
+        <div class="aws-empty-state-icon" style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+        <p class="aws-empty-state-desc"><%= t('.no_friends') %></p>
+        <p class="aws-empty-state-desc"><%= t('.share_invite') %></p>
+      </div>
+    <% end %>
+  </div>
 </div>

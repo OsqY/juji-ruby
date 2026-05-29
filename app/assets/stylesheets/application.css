@@ -14,6 +14,8 @@
   --income-text: #2D5A27;
   --expense-bg: #FFEBEB;
   --expense-text: #D63031;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -896,24 +898,24 @@ textarea:focus {
 [data-theme="neon"] textarea,
 [data-theme="brat"] input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
 [data-theme="brat"] textarea,
-[data-theme="dark"] select {
+[data-theme="dark"] select:not(.theme-select-compact):not(.brat-font-select) {
   background: #1e1e1e !important;
   color: #fff !important;
 }
 
-[data-theme="neon"] select {
+[data-theme="neon"] select:not(.theme-select-compact):not(.brat-font-select) {
   background: #141024 !important;
   color: #ddffd8 !important;
 }
 
-[data-theme="brat"] select {
+[data-theme="brat"] select:not(.theme-select-compact):not(.brat-font-select) {
   background: #a6e92e !important;
   color: #111 !important;
 }
 
 [data-theme="comic"] input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
 [data-theme="comic"] textarea,
-[data-theme="comic"] select {
+[data-theme="comic"] select:not(.theme-select-compact):not(.brat-font-select) {
   background: #fff !important;
   color: var(--ink) !important;
   border-width: 4px;
@@ -927,7 +929,7 @@ textarea:focus {
 
 [data-theme="superhero"] input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
 [data-theme="superhero"] textarea,
-[data-theme="superhero"] select {
+[data-theme="superhero"] select:not(.theme-select-compact):not(.brat-font-select) {
   background: #fff !important;
   color: var(--ink) !important;
   border-width: 4px;
@@ -1139,7 +1141,7 @@ input[type="submit"].btn-chaos {
   min-width: 160px;
 }
 
-.theme-select-compact {
+.theme-select-compact.theme-select-compact {
   width: auto !important;
   margin: 0 !important;
   min-width: 112px;
@@ -1151,10 +1153,11 @@ input[type="submit"].btn-chaos {
   background: var(--paper) !important;
   color: var(--ink) !important;
   box-shadow: none !important;
+  transition: none !important;
   line-height: 1.2;
 }
 
-.brat-font-select {
+.brat-font-select.brat-font-select {
   min-width: 132px;
   display: none;
 }
@@ -2223,7 +2226,7 @@ nav.chaos-nav {
 
 [data-theme="superhero"] input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):hover,
 [data-theme="superhero"] textarea:hover,
-[data-theme="superhero"] select:hover {
+[data-theme="superhero"] select:not(.theme-select-compact):not(.brat-font-select):hover {
   animation: superheroSpring 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 

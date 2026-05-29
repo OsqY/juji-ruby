@@ -1,3 +1,47 @@
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: @chat_room.name,
+    subtitle: @chat_room.description || t('.no_description'),
+    breadcrumbs: [["Home", root_path], ["Chat", chat_rooms_path], [@chat_room.name, nil]] %>
+
+  <div class="aws-card" style="max-width: 600px; margin: 0 auto; text-align: center;">
+    <div style="margin-bottom: 16px;">
+      <span class="aws-tag aws-tag-info"><%= @chat_room.room_type %></span>
+    </div>
+
+    <p style="color: var(--aws-text-secondary); margin-bottom: 16px; font-size: 14px;">
+      Miembros: <strong><%= @chat_room.member_count %></strong>
+      <% if @chat_room.capacity.present? %> / <%= @chat_room.capacity %><% end %>
+    </p>
+
+    <% if @is_member %>
+      <%= link_to t('.enter_room'), @chat_room, class: "aws-btn aws-btn-primary" %>
+    <% elsif authenticated? && @can_join %>
+      <% if @chat_room.private_code? %>
+        <%= form_with url: public_chat_room_join_path(token: @chat_room.token), method: :post do |f| %>
+          <div style="margin-bottom: 12px;">
+            <%= f.text_field :entry_code,
+                placeholder: t('.entry_code_placeholder'),
+                required: true,
+                style: "width: 100%; max-width: 300px; padding: 8px 12px; border: 1px solid var(--aws-border); border-radius: 2px; background: var(--aws-input-bg); color: var(--aws-text-primary); font-size: 14px; text-align: center;"
+            %>
+          </div>
+          <%= f.submit t('.join'), class: "aws-btn aws-btn-primary" %>
+        <% end %>
+      <% else %>
+        <%= button_to t('.join_room'), public_chat_room_join_path(token: @chat_room.token), method: :post, class: "aws-btn aws-btn-primary" %>
+      <% end %>
+    <% elsif @chat_room.full? %>
+      <div class="aws-alert aws-alert-danger">
+        <%= t('.room_full') %>
+      </div>
+    <% elsif !authenticated? %>
+      <p style="margin-bottom: 12px; font-size: 14px;"><%= t('.login_to_join') %></p>
+      <%= link_to t('.login'), new_session_path, class: "aws-btn aws-btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="legacy-content">
 <div class="chaotic-container">
   <div style="max-width: 600px; margin: 0 auto; text-align: center;">
     <div style="margin-bottom: 1.5rem;">
@@ -41,4 +85,5 @@
       <%= link_to t('.login'), new_session_path, class: "btn-chaos", style: "padding: 0.75rem 2rem; text-decoration: none;" %>
     <% end %>
   </div>
+</div>
 </div>

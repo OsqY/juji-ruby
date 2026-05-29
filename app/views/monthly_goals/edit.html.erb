@@ -1,5 +1,95 @@
-<%= render "layouts/aws_page_header", title: "EDITAR META",
-  breadcrumbs: [["Home", root_path], ["Metas", monthly_goals_path], ["Editar", nil]] %>
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: "EDITAR META",
+    breadcrumbs: [["Home", root_path], ["Metas", monthly_goals_path], ["Editar", nil]] %>
 
-<h1>MonthlyGoals#edit</h1>
-<p>Find me in app/views/monthly_goals/edit.html.erb</p>
+  <div class="aws-card" style="max-width: 600px;">
+    <div class="aws-card-header">
+      <h3 class="aws-card-title">Editar meta</h3>
+    </div>
+    <%= form_with model: @monthly_goal do |f| %>
+      <% if @monthly_goal.errors.any? %>
+        <div class="aws-alert aws-alert-danger" style="margin-bottom: 16px;">
+          <% @monthly_goal.errors.full_messages.each do |msg| %>
+            <p style="margin: 0;"><%= msg %></p>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= f.label :title, "Título" %>
+        <%= f.text_field :title, required: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :description, "Descripción" %>
+        <%= f.text_area :description, rows: 3 %>
+      </div>
+
+      <div class="field">
+        <%= f.label :goal_type, "Tipo" %>
+        <%= f.select :goal_type, MonthlyGoal.goal_types.keys.map { |k| [k.humanize, k] }, {}, required: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :target_value, "Valor objetivo" %>
+        <%= f.number_field :target_value, step: 0.01, min: 0.01, required: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :category, "Categoría (opcional)" %>
+        <%= f.text_field :category %>
+      </div>
+
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <%= f.submit "Guardar", class: "aws-btn aws-btn-primary" %>
+        <%= link_to "Cancelar", monthly_goals_path, class: "aws-btn aws-btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="legacy-content">
+  <div class="chaotic-container" style="max-width: 600px;">
+    <h1 style="font-size: 2.5rem; margin-bottom: 2rem;">EDITAR META</h1>
+
+    <%= form_with model: @monthly_goal, class: "report-section-block" do |f| %>
+      <% if @monthly_goal.errors.any? %>
+        <div style="background: var(--expense-bg); padding: 1rem; margin-bottom: 1rem; border: 3px solid var(--expense-text);">
+          <% @monthly_goal.errors.full_messages.each do |msg| %>
+            <p style="margin: 0; color: var(--expense-text);"><%= msg %></p>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div style="margin-bottom: 1.5rem;">
+        <%= f.label :title, "TÍTULO", style: "display: block; font-size: 0.8rem; font-weight: 900; margin-bottom: 0.5rem;" %>
+        <%= f.text_field :title, required: true %>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <%= f.label :description, "DESCRIPCIÓN", style: "display: block; font-size: 0.8rem; font-weight: 900; margin-bottom: 0.5rem;" %>
+        <%= f.text_area :description, rows: 3 %>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <%= f.label :goal_type, "TIPO", style: "display: block; font-size: 0.8rem; font-weight: 900; margin-bottom: 0.5rem;" %>
+        <%= f.select :goal_type, MonthlyGoal.goal_types.keys.map { |k| [k.humanize, k] }, {}, required: true %>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <%= f.label :target_value, "VALOR OBJETIVO", style: "display: block; font-size: 0.8rem; font-weight: 900; margin-bottom: 0.5rem;" %>
+        <%= f.number_field :target_value, step: 0.01, min: 0.01, required: true %>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <%= f.label :category, "CATEGORÍA (opcional)", style: "display: block; font-size: 0.8rem; font-weight: 900; margin-bottom: 0.5rem;" %>
+        <%= f.text_field :category %>
+      </div>
+
+      <div>
+        <%= f.submit "GUARDAR", class: "btn-chaos" %>
+        <%= link_to "CANCELAR", monthly_goals_path, class: "nav-link", style: "margin-left: 1rem;" %>
+      </div>
+    <% end %>
+  </div>
+</div>

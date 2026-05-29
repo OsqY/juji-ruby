@@ -15,6 +15,7 @@ export default class ThemeController extends Controller {
         const theme = event.target.value
         this.applyTheme(theme)
         localStorage.setItem("theme", theme)
+        this.syncAllThemeSelects(theme)
         this.syncBratFontVisibility(theme)
     }
 
@@ -42,9 +43,15 @@ export default class ThemeController extends Controller {
     }
 
     syncSelectValues(theme, bratFont) {
-        if (this.hasThemeSelectTarget) this.themeSelectTarget.value = theme
+        this.syncAllThemeSelects(theme)
         if (this.hasBratFontSelectTarget) this.bratFontSelectTarget.value = bratFont
         this.syncBratFontVisibility(theme)
+    }
+
+    syncAllThemeSelects(theme) {
+        document.querySelectorAll('[data-theme-target="themeSelect"]').forEach(select => {
+            select.value = theme
+        })
     }
 
     syncBratFontVisibility(theme) {

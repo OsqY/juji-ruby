@@ -1,3 +1,52 @@
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: "DETALLE REPORTE",
+    subtitle: "#{@daily_report.work_title.presence || 'Sin título'} — #{@daily_report.report_date.strftime('%d/%m/%Y')}",
+    breadcrumbs: [["Home", root_path], ["Reportes", daily_reports_path(view: "week")], ["Detalle", nil]] %>
+
+  <div class="aws-card aws-mb-2">
+    <div class="aws-card-header">
+      <h3 class="aws-card-title"><%= @daily_report.work_title.presence || "Sin título" %></h3>
+    </div>
+    <div style="padding: 16px;">
+      <p style="font-size: 12px; color: var(--aws-text-secondary); margin: 0 0 16px;">
+        Responsable: <strong><%= @daily_report.worked_by.presence || "Sin responsable" %></strong> | Fecha: <%= @daily_report.report_date.strftime("%d/%m/%Y") %>
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+        <div class="aws-card" style="padding: 16px;">
+          <h4 style="font-size: 14px; font-weight: 600; margin: 0 0 8px;">He hecho</h4>
+          <div style="font-size: 14px; color: var(--aws-text-primary);"><%= format_as_list(@daily_report.yesterday) %></div>
+        </div>
+
+        <div class="aws-card" style="padding: 16px;">
+          <h4 style="font-size: 14px; font-weight: 600; margin: 0 0 8px;">Haré</h4>
+          <div style="font-size: 14px; color: var(--aws-text-primary);"><%= format_as_list(@daily_report.today) %></div>
+        </div>
+      </div>
+
+      <% if @daily_report.blockers.present? %>
+        <div class="aws-card" style="margin-top: 16px; padding: 16px;">
+          <h4 style="font-size: 14px; font-weight: 600; margin: 0 0 8px;">Impedimentos</h4>
+          <div style="font-size: 14px; color: var(--aws-text-primary); font-weight: 600;"><%= @daily_report.blockers %></div>
+        </div>
+      <% end %>
+
+      <% if @daily_report.additional_details.present? %>
+        <div class="aws-card" style="margin-top: 16px; padding: 16px;">
+          <h4 style="font-size: 14px; font-weight: 600; margin: 0 0 8px;">Notas</h4>
+          <div style="font-size: 14px; color: var(--aws-text-primary);"><%= @daily_report.additional_details %></div>
+        </div>
+      <% end %>
+
+      <div style="margin-top: 16px; display: flex; gap: 8px;">
+        <%= link_to "Ver todos", daily_reports_path(view: "week", date: @daily_report.report_date.strftime("%Y-%m-%d")), class: "aws-btn aws-btn-secondary" %>
+        <%= link_to "Editar", edit_daily_report_path(@daily_report), class: "aws-btn aws-btn-primary", data: { turbo_frame: "daily_report_form_panel" } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="legacy-content">
 <%= render "layouts/aws_page_header", title: "DETALLE REPORTE",
   breadcrumbs: [["Home", root_path], ["Reportes", daily_reports_path(view: "week")], ["Detalle", nil]] %>
 
@@ -53,4 +102,5 @@
     <%= link_to "VER TODOS", daily_reports_path(view: "week", date: @daily_report.report_date.strftime("%Y-%m-%d")), class: "nav-link" %>
     <%= link_to "EDITAR", edit_daily_report_path(@daily_report), class: "nav-link", data: { turbo_frame: "daily_report_form_panel" } %>
   </section>
+</div>
 </div>

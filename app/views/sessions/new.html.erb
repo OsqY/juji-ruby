@@ -1,48 +1,93 @@
 <%= turbo_frame_tag "session_form_content" do %>
-<%= render "layouts/aws_page_header", title: "ENTRAR",
-  subtitle: "Accede a tu archivo personal",
-  breadcrumbs: [["Home", root_path], ["Entrar", nil]] %>
+  <div class="aws-content">
+    <%= render "layouts/aws_page_header", title: "ENTRAR",
+      subtitle: "Accede a tu archivo personal",
+      breadcrumbs: [["Home", root_path], ["Entrar", nil]] %>
 
-<div class="chaotic-container" style="max-width: 600px;">
-  <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
-    <h1 class="form-title">ENTRAR</h1>
-    <p style="font-weight: 700; opacity: 0.6;">ACCEDE A TU ARCHIVO PERSONAL</p>
+    <div class="aws-card" style="max-width: 600px; margin: 0 auto;">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title">Entrar</h3>
+      </div>
+      <div style="padding: 24px;">
+        <% if alert %>
+          <div class="aws-alert aws-alert-danger" style="margin-bottom: 16px;">
+            <%= alert %>
+          </div>
+        <% end %>
+
+        <% if notice %>
+          <div class="aws-alert aws-alert-success" style="margin-bottom: 16px;">
+            <%= notice %>
+          </div>
+        <% end %>
+
+        <%= form_with(url: session_path, data: { turbo_frame: "_top" }) do |f| %>
+          <div class="field">
+            <%= f.label :email_address, "Correo electrónico" %>
+            <%= f.email_field :email_address, value: @email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "tu@ejemplo.com" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password, "Contraseña" %>
+            <%= f.password_field :password, required: true, autocomplete: "current-password", placeholder: "••••••••" %>
+          </div>
+
+          <div style="margin-bottom: 16px; text-align: right;">
+            <%= link_to "¿Olvidaste tu contraseña?", new_password_path, data: { turbo_frame: "_top" }, style: "font-size: 12px; color: var(--aws-text-secondary);" %>
+          </div>
+
+          <%= f.submit "Acceder", class: "aws-btn aws-btn-primary", style: "width: 100%;" %>
+        <% end %>
+
+        <div style="margin-top: 16px; text-align: center;">
+          <%= link_to "¿No tienes cuenta? Crear una", new_registration_path, data: { turbo_frame: "_top" }, style: "font-size: 13px; color: var(--aws-primary); text-decoration: none;" %>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <% if alert %>
-    <div style="background: #FFEDED; border: 4px solid #D63031; padding: 2rem; margin-bottom: 3rem; color: #D63031; font-weight: 700;">
-      <%= alert.upcase %>
-    </div>
-  <% end %>
+  <div class="legacy-content">
+    <div class="chaotic-container" style="max-width: 600px;">
+      <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
+        <h1 class="form-title">ENTRAR</h1>
+        <p style="font-weight: 700; opacity: 0.6;">ACCEDE A TU ARCHIVO PERSONAL</p>
+      </div>
 
-  <% if notice %>
-    <div style="background: #E1FFEC; border: 4px solid #2D5A27; padding: 2rem; margin-bottom: 3rem; color: #2D5A27; font-weight: 700;">
-      <%= notice.upcase %>
-    </div>
-  <% end %>
+      <% if alert %>
+        <div style="background: #FFEDED; border: 4px solid #D63031; padding: 2rem; margin-bottom: 3rem; color: #D63031; font-weight: 700;">
+          <%= alert.upcase %>
+        </div>
+      <% end %>
 
-  <%= form_with(url: session_path, data: { turbo_frame: "_top" }) do |f| %>
-    <div class="form-group">
-      <%= f.label :email_address, "CORREO ELECTRÓNICO" %>
-      <%= f.email_field :email_address, value: @email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "tu@ejemplo.com" %>
-    </div>
+      <% if notice %>
+        <div style="background: #E1FFEC; border: 4px solid #2D5A27; padding: 2rem; margin-bottom: 3rem; color: #2D5A27; font-weight: 700;">
+          <%= notice.upcase %>
+        </div>
+      <% end %>
 
-    <div class="form-group">
-      <%= f.label :password, "CONTRASEÑA" %>
-      <%= f.password_field :password, required: true, autocomplete: "current-password", placeholder: "••••••••" %>
-    </div>
+      <%= form_with(url: session_path, data: { turbo_frame: "_top" }) do |f| %>
+        <div class="form-group">
+          <%= f.label :email_address, "CORREO ELECTRÓNICO" %>
+          <%= f.email_field :email_address, value: @email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "tu@ejemplo.com" %>
+        </div>
 
-    <div style="margin-bottom: 2rem; text-align: right;">
-      <%= link_to "¿OLVIDASTE TU CONTRASEÑA?", new_password_path, data: { turbo_frame: "_top" }, style: "font-size: 0.8rem; font-weight: 700; color: var(--ink); opacity: 0.6;" %>
-    </div>
+        <div class="form-group">
+          <%= f.label :password, "CONTRASEÑA" %>
+          <%= f.password_field :password, required: true, autocomplete: "current-password", placeholder: "••••••••" %>
+        </div>
 
-    <div class="form-actions">
-      <%= f.submit "ACCEDER", class: "btn-chaos", style: "flex: 1;" %>
-    </div>
+        <div style="margin-bottom: 2rem; text-align: right;">
+          <%= link_to "¿OLVIDASTE TU CONTRASEÑA?", new_password_path, data: { turbo_frame: "_top" }, style: "font-size: 0.8rem; font-weight: 700; color: var(--ink); opacity: 0.6;" %>
+        </div>
 
-    <div style="margin-top: 2rem; text-align: center;">
-      <%= link_to "¿NO TIENES CUENTA? CREAR UNA", new_registration_path, data: { turbo_frame: "_top" }, style: "font-weight: 900; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--highlight);" %>
+        <div class="form-actions">
+          <%= f.submit "ACCEDER", class: "btn-chaos", style: "flex: 1;" %>
+        </div>
+
+        <div style="margin-top: 2rem; text-align: center;">
+          <%= link_to "¿NO TIENES CUENTA? CREAR UNA", new_registration_path, data: { turbo_frame: "_top" }, style: "font-weight: 900; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--highlight);" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-</div>
+  </div>
 <% end %>

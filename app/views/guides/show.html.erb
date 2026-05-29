@@ -1,3 +1,116 @@
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: "GUÍA",
+    subtitle: t("guide.subtitle", default: "Cómo usar Juji"),
+    breadcrumbs: [["Home", root_path], ["Guía", nil]] %>
+
+  <div class="aws-card aws-mb-2">
+    <div class="aws-card-header">
+      <h3 class="aws-card-title"><%= t("guide.whats_new.title") %></h3>
+    </div>
+    <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+      <p style="font-size: 14px; color: var(--aws-text-secondary); margin: 0;"><%= t("guide.whats_new.whiteboard") %></p>
+      <p style="font-size: 14px; color: var(--aws-text-secondary); margin: 0;"><%= t("guide.whats_new.forms") %></p>
+      <p style="font-size: 14px; color: var(--aws-text-secondary); margin: 0;"><%= t("guide.whats_new.search") %></p>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+    <div class="aws-card">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title"><%= t("guide.labels.reports") %></h3>
+      </div>
+      <div style="padding: 16px;">
+        <ol style="margin: 0; padding-left: 20px; font-size: 14px; color: var(--aws-text-primary);">
+          <li><%= t("guide.reports.step_1") %></li>
+          <li><%= t("guide.reports.step_2") %></li>
+          <li><%= t("guide.reports.step_3") %></li>
+        </ol>
+        <div style="margin-top: 12px;">
+          <%= link_to t("guide.quick_actions.open_reports"), daily_reports_path, class: "aws-btn aws-btn-primary", style: "font-size: 12px; padding: 4px 12px;" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="aws-card">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title"><%= t("guide.labels.finance") %></h3>
+      </div>
+      <div style="padding: 16px;">
+        <ol style="margin: 0; padding-left: 20px; font-size: 14px; color: var(--aws-text-primary);">
+          <li><%= t("guide.finance.step_1") %></li>
+          <li><%= t("guide.finance.step_2") %></li>
+          <li><%= t("guide.finance.step_3") %></li>
+        </ol>
+        <div style="margin-top: 12px;">
+          <%= link_to t("guide.quick_actions.open_finance"), transactions_path, class: "aws-btn aws-btn-primary", style: "font-size: 12px; padding: 4px 12px;" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="aws-card">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title"><%= t("guide.labels.productivity") %></h3>
+      </div>
+      <div style="padding: 16px;">
+        <ol style="margin: 0; padding-left: 20px; font-size: 14px; color: var(--aws-text-primary);">
+          <li><%= t("guide.productivity.step_1") %></li>
+          <li><%= t("guide.productivity.step_2") %></li>
+          <li><%= t("guide.productivity.step_3") %></li>
+        </ol>
+        <div style="margin-top: 12px;">
+          <%= link_to t("guide.quick_actions.open_projects"), projects_path, class: "aws-btn aws-btn-primary", style: "font-size: 12px; padding: 4px 12px;" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="aws-card">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title"><%= t("guide.labels.whiteboards") %></h3>
+      </div>
+      <div style="padding: 16px;">
+        <ol style="margin: 0; padding-left: 20px; font-size: 14px; color: var(--aws-text-primary);">
+          <li><%= t("guide.whiteboards.step_1") %></li>
+          <li><%= t("guide.whiteboards.step_2") %></li>
+          <li><%= t("guide.whiteboards.step_3") %></li>
+        </ol>
+        <div style="margin-top: 12px;">
+          <%= link_to t("guide.quick_actions.open_whiteboards"), whiteboards_path, class: "aws-btn aws-btn-primary", style: "font-size: 12px; padding: 4px 12px;" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="aws-card">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title"><%= t("guide.labels.forms") %></h3>
+      </div>
+      <div style="padding: 16px;">
+        <ol style="margin: 0; padding-left: 20px; font-size: 14px; color: var(--aws-text-primary);">
+          <li><%= t("guide.forms.step_1") %></li>
+          <li><%= t("guide.forms.step_2") %></li>
+          <li><%= t("guide.forms.step_3") %></li>
+        </ol>
+        <div style="margin-top: 12px;">
+          <%= link_to t("guide.quick_actions.open_forms"), anonymous_forms_path, class: "aws-btn aws-btn-primary", style: "font-size: 12px; padding: 4px 12px;" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="aws-card">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title"><%= t("guide.labels.tips") %></h3>
+      </div>
+      <div style="padding: 16px;">
+        <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: var(--aws-text-primary);">
+          <li><%= t("guide.tips.item_1") %></li>
+          <li><%= t("guide.tips.item_2") %></li>
+          <li><%= t("guide.tips.item_3") %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="legacy-content">
 <div class="chaotic-container guide-page">
   <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;">
     <h1 style="font-size: 3rem;"><%= t("guide.title") %></h1>
@@ -88,4 +201,5 @@
       </ul>
     </section>
   </div>
+</div>
 </div>

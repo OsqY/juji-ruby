@@ -1,14 +1,63 @@
 <%= turbo_frame_tag "password_edit_content" do %>
-<%= render "layouts/aws_page_header", title: "ACTUALIZAR CONTRASEÑA",
-  breadcrumbs: [["Home", root_path], ["Actualizar", nil]] %>
+  <div class="aws-content">
+    <%= render "layouts/aws_page_header", title: "ACTUALIZAR CONTRASEÑA",
+      breadcrumbs: [["Home", root_path], ["Actualizar", nil]] %>
 
-<h1>Update your password</h1>
+    <div class="aws-card" style="max-width: 600px; margin: 0 auto;">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title">Nueva contraseña</h3>
+      </div>
+      <div style="padding: 24px;">
+        <% if flash[:alert] %>
+          <div class="aws-alert aws-alert-danger" style="margin-bottom: 16px;">
+            <%= flash[:alert] %>
+          </div>
+        <% end %>
 
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+        <%= form_with url: password_path(params[:token]), method: :put, data: { turbo_frame: "_top" } do |f| %>
+          <div class="field">
+            <%= f.label :password, "Nueva contraseña" %>
+            <%= f.password_field :password, required: true, autocomplete: "new-password", placeholder: "••••••••", maxlength: 72 %>
+          </div>
 
-<%= form_with url: password_path(params[:token]), method: :put, data: { turbo_frame: "_top" } do |form| %>
-  <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter new password", maxlength: 72 %><br>
-  <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 72 %><br>
-  <%= form.submit "Save" %>
-<% end %>
+          <div class="field">
+            <%= f.label :password_confirmation, "Confirmar contraseña" %>
+            <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "••••••••", maxlength: 72 %>
+          </div>
+
+          <%= f.submit "Guardar", class: "aws-btn aws-btn-primary", style: "width: 100%;" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="legacy-content">
+    <div class="chaotic-container" style="max-width: 600px;">
+      <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
+        <h1 class="form-title">ACTUALIZAR CONTRASEÑA</h1>
+      </div>
+
+      <% if flash[:alert] %>
+        <div style="background: #FFEDED; border: 4px solid #D63031; padding: 2rem; margin-bottom: 3rem; color: #D63031; font-weight: 700;">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <%= form_with url: password_path(params[:token]), method: :put, data: { turbo_frame: "_top" } do |f| %>
+        <div class="form-group">
+          <%= f.label :password, "NUEVA CONTRASEÑA" %>
+          <%= f.password_field :password, required: true, autocomplete: "new-password", placeholder: "••••••••", maxlength: 72 %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password_confirmation, "CONFIRMAR CONTRASEÑA" %>
+          <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "••••••••", maxlength: 72 %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "GUARDAR", class: "btn-chaos", style: "flex: 1;" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 <% end %>

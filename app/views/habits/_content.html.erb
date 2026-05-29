@@ -1,84 +1,156 @@
 <%= turbo_frame_tag "habits_content" do %>
   <%= render "shared/frame_flash" %>
-<%= render "layouts/aws_page_header", title: "RASTREADOR DE HÁBITOS",
-  subtitle: "Tus últimos 7 días",
-  breadcrumbs: [["Home", root_path], ["Hábitos", habits_path]] %>
 
-  <div class="chaotic-container">
-    <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
-      <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
-        <div>
-          <h1 class="form-title">RASTREADOR DE HÁBITOS</h1>
-          <p style="font-weight: 700; opacity: 0.6;">TUS ÚLTIMOS 7 DÍAS / YOUR LAST 7 DAYS</p>
-        </div>
-        <%= render "shared/export_actions", model: "habits" %>
+  <div class="aws-content">
+    <%= render "layouts/aws_page_header", title: "RASTREADOR DE HÁBITOS",
+      subtitle: "Tus últimos 7 días",
+      breadcrumbs: [["Home", root_path], ["Hábitos", habits_path]] %>
+
+    <div class="aws-card aws-mb-2">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title">Crear nuevo hábito</h3>
       </div>
-    </div>
-
-    <div class="report-section-block" style="margin-bottom: 3rem;">
-      <h2 class="section-title">CREAR NUEVO HÁBITO</h2>
       <%= form_with(model: @new_habit) do |f| %>
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <div style="flex: 1; min-width: auto;">
-            <%= f.label :name, "NOMBRE DEL HÁBITO", style: "font-size: 0.7rem; font-weight: 900; opacity: 0.5; display: block;" %>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;">
+          <div class="field" style="flex: 1;">
+            <%= f.label :name, "Nombre del hábito" %>
             <%= f.text_field :name, placeholder: "Ej. Meditar, Leer 10 min, Ejercicio...", required: true %>
           </div>
-          <div style="display: flex; align-items: flex-end;">
-            <%= f.submit "AGREGAR +", class: "btn-chaos", style: "padding: 1rem 2rem;" %>
-          </div>
+          <%= f.submit "Agregar", class: "aws-btn aws-btn-primary" %>
         </div>
       <% end %>
     </div>
 
-    <div class="habit-tracker-grid" style="display: flex; flex-direction: column; gap: 2rem; overflow-x: auto;">
+    <div class="aws-card">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title">Hábitos</h3>
+      </div>
       <% if @habits.any? %>
-        <div style="display: grid; grid-template-columns: auto repeat(7, 50px); gap: 10px; min-width: auto; padding-bottom: 1rem; overflow-x: auto; -webkit-overflow-scrolling: touch;">
-          <div></div>
-          <% @dates.each do |date| %>
-            <div style="text-align: center; min-width: 50px;">
-              <div style="font-size: 0.6rem; font-weight: 900; opacity: 0.4;"><%= date.strftime("%a").upcase %></div>
-              <div style="font-size: 1rem; font-weight: 900;"><%= date.day %></div>
-            </div>
-          <% end %>
-
-          <% @habits.each do |habit| %>
-            <div style="display: flex; align-items: center; justify-content: space-between; padding-right: 1rem;">
-              <h3 style="margin: 0; font-size: 1.1rem; text-transform: uppercase;"><%= habit.name %></h3>
-              <%= button_to habit_path(habit), method: :delete, class: "delete-btn-link", data: { turbo_confirm: "¿Eliminar?" }, style: "opacity: 0.3;" do %>
-                <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
-              <% end %>
-            </div>
-
-            <% @dates.each do |date| %>
-              <% log = habit.habit_logs.find_by(log_date: date) %>
-              <div style="display: flex; justify-content: center; align-items: center;">
-                <%= button_to toggle_habit_path(habit, date: date), method: :post, class: "habit-toggle-cell", style: "padding: 0; border: none; background: none; cursor: pointer; width: 40px; height: 40px;" do %>
-                  <div style="width: 100%; height: 100%; border: 4px solid var(--ink); border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; <%= log&.completed ? 'background: var(--highlight); color: black;' : 'background: var(--paper);' %>">
-                    <% if log&.completed %>
-                      <i data-lucide="check" style="width: 20px; height: 20px; stroke-width: 4;"></i>
-                    <% end %>
-                  </div>
+        <div style="overflow-x: auto;">
+          <table class="aws-table">
+            <thead>
+              <tr>
+                <th>Hábito</th>
+                <% @dates.each do |date| %>
+                  <th style="text-align: center; white-space: nowrap;">
+                    <div style="font-size: 10px; color: var(--aws-text-secondary); text-transform: uppercase;"><%= date.strftime("%a").upcase %></div>
+                    <div style="font-size: 14px; font-weight: 600;"><%= date.day %></div>
+                  </th>
                 <% end %>
-              </div>
-            <% end %>
-          <% end %>
+                <th style="text-align: right;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @habits.each do |habit| %>
+                <tr>
+                  <td style="font-weight: 600;"><%= habit.name %></td>
+                  <% @dates.each do |date| %>
+                    <% log = habit.habit_logs.find_by(log_date: date) %>
+                    <td style="text-align: center;">
+                      <%= button_to toggle_habit_path(habit, date: date), method: :post, style: "padding: 0; border: none; background: none; cursor: pointer; width: 32px; height: 32px;" do %>
+                        <div style="width: 100%; height: 100%; border: 2px solid var(--aws-border); border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; <%= log&.completed ? 'background: var(--aws-primary); color: white;' : 'background: var(--aws-bg-primary);' %>">
+                          <% if log&.completed %>
+                            <i data-lucide="check" style="width: 16px; height: 16px; stroke-width: 3;"></i>
+                          <% end %>
+                        </div>
+                      <% end %>
+                    </td>
+                  <% end %>
+                  <td style="text-align: right;">
+                    <%= button_to habit_path(habit), method: :delete, class: "aws-btn aws-btn-danger", style: "padding: 2px 8px; font-size: 12px;", data: { turbo_confirm: "¿Eliminar?" } do %>
+                      <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
       <% else %>
-        <div class="report-section-block" style="text-align: center; padding: 4rem;">
-          <p style="font-weight: 900; opacity: 0.3; font-size: 1.2rem;">SIN HÁBITOS TODAVÍA / NO HABITS YET</p>
+        <div class="aws-empty-state">
+          <p class="aws-empty-state-desc">Sin hábitos todavía / No habits yet</p>
         </div>
       <% end %>
     </div>
   </div>
 
-  <style>
-    .habit-toggle-cell:hover div {
-      transform: scale(1.1);
-      box-shadow: 4px 4px 0 var(--ink);
-    }
+  <div class="legacy-content">
+    <div class="chaotic-container">
+      <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <div>
+            <h1 class="form-title">RASTREADOR DE HÁBITOS</h1>
+            <p style="font-weight: 700; opacity: 0.6;">TUS ÚLTIMOS 7 DÍAS / YOUR LAST 7 DAYS</p>
+          </div>
+          <%= render "shared/export_actions", model: "habits" %>
+        </div>
+      </div>
 
-    .habit-toggle-cell:active div {
-      transform: scale(0.95);
-    }
-  </style>
+      <div class="report-section-block" style="margin-bottom: 3rem;">
+        <h2 class="section-title">CREAR NUEVO HÁBITO</h2>
+        <%= form_with(model: @new_habit) do |f| %>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <div class="field" style="flex: 1; min-width: auto;">
+              <%= f.label :name, "NOMBRE DEL HÁBITO" %>
+              <%= f.text_field :name, placeholder: "Ej. Meditar, Leer 10 min, Ejercicio...", required: true %>
+            </div>
+            <div style="display: flex; align-items: flex-end;">
+              <%= f.submit "AGREGAR +", class: "btn-chaos", style: "padding: 1rem 2rem;" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="habit-tracker-grid" style="display: flex; flex-direction: column; gap: 2rem; overflow-x: auto;">
+        <% if @habits.any? %>
+          <div style="display: grid; grid-template-columns: auto repeat(7, 50px); gap: 10px; min-width: auto; padding-bottom: 1rem; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+            <div></div>
+            <% @dates.each do |date| %>
+              <div style="text-align: center; min-width: 50px;">
+                <div style="font-size: 0.6rem; font-weight: 900; opacity: 0.4;"><%= date.strftime("%a").upcase %></div>
+                <div style="font-size: 1rem; font-weight: 900;"><%= date.day %></div>
+              </div>
+            <% end %>
+
+            <% @habits.each do |habit| %>
+              <div style="display: flex; align-items: center; justify-content: space-between; padding-right: 1rem;">
+                <h3 style="margin: 0; font-size: 1.1rem; text-transform: uppercase;"><%= habit.name %></h3>
+                <%= button_to habit_path(habit), method: :delete, class: "aws-btn aws-btn-danger", data: { turbo_confirm: "¿Eliminar?" } do %>
+                  <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
+                <% end %>
+              </div>
+
+              <% @dates.each do |date| %>
+                <% log = habit.habit_logs.find_by(log_date: date) %>
+                <div style="display: flex; justify-content: center; align-items: center;">
+                  <%= button_to toggle_habit_path(habit, date: date), method: :post, class: "habit-toggle-cell", style: "padding: 0; border: none; background: none; cursor: pointer; width: 40px; height: 40px;" do %>
+                    <div style="width: 100%; height: 100%; border: 4px solid var(--ink); border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; <%= log&.completed ? 'background: var(--highlight); color: black;' : 'background: var(--paper);' %>">
+                      <% if log&.completed %>
+                        <i data-lucide="check" style="width: 20px; height: 20px; stroke-width: 4;"></i>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="aws-empty-state">
+            <p class="aws-empty-state-desc">SIN HÁBITOS TODAVÍA / NO HABITS YET</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 <% end %>
+
+<style>
+  .habit-toggle-cell:hover div {
+    transform: scale(1.1);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .habit-toggle-cell:active div {
+    transform: scale(0.95);
+  }
+</style>

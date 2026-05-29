@@ -1,5 +1,179 @@
-<%= render "layouts/aws_page_header", title: "EDITAR TRANSACCIÓN",
-  breadcrumbs: [["Home", root_path], ["Finanzas", transactions_path], ["Editar", nil]] %>
+<% frame_id = turbo_frame_request_id.presence || "transaction_form_content" %>
+<% drawer_mode = frame_id == "transaction_form_panel" %>
+<%= turbo_frame_tag frame_id do %>
+  <div class="aws-content">
+    <% if drawer_mode %>
+      <%= render "layouts/aws_page_header", title: "EDITAR TRANSACCIÓN",
+        breadcrumbs: [["Home", root_path], ["Finanzas", transactions_path], ["Editar", nil]] %>
 
-<h1>Transactions#edit</h1>
-<p>Find me in app/views/transactions/edit.html.erb</p>
+      <div class="inline-drawer-shell" data-controller="drawer">
+        <div class="inline-drawer-backdrop" data-action="click->drawer#close"></div>
+        <div class="inline-drawer-panel">
+          <button type="button" class="inline-drawer-close" data-action="click->drawer#close"><%= t("common.close") %></button>
+    <% end %>
+
+    <div class="aws-card" style="max-width: 800px;">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title">Editar transacción</h3>
+      </div>
+      <%= form_with(model: @transaction, data: (drawer_mode ? {} : { turbo_frame: "_top" })) do |f| %>
+        <div class="field">
+          <%= f.label :transaction_type, "Tipo de flujo" %>
+          <div style="display: flex; gap: 12px;">
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <%= f.radio_button :transaction_type, "expense" %>
+              <span>Egreso</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <%= f.radio_button :transaction_type, "income" %>
+              <span>Ingreso</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= f.label :amount, "Monto (L)" %>
+          <%= f.number_field :amount, step: 0.01, placeholder: "0.00" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :description, "Descripción" %>
+          <%= f.text_area :description, placeholder: "Compra de materiales, Venta de..." %>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <div class="field" style="flex: 1;">
+            <%= f.label :date, "Fecha del movimiento" %>
+            <%= f.date_field :date %>
+          </div>
+          <div class="field" style="flex: 1;">
+            <% category_options = @category_options.to_a %>
+            <% selected_category = @transaction.category.to_s.strip.downcase %>
+            <% in_options = selected_category.present? && category_options.include?(selected_category) %>
+            <% selected_option = in_options ? selected_category : "__new__" %>
+            <% custom_value = in_options ? "" : selected_category %>
+
+            <%= f.label :category, "Categoría / etiqueta" %>
+            <div data-controller="category-picker">
+              <%= f.hidden_field :category, value: selected_category, data: { category_picker_target: "hidden" } %>
+              <%= select_tag "transaction[category_option]",
+                  options_for_select([*category_options.map { |category| [category, category] }, [t("transactions.category.new"), "__new__"]], selected_option),
+                  data: { category_picker_target: "select", action: "change->category-picker#selectChanged", new_value: "__new__" } %>
+              <div data-category-picker-target="customWrap" style="margin-top: 4px;">
+                <%= text_field_tag "transaction[category_custom]", custom_value, placeholder: t("transactions.category.custom_placeholder"), data: { category_picker_target: "custom", action: "input->category-picker#customChanged" } %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; align-items: center; margin-top: 8px;">
+          <%= f.submit "Guardar", class: "aws-btn aws-btn-primary" %>
+          <% if drawer_mode %>
+            <button type="button" class="aws-btn aws-btn-secondary" data-action="click->drawer#close"><%= t("common.cancel") %></button>
+          <% else %>
+            <%= link_to t("common.cancel"), transactions_path, data: { turbo_frame: "_top" }, class: "aws-btn aws-btn-secondary" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <% if drawer_mode %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="legacy-content">
+    <% if drawer_mode %>
+      <div class="inline-drawer-shell" data-controller="drawer">
+        <div class="inline-drawer-backdrop" data-action="click->drawer#close"></div>
+        <div class="inline-drawer-panel">
+          <button type="button" class="inline-drawer-close" data-action="click->drawer#close"><%= t("common.close") %></button>
+    <% end %>
+    <div class="chaotic-container" style="max-width: 800px;">
+      <div style="border-bottom: 8px solid var(--ink); margin-bottom: 4rem; padding-bottom: 1rem;">
+        <h1 class="form-title">EDITAR TRANSACCIÓN</h1>
+      </div>
+
+      <%= form_with(model: @transaction, data: (drawer_mode ? {} : { turbo_frame: "_top" })) do |f| %>
+        <div class="form-group">
+          <%= f.label :transaction_type, "TIPO DE FLUJO" %>
+          <div class="transaction-type-cards">
+            <label class="type-card-wrapper">
+              <%= f.radio_button :transaction_type, "expense" %>
+              <div class="type-card">
+                <div class="card-label">EGRESO</div>
+              </div>
+            </label>
+            <label class="type-card-wrapper">
+              <%= f.radio_button :transaction_type, "income" %>
+              <div class="type-card">
+                <div class="card-label">INGRESO</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="report-section-block">
+            <%= f.label :amount, "¿CUÁNTO DINERO (L)?" %>
+            <%= f.number_field :amount, step: 0.01, placeholder: "0.00" %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="report-section-block" style="background: var(--muted-gray);">
+            <%= f.label :description, "¿POR QUÉ CONCEPTO? (DESCRIPCIÓN)" %>
+            <%= f.text_area :description, placeholder: "Compra de materiales, Venta de..." %>
+          </div>
+        </div>
+
+        <div class="report-grid" style="margin-bottom: 4rem;">
+          <div class="report-column">
+            <div class="form-group" style="margin-bottom: 0;">
+              <div class="report-section-block">
+                <%= f.label :date, "FECHA DEL MOVIMIENTO" %>
+                <%= f.date_field :date %>
+              </div>
+            </div>
+          </div>
+          <div class="report-column">
+            <div class="form-group" style="margin-bottom: 0;">
+              <div class="report-section-block">
+                <% category_options = @category_options.to_a %>
+                <% selected_category = @transaction.category.to_s.strip.downcase %>
+                <% in_options = selected_category.present? && category_options.include?(selected_category) %>
+                <% selected_option = in_options ? selected_category : "__new__" %>
+                <% custom_value = in_options ? "" : selected_category %>
+
+                <%= f.label :category, "CATEGORÍA / ETIQUETA" %>
+                <div data-controller="category-picker">
+                  <%= f.hidden_field :category, value: selected_category, data: { category_picker_target: "hidden" } %>
+                  <%= select_tag "transaction[category_option]",
+                      options_for_select([*category_options.map { |category| [category, category] }, [t("transactions.category.new"), "__new__"]], selected_option),
+                      data: { category_picker_target: "select", action: "change->category-picker#selectChanged", new_value: "__new__" } %>
+                  <div data-category-picker-target="customWrap" style="margin-top: 0.6rem;">
+                    <%= text_field_tag "transaction[category_custom]", custom_value, placeholder: t("transactions.category.custom_placeholder"), data: { category_picker_target: "custom", action: "input->category-picker#customChanged" } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "GUARDAR", class: "btn-chaos", style: "flex: 1;" %>
+          <% if drawer_mode %>
+            <button type="button" data-action="click->drawer#close" style="font-weight: 900; text-decoration: none; color: #D63031; background: none; border: none; cursor: pointer;"><%= t("common.cancel") %></button>
+          <% else %>
+            <%= link_to t("common.cancel"), transactions_path, data: { turbo_frame: "_top" }, style: "font-weight: 900; text-decoration: none; color: #D63031;" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <% if drawer_mode %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

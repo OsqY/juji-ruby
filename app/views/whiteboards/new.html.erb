@@ -1,37 +1,77 @@
-<%= render "layouts/aws_page_header", title: t('.title'),
-  breadcrumbs: [["Home", root_path], ["Pizarras", whiteboards_path], ["Nueva", nil]] %>
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: t('.title'),
+    breadcrumbs: [["Home", root_path], ["Pizarras", whiteboards_path], ["Nueva", nil]] %>
 
-<div class="chaotic-container" style="max-width: 600px;">
-  <h1 style="font-size: 3rem; margin-bottom: 2rem;"><%= t('.title') %></h1>
+  <div class="aws-card" style="max-width: 600px;">
+    <div class="aws-card-header">
+      <h3 class="aws-card-title"><%= t('.title') %></h3>
+    </div>
+    <%= form_with model: @whiteboard do |f| %>
+      <% if @whiteboard.errors.any? %>
+        <div class="aws-alert aws-alert-danger" style="margin-bottom: 16px;">
+          <p style="font-weight: 800; margin: 0;"><%= @whiteboard.errors.count %> <%= t('.errors_count') %></p>
+          <ul style="margin: 8px 0 0; padding-left: 20px;">
+            <% @whiteboard.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-  <%= form_with model: @whiteboard, class: "report-section-block", style: "padding: 2rem;" do |f| %>
-    <% if @whiteboard.errors.any? %>
-      <div style="margin-bottom: 1.5rem; padding: 1rem; background: var(--expense-bg); border: 3px solid var(--expense-text);">
-        <p style="font-weight: 800; margin: 0;"><%= @whiteboard.errors.count %> <%= t('.errors_count') %></p>
-        <ul style="margin: 0.5rem 0 0; padding-left: 1.2rem;">
-          <% @whiteboard.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
+      <div class="field">
+        <%= f.label :name, t('.name_label') %>
+        <%= f.text_field :name, placeholder: t('.name_placeholder'), required: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :background_color, t('.bg_color_label') %>
+        <%= f.color_field :background_color, value: "#FFFFFF" %>
+      </div>
+
+      <%= f.hidden_field :width, value: 4000 %>
+      <%= f.hidden_field :height, value: 4000 %>
+
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <%= f.submit t('.submit'), class: "aws-btn aws-btn-primary" %>
+        <%= link_to t('common.cancel'), whiteboards_path, class: "aws-btn aws-btn-secondary" %>
       </div>
     <% end %>
+  </div>
+</div>
 
-    <div class="form-group">
-      <%= f.label :name, t('.name_label') %>
-      <%= f.text_field :name, placeholder: t('.name_placeholder'), required: true %>
-    </div>
+<div class="legacy-content">
+  <div class="chaotic-container" style="max-width: 600px;">
+    <h1 style="font-size: 3rem; margin-bottom: 2rem;"><%= t('.title') %></h1>
 
-    <div class="form-group">
-      <%= f.label :background_color, t('.bg_color_label') %>
-      <%= f.color_field :background_color, value: "#FFFFFF" %>
-    </div>
+    <%= form_with model: @whiteboard, class: "report-section-block", style: "padding: 2rem;" do |f| %>
+      <% if @whiteboard.errors.any? %>
+        <div style="background: #FFEDED; border: 4px solid #D63031; padding: 2rem; margin-bottom: 3rem; color: #D63031; font-weight: 700;">
+          <p style="font-weight: 800; margin: 0;"><%= @whiteboard.errors.count %> <%= t('.errors_count') %></p>
+          <ul style="margin: 0.5rem 0 0; padding-left: 1.2rem;">
+            <% @whiteboard.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-    <%= f.hidden_field :width, value: 4000 %>
-    <%= f.hidden_field :height, value: 4000 %>
+      <div class="field">
+        <%= f.label :name, t('.name_label') %>
+        <%= f.text_field :name, placeholder: t('.name_placeholder'), required: true %>
+      </div>
 
-    <div class="form-actions" style="position: static; box-shadow: none; padding: 0; border: none;">
-      <%= f.submit t('.submit'), class: "btn-chaos" %>
-      <%= link_to t('common.cancel'), whiteboards_path, class: "nav-link" %>
-    </div>
-  <% end %>
+      <div class="field">
+        <%= f.label :background_color, t('.bg_color_label') %>
+        <%= f.color_field :background_color, value: "#FFFFFF" %>
+      </div>
+
+      <%= f.hidden_field :width, value: 4000 %>
+      <%= f.hidden_field :height, value: 4000 %>
+
+      <div class="form-actions" style="position: static; box-shadow: none; padding: 0; border: none;">
+        <%= f.submit t('.submit'), class: "btn-chaos" %>
+        <%= link_to t('common.cancel'), whiteboards_path, class: "nav-link" %>
+      </div>
+    <% end %>
+  </div>
 </div>

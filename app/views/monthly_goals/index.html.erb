@@ -1,66 +1,175 @@
-<%= render "layouts/aws_page_header", title: "METAS MENSUALES",
-  subtitle: Date.current.strftime("%B %Y").upcase,
-  breadcrumbs: [["Home", root_path], ["Metas", monthly_goals_path]] %>
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: "METAS MENSUALES",
+    subtitle: Date.current.strftime("%B %Y").upcase,
+    breadcrumbs: [["Home", root_path], ["Metas", monthly_goals_path]] %>
 
-<div class="chaotic-container">
-  <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
-    <div>
-      <h1 style="font-size: 3rem;">METAS MENSUALES</h1>
-      <p style="font-weight: 700; opacity: 0.6;"><%= Date.current.strftime("%B %Y").upcase %></p>
+  <div class="aws-page-header-actions aws-mb-2">
+    <%= link_to "NUEVA META", new_monthly_goal_path, class: "aws-btn aws-btn-primary" %>
+  </div>
+
+  <div class="aws-widgets-grid aws-mb-2">
+    <div class="aws-widget is-accent">
+      <div class="aws-widget-label">Metas activas</div>
+      <div class="aws-widget-value"><%= @current_goals.count %></div>
     </div>
-    <%= link_to "NUEVA META", new_monthly_goal_path, class: "btn-chaos", style: "padding: 0.9rem 1.2rem;" %>
+    <div class="aws-widget is-success">
+      <div class="aws-widget-label">Completadas</div>
+      <div class="aws-widget-value"><%= @completed_goals.count %></div>
+    </div>
+    <div class="aws-widget is-danger">
+      <div class="aws-widget-label">Fallidas</div>
+      <div class="aws-widget-value"><%= @failed_goals.count %></div>
+    </div>
   </div>
 
   <% if @current_goals.any? %>
-    <h2 class="section-title" style="margin-bottom: 1.5rem;">METAS ACTIVAS</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-bottom: 3rem;">
-      <% @current_goals.each do |goal| %>
-        <section class="report-section-block" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem;">
-          <div>
-            <span class="section-label" style="background: var(--accent-blue); color: white;"><%= goal.goal_type.upcase %></span>
-            <h2 class="section-title" style="font-size: 1.4rem; margin: 0.5rem 0 0.2rem;"><%= goal.title %></h2>
-            <p class="report-text" style="margin: 0;"><%= goal.description %></p>
-          </div>
-
-          <div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-              <span style="font-weight: 700;">Progreso</span>
-              <span style="font-weight: 900;"><%= goal.progress_percentage %>%</span>
-            </div>
-            <div style="width: 100%; height: 12px; background: var(--muted-gray); border: 3px solid var(--ink); overflow: hidden;">
-              <div style="width: <%= goal.progress_percentage %>%; height: 100%; background: var(--highlight); transition: width 0.4s ease;"></div>
-            </div>
-            <p style="font-size: 0.8rem; margin-top: 0.3rem;">
-              <%= number_with_precision(goal.current_value, precision: 2) %> / <%= number_with_precision(goal.target_value, precision: 2) %>
-            </p>
-          </div>
-
-          <div style="display: flex; gap: 0.7rem; margin-top: auto; flex-wrap: wrap;">
-            <%= button_to "ACTUALIZAR", check_progress_monthly_goal_path(goal), method: :post, class: "btn-chaos", style: "padding: 0.6rem 1rem; font-size: 0.8rem;" %>
-            <%= link_to "EDITAR", edit_monthly_goal_path(goal), class: "nav-link" %>
-            <%= button_to "ELIMINAR", monthly_goal_path(goal), method: :delete, class: "delete-btn-link", data: { turbo_confirm: "¿Eliminar meta?" } %>
-          </div>
-        </section>
-      <% end %>
+    <div class="aws-card aws-mb-2">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title">Metas activas</h3>
+      </div>
+      <table class="aws-table">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Tipo</th>
+            <th>Progreso</th>
+            <th style="text-align: right;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @current_goals.each do |goal| %>
+            <tr>
+              <td><%= goal.title %></td>
+              <td><span class="aws-tag aws-tag-info"><%= goal.goal_type.humanize %></span></td>
+              <td>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div style="background: var(--aws-border); height: 8px; width: 100px; overflow: hidden; border-radius: 4px;">
+                    <div style="background: var(--aws-primary); height: 100%; width: <%= goal.progress_percentage %>%; border-radius: 4px;"></div>
+                  </div>
+                  <span style="font-size: 12px; font-weight: 600;"><%= goal.progress_percentage %>%</span>
+                </div>
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <%= button_to "Actualizar", check_progress_monthly_goal_path(goal), method: :post, class: "aws-btn aws-btn-secondary", style: "padding: 2px 8px; font-size: 12px;" %>
+                <%= link_to "Editar", edit_monthly_goal_path(goal), class: "aws-btn aws-btn-secondary", style: "padding: 2px 8px; font-size: 12px;" %>
+                <%= button_to "Eliminar", monthly_goal_path(goal), method: :delete, class: "aws-btn aws-btn-danger", style: "padding: 2px 8px; font-size: 12px;", data: { turbo_confirm: "¿Eliminar meta?" } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   <% end %>
 
   <% if @completed_goals.any? %>
-    <h2 class="section-title" style="margin-bottom: 1.5rem; color: var(--income-text);">METAS COMPLETADAS ✅</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-bottom: 3rem; opacity: 0.8;">
-      <% @completed_goals.each do |goal| %>
-        <section class="report-section-block" style="padding: 1.5rem;">
-          <h3 style="margin: 0;"><%= goal.title %></h3>
-          <p style="font-size: 0.85rem; margin: 0.3rem 0 0;"><%= goal.goal_type.humanize %> - <%= number_with_precision(goal.target_value, precision: 2) %></p>
-        </section>
-      <% end %>
+    <div class="aws-card aws-mb-2">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title">Metas completadas</h3>
+      </div>
+      <table class="aws-table">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Tipo</th>
+            <th>Valor objetivo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @completed_goals.each do |goal| %>
+            <tr>
+              <td><%= goal.title %></td>
+              <td><span class="aws-tag aws-tag-success"><%= goal.goal_type.humanize %></span></td>
+              <td><%= number_with_precision(goal.target_value, precision: 2) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
+  <% if @failed_goals.any? %>
+    <div class="aws-card aws-mb-2">
+      <div class="aws-card-header">
+        <h3 class="aws-card-title">Metas fallidas</h3>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+        <% @failed_goals.each do |goal| %>
+          <div class="aws-card" style="padding: 16px;">
+            <div style="font-weight: 600; margin-bottom: 4px;"><%= goal.title %></div>
+            <div style="font-size: 12px; color: var(--aws-text-secondary);"><%= goal.goal_type.humanize %> — <%= number_with_precision(goal.target_value, precision: 2) %></div>
+          </div>
+        <% end %>
+      </div>
     </div>
   <% end %>
 
   <% if @current_goals.empty? && @completed_goals.empty? && @failed_goals.empty? %>
-    <section class="report-section-block" style="text-align: center; padding: 3rem;">
-      <h2 class="section-title">SIN METAS ESTE MES</h2>
-      <p class="report-text">Crea tu primera meta mensual para empezar a trackear tu progreso.</p>
-    </section>
+    <div class="aws-empty-state">
+      <p class="aws-empty-state-desc">Crea tu primera meta mensual para empezar a trackear tu progreso.</p>
+    </div>
   <% end %>
+</div>
+
+<div class="legacy-content">
+  <div class="chaotic-container">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
+      <div>
+        <h1 style="font-size: 3rem;">METAS MENSUALES</h1>
+        <p style="font-weight: 700; opacity: 0.6;"><%= Date.current.strftime("%B %Y").upcase %></p>
+      </div>
+      <%= link_to "NUEVA META", new_monthly_goal_path, class: "btn-chaos", style: "padding: 0.9rem 1.2rem;" %>
+    </div>
+
+    <% if @current_goals.any? %>
+      <h2 class="section-title" style="margin-bottom: 1.5rem;">METAS ACTIVAS</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-bottom: 3rem;">
+        <% @current_goals.each do |goal| %>
+          <section class="report-section-block" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem;">
+            <div>
+              <span class="section-label" style="background: var(--accent-blue); color: white;"><%= goal.goal_type.upcase %></span>
+              <h2 class="section-title" style="font-size: 1.4rem; margin: 0.5rem 0 0.2rem;"><%= goal.title %></h2>
+              <p class="report-text" style="margin: 0;"><%= goal.description %></p>
+            </div>
+
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span style="font-weight: 700;">Progreso</span>
+                <span style="font-weight: 900;"><%= goal.progress_percentage %>%</span>
+              </div>
+              <div style="width: 100%; height: 12px; background: var(--muted-gray); border: 3px solid var(--ink); overflow: hidden;">
+                <div style="width: <%= goal.progress_percentage %>%; height: 100%; background: var(--highlight); transition: width 0.4s ease;"></div>
+              </div>
+              <p style="font-size: 0.8rem; margin-top: 0.3rem;">
+                <%= number_with_precision(goal.current_value, precision: 2) %> / <%= number_with_precision(goal.target_value, precision: 2) %>
+              </p>
+            </div>
+
+            <div style="display: flex; gap: 0.7rem; margin-top: auto; flex-wrap: wrap;">
+              <%= button_to "ACTUALIZAR", check_progress_monthly_goal_path(goal), method: :post, class: "btn-chaos", style: "padding: 0.6rem 1rem; font-size: 0.8rem;" %>
+              <%= link_to "EDITAR", edit_monthly_goal_path(goal), class: "nav-link" %>
+              <%= button_to "ELIMINAR", monthly_goal_path(goal), method: :delete, class: "aws-btn aws-btn-danger", data: { turbo_confirm: "¿Eliminar meta?" } %>
+            </div>
+          </section>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if @completed_goals.any? %>
+      <h2 class="section-title" style="margin-bottom: 1.5rem; color: var(--income-text);">METAS COMPLETADAS ✅</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-bottom: 3rem; opacity: 0.8;">
+        <% @completed_goals.each do |goal| %>
+          <section class="report-section-block" style="padding: 1.5rem;">
+            <h3 style="margin: 0;"><%= goal.title %></h3>
+            <p style="font-size: 0.85rem; margin: 0.3rem 0 0;"><%= goal.goal_type.humanize %> - <%= number_with_precision(goal.target_value, precision: 2) %></p>
+          </section>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if @current_goals.empty? && @completed_goals.empty? && @failed_goals.empty? %>
+      <div class="aws-empty-state">
+        <p class="aws-empty-state-desc">Crea tu primera meta mensual para empezar a trackear tu progreso.</p>
+      </div>
+    <% end %>
+  </div>
 </div>

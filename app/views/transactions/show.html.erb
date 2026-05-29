@@ -1,46 +1,89 @@
-<%= render "layouts/aws_page_header", title: "DETALLE FINANCIERO",
-  breadcrumbs: [["Home", root_path], ["Finanzas", transactions_path], ["Detalle", nil]] %>
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: "DETALLE FINANCIERO",
+    breadcrumbs: [["Home", root_path], ["Finanzas", transactions_path], ["Detalle", nil]] %>
 
-<div class="chaotic-container">
-  <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-    <h1 style="font-size: 2.8rem;">DETALLE<br>FINANCIERO</h1>
-    <%= link_to "VOLVER A FINANZAS", transactions_path(month: @transaction.date.strftime("%Y-%m")), class: "nav-link" %>
+  <div class="aws-page-header-actions aws-mb-2">
+    <%= link_to "Volver a finanzas", transactions_path(month: @transaction.date.strftime("%Y-%m")), class: "aws-btn aws-btn-secondary" %>
   </div>
 
-  <section class="report-section-block" style="margin-bottom: 1.2rem;">
-    <span class="section-label" style="background: <%= @transaction.income? ? 'var(--income-text)' : 'var(--expense-text)' %>; color: <%= @transaction.income? ? 'var(--income-bg)' : 'var(--expense-bg)' %>;">
-      <%= @transaction.transaction_type.to_s.upcase %>
-    </span>
-    <h2 class="section-title" style="margin-top: 0.8rem;"><%= @transaction.description.to_s.upcase %></h2>
-    <p style="font-size: 0.86rem; font-weight: 800; opacity: 0.8; margin-top: 0.5rem;">
-      CATEGORIA: <%= (@transaction.category.presence || "varios").upcase %>
-    </p>
-  </section>
-
-  <div class="report-grid">
-    <div class="report-column">
-      <section class="report-section-block">
-        <span class="section-label">MONTO</span>
-        <h2 style="font-size: 2.4rem; margin-top: 0.7rem; color: <%= @transaction.income? ? 'var(--income-text)' : 'var(--expense-text)' %>;">
+  <div class="aws-card">
+    <div class="aws-card-header">
+      <h3 class="aws-card-title"><%= @transaction.description %></h3>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 12px; color: var(--aws-text-secondary); text-transform: uppercase;">Tipo</span>
+        <span class="aws-tag <%= @transaction.income? ? 'aws-tag-success' : 'aws-tag-error' %>">
+          <%= @transaction.transaction_type %>
+        </span>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 12px; color: var(--aws-text-secondary); text-transform: uppercase;">Monto</span>
+        <span style="font-size: 1.5rem; font-weight: 700; color: <%= @transaction.income? ? '#1d8102' : '#d13212' %>;">
           <%= @transaction.income? ? '+' : '-' %>L. <%= number_with_precision(@transaction.amount, precision: 2) %>
-        </h2>
-      </section>
-    </div>
-
-    <div class="report-column">
-      <section class="report-section-block">
-        <span class="section-label">FECHA</span>
-        <h2 style="font-size: 1.8rem; margin-top: 0.8rem;"><%= @transaction.date.strftime("%d/%m/%Y") %></h2>
-      </section>
+        </span>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 12px; color: var(--aws-text-secondary); text-transform: uppercase;">Categoría</span>
+        <span style="font-weight: 600;"><%= @transaction.category.presence || "Varios" %></span>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 12px; color: var(--aws-text-secondary); text-transform: uppercase;">Fecha</span>
+        <span style="font-weight: 600;"><%= @transaction.date.strftime("%d/%m/%Y") %></span>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+        <%= link_to "Ver todas", transactions_path(month: @transaction.date.strftime("%Y-%m")), class: "aws-btn aws-btn-secondary" %>
+        <%= button_to "Eliminar", transaction_path(@transaction, month: @transaction.date.strftime("%Y-%m")),
+          method: :delete,
+          data: { turbo_confirm: "¿Borrar este registro financiero?" },
+          class: "aws-btn aws-btn-danger" %>
+      </div>
     </div>
   </div>
+</div>
 
-  <section class="report-section-block" style="margin-top: 1.2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
-    <%= link_to "VER TODAS", transactions_path(month: @transaction.date.strftime("%Y-%m")), class: "nav-link" %>
-    <%= button_to "ELIMINAR", transaction_path(@transaction, month: @transaction.date.strftime("%Y-%m")),
-      method: :delete,
-      data: { turbo_confirm: "¿Borrar este registro financiero?" },
-      class: "delete-btn-link",
-      style: "color: #D63031;" %>
-  </section>
+<div class="legacy-content">
+  <div class="chaotic-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+      <h1 style="font-size: 2.8rem;">DETALLE<br>FINANCIERO</h1>
+      <%= link_to "VOLVER A FINANZAS", transactions_path(month: @transaction.date.strftime("%Y-%m")), class: "nav-link" %>
+    </div>
+
+    <section class="report-section-block" style="margin-bottom: 1.2rem;">
+      <span class="section-label" style="background: <%= @transaction.income? ? 'var(--income-text)' : 'var(--expense-text)' %>; color: <%= @transaction.income? ? 'var(--income-bg)' : 'var(--expense-bg)' %>;">
+        <%= @transaction.transaction_type.to_s.upcase %>
+      </span>
+      <h2 class="section-title" style="margin-top: 0.8rem;"><%= @transaction.description.to_s.upcase %></h2>
+      <p style="font-size: 0.86rem; font-weight: 800; opacity: 0.8; margin-top: 0.5rem;">
+        CATEGORIA: <%= (@transaction.category.presence || "varios").upcase %>
+      </p>
+    </section>
+
+    <div class="report-grid">
+      <div class="report-column">
+        <section class="report-section-block">
+          <span class="section-label">MONTO</span>
+          <h2 style="font-size: 2.4rem; margin-top: 0.7rem; color: <%= @transaction.income? ? 'var(--income-text)' : 'var(--expense-text)' %>;">
+            <%= @transaction.income? ? '+' : '-' %>L. <%= number_with_precision(@transaction.amount, precision: 2) %>
+          </h2>
+        </section>
+      </div>
+
+      <div class="report-column">
+        <section class="report-section-block">
+          <span class="section-label">FECHA</span>
+          <h2 style="font-size: 1.8rem; margin-top: 0.8rem;"><%= @transaction.date.strftime("%d/%m/%Y") %></h2>
+        </section>
+      </div>
+    </div>
+
+    <section class="report-section-block" style="margin-top: 1.2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+      <%= link_to "VER TODAS", transactions_path(month: @transaction.date.strftime("%Y-%m")), class: "nav-link" %>
+      <%= button_to "ELIMINAR", transaction_path(@transaction, month: @transaction.date.strftime("%Y-%m")),
+        method: :delete,
+        data: { turbo_confirm: "¿Borrar este registro financiero?" },
+        class: "delete-btn-link",
+        style: "color: #D63031;" %>
+    </section>
+  </div>
 </div>

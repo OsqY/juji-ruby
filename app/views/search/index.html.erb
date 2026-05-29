@@ -1,76 +1,73 @@
-<%= render "layouts/aws_page_header", title: t('.title'),
-  breadcrumbs: [["Home", root_path], ["Buscar", nil]] %>
+<div class="aws-content">
+  <%= render "layouts/aws_page_header", title: t('.title'),
+    breadcrumbs: [["Home", root_path], ["Buscar", nil]] %>
 
-<div class="chaotic-container">
-  <div style="margin-bottom: 2rem;">
-    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;"><%= t('.title') %></h1>
-    
-    <div 
-      class="search-wrapper" 
-      data-controller="search" 
+  <div class="aws-card aws-mb-2">
+    <div class="aws-card-header">
+      <h3 class="aws-card-title">Búsqueda</h3>
+    </div>
+    <div
+      class="search-wrapper"
+      data-controller="search"
       data-action="keydown->search#handleKeydown"
       data-i18n-recent-searches="<%= t('search.js.recent_searches') %>"
       data-i18n-no-results="<%= t('search.js.no_results') %>"
       data-i18n-untitled="<%= t('search.js.untitled') %>"
-      style="position: relative; margin-bottom: 2rem;"
+      style="position: relative;"
     >
-      <form 
-        method="get" 
-        action="<%= search_path %>" 
-        style="display: flex; gap: 0.8rem; margin-bottom: 2rem;" 
+      <form
+        method="get"
+        action="<%= search_path %>"
+        style="display: flex; gap: 8px; margin-bottom: 16px;"
         data-search-target="form"
       >
-        <input 
-          type="text" 
-          name="q" 
-          value="<%= @query %>" 
-          placeholder="<%= t('.placeholder') %>" 
+        <input
+          type="text"
+          name="q"
+          value="<%= @query %>"
+          placeholder="<%= t('.placeholder') %>"
           class="search-input"
           data-search-target="input"
           data-action="input->search#search blur->search#hideResults"
-          style="flex: 1; padding: 0.9rem 1rem; border: 4px solid var(--ink); border-radius: 0; font-size: 1rem; background: var(--paper); color: var(--ink);"
+          style="flex: 1; padding: 8px 12px; border: 1px solid var(--aws-border); border-radius: 2px; font-size: 14px; background: var(--aws-bg-secondary); color: var(--aws-text-primary);"
           autofocus
         />
-        <button type="submit" class="btn-chaos search-submit-btn" style="padding: 0.9rem 2rem;"><%= t('.submit') %></button>
+        <button type="submit" class="aws-btn aws-btn-primary"><%= t('.submit') %></button>
       </form>
-      
-      <div 
-        class="search-results-container" 
+
+      <div
+        class="search-results-container"
         data-search-target="results"
         style="
           position: absolute;
           top: 100%;
           left: 0;
           right: 0;
-          margin-top: 0.35rem;
+          margin-top: 4px;
           z-index: 1000;
           max-height: 400px;
           overflow-y: auto;
-          background: var(--paper);
-          border: 3px solid var(--ink);
-          border-radius: 0;
-          box-shadow: 6px 6px 0 var(--highlight);
+          background: var(--aws-bg-primary);
+          border: 1px solid var(--aws-border);
+          border-radius: 2px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
           display: none;
         "
       ></div>
     </div>
 
-    <!-- Advanced Filters (Optional) -->
-    <details style="margin-bottom: 2rem; padding: 1rem; background: var(--muted-gray); border-radius: 0; border: 3px solid var(--ink);">
-      <summary style="cursor: pointer; font-weight: 900; color: var(--ink); padding: 0.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.8px;">
+    <details style="padding: 12px; background: var(--aws-bg-secondary); border-radius: 2px; border: 1px solid var(--aws-border);">
+      <summary style="cursor: pointer; font-weight: 600; color: var(--aws-text-primary); padding: 4px; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">
         <%= t('.filters_title') %>
       </summary>
-      
-      <form method="get" action="<%= search_path %>" style="margin-top: 1rem;">
+
+      <form method="get" action="<%= search_path %>" style="margin-top: 12px;">
         <input type="hidden" name="q" value="<%= @query %>">
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
-          <!-- Type Filter -->
-          <div>
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">
-              <%= t('.content_type') %>
-            </label>
-            <select name="type" style="width: 100%; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink);">
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px;">
+          <div class="field">
+            <label><%= t('.content_type') %></label>
+            <select name="type">
               <option value=""><%= t('.all_types') %></option>
               <option value="transactions" <%= 'selected' if params[:type] == 'transactions' %>><%= t('.types.transactions') %></option>
               <option value="daily_reports" <%= 'selected' if params[:type] == 'daily_reports' %>><%= t('.types.daily_reports') %></option>
@@ -84,204 +81,425 @@
             </select>
           </div>
 
-          <!-- Date Range -->
-          <div>
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">
-              <%= t('.from') %>
-            </label>
-            <input 
-              type="date" 
-              name="from_date" 
+          <div class="field">
+            <label><%= t('.from') %></label>
+            <input
+              type="date"
+              name="from_date"
               value="<%= params[:from_date] %>"
-              style="width: 100%; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink);"
             />
           </div>
 
-          <div>
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">
-              <%= t('.to') %>
-            </label>
-            <input 
-              type="date" 
-              name="to_date" 
+          <div class="field">
+            <label><%= t('.to') %></label>
+            <input
+              type="date"
+              name="to_date"
               value="<%= params[:to_date] %>"
-              style="width: 100%; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink);"
             />
           </div>
         </div>
 
-        <div style="display: flex; gap: 0.5rem;">
-          <button type="submit" class="btn-chaos" style="padding: 0.75rem 1.5rem;"><%= t('.apply') %></button>
-          <a href="<%= search_path %>" style="padding: 0.75rem 1.5rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); cursor: pointer; text-decoration: none; font-weight: 900; text-transform: uppercase; font-size: 0.8rem;"><%= t('.clear') %></a>
+        <div style="display: flex; gap: 8px;">
+          <button type="submit" class="aws-btn aws-btn-primary"><%= t('.apply') %></button>
+          <a href="<%= search_path %>" class="aws-btn aws-btn-secondary"><%= t('.clear') %></a>
         </div>
       </form>
     </details>
   </div>
-    <% if @query.present? %>
+
+  <% if @query.present? %>
     <% if @total_count > 0 %>
-      <div style="margin-bottom: 2rem;">
-        <p style="color: #666; font-size: 0.95rem;">
+      <div class="aws-mb-2">
+        <p style="color: var(--aws-text-secondary); font-size: 14px;">
           <%= t('.results_found_html', count: @total_count, query: @query) %>
         </p>
       </div>
 
       <% @results.each do |model_type, records| %>
         <% if records.any? %>
-          <section style="margin-bottom: 2.5rem;">
-            <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee;">
-              <%= model_type.to_s.humanize %>
-              <span style="font-size: 0.85rem; color: #999; font-weight: 400;">(<%= records.size %>)</span>
-            </h2>
-
-            <div style="display: grid; gap: 1rem;">
+          <div class="aws-card aws-mb-2">
+            <div class="aws-card-header">
+              <h3 class="aws-card-title"><%= model_type.to_s.humanize %> <span style="font-size: 12px; color: var(--aws-text-secondary); font-weight: 400;">(<%= records.size %>)</span></h3>
+            </div>
+            <div class="aws-list">
               <% records.each do |record| %>
                 <% case model_type %>
                   <% when :transactions %>
-                    <div class="search-result-card">
-                      <%= link_to transaction_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">TX</div>
-                        <div style="flex: 1;">
-                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
-                            <%= record.description %>
-                          </h3>
-                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            <%= record.transaction_type.humanize %> · L. <%= number_with_precision(record.amount, precision: 2) %> · <%= record.category %>
-                          </p>
-                        </div>
-                      <% end %>
-                    </div>
+                    <%= link_to transaction_path(record), class: "aws-list-item", style: "display: flex; gap: 12px; text-decoration: none; color: inherit;" do %>
+                      <div style="font-size: 1.2rem;">TX</div>
+                      <div style="flex: 1;">
+                        <div class="aws-list-item-title"><%= record.description %></div>
+                        <div class="aws-list-item-meta"><%= record.transaction_type.humanize %> · L. <%= number_with_precision(record.amount, precision: 2) %> · <%= record.category %></div>
+                      </div>
+                    <% end %>
                   <% when :daily_reports %>
-                    <div class="search-result-card">
-                      <%= link_to daily_report_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">RP</div>
-                        <div style="flex: 1;">
-                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
-                            <%= record.work_title %>
-                          </h3>
-                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            <%= t('.result_labels.report') %> · <%= record.report_date.strftime('%d/%m/%Y') %>
-                          </p>
-                        </div>
-                      <% end %>
-                    </div>
+                    <%= link_to daily_report_path(record), class: "aws-list-item", style: "display: flex; gap: 12px; text-decoration: none; color: inherit;" do %>
+                      <div style="font-size: 1.2rem;">RP</div>
+                      <div style="flex: 1;">
+                        <div class="aws-list-item-title"><%= record.work_title %></div>
+                        <div class="aws-list-item-meta"><%= t('.result_labels.report') %> · <%= record.report_date.strftime('%d/%m/%Y') %></div>
+                      </div>
+                    <% end %>
                   <% when :projects %>
-                    <div class="search-result-card">
-                      <%= link_to project_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">PJ</div>
-                        <div style="flex: 1;">
-                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
-                            <%= record.name %>
-                          </h3>
-                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            <%= record.description&.truncate(60) || t('.result_labels.project_no_desc') %>
-                          </p>
-                        </div>
-                      <% end %>
-                    </div>
+                    <%= link_to project_path(record), class: "aws-list-item", style: "display: flex; gap: 12px; text-decoration: none; color: inherit;" do %>
+                      <div style="font-size: 1.2rem;">PJ</div>
+                      <div style="flex: 1;">
+                        <div class="aws-list-item-title"><%= record.name %></div>
+                        <div class="aws-list-item-meta"><%= record.description&.truncate(60) || t('.result_labels.project_no_desc') %></div>
+                      </div>
+                    <% end %>
                   <% when :project_tasks %>
-                    <div class="search-result-card">
-                      <%= link_to project_project_task_path(record.project, record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;"><%= record.completed? ? 'OK' : '--' %></div>
-                        <div style="flex: 1;">
-                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
-                            <%= record.name %>
-                          </h3>
-                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            <%= t('.result_labels.task') %> · <%= record.project.name %>
-                          </p>
-                        </div>
-                      <% end %>
-                    </div>
+                    <%= link_to project_project_task_path(record.project, record), class: "aws-list-item", style: "display: flex; gap: 12px; text-decoration: none; color: inherit;" do %>
+                      <div style="font-size: 1.2rem;"><%= record.completed? ? 'OK' : '--' %></div>
+                      <div style="flex: 1;">
+                        <div class="aws-list-item-title"><%= record.name %></div>
+                        <div class="aws-list-item-meta"><%= t('.result_labels.task') %> · <%= record.project.name %></div>
+                      </div>
+                    <% end %>
                   <% when :habits %>
-                    <div class="search-result-card">
-                      <%= link_to habit_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">HB</div>
-                        <div style="flex: 1;">
-                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
-                            <%= record.name %>
-                          </h3>
-                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            <%= t('.result_labels.habit') %>
-                          </p>
-                        </div>
-                      <% end %>
-                    </div>
+                    <%= link_to habit_path(record), class: "aws-list-item", style: "display: flex; gap: 12px; text-decoration: none; color: inherit;" do %>
+                      <div style="font-size: 1.2rem;">HB</div>
+                      <div style="flex: 1;">
+                        <div class="aws-list-item-title"><%= record.name %></div>
+                        <div class="aws-list-item-meta"><%= t('.result_labels.habit') %></div>
+                      </div>
+                    <% end %>
                   <% when :shopping_items %>
-                    <div class="search-result-card">
-                      <%= link_to shopping_item_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">CP</div>
-                        <div style="flex: 1;">
-                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
-                            <%= record.name %>
-                          </h3>
-                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            <%= t('.result_labels.shopping') %> · <%= t('.result_labels.quantity') %>: <%= record.quantity %>
-                          </p>
-                        </div>
-                      <% end %>
-                    </div>
+                    <%= link_to shopping_item_path(record), class: "aws-list-item", style: "display: flex; gap: 12px; text-decoration: none; color: inherit;" do %>
+                      <div style="font-size: 1.2rem;">CP</div>
+                      <div style="flex: 1;">
+                        <div class="aws-list-item-title"><%= record.name %></div>
+                        <div class="aws-list-item-meta"><%= t('.result_labels.shopping') %> · <%= t('.result_labels.quantity') %>: <%= record.quantity %></div>
+                      </div>
+                    <% end %>
                   <% when :budgets %>
-                    <div class="search-result-card">
-                      <%= link_to budget_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">BG</div>
-                        <div style="flex: 1;">
-                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
-                            <%= record.category %>
-                          </h3>
-                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            <%= t('.result_labels.budget') %> · L. <%= number_with_precision(record.monthly_limit, precision: 2) %>
-                          </p>
-                        </div>
-                      <% end %>
-                    </div>
+                    <%= link_to budget_path(record), class: "aws-list-item", style: "display: flex; gap: 12px; text-decoration: none; color: inherit;" do %>
+                      <div style="font-size: 1.2rem;">BG</div>
+                      <div style="flex: 1;">
+                        <div class="aws-list-item-title"><%= record.category %></div>
+                        <div class="aws-list-item-meta"><%= t('.result_labels.budget') %> · L. <%= number_with_precision(record.monthly_limit, precision: 2) %></div>
+                      </div>
+                    <% end %>
                   <% when :anonymous_forms %>
-                    <div class="search-result-card">
-                      <%= link_to anonymous_form_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">FM</div>
-                        <div style="flex: 1;">
-                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
-                            <%= record.title %>
-                          </h3>
-                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            <%= t('.result_labels.form') %> · <%= record.description&.truncate(50) || t('.result_labels.no_description') %>
-                          </p>
-                        </div>
-                      <% end %>
-                    </div>
+                    <%= link_to anonymous_form_path(record), class: "aws-list-item", style: "display: flex; gap: 12px; text-decoration: none; color: inherit;" do %>
+                      <div style="font-size: 1.2rem;">FM</div>
+                      <div style="flex: 1;">
+                        <div class="aws-list-item-title"><%= record.title %></div>
+                        <div class="aws-list-item-meta"><%= t('.result_labels.form') %> · <%= record.description&.truncate(50) || t('.result_labels.no_description') %></div>
+                      </div>
+                    <% end %>
                   <% when :chat_rooms %>
-                    <div class="search-result-card">
-                      <%= link_to chat_room_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
-                        <div style="font-size: 1.5rem;">CH</div>
-                        <div style="flex: 1;">
-                          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
-                            <%= record.name %>
-                          </h3>
-                          <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
-                            <%= t('.result_labels.room') %> <%= record.room_type.humanize %> · <%= record.description&.truncate(50) || t('.result_labels.no_description') %>
-                          </p>
-                        </div>
-                      <% end %>
-                    </div>
+                    <%= link_to chat_room_path(record), class: "aws-list-item", style: "display: flex; gap: 12px; text-decoration: none; color: inherit;" do %>
+                      <div style="font-size: 1.2rem;">CH</div>
+                      <div style="flex: 1;">
+                        <div class="aws-list-item-title"><%= record.name %></div>
+                        <div class="aws-list-item-meta"><%= t('.result_labels.room') %> <%= record.room_type.humanize %> · <%= record.description&.truncate(50) || t('.result_labels.no_description') %></div>
+                      </div>
+                    <% end %>
                 <% end %>
               <% end %>
             </div>
-          </section>
+          </div>
         <% end %>
       <% end %>
     <% else %>
-      <div style="text-align: center; padding: 3rem 1rem;">
-        <div style="font-size: 3rem; margin-bottom: 1rem;"><%= t('.submit') %></div>
-        <p style="font-size: 1.1rem; color: #666;"><%= t('.no_results_html', query: @query) %></p>
-        <p style="color: #999; margin-top: 0.5rem;"><%= t('.try_again') %></p>
+      <div class="aws-empty-state">
+        <div class="aws-empty-state-icon" style="font-size: 3rem; margin-bottom: 1rem;"><%= t('.submit') %></div>
+        <p class="aws-empty-state-desc"><%= t('.no_results_html', query: @query) %></p>
+        <p class="aws-empty-state-desc"><%= t('.try_again') %></p>
       </div>
     <% end %>
   <% else %>
-    <div style="text-align: center; padding: 3rem 1rem;">
-      <div style="font-size: 3rem; margin-bottom: 1rem;"><%= t('.title') %></div>
-      <p style="font-size: 1.1rem; color: #666;"><%= t('.empty_title') %></p>
-      <p style="color: #999; margin-top: 0.5rem;"><%= t('.empty_subtitle') %></p>
+    <div class="aws-empty-state">
+      <div class="aws-empty-state-icon" style="font-size: 3rem; margin-bottom: 1rem;"><%= t('.title') %></div>
+      <p class="aws-empty-state-desc"><%= t('.empty_title') %></p>
+      <p class="aws-empty-state-desc"><%= t('.empty_subtitle') %></p>
     </div>
   <% end %>
+</div>
+
+<div class="legacy-content">
+  <div class="chaotic-container">
+    <div style="margin-bottom: 2rem;">
+      <h1 style="font-size: 2.5rem; margin-bottom: 1rem;"><%= t('.title') %></h1>
+
+      <div
+        class="search-wrapper"
+        data-controller="search"
+        data-action="keydown->search#handleKeydown"
+        data-i18n-recent-searches="<%= t('search.js.recent_searches') %>"
+        data-i18n-no-results="<%= t('search.js.no_results') %>"
+        data-i18n-untitled="<%= t('search.js.untitled') %>"
+        style="position: relative; margin-bottom: 2rem;"
+      >
+        <form
+          method="get"
+          action="<%= search_path %>"
+          style="display: flex; gap: 0.8rem; margin-bottom: 2rem;"
+          data-search-target="form"
+        >
+          <input
+            type="text"
+            name="q"
+            value="<%= @query %>"
+            placeholder="<%= t('.placeholder') %>"
+            class="search-input"
+            data-search-target="input"
+            data-action="input->search#search blur->search#hideResults"
+            style="flex: 1; padding: 0.9rem 1rem; border: 4px solid var(--ink); border-radius: 0; font-size: 1rem; background: var(--paper); color: var(--ink);"
+            autofocus
+          />
+          <button type="submit" class="btn-chaos search-submit-btn" style="padding: 0.9rem 2rem;"><%= t('.submit') %></button>
+        </form>
+
+        <div
+          class="search-results-container"
+          data-search-target="results"
+          style="
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            margin-top: 0.35rem;
+            z-index: 1000;
+            max-height: 400px;
+            overflow-y: auto;
+            background: var(--paper);
+            border: 3px solid var(--ink);
+            border-radius: 0;
+            box-shadow: 6px 6px 0 var(--highlight);
+            display: none;
+          "
+        ></div>
+      </div>
+
+      <details style="margin-bottom: 2rem; padding: 1rem; background: var(--muted-gray); border-radius: 0; border: 3px solid var(--ink);">
+        <summary style="cursor: pointer; font-weight: 900; color: var(--ink); padding: 0.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.8px;">
+          <%= t('.filters_title') %>
+        </summary>
+
+        <form method="get" action="<%= search_path %>" style="margin-top: 1rem;">
+          <input type="hidden" name="q" value="<%= @query %>">
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">
+                <%= t('.content_type') %>
+              </label>
+              <select name="type" style="width: 100%; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink);">
+                <option value=""><%= t('.all_types') %></option>
+                <option value="transactions" <%= 'selected' if params[:type] == 'transactions' %>><%= t('.types.transactions') %></option>
+                <option value="daily_reports" <%= 'selected' if params[:type] == 'daily_reports' %>><%= t('.types.daily_reports') %></option>
+                <option value="projects" <%= 'selected' if params[:type] == 'projects' %>><%= t('.types.projects') %></option>
+                <option value="project_tasks" <%= 'selected' if params[:type] == 'project_tasks' %>><%= t('.types.project_tasks') %></option>
+                <option value="habits" <%= 'selected' if params[:type] == 'habits' %>><%= t('.types.habits') %></option>
+                <option value="shopping_items" <%= 'selected' if params[:type] == 'shopping_items' %>><%= t('.types.shopping_items') %></option>
+                <option value="budgets" <%= 'selected' if params[:type] == 'budgets' %>><%= t('.types.budgets') %></option>
+                <option value="anonymous_forms" <%= 'selected' if params[:type] == 'anonymous_forms' %>><%= t('.types.anonymous_forms') %></option>
+                <option value="chat_rooms" <%= 'selected' if params[:type] == 'chat_rooms' %>><%= t('.types.chat_rooms') %></option>
+              </select>
+            </div>
+
+            <div>
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">
+                <%= t('.from') %>
+              </label>
+              <input
+                type="date"
+                name="from_date"
+                value="<%= params[:from_date] %>"
+                style="width: 100%; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink);"
+              />
+            </div>
+
+            <div>
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">
+                <%= t('.to') %>
+              </label>
+              <input
+                type="date"
+                name="to_date"
+                value="<%= params[:to_date] %>"
+                style="width: 100%; padding: 0.75rem; border: 3px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink);"
+              />
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="submit" class="btn-chaos" style="padding: 0.75rem 1.5rem;"><%= t('.apply') %></button>
+            <a href="<%= search_path %>" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.75rem 1.5rem; font-size: 14px; font-weight: 700; text-decoration: none; color: var(--ink); border: 2px solid var(--ink); background: var(--paper);"</a><%= t('.clear') %></a>
+          </div>
+        </form>
+      </details>
+    </div>
+
+    <% if @query.present? %>
+      <% if @total_count > 0 %>
+        <div style="margin-bottom: 2rem;">
+          <p style="color: #666; font-size: 0.95rem;">
+            <%= t('.results_found_html', count: @total_count, query: @query) %>
+          </p>
+        </div>
+
+        <% @results.each do |model_type, records| %>
+          <% if records.any? %>
+            <section style="margin-bottom: 2.5rem;">
+              <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee;">
+                <%= model_type.to_s.humanize %>
+                <span style="font-size: 0.85rem; color: #999; font-weight: 400;">(<%= records.size %>)</span>
+              </h2>
+
+              <div style="display: grid; gap: 1rem;">
+                <% records.each do |record| %>
+                  <% case model_type %>
+                    <% when :transactions %>
+                      <div class="search-result-card">
+                        <%= link_to transaction_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                          <div style="font-size: 1.5rem;">TX</div>
+                          <div style="flex: 1;">
+                            <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                              <%= record.description %>
+                            </h3>
+                            <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                              <%= record.transaction_type.humanize %> · L. <%= number_with_precision(record.amount, precision: 2) %> · <%= record.category %>
+                            </p>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% when :daily_reports %>
+                      <div class="search-result-card">
+                        <%= link_to daily_report_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                          <div style="font-size: 1.5rem;">RP</div>
+                          <div style="flex: 1;">
+                            <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                              <%= record.work_title %>
+                            </h3>
+                            <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                              <%= t('.result_labels.report') %> · <%= record.report_date.strftime('%d/%m/%Y') %>
+                            </p>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% when :projects %>
+                      <div class="search-result-card">
+                        <%= link_to project_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                          <div style="font-size: 1.5rem;">PJ</div>
+                          <div style="flex: 1;">
+                            <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                              <%= record.name %>
+                            </h3>
+                            <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                              <%= record.description&.truncate(60) || t('.result_labels.project_no_desc') %>
+                            </p>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% when :project_tasks %>
+                      <div class="search-result-card">
+                        <%= link_to project_project_task_path(record.project, record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                          <div style="font-size: 1.5rem;"><%= record.completed? ? 'OK' : '--' %></div>
+                          <div style="flex: 1;">
+                            <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                              <%= record.name %>
+                            </h3>
+                            <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                              <%= t('.result_labels.task') %> · <%= record.project.name %>
+                            </p>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% when :habits %>
+                      <div class="search-result-card">
+                        <%= link_to habit_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                          <div style="font-size: 1.5rem;">HB</div>
+                          <div style="flex: 1;">
+                            <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                              <%= record.name %>
+                            </h3>
+                            <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                              <%= t('.result_labels.habit') %>
+                            </p>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% when :shopping_items %>
+                      <div class="search-result-card">
+                        <%= link_to shopping_item_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                          <div style="font-size: 1.5rem;">CP</div>
+                          <div style="flex: 1;">
+                            <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                              <%= record.name %>
+                            </h3>
+                            <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                              <%= t('.result_labels.shopping') %> · <%= t('.result_labels.quantity') %>: <%= record.quantity %>
+                            </p>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% when :budgets %>
+                      <div class="search-result-card">
+                        <%= link_to budget_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                          <div style="font-size: 1.5rem;">BG</div>
+                          <div style="flex: 1;">
+                            <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                              <%= record.category %>
+                            </h3>
+                            <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                              <%= t('.result_labels.budget') %> · L. <%= number_with_precision(record.monthly_limit, precision: 2) %>
+                            </p>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% when :anonymous_forms %>
+                      <div class="search-result-card">
+                        <%= link_to anonymous_form_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                          <div style="font-size: 1.5rem;">FM</div>
+                          <div style="flex: 1;">
+                            <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                              <%= record.title %>
+                            </h3>
+                            <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                              <%= t('.result_labels.form') %> · <%= record.description&.truncate(50) || t('.result_labels.no_description') %>
+                            </p>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% when :chat_rooms %>
+                      <div class="search-result-card">
+                        <%= link_to chat_room_path(record), style: "text-decoration: none; color: inherit; display: flex; gap: 1rem;" do %>
+                          <div style="font-size: 1.5rem;">CH</div>
+                          <div style="flex: 1;">
+                            <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">
+                              <%= record.name %>
+                            </h3>
+                            <p style="font-size: 0.85rem; color: #666; margin: 0.3rem 0 0;">
+                              <%= t('.result_labels.room') %> <%= record.room_type.humanize %> · <%= record.description&.truncate(50) || t('.result_labels.no_description') %>
+                            </p>
+                          </div>
+                        <% end %>
+                      </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </section>
+          <% end %>
+        <% end %>
+      <% else %>
+        <div class="aws-empty-state">
+          <div class="aws-empty-state-icon" style="font-size: 3rem; margin-bottom: 1rem;"><%= t('.submit') %></div>
+          <p class="aws-empty-state-desc"><%= t('.no_results_html', query: @query) %></p>
+          <p class="aws-empty-state-desc"><%= t('.try_again') %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="aws-empty-state">
+        <div class="aws-empty-state-icon" style="font-size: 3rem; margin-bottom: 1rem;"><%= t('.title') %></div>
+        <p class="aws-empty-state-desc"><%= t('.empty_title') %></p>
+        <p class="aws-empty-state-desc"><%= t('.empty_subtitle') %></p>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <style>
@@ -414,7 +632,7 @@
     .search-results-container {
       max-height: 300px !important;
     }
-    
+
     .search-result-item {
       padding: 0.5rem 0.75rem;
     }
