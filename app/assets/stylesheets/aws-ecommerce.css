@@ -1,0 +1,1378 @@
+/* ============================================================
+   Amazon Ecommerce Design System Theme for Juji
+   ============================================================ */
+
+/* -----------------------------------------------------------
+   1.  CSS Custom Properties  (scoped to [data-theme="aws-ecommerce"])
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] {
+  /* Amazon palette */
+  --aws-ecom-nav-bg: #131A22;
+  --aws-ecom-nav-hover: #232F3E;
+  --aws-ecom-nav-border: #3A4553;
+  --aws-ecom-accent: #FF9900;
+  --aws-ecom-accent-hover: #E88B00;
+  --aws-ecom-cta: #FFD814;
+  --aws-ecom-cta-hover: #F7CA00;
+  --aws-ecom-cta-border: #FCD200;
+  --aws-ecom-sidebar-bg: #232F3E;
+  --aws-ecom-sidebar-hover: #2C3A4B;
+  --aws-ecom-sidebar-active-bg: #37475A;
+  --aws-ecom-sidebar-active-border: #FF9900;
+  --aws-ecom-sidebar-text: #FFFFFF;
+  --aws-ecom-sidebar-muted: #AAB7B8;
+  --aws-ecom-content-bg: #EAEDED;
+  --aws-ecom-card-bg: #FFFFFF;
+  --aws-ecom-card-border: #D5D9D9;
+  --aws-ecom-card-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  --aws-ecom-text-primary: #0F1111;
+  --aws-ecom-text-secondary: #565959;
+  --aws-ecom-text-link: #007185;
+  --aws-ecom-text-link-hover: #C7511F;
+  --aws-ecom-border: #D5D9D9;
+  --aws-ecom-border-dark: #888C8C;
+  --aws-ecom-input-bg: #FFFFFF;
+  --aws-ecom-input-border: #888C8C;
+  --aws-ecom-success: #067D62;
+  --aws-ecom-warning: #FF9900;
+  --aws-ecom-error: #CC0C39;
+  --aws-ecom-info: #007185;
+  --aws-ecom-primary: #FFD814;
+  --aws-ecom-price: #B12704;
+  --aws-ecom-stars: #FFA41C;
+  --aws-ecom-badge-bg: #CC0C39;
+  --aws-ecom-badge-text: #FFFFFF;
+  --aws-ecom-table-header-bg: #F0F2F2;
+  --aws-ecom-table-hover: #F7FAFA;
+  --aws-ecom-divider: #E7E7E7;
+
+  /* Legacy token overrides */
+  --ink: #0F1111;
+  --paper: #EAEDED;
+  --highlight: #FF9900;
+  --accent-blue: #007185;
+  --muted-gray: #D5D9D9;
+
+  /* Financial colors */
+  --income-bg: #EDF7F0;
+  --income-text: #067D62;
+  --expense-bg: #FDECEF;
+  --expense-text: #CC0C39;
+}
+
+/* -----------------------------------------------------------
+   2.  Base styles (Ecommerce theme only)
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] body {
+  margin: 0;
+  font-family: "Amazon Ember", Arial, sans-serif;
+  background: var(--aws-ecom-content-bg);
+  color: var(--aws-ecom-text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-theme="aws-ecommerce"] h1,
+[data-theme="aws-ecommerce"] h2,
+[data-theme="aws-ecommerce"] h3,
+[data-theme="aws-ecommerce"] h4 {
+  font-family: "Amazon Ember", Arial, sans-serif;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--aws-ecom-text-primary);
+  margin: 0;
+}
+
+[data-theme="aws-ecommerce"] a {
+  color: var(--aws-ecom-text-link);
+  text-decoration: none;
+}
+
+[data-theme="aws-ecommerce"] a:hover {
+  color: var(--aws-ecom-text-link-hover);
+  text-decoration: underline;
+}
+
+/* -----------------------------------------------------------
+   3.  Layout
+   ----------------------------------------------------------- */
+/* Show AWS chrome under ecommerce theme (hidden by default) */
+[data-theme="aws-ecommerce"] .aws-topbar,
+[data-theme="aws-ecommerce"] .aws-sidebar,
+[data-theme="aws-ecommerce"] .aws-breadcrumbs,
+[data-theme="aws-ecommerce"] .aws-page-header {
+  display: block;
+}
+
+[data-theme="aws-ecommerce"] .aws-layout {
+  display: block;
+}
+
+[data-theme="aws-ecommerce"] .aws-main {
+  margin-left: 240px;
+  margin-top: 48px;
+  min-height: calc(100vh - 48px);
+  background: var(--aws-ecom-content-bg);
+  transition: margin-left 0.2s ease;
+}
+
+[data-theme="aws-ecommerce"] .aws-layout.is-collapsed .aws-main {
+  margin-left: 48px;
+}
+
+[data-theme="aws-ecommerce"] .chaos-nav {
+  display: none !important;
+}
+
+[data-theme="aws-ecommerce"] .legacy-dashboard {
+  display: none !important;
+}
+
+[data-theme="aws-ecommerce"] main.nav-spaced {
+  padding-top: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+
+[data-theme="aws-ecommerce"] .chaotic-container {
+  padding: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+
+/* -----------------------------------------------------------
+   4.  Topbar
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  display: flex;
+  background: var(--aws-ecom-nav-bg);
+  border-bottom: 1px solid var(--aws-ecom-nav-border);
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-logo {
+  color: #FFFFFF;
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-logo:hover {
+  color: var(--aws-ecom-accent);
+  background: transparent;
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-search input {
+  border-radius: 4px;
+  border-color: var(--aws-ecom-accent);
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-search input:focus {
+  border-color: var(--aws-ecom-accent);
+  box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.3);
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-btn {
+  color: #FFFFFF;
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-btn:hover {
+  background: var(--aws-ecom-nav-hover);
+  color: #FFFFFF;
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-badge[data-count]::after {
+  background: var(--aws-ecom-accent);
+  color: #0F1111;
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-hamburger {
+  color: #FFFFFF;
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-region {
+  color: var(--aws-ecom-sidebar-muted);
+  border-color: var(--aws-ecom-nav-border);
+  background: transparent;
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-region:hover {
+  background: var(--aws-ecom-nav-hover);
+}
+
+/* -----------------------------------------------------------
+   5.  Sidebar
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-sidebar {
+  position: fixed;
+  top: 48px;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  display: block;
+  background: var(--aws-ecom-sidebar-bg);
+  border-right: 1px solid var(--aws-ecom-nav-border);
+  transition: width 0.2s ease;
+}
+
+[data-theme="aws-ecommerce"] .aws-sidebar-toggle {
+  color: var(--aws-ecom-sidebar-muted);
+  border-bottom-color: var(--aws-ecom-nav-border);
+}
+
+[data-theme="aws-ecommerce"] .aws-sidebar-toggle:hover {
+  background: var(--aws-ecom-sidebar-hover);
+}
+
+[data-theme="aws-ecommerce"] .aws-sidebar-section {
+  border-bottom-color: var(--aws-ecom-nav-border);
+}
+
+[data-theme="aws-ecommerce"] .aws-sidebar-header {
+  color: var(--aws-ecom-sidebar-muted);
+}
+
+[data-theme="aws-ecommerce"] .aws-sidebar-header:hover {
+  background: var(--aws-ecom-sidebar-hover);
+}
+
+[data-theme="aws-ecommerce"] .aws-sidebar-link {
+  color: var(--aws-ecom-sidebar-text);
+}
+
+[data-theme="aws-ecommerce"] .aws-sidebar-link:hover {
+  background: var(--aws-ecom-sidebar-hover);
+  color: var(--aws-ecom-accent);
+  text-decoration: none;
+}
+
+[data-theme="aws-ecommerce"] .aws-sidebar-link.is-active {
+  background: var(--aws-ecom-sidebar-active-bg);
+  color: var(--aws-ecom-accent);
+  border-left-color: var(--aws-ecom-sidebar-active-border);
+}
+
+[data-theme="aws-ecommerce"] .aws-sidebar-badge {
+  background: var(--aws-ecom-nav-border);
+  color: var(--aws-ecom-sidebar-muted);
+}
+
+/* -----------------------------------------------------------
+   6.  Main Content
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-main {
+  padding: 20px;
+}
+
+/* -----------------------------------------------------------
+   7.  Breadcrumbs
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--aws-ecom-text-secondary);
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+[data-theme="aws-ecommerce"] .aws-breadcrumbs a {
+  color: var(--aws-ecom-text-link);
+}
+
+[data-theme="aws-ecommerce"] .aws-breadcrumbs a:hover {
+  text-decoration: underline;
+  color: var(--aws-ecom-text-link-hover);
+}
+
+[data-theme="aws-ecommerce"] .aws-breadcrumbs .crumb-sep {
+  color: var(--aws-ecom-text-secondary);
+}
+
+[data-theme="aws-ecommerce"] .aws-breadcrumbs .crumb-current {
+  color: var(--aws-ecom-text-primary);
+  font-weight: 600;
+}
+
+/* -----------------------------------------------------------
+   8.  Page Header
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-page-header {
+  display: block;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--aws-ecom-divider);
+}
+
+[data-theme="aws-ecommerce"] .aws-page-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--aws-ecom-text-primary);
+  margin: 0 0 4px 0;
+  line-height: 1.3;
+}
+
+[data-theme="aws-ecommerce"] .aws-page-header p {
+  font-size: 14px;
+  color: var(--aws-ecom-text-secondary);
+  margin: 0;
+}
+
+/* -----------------------------------------------------------
+   9.  Cards & Panels
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-card {
+  background: var(--aws-ecom-card-bg);
+  border: 1px solid var(--aws-ecom-card-border);
+  border-radius: 8px;
+  box-shadow: var(--aws-ecom-card-shadow);
+  padding: 20px;
+}
+
+[data-theme="aws-ecommerce"] .aws-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  margin: -20px -20px 12px;
+  background: var(--aws-ecom-table-header-bg);
+  border-bottom: 1px solid var(--aws-ecom-divider);
+  border-radius: 8px 8px 0 0;
+}
+
+[data-theme="aws-ecommerce"] .aws-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--aws-ecom-text-primary);
+}
+
+/* -----------------------------------------------------------
+   10. Dashboard Widgets
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-widget {
+  background: var(--aws-ecom-card-bg);
+  border: 1px solid var(--aws-ecom-card-border);
+  border-radius: 8px;
+  box-shadow: var(--aws-ecom-card-shadow);
+}
+
+[data-theme="aws-ecommerce"] .aws-widget-label {
+  color: var(--aws-ecom-text-secondary);
+}
+
+[data-theme="aws-ecommerce"] .aws-widget-value {
+  color: var(--aws-ecom-text-primary);
+}
+
+[data-theme="aws-ecommerce"] .aws-widget-meta {
+  color: var(--aws-ecom-text-secondary);
+}
+
+[data-theme="aws-ecommerce"] .aws-widget.is-success .aws-widget-value {
+  color: var(--aws-ecom-success);
+}
+
+[data-theme="aws-ecommerce"] .aws-widget.is-danger .aws-widget-value {
+  color: var(--aws-ecom-error);
+}
+
+[data-theme="aws-ecommerce"] .aws-widget.is-accent .aws-widget-value {
+  color: var(--aws-ecom-accent);
+}
+
+/* -----------------------------------------------------------
+   11. Tables
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-table thead th {
+  background: var(--aws-ecom-table-header-bg);
+  color: var(--aws-ecom-text-primary);
+  border-bottom-color: var(--aws-ecom-border);
+}
+
+[data-theme="aws-ecommerce"] .aws-table tbody td {
+  border-bottom-color: var(--aws-ecom-divider);
+  color: var(--aws-ecom-text-primary);
+}
+
+[data-theme="aws-ecommerce"] .aws-table tbody tr:hover td {
+  background: var(--aws-ecom-table-hover);
+}
+
+[data-theme="aws-ecommerce"] .aws-table tbody tr.is-selected td {
+  background: #FEF8EE;
+}
+
+/* Status tags */
+[data-theme="aws-ecommerce"] .aws-tag {
+  border-radius: 4px;
+}
+
+[data-theme="aws-ecommerce"] .aws-tag-success {
+  background: var(--aws-ecom-success);
+  color: #FFFFFF;
+}
+
+[data-theme="aws-ecommerce"] .aws-tag-warning {
+  background: var(--aws-ecom-warning);
+  color: #0F1111;
+}
+
+[data-theme="aws-ecommerce"] .aws-tag-error {
+  background: var(--aws-ecom-error);
+  color: #FFFFFF;
+}
+
+[data-theme="aws-ecommerce"] .aws-tag-info {
+  background: var(--aws-ecom-info);
+  color: #FFFFFF;
+}
+
+/* -----------------------------------------------------------
+   12. Buttons
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+  line-height: 20px;
+  border-radius: 8px;
+}
+
+[data-theme="aws-ecommerce"] .aws-btn-primary {
+  background: var(--aws-ecom-cta);
+  color: #0F1111;
+  border-color: var(--aws-ecom-cta-border);
+}
+
+[data-theme="aws-ecommerce"] .aws-btn-primary:hover {
+  background: var(--aws-ecom-cta-hover);
+  border-color: var(--aws-ecom-cta-hover);
+  text-decoration: none;
+  color: #0F1111;
+}
+
+[data-theme="aws-ecommerce"] .aws-btn-secondary {
+  background: #FFFFFF;
+  color: var(--aws-ecom-text-primary);
+  border-color: var(--aws-ecom-border-dark);
+  border-radius: 8px;
+}
+
+[data-theme="aws-ecommerce"] .aws-btn-secondary:hover {
+  background: #F7FAFA;
+  text-decoration: none;
+  color: var(--aws-ecom-text-primary);
+}
+
+[data-theme="aws-ecommerce"] .aws-btn-danger {
+  background: #FFFFFF;
+  color: var(--aws-ecom-error);
+  border-color: var(--aws-ecom-error);
+  border-radius: 8px;
+}
+
+[data-theme="aws-ecommerce"] .aws-btn-danger:hover {
+  background: #FDECEF;
+  text-decoration: none;
+  color: var(--aws-ecom-error);
+}
+
+/* -----------------------------------------------------------
+   13. Alerts & Badges
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-alert {
+  border-radius: 8px;
+}
+
+[data-theme="aws-ecommerce"] .aws-alert-danger {
+  background: #FDECEF;
+  color: var(--aws-ecom-error);
+  border-left-color: var(--aws-ecom-error);
+}
+
+[data-theme="aws-ecommerce"] .aws-alert-warning {
+  background: #FEF8EE;
+  color: var(--aws-ecom-text-primary);
+  border-left-color: var(--aws-ecom-warning);
+}
+
+[data-theme="aws-ecommerce"] .aws-alert-success {
+  background: #EDF7F0;
+  color: var(--aws-ecom-success);
+  border-left-color: var(--aws-ecom-success);
+}
+
+[data-theme="aws-ecommerce"] .aws-alert-info {
+  background: #EDFDFF;
+  color: var(--aws-ecom-info);
+  border-left-color: var(--aws-ecom-info);
+}
+
+/* -----------------------------------------------------------
+   14. Empty States
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-empty-state-icon {
+  color: var(--aws-ecom-border);
+}
+
+[data-theme="aws-ecommerce"] .aws-empty-state-title {
+  color: var(--aws-ecom-text-primary);
+}
+
+[data-theme="aws-ecommerce"] .aws-empty-state-desc {
+  color: var(--aws-ecom-text-secondary);
+}
+
+/* -----------------------------------------------------------
+   15. Forms
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--aws-ecom-text-primary);
+  margin-bottom: 4px;
+}
+
+[data-theme="aws-ecommerce"] input[type="text"],
+[data-theme="aws-ecommerce"] input[type="email"],
+[data-theme="aws-ecommerce"] input[type="password"],
+[data-theme="aws-ecommerce"] input[type="number"],
+[data-theme="aws-ecommerce"] input[type="date"],
+[data-theme="aws-ecommerce"] input[type="datetime-local"],
+[data-theme="aws-ecommerce"] input[type="color"],
+[data-theme="aws-ecommerce"] textarea,
+[data-theme="aws-ecommerce"] select {
+  padding: 8px 12px;
+  border: 1px solid var(--aws-ecom-input-border);
+  border-radius: 4px;
+  font-size: 14px;
+  background: var(--aws-ecom-input-bg);
+  color: var(--aws-ecom-text-primary);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+}
+
+[data-theme="aws-ecommerce"] input:focus,
+[data-theme="aws-ecommerce"] textarea:focus,
+[data-theme="aws-ecommerce"] select:focus {
+  border-color: var(--aws-ecom-accent);
+  box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.3);
+}
+
+[data-theme="aws-ecommerce"] input::placeholder,
+[data-theme="aws-ecommerce"] textarea::placeholder {
+  color: #888C8C;
+}
+
+[data-theme="aws-ecommerce"] input[type="color"] {
+  padding: 4px;
+  height: 40px;
+}
+
+[data-theme="aws-ecommerce"] .field,
+[data-theme="aws-ecommerce"] .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+[data-theme="aws-ecommerce"] input.is-error,
+[data-theme="aws-ecommerce"] textarea.is-error {
+  border-color: var(--aws-ecom-error);
+}
+
+[data-theme="aws-ecommerce"] .field-error {
+  font-size: 12px;
+  color: var(--aws-ecom-error);
+  margin-top: 4px;
+}
+
+/* -----------------------------------------------------------
+   16. Modals / Drawers
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-drawer {
+  background: #FFFFFF;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.15);
+  border-radius: 8px 0 0 8px;
+}
+
+[data-theme="aws-ecommerce"] .aws-drawer-header {
+  border-bottom-color: var(--aws-ecom-divider);
+}
+
+[data-theme="aws-ecommerce"] .aws-drawer-title {
+  color: var(--aws-ecom-text-primary);
+}
+
+[data-theme="aws-ecommerce"] .aws-drawer-close {
+  color: var(--aws-ecom-text-secondary);
+}
+
+[data-theme="aws-ecommerce"] .aws-drawer-close:hover {
+  color: var(--aws-ecom-text-primary);
+}
+
+/* -----------------------------------------------------------
+   17. Responsive
+   ----------------------------------------------------------- */
+@media (max-width: 768px) {
+  [data-theme="aws-ecommerce"] .aws-sidebar {
+    transform: translateX(-100%);
+  }
+
+  [data-theme="aws-ecommerce"] .aws-sidebar.is-mobile-open {
+    transform: translateX(0);
+  }
+
+  [data-theme="aws-ecommerce"] .aws-main {
+    margin-left: 0;
+  }
+}
+
+[data-theme="aws-ecommerce"] .aws-sidebar-overlay.is-visible {
+  display: block;
+}
+
+/* -----------------------------------------------------------
+   18. List items
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-list-item {
+  border-color: var(--aws-ecom-border);
+  border-radius: 4px;
+}
+
+[data-theme="aws-ecommerce"] .aws-list-item:hover {
+  background: var(--aws-ecom-table-hover);
+  text-decoration: none;
+  color: var(--aws-ecom-text-primary);
+}
+
+[data-theme="aws-ecommerce"] .aws-list-item-title {
+  font-weight: 700;
+}
+
+[data-theme="aws-ecommerce"] .aws-list-item-meta {
+  color: var(--aws-ecom-text-secondary);
+}
+
+[data-theme="aws-ecommerce"] .aws-list-item-arrow {
+  color: var(--aws-ecom-text-secondary);
+}
+
+/* -----------------------------------------------------------
+   19. Utility helpers
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-text-secondary {
+  color: var(--aws-ecom-text-secondary);
+}
+
+/* -----------------------------------------------------------
+   20. Spinner / Loading
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .aws-spinner {
+  border-color: var(--aws-ecom-border);
+  border-top-color: var(--aws-ecom-accent);
+}
+
+[data-theme="aws-ecommerce"] .aws-skeleton {
+  background: linear-gradient(90deg, #E7E7E7 25%, #F0F2F2 50%, #E7E7E7 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   21. Legacy component overrides for Ecommerce theme
+   ============================================================ */
+
+/* Content visibility toggles */
+[data-theme="aws-ecommerce"] .aws-content {
+  display: block;
+}
+
+[data-theme="aws-ecommerce"] .legacy-content {
+  display: none;
+}
+
+/* -----------------------------------------------------------
+   Buttons (.btn-chaos -> Amazon-style buttons)
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .btn-chaos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+  background: var(--aws-ecom-cta);
+  color: #0F1111;
+}
+
+[data-theme="aws-ecommerce"] .btn-chaos:hover {
+  background: var(--aws-ecom-cta-hover);
+  text-decoration: none;
+  color: #0F1111;
+}
+
+[data-theme="aws-ecommerce"] a.btn-chaos:not([href*="delete"]):not([data-turbo-confirm*="delete"]):not([style*="background: #c00"]):not([style*="background:#c00"]) {
+  background: var(--aws-ecom-cta);
+  color: #0F1111;
+}
+
+[data-theme="aws-ecommerce"] a.btn-chaos:not([href*="delete"]):not([data-turbo-confirm*="delete"]):not([style*="background: #c00"]):not([style*="background:#c00"]):hover {
+  background: var(--aws-ecom-cta-hover);
+}
+
+[data-theme="aws-ecommerce"] button.btn-chaos[style*="background: #c00"],
+[data-theme="aws-ecommerce"] button.btn-chaos[style*="background:#c00"],
+[data-theme="aws-ecommerce"] a.btn-chaos[style*="background: #c00"],
+[data-theme="aws-ecommerce"] a.btn-chaos[style*="background:#c00"] {
+  background: #FFFFFF;
+  color: var(--aws-ecom-error);
+  border-color: var(--aws-ecom-error);
+}
+
+[data-theme="aws-ecommerce"] button.btn-chaos[style*="background: #c00"]:hover,
+[data-theme="aws-ecommerce"] button.btn-chaos[style*="background:#c00"]:hover,
+[data-theme="aws-ecommerce"] a.btn-chaos[style*="background: #c00"]:hover,
+[data-theme="aws-ecommerce"] a.btn-chaos[style*="background:#c00"]:hover {
+  background: #FDECEF;
+}
+
+/* -----------------------------------------------------------
+   Containers (.chaotic-container)
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .chaotic-container {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+}
+
+[data-theme="aws-ecommerce"] .chaotic-container[style*="max-width"] {
+  max-width: none !important;
+}
+
+/* -----------------------------------------------------------
+   Cards (.report-section-block -> Amazon card)
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .report-section-block {
+  background: #FFFFFF;
+  border: 1px solid var(--aws-ecom-card-border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--aws-ecom-card-shadow);
+}
+
+[data-theme="aws-ecommerce"] .report-section-block[style*="background: var(--income-bg)"] {
+  background: #EDF7F0;
+  border-color: #88C9A6;
+}
+
+[data-theme="aws-ecommerce"] .report-section-block[style*="background: var(--expense-bg)"] {
+  background: #FDECEF;
+  border-color: #F2A6B4;
+}
+
+/* -----------------------------------------------------------
+   Labels / Badges (.section-label)
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .section-label {
+  display: inline-block;
+  background: #F0F2F2 !important;
+  color: var(--aws-ecom-text-secondary) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  border: none !important;
+  line-height: 1.4;
+}
+
+/* -----------------------------------------------------------
+   Editorial list
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .editorial-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+[data-theme="aws-ecommerce"] .editorial-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--aws-ecom-divider);
+  font-size: 14px;
+  color: var(--aws-ecom-text-primary);
+}
+
+[data-theme="aws-ecommerce"] .editorial-list li:last-child {
+  border-bottom: none;
+}
+
+/* -----------------------------------------------------------
+   Category bars
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .category-bar-track {
+  background: #E7E7E7;
+}
+
+[data-theme="aws-ecommerce"] .category-bar-fill {
+  background: var(--aws-ecom-accent);
+}
+
+[data-theme="aws-ecommerce"] .category-row > *:first-child {
+  color: var(--aws-ecom-text-secondary);
+}
+
+/* -----------------------------------------------------------
+   Daily headers & metadata
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .daily-header,
+[data-theme="aws-ecommerce"] .daily-date,
+[data-theme="aws-ecommerce"] .daily-metadata {
+  color: var(--aws-ecom-text-secondary);
+}
+
+[data-theme="aws-ecommerce"] .daily-header h1,
+[data-theme="aws-ecommerce"] .daily-header h2,
+[data-theme="aws-ecommerce"] .daily-header h3 {
+  color: var(--aws-ecom-text-primary);
+}
+
+/* -----------------------------------------------------------
+   Links
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .card-action-link,
+[data-theme="aws-ecommerce"] .delete-btn-link,
+[data-theme="aws-ecommerce"] .nav-link {
+  color: var(--aws-ecom-text-link);
+}
+
+[data-theme="aws-ecommerce"] .card-action-link:hover,
+[data-theme="aws-ecommerce"] .delete-btn-link:hover,
+[data-theme="aws-ecommerce"] .nav-link:hover {
+  text-decoration: underline;
+}
+
+[data-theme="aws-ecommerce"] .delete-btn-link {
+  color: var(--aws-ecom-error);
+}
+
+/* -----------------------------------------------------------
+   Form title override
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .form-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--aws-ecom-text-primary);
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+/* -----------------------------------------------------------
+   Search result cards
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .search-result-card {
+  background: #FFFFFF;
+  border: 1px solid var(--aws-ecom-card-border);
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: var(--aws-ecom-card-shadow);
+}
+
+/* -----------------------------------------------------------
+   Inline drawer
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .inline-drawer-panel {
+  background: var(--aws-ecom-content-bg);
+  border-left: 1px solid var(--aws-ecom-border-dark);
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="aws-ecommerce"] .inline-drawer-close:hover {
+  color: var(--aws-ecom-text-primary);
+}
+
+/* -----------------------------------------------------------
+   Transaction type cards
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .type-card {
+  border: 1px solid var(--aws-ecom-border-dark);
+  border-radius: 8px;
+  background: #FFFFFF;
+}
+
+[data-theme="aws-ecommerce"] .type-card-wrapper input[type="radio"]:checked + .type-card,
+[data-theme="aws-ecommerce"] .type-card-wrapper input[type="radio"]:focus + .type-card {
+  border-color: var(--aws-ecom-accent);
+  box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.3);
+}
+
+[data-theme="aws-ecommerce"] .type-card:hover {
+  border-color: var(--aws-ecom-accent);
+}
+
+[data-theme="aws-ecommerce"] .type-card .card-label {
+  color: var(--aws-ecom-text-primary);
+}
+
+/* -----------------------------------------------------------
+   Whiteboard toolbar
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .whiteboard-toolbar {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--aws-ecom-border-dark);
+}
+
+[data-theme="aws-ecommerce"] .whiteboard-toolbar .btn-tool {
+  border: 1px solid var(--aws-ecom-border-dark);
+  color: var(--aws-ecom-text-primary);
+  border-radius: 4px;
+}
+
+[data-theme="aws-ecommerce"] .whiteboard-toolbar .btn-tool:hover {
+  background: var(--aws-ecom-table-hover);
+}
+
+[data-theme="aws-ecommerce"] .whiteboard-toolbar .btn-tool[data-tool].is-active {
+  background: var(--aws-ecom-accent);
+  color: #0F1111;
+  border-color: var(--aws-ecom-accent);
+}
+
+/* -----------------------------------------------------------
+   Flash / alerts
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] div[style*="background: #FFEDED"],
+[data-theme="aws-ecommerce"] div[style*="background: #FFEDED"] * {
+  background: #FDECEF !important;
+  border-color: var(--aws-ecom-error) !important;
+  color: var(--aws-ecom-error) !important;
+}
+
+[data-theme="aws-ecommerce"] div[style*="background: #E1FFEC"],
+[data-theme="aws-ecommerce"] div[style*="background: #E1FFEC"] * {
+  background: #EDF7F0 !important;
+  border-color: var(--aws-ecom-success) !important;
+  color: var(--aws-ecom-success) !important;
+}
+
+/* -----------------------------------------------------------
+   Grid helpers
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] .report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+[data-theme="aws-ecommerce"] .report-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* -----------------------------------------------------------
+   Misc legacy overrides
+   ----------------------------------------------------------- */
+[data-theme="aws-ecommerce"] h1,
+[data-theme="aws-ecommerce"] h2,
+[data-theme="aws-ecommerce"] h3 {
+  font-family: "Amazon Ember", Arial, sans-serif;
+}
+
+[data-theme="aws-ecommerce"] h1[style*="font-size: 3"],
+[data-theme="aws-ecommerce"] h1[style*="font-size: 2.5"],
+[data-theme="aws-ecommerce"] h1[style*="font-size: 2.8"],
+[data-theme="aws-ecommerce"] h1[style*="font-size: 3.3"],
+[data-theme="aws-ecommerce"] h1[style*="font-size: 3.4"],
+[data-theme="aws-ecommerce"] h1[style*="font-size: 3.5"],
+[data-theme="aws-ecommerce"] h1[style*="font-size: 3.6"] {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  color: var(--aws-ecom-text-primary) !important;
+  margin: 0 0 8px 0 !important;
+  line-height: 1.3 !important;
+}
+
+[data-theme="aws-ecommerce"] h2[style*="font-size: 1.3"],
+[data-theme="aws-ecommerce"] h2[style*="font-size: 1.1"] {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: var(--aws-ecom-text-primary) !important;
+  margin: 0 0 12px 0 !important;
+  border-bottom: 1px solid var(--aws-ecom-divider) !important;
+  padding-bottom: 8px !important;
+}
+
+[data-theme="aws-ecommerce"] h2.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--aws-ecom-text-primary);
+  margin: 0 0 12px 0;
+}
+
+[data-theme="aws-ecommerce"] p[style*="font-weight: 700; opacity: 0.6"],
+[data-theme="aws-ecommerce"] p[style*="font-weight:700; opacity:0.6"] {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  opacity: 1 !important;
+  color: var(--aws-ecom-text-secondary) !important;
+  margin: 0 !important;
+}
+
+[data-theme="aws-ecommerce"] p[style*="font-weight: 700; opacity: 0.65"] {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  opacity: 1 !important;
+  color: var(--aws-ecom-text-secondary) !important;
+}
+
+[data-theme="aws-ecommerce"] strong[style*="letter-spacing: 1px"] {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--aws-ecom-text-primary);
+  letter-spacing: normal;
+}
+
+[data-theme="aws-ecommerce"] div[style*="border-bottom: 8px solid var(--ink)"] {
+  border-bottom: 1px solid var(--aws-ecom-divider) !important;
+  margin-bottom: 24px !important;
+  padding-bottom: 16px !important;
+}
+
+[data-theme="aws-ecommerce"] div[style*="border-bottom: 2px solid #eee"] {
+  border-bottom: 1px solid var(--aws-ecom-divider) !important;
+}
+
+/* Topbar search input */
+[data-theme="aws-ecommerce"] .aws-topbar-search input[type="text"] {
+  width: 100% !important;
+  padding: 6px 12px 6px 32px !important;
+  margin: 0 !important;
+  border: 1px solid var(--aws-ecom-input-border) !important;
+  border-radius: 4px !important;
+  background: var(--aws-ecom-input-bg) !important;
+  color: var(--aws-ecom-text-primary) !important;
+  font-size: 14px !important;
+  font-family: "Amazon Ember", Arial, sans-serif !important;
+  line-height: 20px !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
+  box-shadow: none !important;
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-search input[type="text"]:focus {
+  border-color: var(--aws-ecom-accent) !important;
+  box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.3) !important;
+  background: var(--aws-ecom-input-bg) !important;
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-search form {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+/* ============================================================
+   22. Ecommerce-specific components
+   ============================================================ */
+
+/* Product card grid */
+[data-theme="aws-ecommerce"] .aws-ecom-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* Product card */
+[data-theme="aws-ecommerce"] .aws-ecom-product-card {
+  background: #FFFFFF;
+  border: 1px solid var(--aws-ecom-card-border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-product-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--aws-ecom-border-dark);
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-product-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background: #F7FAFA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--aws-ecom-text-secondary);
+  font-size: 48px;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-product-body {
+  padding: 12px;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-product-name {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--aws-ecom-text-primary);
+  margin: 0 0 4px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-product-name:hover {
+  color: var(--aws-ecom-text-link-hover);
+}
+
+/* Star rating */
+[data-theme="aws-ecommerce"] .aws-ecom-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-stars svg {
+  width: 14px;
+  height: 14px;
+  color: var(--aws-ecom-stars);
+  fill: var(--aws-ecom-stars);
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-rating-count {
+  font-size: 12px;
+  color: var(--aws-ecom-text-link);
+  margin-left: 4px;
+}
+
+/* Price display */
+[data-theme="aws-ecommerce"] .aws-ecom-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-price-symbol {
+  font-size: 12px;
+  color: var(--aws-ecom-price);
+  font-weight: 400;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-price-whole {
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--aws-ecom-price);
+  line-height: 1;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-price-fraction {
+  font-size: 12px;
+  color: var(--aws-ecom-price);
+  font-weight: 400;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-price-original {
+  font-size: 12px;
+  color: var(--aws-ecom-text-secondary);
+  text-decoration: line-through;
+  margin-left: 4px;
+}
+
+/* Prime / deal badge */
+[data-theme="aws-ecommerce"] .aws-ecom-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-badge-deal {
+  background: var(--aws-ecom-error);
+  color: #FFFFFF;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-badge-best {
+  background: var(--aws-ecom-accent);
+  color: #0F1111;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-badge-new {
+  background: var(--aws-ecom-success);
+  color: #FFFFFF;
+}
+
+/* Add to cart button (Amazon yellow) */
+[data-theme="aws-ecommerce"] .aws-ecom-btn-cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 400;
+  background: var(--aws-ecom-cta);
+  border: 1px solid var(--aws-ecom-cta-border);
+  border-radius: 20px;
+  color: #0F1111;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-btn-cart:hover {
+  background: var(--aws-ecom-cta-hover);
+  text-decoration: none;
+  color: #0F1111;
+}
+
+/* Buy now button (Amazon orange) */
+[data-theme="aws-ecommerce"] .aws-ecom-btn-buy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 400;
+  background: var(--aws-ecom-accent);
+  border: 1px solid var(--aws-ecom-accent);
+  border-radius: 20px;
+  color: #0F1111;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-btn-buy:hover {
+  background: var(--aws-ecom-accent-hover);
+  text-decoration: none;
+  color: #0F1111;
+}
+
+/* Category navigation strip (horizontal scrolling) */
+[data-theme="aws-ecommerce"] .aws-ecom-categories {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 8px 0;
+  margin-bottom: 16px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-categories::-webkit-scrollbar {
+  display: none;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-category-chip {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 400;
+  background: #FFFFFF;
+  border: 1px solid var(--aws-ecom-border);
+  border-radius: 20px;
+  color: var(--aws-ecom-text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-category-chip:hover {
+  background: var(--aws-ecom-table-hover);
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-category-chip.is-active {
+  background: var(--aws-ecom-nav-bg);
+  color: #FFFFFF;
+  border-color: var(--aws-ecom-nav-bg);
+}
+
+/* Hero banner */
+[data-theme="aws-ecommerce"] .aws-ecom-hero {
+  background: linear-gradient(135deg, #232F3E 0%, #37475A 100%);
+  border-radius: 8px;
+  padding: 32px;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-hero h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 8px 0;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-hero p {
+  font-size: 16px;
+  color: #AAB7B8;
+  margin: 0 0 16px 0;
+}
+
+[data-theme="aws-ecommerce"] .aws-ecom-hero .aws-btn-primary {
+  background: var(--aws-ecom-cta);
+  color: #0F1111;
+  border-color: var(--aws-ecom-cta-border);
+  font-size: 15px;
+  padding: 8px 24px;
+}
+
+/* Account dropdown menu */
+[data-theme="aws-ecommerce"] .aws-topbar-account-menu {
+  background: var(--aws-ecom-nav-bg);
+  border-color: var(--aws-ecom-nav-border);
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-account-menu .menu-header {
+  color: var(--aws-ecom-sidebar-muted);
+  border-bottom-color: var(--aws-ecom-nav-border);
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-account-menu .menu-item {
+  color: #FFFFFF;
+}
+
+[data-theme="aws-ecommerce"] .aws-topbar-account-menu .menu-item:hover {
+  background: var(--aws-ecom-nav-hover);
+}

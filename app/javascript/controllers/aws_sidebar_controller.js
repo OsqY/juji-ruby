@@ -3,21 +3,27 @@ import { Controller } from "@hotwired/stimulus"
 export default class AwsSidebarController extends Controller {
     static targets = [
         "sidebar", "topbar", "overlay", "toggleIcon",
-        "accountMenu", "sectionHeader", "sectionLinks"
+        "accountMenu", "layout"
     ]
 
     connect() {
+        this.boundCloseAccountMenu = this.closeAccountMenu.bind(this)
+        document.addEventListener("click", this.boundCloseAccountMenu)
+
         const collapsed = localStorage.getItem("awsSidebarCollapsed") === "true"
-        const layout = document.querySelector(".aws-layout")
-        if (layout && collapsed) {
-            layout.classList.add("is-collapsed")
+        if (this.hasLayoutTarget && collapsed) {
+            this.layoutTarget.classList.add("is-collapsed")
             this.rotateIcon(true)
         }
     }
 
+    disconnect() {
+        document.removeEventListener("click", this.boundCloseAccountMenu)
+    }
+
     toggleCollapse() {
-        const layout = document.querySelector(".aws-layout")
-        const isCollapsed = layout.classList.toggle("is-collapsed")
+        if (!this.hasLayoutTarget) return
+        const isCollapsed = this.layoutTarget.classList.toggle("is-collapsed")
         localStorage.setItem("awsSidebarCollapsed", isCollapsed)
         this.rotateIcon(isCollapsed)
     }

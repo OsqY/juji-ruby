@@ -565,7 +565,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
   padding: 12px 20px;
   margin: -20px -20px 12px;
   background: var(--aws-table-header-bg);
@@ -779,7 +778,7 @@
 
 .aws-alert-warning {
   background: #fff3e0;
-  color: #bf360c;
+  color: var(--aws-text-primary);
   border-left-color: var(--aws-warning);
 }
 
@@ -1064,7 +1063,7 @@
 .aws-mb-3 { margin-bottom: 24px; }
 
 /* -----------------------------------------------------------
-   19. Spinner / Loading
+    20. Spinner / Loading
    ----------------------------------------------------------- */
 .aws-spinner {
   display: inline-block;
@@ -1093,7 +1092,7 @@
 }
 
 /* ============================================================
-   20. Legacy component overrides for Cloudscape theme
+    21. Legacy component overrides for Cloudscape theme
    ============================================================ */
 
 /* Content visibility toggles */
@@ -1450,7 +1449,7 @@
 }
 
 [data-theme="aws"] .type-card:hover {
-  border-color: var(--aws-border-darker);
+  border-color: var(--aws-border-dark);
 }
 
 [data-theme="aws"] .type-card .card-label {

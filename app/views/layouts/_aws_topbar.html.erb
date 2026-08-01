@@ -28,9 +28,9 @@
       <div class="aws-topbar-account-menu" data-aws-sidebar-target="accountMenu">
         <% if authenticated? %>
           <div class="menu-header"><%= current_user.email_address %></div>
-          <%= button_to "Cerrar sesion", session_path, method: :delete, class: "menu-item" %>
+          <%= button_to "Cerrar sesión", session_path, method: :delete, class: "menu-item" %>
         <% else %>
-          <%= link_to "Iniciar sesion", new_session_path, class: "menu-item" %>
+          <%= link_to "Iniciar sesión", new_session_path, class: "menu-item" %>
           <%= link_to "Registrarse", new_registration_path, class: "menu-item" %>
         <% end %>
       </div>
