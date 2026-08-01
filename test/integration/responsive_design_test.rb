@@ -131,6 +131,8 @@ class ResponsiveDesignTest < ActionDispatch::IntegrationTest
   end
 
   def sign_in_as(user)
-    post session_path, params: { email_address: user.email_address, password: 'password' }
+    post session_path, params: { email_address: user.email_address, password: "password" }
+    visit new_session_path
+    page.driver.browser.manage.add_cookie(name: "session_id", value: cookies["session_id"], path: "/")
   end
 end
