@@ -1,56 +1,81 @@
-import { Capacitor } from "@capacitor/core"
-import { Preferences } from "@capacitor/preferences"
-import { App } from "@capacitor/app"
-import { SplashScreen } from "@capacitor/splash-screen"
-import { StatusBar, Style } from "@capacitor/status-bar"
-
 const SESSION_KEY = "juji_session_id"
 const LAST_PATH_KEY = "juji_last_path"
 
+function capacitorPlugin(name) {
+  return globalThis.Capacitor?.Plugins?.[name]
+}
+
+async function setPreference(key, value) {
+  const preferences = capacitorPlugin("Preferences")
+  if (preferences?.set) {
+    await preferences.set({ key, value })
+  } else {
+    localStorage.setItem(key, value)
+  }
+}
+
+async function getPreference(key) {
+  const preferences = capacitorPlugin("Preferences")
+  if (preferences?.get) return (await preferences.get({ key })).value
+  return localStorage.getItem(key)
+}
+
+async function removePreference(key) {
+  const preferences = capacitorPlugin("Preferences")
+  if (preferences?.remove) {
+    await preferences.remove({ key })
+  } else {
+    localStorage.removeItem(key)
+  }
+}
+
 export async function initBridge() {
+  const splashScreen = capacitorPlugin("SplashScreen")
+  const statusBar = capacitorPlugin("StatusBar")
+  const app = capacitorPlugin("App")
+
   // Hide splash screen after a short delay
-  setTimeout(() => SplashScreen.hide(), 1500)
+  setTimeout(() => splashScreen?.hide?.(), 1500)
 
   // Set status bar style based on theme
   const theme = document.documentElement.dataset.theme || "light"
-  await StatusBar.setStyle({ style: theme === "dark" ? Style.Dark : Style.Light })
-  await StatusBar.setBackgroundColor({ color: getComputedStyle(document.documentElement).getPropertyValue("--paper").trim() || "#FFFFFF" })
+  await statusBar?.setStyle?.({ style: theme === "dark" ? "DARK" : "LIGHT" })
+  await statusBar?.setBackgroundColor?.({ color: getComputedStyle(document.documentElement).getPropertyValue("--paper").trim() || "#FFFFFF" })
 
   // Handle Android back button
-  App.addListener("backButton", ({ canGoBack }) => {
+  app?.addListener?.("backButton", ({ canGoBack }) => {
     if (canGoBack) {
       window.history.back()
     } else {
-      App.exitApp()
+      app.exitApp?.()
     }
   })
 
   // Save last visited path before app pauses
-  App.addListener("pause", async () => {
-    await Preferences.set({ key: LAST_PATH_KEY, value: window.location.pathname })
+  app?.addListener?.("pause", async () => {
+    await setPreference(LAST_PATH_KEY, window.location.pathname)
   })
 
   // On app resume, could refresh data or check connectivity
-  App.addListener("resume", async () => {
-    const lastPath = await Preferences.get({ key: LAST_PATH_KEY })
-    if (lastPath.value && lastPath.value !== window.location.pathname) {
+  app?.addListener?.("resume", async () => {
+    const lastPath = await getPreference(LAST_PATH_KEY)
+    if (lastPath && lastPath !== window.location.pathname) {
       // Optional: navigate back to last known path
     }
   })
 }
 
 export async function saveSession(sessionId) {
-  await Preferences.set({ key: SESSION_KEY, value: sessionId })
+  await setPreference(SESSION_KEY, sessionId)
 }
 
 export async function getSession() {
-  const result = await Preferences.get({ key: SESSION_KEY })
-  return result.value
+  return getPreference(SESSION_KEY)
 }
 
 export async function clearSession() {
-  await Preferences.remove({ key: SESSION_KEY })
-  await Preferences.remove({ key: LAST_PATH_KEY })
+  await removePreference(SESSION_KEY)
+  await removePreference(LAST_PATH_KEY)
 }
 
 export async function injectSessionCookie() {
@@ -62,5 +87,5 @@ export async function injectSessionCookie() {
 
 // Check if running inside Capacitor native shell
 export function isNative() {
-  return typeof Capacitor !== "undefined" && Capacitor.isNativePlatform()
+  return globalThis.Capacitor?.isNativePlatform?.() === true
 }

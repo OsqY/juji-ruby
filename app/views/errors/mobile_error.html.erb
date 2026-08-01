@@ -189,10 +189,10 @@
     <% end %>
   </div>
 
-  <script>
+  <%= javascript_tag nonce: true do %>
     // Detect and apply theme
     const theme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', theme);
-  </script>
+  <% end %>
 </body>
 </html>

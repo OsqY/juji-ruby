@@ -18,8 +18,11 @@ Rails.application.configure do
     policy.form_action :self
   end
 
-  # Generate session nonces for permitted importmap and inline scripts.
-  config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
+  # Generate nonces independently of session creation so public pages do not
+  # render empty nonce attributes.
+  config.content_security_policy_nonce_generator = ->(request) do
+    request.env.fetch("juji.csp_nonce") { request.env["juji.csp_nonce"] = SecureRandom.base64(16) }
+  end
   config.content_security_policy_nonce_directives = %w(script-src)
 
   # Report violations without enforcing the policy (uncomment to enforce).

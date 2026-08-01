@@ -356,9 +356,9 @@ class AlertServiceTest < ActiveSupport::TestCase
   end
 
   test "check_no_reports_3_days counts correctly across weeks" do
-    # Report from last month
+    # Report older than the threshold, regardless of the current month.
     @user.daily_reports.create!(
-      report_date: (Date.current.beginning_of_month - 1.day),
+      report_date: Date.current - (AlertsConfig::DAYS_WITHOUT_REPORT + 1).days,
       work_title: "Last month",
       worked_by: "Me",
       yesterday: "Work",

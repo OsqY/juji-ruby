@@ -8,6 +8,17 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "public pages have usable CSP nonces and no native nav overlay" do
+    get new_session_path, headers: { "User-Agent" => "TurboNative/1.0" }
+
+    assert_response :success
+    assert_select "script[nonce]" do |scripts|
+      assert scripts.all? { |script| script["nonce"].present? }
+    end
+    assert_not_includes response.body, 'nonce=""'
+    assert_not_includes response.body, 'class="chaos-nav mobile-nav"'
+  end
+
   test "create with valid credentials" do
     post session_path, params: { email_address: @user.email_address, password: "password" }
 

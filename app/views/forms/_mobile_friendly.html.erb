@@ -150,7 +150,7 @@ Esto agregará clases y estilos para hacer formularios más usables en mobile
 </style>
 
 <!-- Helpers de Ruby para formularios mobile -->
-<script type="application/javascript">
+<%= javascript_tag nonce: true, type: "application/javascript" do %>
   // Auto-focus en primer input en formularios
   document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('form');
@@ -165,4 +165,4 @@ Esto agregará clases y estilos para hacer formularios más usables en mobile
       }
     }
   });
-</script>
+<% end %>

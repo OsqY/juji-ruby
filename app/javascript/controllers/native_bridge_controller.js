@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
-import { initBridge, saveSession, clearSession, injectSessionCookie, isNative } from "../../capacitor/bridge"
-import { initPushNotifications } from "../../capacitor/push"
+import { initBridge, saveSession, clearSession, injectSessionCookie, isNative } from "capacitor/bridge"
+import { initPushNotifications } from "capacitor/push"
 
 export default class extends Controller {
   static values = {

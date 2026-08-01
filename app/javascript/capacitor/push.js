@@ -1,24 +1,29 @@
-import { PushNotifications } from "@capacitor/push-notifications"
+function pushNotifications() {
+  return globalThis.Capacitor?.Plugins?.PushNotifications
+}
 
 export async function initPushNotifications() {
-  const result = await PushNotifications.requestPermissions()
+  const plugin = pushNotifications()
+  if (!plugin?.requestPermissions) return false
+
+  const result = await plugin.requestPermissions()
   if (result.receive !== "granted") return false
 
-  await PushNotifications.register()
+  await plugin.register()
 
-  PushNotifications.addListener("registration", async (token) => {
+  plugin.addListener("registration", async (token) => {
     await registerTokenWithBackend(token.value)
   })
 
-  PushNotifications.addListener("registrationError", (error) => {
+  plugin.addListener("registrationError", (error) => {
     console.error("Push registration error:", error)
   })
 
-  PushNotifications.addListener("pushNotificationReceived", (notification) => {
+  plugin.addListener("pushNotificationReceived", (notification) => {
     console.log("Push received:", notification)
   })
 
-  PushNotifications.addListener("pushNotificationActionPerformed", (action) => {
+  plugin.addListener("pushNotificationActionPerformed", (action) => {
     const data = action.notification.data
     if (data?.url) {
       window.location.href = data.url
@@ -46,5 +51,5 @@ async function registerTokenWithBackend(token) {
 }
 
 export async function unregisterPushNotifications() {
-  await PushNotifications.unregister()
+  await pushNotifications()?.unregister?.()
 }
