@@ -91,7 +91,8 @@
 
   <body data-controller="theme frame-state native-bridge offline-indicator"
         data-platform="native"
-        data-native-bridge-session-id-value="<%= cookies.signed[:session_id] %>">
+        data-native-push-enabled="<%= ENV["JUJI_PUSH_NOTIFICATIONS"] == "true" %>"
+        data-native-bridge-session-id-value="<%= cookies[:session_id] %>">
     <div data-offline-indicator-target="banner"
          style="display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: #c0392b; color: white; text-align: center; padding: 0.5rem; font-weight: 700; font-size: 0.85rem;">
       Sin conexión a internet — Algunas funciones pueden no estar disponibles

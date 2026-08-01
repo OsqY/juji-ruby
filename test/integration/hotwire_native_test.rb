@@ -51,6 +51,25 @@ class HotwireNativeTest < ActionDispatch::IntegrationTest
       "Mobile layout not used for native client"
   end
 
+  test "native layout disables push registration unless explicitly enabled" do
+    get new_session_path, headers: { 'User-Agent' => 'Capacitor/8.0' }
+
+    assert_response :success
+    assert_includes response.body, 'data-native-push-enabled="false"'
+  end
+
+  test "native layout exposes the signed session cookie for restoration" do
+    post session_path, params: {
+      email_address: @user.email_address,
+      password: 'password'
+    }
+
+    get dashboard_path, headers: { 'User-Agent' => 'Capacitor/8.0' }
+
+    assert_response :success
+    assert_match(/data-native-bridge-session-id-value="[^\"]+--[^\"]+"/, response.body)
+  end
+
   test "CORS headers are present for native requests" do
     post session_path, params: {
       email_address: @user.email_address,

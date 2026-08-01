@@ -168,6 +168,10 @@ DELETE /push_notifications/unregister
 4. Agregar plugin `com.google.gms.google-services` en `android/app/build.gradle`
 5. Copiar server key de Firebase y configurarla en Rails (credentials o ENV)
 
+La app no intenta registrar push por defecto. Activa `JUJI_PUSH_NOTIFICATIONS=true`
+solo después de configurar `google-services.json` para `com.juji.app` y validar
+FCM en un dispositivo; así una compilación sin Firebase no puede cerrar la app.
+
 ---
 
 ## Compilar APK de release

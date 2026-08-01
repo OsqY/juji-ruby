@@ -80,9 +80,10 @@ export async function clearSession() {
 
 export async function injectSessionCookie() {
   const sessionId = await getSession()
-  if (sessionId) {
-    document.cookie = `session_id=${sessionId}; path=/; SameSite=Lax`
-  }
+  if (!sessionId) return false
+
+  document.cookie = `session_id=${sessionId}; path=/; SameSite=Lax`
+  return true
 }
 
 // Check if running inside Capacitor native shell

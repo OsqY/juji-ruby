@@ -3,6 +3,8 @@ function pushNotifications() {
 }
 
 export async function initPushNotifications() {
+  if (globalThis.document?.body?.dataset.nativePushEnabled !== "true") return false
+
   const plugin = pushNotifications()
   if (!plugin?.requestPermissions) return false
 

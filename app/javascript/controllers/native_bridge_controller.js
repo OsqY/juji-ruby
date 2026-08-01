@@ -19,7 +19,12 @@ export default class extends Controller {
     })
 
     // Restore session if we have a stored one
-    await injectSessionCookie()
+    const sessionRestored = await injectSessionCookie()
+
+    if (sessionRestored && window.location.pathname === "/session/new") {
+      window.location.replace("/")
+      return
+    }
 
     // If Rails rendered with a session, store it locally
     if (this.hasSessionIdValue) {
