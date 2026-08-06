@@ -58,6 +58,46 @@
   --income-text: #067D62;
   --expense-bg: #FDECEF;
   --expense-text: #CC0C39;
+
+  /* Compatibility aliases for existing AWS view inline styles */
+  --aws-nav-bg: var(--aws-ecom-nav-bg);
+  --aws-nav-hover: var(--aws-ecom-nav-hover);
+  --aws-nav-border: var(--aws-ecom-nav-border);
+  --aws-accent: var(--aws-ecom-accent);
+  --aws-accent-hover: var(--aws-ecom-accent-hover);
+  --aws-sidebar-bg: var(--aws-ecom-sidebar-bg);
+  --aws-sidebar-hover: var(--aws-ecom-sidebar-hover);
+  --aws-sidebar-active-bg: var(--aws-ecom-sidebar-active-bg);
+  --aws-sidebar-active-border: var(--aws-ecom-sidebar-active-border);
+  --aws-sidebar-text: var(--aws-ecom-sidebar-text);
+  --aws-sidebar-muted: var(--aws-ecom-sidebar-muted);
+  --aws-content-bg: var(--aws-ecom-content-bg);
+  --aws-card-bg: var(--aws-ecom-card-bg);
+  --aws-card-border: var(--aws-ecom-card-border);
+  --aws-card-shadow: var(--aws-ecom-card-shadow);
+  --aws-text-primary: var(--aws-ecom-text-primary);
+  --aws-text-secondary: var(--aws-ecom-text-secondary);
+  --aws-text-link: var(--aws-ecom-text-link);
+  --aws-text-link-hover: var(--aws-ecom-text-link-hover);
+  --aws-border: var(--aws-ecom-border);
+  --aws-border-dark: var(--aws-ecom-border-dark);
+  --aws-border-darker: var(--aws-ecom-border-dark);
+  --aws-input-bg: var(--aws-ecom-input-bg);
+  --aws-input-border: var(--aws-ecom-input-border);
+  --aws-success: var(--aws-ecom-success);
+  --aws-warning: var(--aws-ecom-warning);
+  --aws-error: var(--aws-ecom-error);
+  --aws-text-error: var(--aws-ecom-error);
+  --aws-info: var(--aws-ecom-info);
+  --aws-primary: var(--aws-ecom-primary);
+  --aws-bg: var(--aws-ecom-content-bg);
+  --aws-bg-primary: var(--aws-ecom-table-header-bg);
+  --aws-bg-secondary: var(--aws-ecom-table-header-bg);
+  --aws-badge-bg: var(--aws-ecom-badge-bg);
+  --aws-badge-text: var(--aws-ecom-badge-text);
+  --aws-table-header-bg: var(--aws-ecom-table-header-bg);
+  --aws-table-hover: var(--aws-ecom-table-hover);
+  --aws-divider: var(--aws-ecom-divider);
 }
 
 /* -----------------------------------------------------------
