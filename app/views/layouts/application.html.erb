@@ -153,7 +153,7 @@
         </details>
 
         <div class="theme-picker theme-picker-dropdown">
-          <select class="theme-select-compact" data-theme-target="themeSelect" data-action="change->theme#switch">
+          <select class="theme-select-compact" aria-label="Seleccionar tema visual" data-theme-target="themeSelect" data-action="change->theme#switch">
             <option value="light"><%= t('.theme.light') %></option>
             <option value="dark"><%= t('.theme.dark') %></option>
             <option value="vintage"><%= t('.theme.vintage') %></option>
@@ -164,7 +164,7 @@
             <option value="aws">AWS Console</option>
             <option value="aws-ecommerce">AWS Ecommerce</option>
           </select>
-          <select class="theme-select-compact brat-font-select" data-theme-target="bratFontSelect" data-action="change->theme#switchFont">
+          <select class="theme-select-compact brat-font-select" aria-label="Seleccionar fuente visual" data-theme-target="bratFontSelect" data-action="change->theme#switchFont">
             <option value="helvetica"><%= t('.theme.font_helvetica') %></option>
             <option value="inter"><%= t('.theme.font_inter') %></option>
           </select>

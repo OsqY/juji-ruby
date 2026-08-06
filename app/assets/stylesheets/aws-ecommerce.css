@@ -241,6 +241,11 @@
   background: var(--aws-ecom-sidebar-hover);
 }
 
+[data-theme="aws-ecommerce"] .aws-sidebar-header:focus-visible {
+  outline: 2px solid var(--aws-ecom-accent);
+  outline-offset: -2px;
+}
+
 [data-theme="aws-ecommerce"] .aws-sidebar-link {
   color: var(--aws-ecom-sidebar-text);
 }

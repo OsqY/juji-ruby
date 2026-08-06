@@ -8,7 +8,9 @@ export default class AwsSidebarController extends Controller {
 
     connect() {
         this.boundCloseAccountMenu = this.closeAccountMenu.bind(this)
+        this.boundCloseMobileOnEscape = this.closeMobileOnEscape.bind(this)
         document.addEventListener("click", this.boundCloseAccountMenu)
+        document.addEventListener("keydown", this.boundCloseMobileOnEscape)
 
         const collapsed = localStorage.getItem("awsSidebarCollapsed") === "true"
         if (this.hasLayoutTarget && collapsed) {
@@ -19,6 +21,7 @@ export default class AwsSidebarController extends Controller {
 
     disconnect() {
         document.removeEventListener("click", this.boundCloseAccountMenu)
+        document.removeEventListener("keydown", this.boundCloseMobileOnEscape)
     }
 
     toggleCollapse() {
@@ -36,10 +39,11 @@ export default class AwsSidebarController extends Controller {
 
     toggleMobile() {
         if (!this.hasSidebarTarget) return
-        this.sidebarTarget.classList.toggle("is-mobile-open")
+        const isOpen = this.sidebarTarget.classList.toggle("is-mobile-open")
         if (this.hasOverlayTarget) {
-            this.overlayTarget.classList.toggle("is-visible")
+            this.overlayTarget.classList.toggle("is-visible", isOpen)
         }
+        this.setMobileToggleState(isOpen)
     }
 
     closeMobile() {
@@ -48,6 +52,19 @@ export default class AwsSidebarController extends Controller {
         if (this.hasOverlayTarget) {
             this.overlayTarget.classList.remove("is-visible")
         }
+        this.setMobileToggleState(false)
+    }
+
+    closeMobileOnEscape(event) {
+        if (event.key === "Escape" && this.hasSidebarTarget && this.sidebarTarget.classList.contains("is-mobile-open")) {
+            this.closeMobile()
+        }
+    }
+
+    setMobileToggleState(isOpen) {
+        if (!this.hasTopbarTarget) return
+        const toggle = this.topbarTarget.querySelector(".aws-topbar-hamburger")
+        toggle?.setAttribute("aria-expanded", String(isOpen))
     }
 
     toggleAccount(event) {
@@ -63,11 +80,19 @@ export default class AwsSidebarController extends Controller {
 
         const isOpen = links.style.display !== "none"
         links.style.display = isOpen ? "none" : "block"
+        header.setAttribute("aria-expanded", String(!isOpen))
 
         const chevron = header.querySelector("svg")
         if (chevron) {
             chevron.style.transform = isOpen ? "rotate(-90deg)" : "rotate(0deg)"
             chevron.style.transition = "transform 0.2s ease"
+        }
+    }
+
+    toggleSectionOnKeydown(event) {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault()
+            this.toggleSection(event)
         }
     }
 
