@@ -6,31 +6,34 @@ export async function initPushNotifications() {
   if (globalThis.document?.body?.dataset.nativePushEnabled !== "true") return false
 
   const plugin = pushNotifications()
-  if (!plugin?.requestPermissions) return false
+  if (!plugin?.checkPermissions || !plugin?.requestPermissions) return false
 
-  const result = await plugin.requestPermissions()
-  if (result.receive !== "granted") return false
+  let permission = await plugin.checkPermissions()
+  if (permission.receive === "prompt") {
+    permission = await plugin.requestPermissions()
+  }
+  if (permission.receive !== "granted") return false
 
-  await plugin.register()
-
-  plugin.addListener("registration", async (token) => {
+  await plugin.addListener("registration", async (token) => {
     await registerTokenWithBackend(token.value)
   })
 
-  plugin.addListener("registrationError", (error) => {
+  await plugin.addListener("registrationError", (error) => {
     console.error("Push registration error:", error)
   })
 
-  plugin.addListener("pushNotificationReceived", (notification) => {
+  await plugin.addListener("pushNotificationReceived", (notification) => {
     console.log("Push received:", notification)
   })
 
-  plugin.addListener("pushNotificationActionPerformed", (action) => {
+  await plugin.addListener("pushNotificationActionPerformed", (action) => {
     const data = action.notification.data
     if (data?.url) {
       window.location.href = data.url
     }
   })
+
+  await plugin.register()
 
   return true
 }
