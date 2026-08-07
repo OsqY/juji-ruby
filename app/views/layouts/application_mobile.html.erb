@@ -53,6 +53,7 @@
       /* Navigation optimized for mobile */
       nav.chaos-nav {
         position: fixed;
+        top: auto;
         bottom: 0;
         left: 0;
         right: 0;
@@ -122,7 +123,7 @@
       <% register_active = controller_name == "registrations" && action_name == "new" %>
       <% recovery_active = controller_name == "passwords" && action_name == "new" %>
 
-      <div class="mobile-nav-items" style="display: flex; justify-content: space-around; padding: 0.5rem 0; gap: 0.25rem;">
+      <div class="mobile-nav-items" style="display: flex; width: 100%; justify-content: space-around; padding: 0.5rem 0; gap: 0.25rem;">
         <%= link_to dashboard_path, class: "mobile-nav-item #{'is-active' if dashboard_active}", style: "flex: 1; padding: 0.75rem; text-align: center; text-decoration: none; border-top: 3px solid transparent; border-color: #{dashboard_active ? 'var(--accent-blue)' : 'transparent'};" do %>
           <div style="font-size: 1.5rem;">IN</div>
           <div style="font-size: 0.7rem; font-weight: 900;">INICIO</div>

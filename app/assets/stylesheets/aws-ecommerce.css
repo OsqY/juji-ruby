@@ -162,7 +162,7 @@
   margin-left: 48px;
 }
 
-[data-theme="aws-ecommerce"] .chaos-nav {
+[data-theme="aws-ecommerce"] .aws-layout .chaos-nav {
   display: none !important;
 }
 
