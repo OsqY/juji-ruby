@@ -4,7 +4,9 @@ class Notification < ApplicationRecord
   enum :notification_type, {
     budget_exceeded: "budget_exceeded",
     no_report_3_days: "no_report_3_days",
-    project_no_progress: "project_no_progress"
+    project_no_progress: "project_no_progress",
+    insight: "insight",
+    reminder: "reminder"
   }
 
   validates :notification_type, presence: true
