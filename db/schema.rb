@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_17_231405) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_10_000000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -314,7 +314,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_17_231405) do
     t.string "email_address", null: false
     t.string "email_frequency", default: "daily"
     t.string "fcm_token"
-    t.string "invite_token"
+    t.string "invite_token", null: false
     t.datetime "last_email_sent_at"
     t.boolean "notify_by_email", default: false
     t.string "password_digest", null: false
