@@ -3,12 +3,21 @@ import { createConsumer } from "@rails/actioncable"
 
 export default class extends Controller {
   static values = { roomId: Number }
-  static targets = ["input"]
+  static targets = ["input", "messages"]
 
   connect() {
     this.subscription = createConsumer().subscriptions.create(
       { channel: "ChatRoomChannel", room_id: this.roomIdValue },
       {
+        connected: () => {
+          this.element.dataset.chatRoomConnected = "true"
+        },
+        disconnected: () => {
+          this.element.dataset.chatRoomConnected = "false"
+        },
+        rejected: () => {
+          this.element.dataset.chatRoomConnected = "false"
+        },
         received: (data) => {
           if (data.type === "init") {
             // Historial ya renderizado server-side
@@ -43,7 +52,7 @@ export default class extends Controller {
   }
 
   appendMessage(html) {
-    const container = this.element
+    const container = this.messagesTarget
     const temp = document.createElement("div")
     temp.innerHTML = html
     const messageEl = temp.firstElementChild
@@ -52,7 +61,7 @@ export default class extends Controller {
   }
 
   scrollToBottom() {
-    const container = this.element
+    const container = this.messagesTarget
     container.scrollTop = container.scrollHeight
   }
 }

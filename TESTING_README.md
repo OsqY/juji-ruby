@@ -1,5 +1,26 @@
 # Testing Documentation for Rails 8.1 App
 
+## Critical browser journeys
+
+Run the reproducible browser matrix with:
+
+```bash
+RAILS_ENV=test bin/rails db:test:prepare test:system
+```
+
+It uses Rails system tests, Capybara, and headless Chrome/Chromium available on
+the host. Browser tests run with one worker because the test database is SQLite
+and the Rails system-test server owns the browser session. Failed tests leave
+screenshots in `tmp/screenshots`; set `RAILS_SYSTEM_TESTING_SCREENSHOT_HTML=1`
+to also save HTML diagnostics.
+
+The suite covers authentication/session expiry, authorization, daily reports,
+transactions and budgets, project tasks, habits, shopping, goals, exports,
+notifications, public forms, invitations, chat delivery, and whiteboard
+peer delivery. Socket delivery itself still requires a running Action Cable
+backend; the browser suite asserts connection and delivery evidence instead
+of silently skipping when that external service is unavailable.
+
 This folder contains comprehensive testing documentation and ready-to-use test templates for your Rails 8.1 application.
 
 ## 📚 Documentation Files
@@ -343,4 +364,3 @@ test/
 **Framework**: Minitest (default)
 
 Happy testing! 🚀
-
