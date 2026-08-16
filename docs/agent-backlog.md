@@ -96,3 +96,21 @@ Registrar todo trabajo realizado por el agente en cada proceso importante: tarea
 - Resultado: Alertas activas y visibles en dashboard para los 3 casos requeridos
 - Riesgos remanentes: Regla de proyecto sin avance usa updated_at de tareas como proxy; puede no capturar todo tipo de progreso
 - Proximos pasos: Extraer reglas a servicio, agregar test dedicado de dashboard y umbrales configurables por usuario
+
+### 2026-08-14 | cierre
+- Fecha: 2026-08-14
+- Hito del proceso: cierre
+- Tarea: Resolver P0.8 del backlog: distinguir duplicados de fallos de guardado en respuestas públicas
+- Contexto: `PublicAnonymousFormsController` infería un duplicado desde `new_record?` y una consulta amplia después de cualquier guardado fallido
+- Hipotesis inicial: El modelo `AnonymousFormResponse` ya valida duplicados autenticados; el controlador debía usar el resultado real de `save`
+- Acciones realizadas: Se eliminó la inferencia por `new_record?`, se rastreó `response_saved`, se agregó mensaje genérico para fallos sin errores de validación y se incorporó regresión de controlador
+- Comandos ejecutados: `bin/rails test test/controllers/public_anonymous_forms_controller_test.rb`; `bin/rails test`; `bin/rubocop app/controllers/public_anonymous_forms_controller.rb test/controllers/public_anonymous_forms_controller_test.rb`; `bin/rubocop`; `bin/brakeman -q --no-exit-on-warn`; `ruby -c ...`; `git diff --check`
+- Resultados de pruebas: Suite específica OK (6 tests, 24 assertions); suite completa OK (304 tests, 708 assertions, 0 failures, 0 errors); RuboCop focalizado OK
+- Archivos tocados: `app/controllers/public_anonymous_forms_controller.rb`, `test/controllers/public_anonymous_forms_controller_test.rb`, `docs/agent-backlog.md`
+- Bloqueos: Ninguno; los 685 hallazgos históricos de RuboCop quedaron registrados en una línea base y Brakeman se actualizó a 8.0.6
+- Analisis de causa raiz: El controlador trataba un registro no persistido como duplicado en vez de distinguir el resultado de la operación de persistencia
+- Resolucion: El redirect de éxito ahora depende exclusivamente de `response_saved`; fallos sin errores de validación reciben respuesta 422 genérica y los duplicados conservan su mensaje del modelo
+- Trade-offs y decisiones: Se reutilizó la validación y el índice únicos existentes; no se agregó una capa de servicio ni se modificaron modelos o esquema
+- Resultado: P0.8 implementado y listo para revisión independiente
+- Riesgos remanentes: La línea base de RuboCop conserva deuda de estilo histórica que debe reducirse sin aceptar nuevas infracciones
+- Proximos pasos: Integrar el cambio junto con la recuperación del quality gate después de la aprobación Git correspondiente

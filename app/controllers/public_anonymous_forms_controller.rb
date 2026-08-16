@@ -14,26 +14,24 @@ class PublicAnonymousFormsController < ApplicationController
     @response.user = current_user if authenticated?
 
     validation_errors.each { |message| @response.errors.add(:base, message) }
+    response_saved = false
 
     if @response.errors.empty?
       @anonymous_form.with_lock do
         @anonymous_form.reload
 
         if @anonymous_form.open_for_responses?
-          @response.save
+          response_saved = @response.save
         else
           @response.errors.add(:base, "Este formulario ya alcanzó su límite de respuestas")
         end
       end
     end
 
-    if @response.errors.empty? && @response.new_record? && @anonymous_form.responses.exists?(user: current_user)
-      @response.errors.add(:base, "Ya respondiste este formulario")
-    end
-
-    if @response.errors.empty?
+    if response_saved
       redirect_to public_anonymous_form_path(@anonymous_form.token, submitted: 1), notice: "Respuesta enviada. Gracias por participar."
     else
+      @response.errors.add(:base, "No se pudo enviar la respuesta") if @response.errors.empty?
       @questions = @anonymous_form.questions
       flash.now[:alert] = @response.errors.full_messages.to_sentence
       render :show, status: :unprocessable_entity

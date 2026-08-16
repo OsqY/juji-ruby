@@ -112,11 +112,46 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
   end
 
   # ============= PROJECTS =============
+  test "user can create toggle and destroy own nested project task" do
+    project = @user_a.projects.create!(name: "Own project", description: "Test")
+
+    assert_difference("ProjectTask.count") do
+      post project_project_tasks_path(project), params: { project_task: { name: "Own task" } }
+    end
+    assert_redirected_to projects_path
+
+    task = project.project_tasks.order(:created_at).last
+    assert_changes("task.reload.completed", from: false, to: true) do
+      post toggle_project_project_task_path(project, task)
+    end
+    assert_redirected_to projects_path
+
+    assert_difference("ProjectTask.count", -1) do
+      delete project_project_task_path(project, task)
+    end
+    assert_redirected_to projects_path
+  end
+
   test "user cannot destroy another user's project" do
     other_project = @user_b.projects.create!(name: "Other project", description: "Test")
     
     assert_no_difference("Project.count") do
       delete project_path(other_project)
+    end
+    assert_response :not_found
+  end
+
+  test "user cannot mutate another user's nested project task" do
+    other_project = @user_b.projects.create!(name: "Other project", description: "Test")
+    other_task = other_project.project_tasks.create!(name: "Other task")
+
+    assert_no_changes("other_task.reload.completed") do
+      post toggle_project_project_task_path(other_project, other_task)
+    end
+    assert_response :not_found
+
+    assert_no_difference("ProjectTask.count") do
+      delete project_project_task_path(other_project, other_task)
     end
     assert_response :not_found
   end
@@ -136,6 +171,23 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
       delete habit_path(other_habit)
     end
     assert_response :not_found
+  end
+
+  test "habit toggle persists when streak side effects fail" do
+    habit = @user_a.habits.create!(name: "Resilient habit")
+
+    original_record_activity = UserStreak.method(:record_activity!)
+    UserStreak.define_singleton_method(:record_activity!) { |*| raise "streak unavailable" }
+    begin
+      assert_difference("HabitLog.count") do
+        post toggle_habit_path(habit), params: { date: Date.current }
+      end
+    ensure
+      UserStreak.define_singleton_method(:record_activity!, original_record_activity)
+    end
+
+    assert_redirected_to habits_path
+    assert habit.habit_logs.find_by(log_date: Date.current).completed
   end
 
   # ============= BUDGETS =============

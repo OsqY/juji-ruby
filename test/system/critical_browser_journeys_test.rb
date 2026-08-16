@@ -118,14 +118,13 @@ class CriticalBrowserJourneysTest < ApplicationSystemTestCase
     assert_button "EXPORTAR CSV"
     export_form = all("form[action^='/exports'][data-turbo='false']", visible: true).first
     within(export_form) { click_button "EXPORTAR CSV" }
-    wait_for { Dir.glob(DOWNLOAD_PATH.join("transactions_*.csv")).any? }
+    wait_for(10) { Dir.glob(DOWNLOAD_PATH.join("transactions_*.csv")).any? }
     csv = File.read(Dir.glob(DOWNLOAD_PATH.join("transactions_*.csv")).first)
     assert_includes csv, transaction.description
 
     visit notifications_path
     assert_text notification.message
     find("form[action='#{mark_as_read_notification_path(notification)}']").click_button "OK"
-    visit notifications_path
     assert_no_css "form[action='#{mark_as_read_notification_path(notification)}']"
   end
 

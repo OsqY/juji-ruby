@@ -19,10 +19,15 @@ class DailyReportsController < ApplicationController
     @daily_report = current_user.daily_reports.new(daily_report_params)
 
     if @daily_report.save
-      # Track streak and achievements
-      UserStreak.record_activity!(current_user, "daily_report")
-      UserAchievement.check_first_time_achievements!(current_user)
-      InsightService.create_insight_notification(current_user, InsightService.generate_weekly_insights(current_user))
+      [
+        -> { UserStreak.record_activity!(current_user, "daily_report") },
+        -> { UserAchievement.check_first_time_achievements!(current_user) },
+        -> { InsightService.create_insight_notification(current_user, InsightService.generate_weekly_insights(current_user)) }
+      ].each do |operation|
+        operation.call
+      rescue StandardError => error
+        Rails.logger.warn("Daily report post-save processing failed: #{error.class}")
+      end
 
       if turbo_frame_request?
         load_index_data

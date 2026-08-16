@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   resources :transactions, except: [ :edit, :update ]
   resources :budgets, only: %i[ index create destroy ]
   resources :projects, only: %i[ index create destroy ] do
-    resources :project_tasks, only: %i[ create update destroy ] do
+    resources :project_tasks, only: %i[ create destroy ] do
       post :toggle, on: :member
     end
   end
