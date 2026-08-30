@@ -14,6 +14,38 @@
   --income-text: #2D5A27;
   --expense-bg: #FFEBEB;
   --expense-text: #D63031;
+
+  /* AWS component fallbacks for the generic themes. */
+  --aws-nav-bg: var(--paper);
+  --aws-nav-hover: var(--muted-gray);
+  --aws-nav-border: var(--muted-gray);
+  --aws-accent: var(--accent-blue);
+  --aws-accent-hover: var(--ink);
+  --aws-sidebar-bg: var(--paper);
+  --aws-sidebar-hover: var(--muted-gray);
+  --aws-sidebar-active-bg: var(--muted-gray);
+  --aws-sidebar-active-border: var(--accent-blue);
+  --aws-sidebar-text: var(--ink);
+  --aws-sidebar-muted: var(--ink);
+  --aws-content-bg: var(--paper);
+  --aws-card-bg: var(--paper);
+  --aws-card-border: var(--muted-gray);
+  --aws-card-shadow: none;
+  --aws-text-primary: var(--ink);
+  --aws-text-secondary: var(--ink);
+  --aws-border: var(--muted-gray);
+  --aws-border-dark: var(--ink);
+  --aws-input-bg: var(--paper);
+  --aws-input-border: var(--muted-gray);
+  --aws-success: var(--income-text);
+  --aws-warning: var(--highlight);
+  --aws-table-hover: var(--muted-gray);
+  --aws-error: var(--expense-text);
+  --aws-info: var(--accent-blue);
+  --aws-primary: var(--accent-blue);
+  --aws-bg-primary: var(--muted-gray);
+  --aws-table-header-bg: var(--muted-gray);
+  --aws-divider: var(--muted-gray);
 }
 
 .visually-hidden {
@@ -2317,6 +2349,12 @@ nav.chaos-nav {
   padding: 1.5rem;
 }
 
+.split-expenses-page .aws-btn:focus-visible {
+  outline: 3px solid var(--accent-blue) !important;
+  outline-offset: 2px;
+  box-shadow: none !important;
+}
+
 .split-expenses-page,
 .split-expenses-page * {
   box-sizing: border-box;
@@ -2329,6 +2367,78 @@ nav.chaos-nav {
 
 .split-expenses-page > .aws-page-header {
   flex-direction: column;
+}
+
+/* Keep this spreadsheet on the compact component scale in every theme. */
+.split-expenses-page .field input,
+.split-expenses-page .split-expense-table input {
+  width: 100%;
+  min-height: 36px;
+  margin-top: 0.25rem !important;
+  padding: 0.5rem 0.75rem !important;
+  border: 1px solid var(--aws-input-border, var(--muted-gray)) !important;
+  border-radius: 2px !important;
+  background: var(--aws-input-bg, var(--paper)) !important;
+  color: var(--aws-text-primary, var(--ink)) !important;
+  font: inherit;
+  font-size: 0.875rem !important;
+  box-shadow: none !important;
+}
+
+.split-expenses-page .field input:focus,
+.split-expenses-page .split-expense-table input:focus {
+  border-color: var(--accent-blue) !important;
+  outline: 2px solid var(--accent-blue) !important;
+  outline-offset: 1px;
+  box-shadow: none !important;
+}
+
+.split-expenses-page .aws-btn-primary {
+  background: var(--ink);
+  color: var(--paper) !important;
+  border-color: var(--ink);
+}
+
+.split-expenses-page .aws-btn-primary:hover {
+  background: var(--accent-blue);
+  color: var(--paper) !important;
+  border-color: var(--accent-blue);
+}
+
+.split-expenses-page .aws-btn-secondary {
+  background: var(--paper);
+  color: var(--ink) !important;
+  border-color: var(--aws-border, var(--muted-gray));
+}
+
+.split-expenses-page .aws-btn-secondary:hover {
+  background: var(--muted-gray);
+  color: var(--ink) !important;
+}
+
+.split-expenses-page .aws-tag-success {
+  background: var(--income-bg);
+  color: var(--ink);
+}
+
+.split-expenses-page .aws-tag-warning {
+  background: var(--muted-gray);
+  color: var(--ink);
+}
+
+.split-expenses-page .aws-tag-error {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.split-expenses-page .aws-tag-info {
+  background: var(--accent-blue);
+  color: var(--paper);
+}
+
+[data-theme="aws-ecommerce"] .split-expenses-page .aws-btn-primary,
+[data-theme="aws-ecommerce"] .split-expenses-page .aws-btn-primary:hover {
+  color: var(--aws-ecom-text-primary) !important;
 }
 
 .split-expense-summary {
@@ -2433,7 +2543,9 @@ nav.chaos-nav {
 }
 
 @media (max-width: 700px) {
-  .split-expenses-page { width: 100vw; max-width: 100vw; padding: 1rem 0; overflow-x: hidden; }
+  .split-expenses-page { width: 100%; max-width: 100%; padding: 1rem; }
+  .split-expenses-page .field input,
+  .split-expenses-page .split-expense-table input { font-size: 16px !important; }
   .split-expense-fields { grid-template-columns: 1fr; }
   .split-expense-actions { align-items: stretch; }
   .split-expense-totals { width: 100%; margin-left: 0; justify-content: space-between; }
