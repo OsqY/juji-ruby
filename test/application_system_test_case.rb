@@ -20,7 +20,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   def sign_in_as(user)
     visit new_session_path
-    page.driver.browser.navigate.refresh
     forms = all("form[action='#{session_path}']", visible: :all)
     form = forms.find(&:visible?)
     email = form.find("input[name='email_address']")
@@ -35,8 +34,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     FileUtils.rm_f(Dir.glob(DOWNLOAD_PATH.join("*")))
   end
 
-  def wait_for
-    Timeout.timeout(Capybara.default_max_wait_time) do
+  def wait_for(timeout = Capybara.default_max_wait_time)
+    Timeout.timeout(timeout) do
       loop do
         return if yield
 

@@ -33,13 +33,22 @@ class HabitsController < ApplicationController
 
   def toggle
     log_date = Date.parse(params[:date]) rescue Date.today
-    log = @habit.habit_logs.find_or_initialize_by(log_date: log_date)
-    log.completed = !log.completed
-    log.save
+    completed = @habit.with_lock do
+      log = @habit.habit_logs.find_or_initialize_by(log_date: log_date)
+      log.completed = !log.completed
+      log.save!
+      log.completed
+    end
 
-    if log.completed
-      UserStreak.record_activity!(current_user, "daily_habit")
-      UserAchievement.check_first_time_achievements!(current_user)
+    if completed
+      [
+        -> { UserStreak.record_activity!(current_user, "daily_habit") },
+        -> { UserAchievement.check_first_time_achievements!(current_user) }
+      ].each do |operation|
+        operation.call
+      rescue StandardError => error
+        Rails.logger.warn("Habit post-save processing failed: #{error.class}")
+      end
     end
 
     load_index_data

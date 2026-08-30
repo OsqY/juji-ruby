@@ -28,9 +28,11 @@ Rails.application.routes.draw do
     patch :toggle_blocker, on: :member
   end
   resources :transactions, except: [ :edit, :update ]
+  resources :expense_splits, only: %i[ index create ]
+  patch "expense_shares/:id/toggle", to: "expense_splits#toggle", as: :toggle_expense_share
   resources :budgets, only: %i[ index create destroy ]
   resources :projects, only: %i[ index create destroy ] do
-    resources :project_tasks, only: %i[ create update destroy ] do
+    resources :project_tasks, only: %i[ create destroy ] do
       post :toggle, on: :member
     end
   end

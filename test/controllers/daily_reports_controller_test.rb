@@ -52,4 +52,29 @@ class DailyReportsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to daily_reports_path
     assert @user.notifications.exists?(notification_type: :insight)
   end
+
+  test "creates a report when post-save tracking fails" do
+    original_record_activity = UserStreak.method(:record_activity!)
+    UserStreak.define_singleton_method(:record_activity!) { |*| raise StandardError, "tracking unavailable" }
+
+    begin
+      assert_difference("DailyReport.count", 1) do
+        post daily_reports_path, params: {
+          daily_report: {
+            report_date: Date.current + 1.day,
+            work_title: "Saved despite tracking failure",
+            worked_by: "Tester",
+            yesterday: "Previous work",
+            today: "Current work",
+            blockers: ""
+          }
+        }
+      end
+    ensure
+      UserStreak.define_singleton_method(:record_activity!, original_record_activity)
+    end
+
+    assert_redirected_to daily_reports_path
+    assert @user.notifications.exists?(notification_type: :insight)
+  end
 end

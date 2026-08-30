@@ -109,4 +109,27 @@ class PublicAnonymousFormsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     assert_match(/Ya respondiste este formulario/i, @response.body)
   end
+
+  test "does not report a failed save as a duplicate response" do
+    sign_in_as(@user)
+    @anonymous_form.responses.create!(user: @user, answers: { "existing" => "A" })
+    failed_response = @anonymous_form.responses.new
+    failed_response.define_singleton_method(:save) { false }
+
+    response_class = AnonymousFormResponse.singleton_class
+    original_new = response_class.instance_method(:new)
+    response_class.define_method(:new) { |*args, **kwargs| failed_response }
+
+    begin
+      post public_anonymous_form_responses_path(@anonymous_form.token), params: {
+        answers: { @anonymous_form.questions.first.id.to_s => "B" }
+      }
+    ensure
+      response_class.define_method(:new, original_new)
+    end
+
+    assert_response :unprocessable_entity
+    assert_match(/No se pudo enviar la respuesta/i, response.body)
+    refute_match(/Ya respondiste este formulario/i, response.body)
+  end
 end
