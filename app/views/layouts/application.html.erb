@@ -51,6 +51,7 @@
       <% projects_active = controller_name == "projects" %>
       <% habits_active = controller_name == "habits" %>
       <% budgets_active = controller_name == "budgets" %>
+      <% expense_splits_active = controller_name == "expense_splits" %>
       <% monthly_goals_active = controller_name == "monthly_goals" %>
       <% shopping_active = controller_name == "shopping_items" %>
       <% forms_active = controller_name == "anonymous_forms" %>
@@ -78,7 +79,7 @@
 
       <% reports_group_active = reports_active || report_new_active %>
       <% productivity_group_active = projects_active || habits_active || shopping_active %>
-      <% finance_group_active = finance_active || finance_new_active || budgets_active || monthly_goals_active %>
+      <% finance_group_active = finance_active || finance_new_active || budgets_active || expense_splits_active || monthly_goals_active %>
       <% social_group_active = chat_active || friends_active %>
       <% tools_group_active = forms_active || whiteboards_active %>
       <% account_group_active = login_active || register_active || recovery_active %>
@@ -111,6 +112,7 @@
             <%= link_to t('.nav.view_finance'), transactions_path, class: "nav-link #{'is-active' if finance_active}", role: "menuitem" %>
             <%= link_to t('.nav.new_transaction'), new_transaction_path, class: "nav-link nav-link-create #{'is-active' if finance_new_active}", role: "menuitem" %>
             <%= link_to t('.nav.budgets'), budgets_path, class: "nav-link #{'is-active' if budgets_active}", role: "menuitem" %>
+            <%= link_to "Cuentas compartidas", expense_splits_path, class: "nav-link #{'is-active' if expense_splits_active}", role: "menuitem" %>
             <%= link_to t('.nav.goals'), monthly_goals_path, class: "nav-link #{'is-active' if monthly_goals_active}", role: "menuitem" %>
           </div>
         </details>

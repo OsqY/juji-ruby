@@ -2310,3 +2310,234 @@ nav.chaos-nav {
     border-left-width: 0;
   }
 }
+/* Shared expense spreadsheet */
+.split-expenses-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.split-expenses-page,
+.split-expenses-page * {
+  box-sizing: border-box;
+}
+
+.split-expenses-page > .aws-breadcrumbs,
+.split-expenses-page > .aws-page-header {
+  display: flex;
+}
+
+.split-expenses-page > .aws-page-header {
+  flex-direction: column;
+}
+
+.split-expense-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.split-expense-builder,
+.split-expense-occasion {
+  margin-bottom: 1rem;
+}
+
+.split-expense-builder form {
+  padding: 1rem;
+}
+
+.split-expense-help {
+  margin: 0.25rem 0 0;
+  color: var(--aws-text-secondary, var(--ink));
+  font-size: 0.85rem;
+}
+
+.split-expense-fields {
+  display: grid;
+  grid-template-columns: minmax(220px, 2fr) minmax(140px, 1fr) minmax(160px, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.split-expense-fields input,
+.split-expense-person {
+  width: 100%;
+}
+
+.split-expense-table-wrap {
+  overflow-x: auto;
+}
+
+.split-expense-table input {
+  min-width: 150px;
+}
+
+.split-expense-table th:nth-child(2),
+.split-expense-table td:nth-child(2) {
+  width: 190px;
+}
+
+.split-expense-row-action {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.split-expense-actions {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.split-expense-row-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.split-expense-totals {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0 0 0 auto;
+}
+
+.split-expense-totals div {
+  text-align: right;
+}
+
+.split-expense-totals dt {
+  color: var(--aws-text-secondary, currentColor);
+  font-size: 0.75rem;
+}
+
+.split-expense-totals dd {
+  margin: 0.2rem 0 0;
+  font-weight: 800;
+}
+
+.split-expense-totals .is-negative {
+  color: var(--aws-error, #dc2626);
+}
+
+.split-expense-history > h2 {
+  margin: 2rem 0 1rem;
+}
+
+.split-expense-empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--aws-text-secondary, currentColor);
+}
+
+@media (max-width: 700px) {
+  .split-expenses-page { width: 100vw; max-width: 100vw; padding: 1rem 0; overflow-x: hidden; }
+  .split-expense-fields { grid-template-columns: 1fr; }
+  .split-expense-actions { align-items: stretch; }
+  .split-expense-totals { width: 100%; margin-left: 0; justify-content: space-between; }
+  .split-expense-actions > .aws-btn-primary { width: 100%; justify-content: center; }
+  .split-expense-table-wrap { overflow: visible; }
+
+  .split-expense-table,
+  .split-expense-table td {
+    display: block;
+    width: 100% !important;
+  }
+
+  .split-expense-table tbody {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .split-expense-builder .split-expense-table tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    height: auto;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--aws-border, var(--muted-gray));
+  }
+
+  .split-expense-table thead {
+    display: none;
+  }
+
+  .split-expense-table td {
+    padding: 0.35rem 0;
+    border: 0;
+  }
+
+  .split-expense-table input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .split-expense-table tbody label.visually-hidden {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0 0 0.25rem;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .split-expense-row-action .aws-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .split-expense-occasion .aws-table,
+  .split-expense-occasion .aws-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .split-expense-occasion .aws-table tbody {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .split-expense-occasion .aws-table tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+
+  .split-expense-occasion .aws-table thead {
+    display: none;
+  }
+
+  .split-expense-occasion .aws-table tr {
+    height: auto;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--aws-border, var(--muted-gray));
+  }
+
+  .split-expense-occasion .aws-table td {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    border: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .split-expense-occasion .aws-table td::before {
+    content: attr(data-label);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .split-expense-occasion .aws-table td form,
+  .split-expense-occasion .aws-table td .aws-btn {
+    width: 100%;
+  }
+}

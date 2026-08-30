@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_10_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_30_000000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -133,6 +133,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_000000) do
     t.index ["user_id"], name: "index_daily_reports_on_user_id"
   end
 
+  create_table "expense_shares", force: :cascade do |t|
+    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.integer "person_id", null: false
+    t.datetime "settled_at"
+    t.integer "transaction_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_expense_shares_on_person_id"
+    t.index ["transaction_id", "person_id"], name: "index_expense_shares_on_transaction_id_and_person_id", unique: true
+    t.index ["transaction_id"], name: "index_expense_shares_on_transaction_id"
+  end
+
   create_table "friendships", force: :cascade do |t|
     t.datetime "accepted_at"
     t.integer "addressee_id", null: false
@@ -207,6 +219,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_000000) do
     t.index ["notification_type"], name: "index_notifications_on_notification_type"
     t.index ["user_id", "read_at"], name: "index_notifications_on_user_id_and_read_at"
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.string "normalized_name", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id", "normalized_name"], name: "index_people_on_user_id_and_normalized_name", unique: true
+    t.index ["user_id"], name: "index_people_on_user_id"
   end
 
   create_table "project_tasks", force: :cascade do |t|
@@ -369,6 +391,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_000000) do
   add_foreign_key "chat_room_members", "users"
   add_foreign_key "chat_rooms", "users", column: "owner_id"
   add_foreign_key "daily_reports", "users"
+  add_foreign_key "expense_shares", "people"
+  add_foreign_key "expense_shares", "transactions"
   add_foreign_key "friendships", "users", column: "addressee_id"
   add_foreign_key "friendships", "users", column: "requester_id"
   add_foreign_key "habit_logs", "habits"
@@ -377,6 +401,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_000000) do
   add_foreign_key "messages", "users"
   add_foreign_key "monthly_goals", "users"
   add_foreign_key "notifications", "users"
+  add_foreign_key "people", "users"
   add_foreign_key "project_tasks", "projects"
   add_foreign_key "projects", "users"
   add_foreign_key "sessions", "users"

@@ -1,0 +1,17 @@
+<tr data-expense-split-target="row">
+  <td>
+    <label class="visually-hidden" for="split_shares_<%= index %>_person_name">Persona</label>
+    <%= text_field_tag "split[shares][#{index}][person_name]", row[:person_name],
+      id: "split_shares_#{index}_person_name", list: "expense-split-people", required: true,
+      autocomplete: "off", placeholder: "Ej. Ana", class: "split-expense-person" %>
+  </td>
+  <td>
+    <label class="visually-hidden" for="split_shares_<%= index %>_amount">Monto</label>
+    <%= number_field_tag "split[shares][#{index}][amount]", row[:amount],
+      id: "split_shares_#{index}_amount", min: 0.01, step: 0.01, required: true,
+      placeholder: "0.00", data: { expense_split_target: "amount", action: "input->expense-split#updateTotals" } %>
+  </td>
+  <td class="split-expense-row-action">
+    <button type="button" class="aws-btn aws-btn-secondary" data-action="expense-split#removeRow" aria-label="Quitar a <%= row[:person_name].presence || 'esta persona' %>">Quitar</button>
+  </td>
+</tr>

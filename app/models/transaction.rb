@@ -1,5 +1,6 @@
 class Transaction < ApplicationRecord
   belongs_to :user
+  has_many :expense_shares, dependent: :destroy
   enum :transaction_type, { expense: 0, income: 1 }
 
   before_validation :normalize_category

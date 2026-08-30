@@ -8,6 +8,7 @@
 
     <div class="aws-page-header-actions aws-mb-2">
       <%= link_to t("transactions.actions.new"), new_transaction_path, class: "aws-btn aws-btn-primary", data: { turbo_frame: "transaction_form_panel" } %>
+      <%= link_to "Cuentas compartidas", expense_splits_path, class: "aws-btn aws-btn-secondary" %>
       <%= render "shared/export_actions", model: "transactions" %>
     </div>
 
@@ -150,6 +151,7 @@
         <h1 style="font-size: 3.6rem;">FLUJO DE<br>CAJA</h1>
         <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
           <%= render "shared/export_actions", model: "transactions" %>
+          <%= link_to "CUENTAS COMPARTIDAS", expense_splits_path, class: "btn-chaos" %>
           <%= link_to t("transactions.actions.new"), new_transaction_path, class: "btn-chaos", data: { turbo_frame: "transaction_form_panel" } %>
         </div>
       </div>

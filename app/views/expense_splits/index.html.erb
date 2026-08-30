@@ -1,0 +1,125 @@
+<% content_for :title, "Cuentas compartidas · Juji" %>
+
+<div class="split-expenses-page">
+  <%= render "layouts/aws_page_header", title: "CUENTAS COMPARTIDAS",
+    subtitle: "Divide una compra pagada por ti en lempiras y conserva lo que cada persona te debe",
+    breadcrumbs: [["Home", root_path], ["Finanzas", transactions_path], ["Cuentas compartidas", nil]] %>
+
+  <%= render "shared/frame_flash" %>
+
+  <div class="split-expense-summary" aria-label="Resumen de cuentas pendientes">
+    <div class="aws-widget is-accent">
+      <div class="aws-widget-label">Pendiente total</div>
+      <div class="aws-widget-value">L. <%= number_with_precision @outstanding_totals.values.sum, precision: 2 %></div>
+      <div class="aws-widget-meta"><%= pluralize(@outstanding_totals.size, "persona", "personas") %></div>
+    </div>
+    <% @outstanding_totals.each do |person, total| %>
+      <div class="aws-widget">
+        <div class="aws-widget-label"><%= person.name %></div>
+        <div class="aws-widget-value">L. <%= number_with_precision total, precision: 2 %></div>
+        <div class="aws-widget-meta">Pendiente</div>
+      </div>
+    <% end %>
+  </div>
+
+  <section class="aws-card split-expense-builder" data-controller="expense-split">
+    <div class="aws-card-header">
+      <div>
+        <h2 class="aws-card-title">Nueva compra</h2>
+        <p class="split-expense-help">Escribe un nombre guardado o uno nuevo. Los nombres nuevos se guardan únicamente al guardar esta cuenta.</p>
+      </div>
+    </div>
+
+    <% if @transaction.errors.any? %>
+      <div class="aws-alert aws-alert-danger" role="alert"><%= @transaction.errors.full_messages.to_sentence %></div>
+    <% end %>
+
+    <%= form_with url: expense_splits_path, scope: :split do |form| %>
+      <div class="split-expense-fields">
+        <div class="field">
+          <%= form.label :description, "Compra" %>
+          <%= form.text_field :description, value: @transaction.description, required: true, maxlength: 120, placeholder: "Ej. Cena del viernes" %>
+        </div>
+        <div class="field">
+          <%= form.label :amount, "Total pagado por ti (L)" %>
+          <%= form.number_field :amount, value: @transaction.amount, required: true, min: 0.01, step: 0.01, placeholder: "0.00",
+            data: { expense_split_target: "total", action: "input->expense-split#updateTotals" } %>
+        </div>
+        <div class="field">
+          <%= form.label :date, "Fecha" %>
+          <%= form.date_field :date, value: @transaction.date || Date.current, required: true %>
+        </div>
+      </div>
+
+      <datalist id="expense-split-people">
+        <% @people.each do |person| %><option value="<%= person.name %>"></option><% end %>
+      </datalist>
+
+      <div class="split-expense-table-wrap">
+        <table class="aws-table split-expense-table">
+          <thead>
+            <tr>
+              <th>Persona</th>
+              <th>Monto que debe</th>
+              <th><span class="visually-hidden">Acciones</span></th>
+            </tr>
+          </thead>
+          <tbody data-expense-split-target="list">
+            <% @share_rows.each_with_index do |row, index| %>
+              <%= render "share_row", row: row, index: index %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <template data-expense-split-target="template">
+        <%= render "share_row", row: { person_name: "", amount: "" }, index: "__INDEX__" %>
+      </template>
+
+      <div class="split-expense-actions">
+        <div class="split-expense-row-buttons">
+          <button type="button" class="aws-btn aws-btn-secondary" data-action="expense-split#addRow">+ Agregar persona</button>
+          <button type="button" class="aws-btn aws-btn-secondary" data-action="expense-split#splitEvenly">Dividir por igual</button>
+        </div>
+        <dl class="split-expense-totals">
+          <div><dt>Asignado</dt><dd data-expense-split-target="assigned">L. 0.00</dd></div>
+          <div><dt>Tu parte / sin asignar</dt><dd data-expense-split-target="remaining">L. 0.00</dd></div>
+        </dl>
+        <%= form.submit "Guardar cuenta", class: "aws-btn aws-btn-primary" %>
+      </div>
+    <% end %>
+  </section>
+
+  <section class="split-expense-history" aria-labelledby="split-expense-history-title">
+    <h2 id="split-expense-history-title">Historial</h2>
+    <% if @split_transactions.any? %>
+      <% @split_transactions.each do |transaction| %>
+        <article class="aws-card split-expense-occasion">
+          <div class="aws-card-header">
+            <div>
+              <h3 class="aws-card-title"><%= transaction.description %></h3>
+              <p class="split-expense-help"><%= l transaction.date, format: :long %> · Total L. <%= number_with_precision transaction.amount, precision: 2 %></p>
+            </div>
+          </div>
+          <div class="split-expense-table-wrap">
+            <table class="aws-table">
+              <thead><tr><th>Persona</th><th>Monto</th><th>Estado</th><th>Acción</th></tr></thead>
+              <tbody>
+                <% transaction.expense_shares.each do |share| %>
+                  <tr>
+                    <td data-label="Persona"><%= share.person.name %></td>
+                    <td data-label="Monto">L. <%= number_with_precision share.amount, precision: 2 %></td>
+                    <td data-label="Estado"><span class="aws-tag <%= share.settled? ? 'aws-tag-success' : 'aws-tag-warning' %>"><%= share.settled? ? "Pagado" : "Pendiente" %></span></td>
+                    <td data-label="Acción"><%= button_to share.settled? ? "Marcar pendiente" : "Marcar pagado", toggle_expense_share_path(share), method: :patch, class: "aws-btn aws-btn-secondary" %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      <% end %>
+    <% else %>
+      <div class="aws-card split-expense-empty">Todavía no hay cuentas compartidas.</div>
+    <% end %>
+  </section>
+</div>
